@@ -144,12 +144,17 @@ body{
     transform: translate(-50%, -50%) rotate(180deg);
 }
 .navigation-primary-link{
+    display: block;
     text-decoration: none;
     font-size: calc(var(--nav-primary-size) * .08);
     white-space: nowrap;
     color: var(--bc-primary);
+    scale: 1;
+    transition: scale 200ms ease-in-out;
 }
-
+.navigation-primary-link:hover{
+    scale: 1.2;
+}
 /*
 ===================================================|
 ---------------------------------------------------|

@@ -23,5 +23,6 @@ const HomeBackground = {
         HomeBackground.height = canvas.height;
     
     }
+    // start with a point, start drawing line as animation, if 
 }
 
