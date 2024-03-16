@@ -109,9 +109,10 @@ body{
     border-radius: 50%;
     margin: 0 auto 4rem auto;
     background: linear-gradient(90deg, blue,purple);
-    box-shadow: -5px -5px 30px hsl(240 100% 50% / 0.5),
-    5px 5px 40px hsl(300 100% 25% / 0.5);
+    /* box-shadow: -5px -5px 30px hsl(240 100% 50% / 0.5),
+    5px 5px 40px hsl(300 100% 25% / 0.5); */
     isolation: isolate;
+    transition: box-shadow 500ms ease-in-out;
 }
 .navigation-primary-list::before{
     content: "";
@@ -121,10 +122,19 @@ body{
     height: calc(var(--nav-primary-size) * 0.88);
     border-radius: inherit;
     background:  black;
-    box-shadow: inset 5px 5px 40px hsl(240 100% 50% / 0.5),
-    inset -5px -5px 30px hsl(300 100% 25% / 0.5);
+    /* box-shadow: inset 5px 5px 40px hsl(240 100% 50% / 0.5),
+    inset -5px -5px 30px hsl(300 100% 25% / 0.5); */
     transform: translate(-50%,-50%);
     z-index: -1;
+    transition: box-shadow 500ms ease-in-out;
+}
+.navigation-primary-list.reveal{
+    box-shadow: -5px -5px 30px hsl(240 100% 50% / 0.5),
+    5px 5px 40px hsl(300 100% 25% / 0.5);
+}
+.navigation-primary-list.reveal::before{
+    box-shadow: inset 5px 5px 40px hsl(240 100% 50% / 0.5),
+    inset -5px -5px 30px hsl(300 100% 25% / 0.5);
 }
 .navigation-primary-logo-img{
     position: absolute;
@@ -134,7 +144,7 @@ body{
     transform: translate(-50%, -40%);
     filter: invert(100%);
     opacity: 0;
-    transition: opacity 500ms ease-in-out;
+    transition: opacity 500ms ease-in-out 500ms;
 }
 .navigation-primary-logo-img.reveal{
     opacity: 1;
