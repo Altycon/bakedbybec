@@ -466,4 +466,26 @@ body{
     .navigation-primary-list{
         --nav-primary-size: 50vw;
     }
+    
+}
+@media only screen and (max-width: 700px){
+   
+    .navigation-primary-logo-img{
+        position: absolute;
+        top: 30%;
+       
+        transform: translate(-50%, -30%);
+       
+    }
+}
+
+@media only screen and (max-width: 500px){
+   
+    .navigation-primary-logo-img{
+        position: absolute;
+        top: 25%;
+       
+        transform: translate(-50%, -25%);
+       
+    }
 }
