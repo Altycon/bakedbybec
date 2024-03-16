@@ -82,9 +82,15 @@ body{
     border: 1px solid black;
 
 }
+.header-primary > p{
+    font-size: 1ren;
+    padding: .5rem;
+}
+.website-title{
+    margin-left: 2rem;
+}
 .website-title > a > img{
-    width: 200px;
-    outline: 1px solid black;
+    width: 100px;
     filter: invert(100%);
 }
 
@@ -101,7 +107,7 @@ body{
     height: var(--nav-primary-size);
     /* border: 1px solid blue; */
     border-radius: 50%;
-    margin: 0 auto;
+    margin: 0 auto 4rem auto;
     background: linear-gradient(90deg, blue,purple);
     box-shadow: -5px -5px 30px hsl(240 100% 50% / 0.5),
     5px 5px 40px hsl(300 100% 25% / 0.5);
@@ -120,7 +126,19 @@ body{
     transform: translate(-50%,-50%);
     z-index: -1;
 }
-
+.navigation-primary-logo-img{
+    position: absolute;
+    top: 40%; left: 50%;
+    width: 80vw;
+    max-width: 800px;
+    transform: translate(-50%, -40%);
+    filter: invert(100%);
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+}
+.navigation-primary-logo-img.reveal{
+    opacity: 1;
+}
 .navigation-primary-item{
     position: absolute;
     top: 50%; left: 50%;
@@ -129,14 +147,15 @@ body{
     /* outline: 1px solid green; */
 }
 .navigation-primary-list .navigation-primary-item:nth-child(1){
-    transform: translate(-50%, -50%) rotate(20deg);
+    transform: translate(-50%, -50%) rotate(-50deg);
 }
 .navigation-primary-list .navigation-primary-item:nth-child(2){
     transform: translate(-50%, -50%) rotate(-20deg);
 }
 .navigation-primary-list .navigation-primary-item:nth-child(3){
-    transform: translate(-50%, -50%) rotate(-50deg);
+    transform: translate(-50%, -50%) rotate(20deg);
 }
+
 .navigation-primary-list .navigation-primary-item:nth-child(4){
     transform: translate(-50%, -50%) rotate(50deg);
 }
@@ -144,7 +163,7 @@ body{
     transform: translate(-50%, -50%) rotate(180deg);
 }
 .navigation-primary-link{
-    display: block;
+    display: inline-block;
     text-decoration: none;
     font-size: calc(var(--nav-primary-size) * .08);
     white-space: nowrap;
@@ -154,6 +173,86 @@ body{
 }
 .navigation-primary-link:hover{
     scale: 1.2;
+}
+.navigation-primary-link > span{
+    display: inline-block;
+}
+
+/* faqs */
+
+.navigation-primary-list .navigation-primary-item:nth-child(1) .navigation-primary-link > span:nth-child(1){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(-8deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(1) .navigation-primary-link > span:nth-child(2){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(-4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(1) .navigation-primary-link > span:nth-child(3){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(1) .navigation-primary-link > span:nth-child(4){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(8deg);
+}
+
+
+/* product */
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(1){
+    transform: translateY(calc(var(--nav-primary-size) * .02)) rotate(-12deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(2){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(-8deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(3){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(-4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(4){
+    color: var(--bc-primary);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(5){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(6){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(8deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(2) .navigation-primary-link > span:nth-child(7){
+    transform: translateY(calc(var(--nav-primary-size) * .02)) rotate(12deg);
+}
+
+/* contact */
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(1){
+    transform: translateY(calc(var(--nav-primary-size) * .02)) rotate(-12deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(2){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(-8deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(3){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(-4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(4){
+    color: var(--bc-primary);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(5){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(5deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(6){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(8deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(3) .navigation-primary-link > span:nth-child(7){
+    transform: translateY(calc(var(--nav-primary-size) * .02)) rotate(14deg);
+}
+
+/* meet */
+
+.navigation-primary-list .navigation-primary-item:nth-child(4) .navigation-primary-link > span:nth-child(1){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(-6deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(4) .navigation-primary-link > span:nth-child(2){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(-4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(4) .navigation-primary-link > span:nth-child(3){
+    transform: translateY(calc(var(--nav-primary-size) * .005)) rotate(4deg);
+}
+.navigation-primary-list .navigation-primary-item:nth-child(4) .navigation-primary-link > span:nth-child(4){
+    transform: translateY(calc(var(--nav-primary-size) * .01)) rotate(6deg);
 }
 /*
 ===================================================|
