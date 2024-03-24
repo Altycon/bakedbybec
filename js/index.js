@@ -1,5 +1,5 @@
-import { Confirmation } from "./confirmation.js";
-import { ANotification } from "./notification.js";
+import { AImageViewer } from "./image_viewer.js";
+
 
 
 function initializeSite(){
@@ -38,6 +38,11 @@ function initializeSite(){
             notes.classList.add('show');
 
         },100)
-    })
+    });
+
+
+    AImageViewer.initialize(document.querySelectorAll('img.viewable'));
+
+   
 }
 initializeSite();
