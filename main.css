@@ -21,9 +21,9 @@
 
      --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
-     --bgi1: url('/bakedbybec/img/cookies_rabbit_chick_landscape-header.jpg');
-     --bgi2: url('/bakedbybec/img/cookies-cooling-header.jpg');
-     --bgi3: url('/bakedbybec/img/customer_review1_image3.jpg');
+     --bgi1: url('/img/cookies_rabbit_chick_landscape-header.jpg');
+     --bgi2: url('/img/cookies-cooling-header.jpg');
+     --bgi3: url('/img/customer_review1_image3.jpg');
 
 }
 
@@ -49,6 +49,7 @@
 .btn{
     cursor: pointer;
 }
+
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -429,33 +430,42 @@ body{
     padding: 1rem;
 
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    grid-template-columns: repeat(3,1fr);
     grid-template-rows: auto;
     align-items: center;
-    
+   
+    gap: 2rem;
 }
 .header-secondary .website-title{
     grid-column: 1;
     grid-row: 1;
-    justify-self: flex-start;
+    text-align: center;
 }
-.navigation-secondary-list{
+.navigation-secondary{
     grid-column: 2;
     grid-row: 1;
+}
+.navigation-secondary-list{
+    
     list-style: none;
     padding: 1rem;
 
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: repeat(4,1fr);
     grid-template-rows: auto;
     gap: 1.5rem;
 }
 .navigation-secondary-item{
     --nav-sec-size: 60px;
-    align-self: center;
+
     justify-self: center;
     position: relative;
     isolation: isolate;
+
+    transition: 200ms ease-out;
+}
+.navigation-secondary-item:hover{
+    transform: scale(1.2);
 }
 .navigation-secondary-item.active::before{
     
@@ -489,9 +499,29 @@ body{
     font-size: 1.5rem;
     text-shadow: 2px 2px 3px black;
 }
-.navigation-secondary-icon{
-    width: 35px;
+
+.navigation-social{
+    grid-column: 3;
+    grid-row: 1;
+    list-style: none;
+    padding: 1rem;
+}
+.navigation-social-list{
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.navigation-social-icon{
+    max-width: 35px;
     filter: invert(100%);
+}
+.navigation-social-item:hover .navigation-social-icon{
+    box-shadow: 0px 0px 5px black;
 }
 /*
 ===================================================|
@@ -665,56 +695,29 @@ body{
 ===================================================|
 */
 .faqs{
-    
-}
-.faqs > header{
-    height: 150px;
-
-    background-color: hsl(0 0% 0% / 0.5);
-    background-image: var(--bgi1);
-    background-repeat: no-repeat;
-    background-position: top;
-    background-size: cover;
-    background-blend-mode: overlay;
-    
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    margin-bottom: 2rem;
-}
-.faqs > header > h1{
-    grid-column: 1;
-    grid-row: 1;
-    align-self: flex-end;
-    padding: 1rem;
-    background-color: hsl(0 0% 0% / 0.5);
-    text-shadow: 2px 2px 3px black;
-
-    text-align: center;
-}
-.faqs > header > img{
-    grid-column: 1;
-    grid-row: 1;
-
-    width: 100vw;
-    max-height: 300px;
+    padding-top: 4rem;
 }
 
 .faqs > article{
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 6rem;
+}
+.faqs > article > header{
+    margin-bottom: 4rem;
 }
 .faqs > article > header > h2{
     font-size: 2rem;
     padding: 1em;
+    background-color: hsl(0 0% 0%);
 }
 .faqs > article > div > p{
+    max-width: 800px;
     font-size: 1.5rem;
-    line-height: 1.5em;
+    line-height: 2em;
     margin: 0 auto;
-    white-space: nowrap;
+   
 }
-.faqs > article:nth-child(3) .answer{
+.faqs > article:nth-child(2) .answer{
     padding: 0 2rem;
 
     display: grid;
@@ -722,8 +725,8 @@ body{
     grid-template-rows: auto;
     gap: 2rem;
 }
-.faqs > article:nth-child(4) .answer,
-.faqs > article:nth-child(5) .answer{
+.faqs > article:nth-child(3) .answer,
+.faqs > article:nth-child(4) .answer{
     padding: 0 2rem;
 
     display: grid;
@@ -732,19 +735,94 @@ body{
     gap: 2rem;
 }
 .faqs .answer .option{
-    padding: 1rem;
-    background-color: black;
+    position: relative;
+    isolation: isolate;
+    padding: 2rem 1rem;
+    
+    /* background-color: black; */
+
+    display:grid;
+    place-content: center;
+}
+.faqs .answer .option::before{
+    content: "";
+    position: absolute;
+    top: 0%; left: 0%;
+    width: 100%;
+    height: 100%;
+    background: var(--site-gradient);
+    z-index: -1;
+    border-radius: 10px;
+}
+.faqs .answer .option::after{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: calc(100% - 1rem);
+    height:calc(100% - 1rem);
+    background-color: hsl(0 0% 3%);
+    z-index: -1;
+    border-radius: 10px;
+    transform: translate(-50%,-50%);
 }
 .faqs .answer .option > h3{
     padding-bottom: 1.5rem;
     text-align: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
 }
 .faqs .answer .option > p{
     max-width: 300px;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.5em;
     margin: 0 auto 1rem auto;
+}
+.faqs .answer .option > p > a{
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    color: var(--fc-primary);
+    white-space: nowrap;
+    padding: 0rem .5rem;
+}
+.faqs .answer .option > p > span{
+    font-weight: 700;
+}
+.faqs .answer .option > p .price{
+    font-size: 1.5rem;
+    padding: 0rem 10px;
+}
+.faqs .answer .option .contact-page-link{
+    --option-link-style-size: 40px;
+    position: relative;
+    isolation: isolate;
+    text-shadow: 2px 2px 3px black;
+}
+.faqs .answer .option .contact-page-link::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: var(--option-link-style-size);
+    height: var(--option-link-style-size);
+    border-radius: 50%;
+    background: var(--site-gradient);
+    z-index: -1;
+
+    transform: translate(-50%,-50%);
+}
+.faqs .answer .option .contact-page-link::after{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: calc(var(--option-link-style-size) * .8);
+    height: calc(var(--option-link-style-size) * .8);
+    border-radius: 50%;
+    background-color: var(--bc-primary);
+    z-index: -1;
+
+    transform: translate(-50%,-50%);
 }
 /*
 ===================================================|
@@ -905,21 +983,10 @@ body{
     grid-row: 1;
     padding: 1rem 1rem 0rem 1rem;
    
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
 }
-.contact-main > header > p:first-of-type{
-    text-align: center;
-    font-size: 1rem;
-    line-height: 1.5em;
-}
+
 .contact-main > header .form-links{
-    grid-column: 3;
-    grid-row: 1;
-
-    justify-self: center;
-
+    text-align: center;
 }
 .contact-main .cookie-form-link,
 .contact-main .cake-form-link{
@@ -929,6 +996,7 @@ body{
     font-weight: 700;
     padding: 5px 10px;
     background: var(--site-gradient);
+    text-shadow: 1px 1px 2px black;
     border-radius: 5px;
     outline: 1px solid var(--fc-primary);
 }
@@ -944,36 +1012,157 @@ body{
 }
 .contact-main > article > p{
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     line-height: 1.5em;
+    margin-bottom: 1em;
+}
+.contact-main .faqs-page-link{
+    --faqs-link-style-size: 40px;
+    position: relative;
+    isolation: isolate;
+    text-shadow: 2px 2px 3px black;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--fc-primary);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.contact-main .faqs-page-link::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: var(--faqs-link-style-size);
+    height: var(--faqs-link-style-size);
+    border-radius: 50%;
+    background: var(--site-gradient);
+    z-index: -1;
+
+    transform: translate(-50%,-50%);
+}
+.contact-main .faqs-page-link::after{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: calc(var(--faqs-link-style-size) * .8);
+    height: calc(var(--faqs-link-style-size) * .8);
+    border-radius: 50%;
+    background-color: var(--bc-primary);
+    z-index: -1;
+
+    transform: translate(-50%,-50%);
 }
 .contact-main .contact-form{
+    position: relative;
     grid-column: 1;
     grid-row: 3;
-    text-align: center;
-    padding:2rem;
+
+    width: 100vw;
+    max-width: 500px;
+    justify-self: center;
+  
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1.5rem;
+}
+.contact-main .contact-form::before{
+    content: "";
+    position: absolute;
+    top: 0%; left: 0%;
+    width: 100%;
+    height: 100%;
+    background: var(--site-gradient);
+    z-index: -1;
+    border-radius: 10px;
+}
+.contact-main .contact-form::after{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: calc(100% - 1rem);
+    height:calc(100% - 1rem);
+    background-color: var(--bc-primary);
+    z-index: -1;
+    border-radius: 10px;
+    transform: translate(-50%,-50%);
 }
 .contact-main .contact-form .input-wrapper{
-    margin-bottom: 1rem;;
+    
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: auto auto;
+}
+.contact-main .contact-form .input-wrapper > label,
+.contact-main .contact-form .textarea-wrapper > label{
+    padding: 1em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.contact-main .contact-form .input-wrapper > input{
+    font-size: 1.2rem;
+    padding: 5px;
+}
+.contact-main .contact-form .input-wrapper > select{
+    font-size: 1.2rem;
+    padding: 5px;
 }
 .contact-main .contact-form .textarea-wrapper{
     display: grid;
-    place-content: center;
-    margin-bottom: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+}
+.contact-main .contact-form .textarea-wrapper > textarea{
+    font-size: 1.2rem;
+    padding: 5px;
+    resize: none;
+}
+
+.contact-main .contact-form > p{
+    text-align: center;
+    line-height: 1.5em;
 }
 .contact-main .contact-form .contact-form-submit-btn{
     border: none;
-    background: none;
-    min-width: 200px;
-    padding: 5px 10px;
-    outline: 1px solid var(--fc-primary);
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 700;
+    text-transform: uppercase;
     color: var(--fc-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    background: var(--site-gradient);
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px black,
+    inset -2px -2px 3px black,
+    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
 }
 .contact-main .contact-form .contact-form-submit-btn:hover{
     background-color: hsl(0 0% 10%);
+}
+@media only screen and (max-width: 440px) {
+    .contact-main .contact-form .input-wrapper > input,
+    .contact-main .contact-form .input-wrapper > select,
+    .contact-main .contact-form .textarea-wrapper > textarea{
+        width: 300px;
+        margin: 0 auto;
+    }
+}
+@media only screen and (max-width: 360px) {
+    .contact-main .contact-form .input-wrapper > input,
+    .contact-main .contact-form .input-wrapper > select,
+    .contact-main .contact-form .textarea-wrapper > textarea{
+        width: 250px;
+        margin: 0 auto;
+    }
+}
+@media only screen and (max-width: 316px) {
+    .contact-main .contact-form .input-wrapper > input,
+    .contact-main .contact-form .input-wrapper > select,
+    .contact-main .contact-form .textarea-wrapper > textarea{
+        width: 200px;
+        margin: 0 auto;
+    }
 }
 /*
 ===================================================|
@@ -1840,6 +2029,37 @@ body{
     /*
     --------------------------------
 
+        |    FAQs
+
+    --------------------------------
+    */
+    .faqs{
+        padding-top: 2rem;
+    }
+    .faqs > article:nth-child(1) .answer > p{
+        padding: 0rem 2rem;
+    }
+    .faqs > article:nth-child(2) .answer{
+        padding: 0 2rem;
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 2rem;
+    }
+    .faqs > article:nth-child(3) .answer,
+    .faqs > article:nth-child(4) .answer{
+        padding: 0 2rem;
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 2rem;
+    }
+
+    /*
+    --------------------------------
+
         |    FOOTER PRIMARY
 
     --------------------------------
@@ -1873,12 +2093,12 @@ body{
 }
 
 @media only screen and (max-width: 900px) {
-    .faqs > article{
+    /* .faqs > article{
         text-align: center;
         margin-bottom: 2rem;
         padding-left: 2rem;
         padding-right: 2rem;
-    }
+    } */
     
 }
 @media only screen and (max-width: 800px) {
@@ -1889,9 +2109,46 @@ body{
        
     }
 
+
+
+      /*
+    --------------------------------
+
+        |    HEADER SECONDARY / PAGE
+
+    --------------------------------
+    */
+
+    .header-secondary{
+  
+        grid-template-columns: repeat(2,auto);
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 0rem;
+    }
+    .header-secondary .website-title{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .navigation-secondary{
+        grid-column: 1/3;
+        grid-row: 2;
+    }
+    .navigation-secondary-list{
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: auto;
+    }
+    .navigation-social{
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+
+
+
+
     .meet-the-baker-content{
 
-        display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
         gap: 2rem;
@@ -2196,54 +2453,7 @@ body{
 
 @media only screen and (max-width: 600px) {
 
-    /*
-    --------------------------------
-
-        |    HEADER SECONDARY / PAGE
-
-    --------------------------------
-    */
-
-    .header-secondary{
-        padding: 1rem;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-        
-    }
-    .header-secondary .website-title{
-        grid-column: 1;
-        grid-row: 1;
-
-        justify-self: flex-start;
-    }
-    .navigation-secondary-list{
-        grid-column: 1;
-        grid-row: 2;
-        list-style: none;
-        padding: 1rem;
-
-        display: grid;
-        grid-template-columns: auto auto auto auto auto;
-        grid-template-rows: auto;
-        gap: 1.5rem;
-    }
-    .navigation-secondary-item{
-
-    }
-    .navigation-secondary-link{
-        text-decoration: none;
-        color: var(--fc-primary);
-        font-size: 1.5rem;
-    }
-    .navigation-secondary-icon{
-        width: 35px;
-        filter: invert(100%);
-    }
-
-
+  
     /* Customer Reviews */
 
     .customer-review-title{
