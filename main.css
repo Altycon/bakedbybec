@@ -21,9 +21,9 @@
 
      --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
-     --bgi1: url('/img/cookies_rabbit_chick_landscape-header.jpg');
-     --bgi2: url('/img/cookies-cooling-header.jpg');
-     --bgi3: url('/img/customer_review1_image3.jpg');
+     --bgi1: url('/bakedbybec/img/cookies_rabbit_chick_landscape-header.jpg');
+     --bgi2: url('/bakedbybec/img/cookies-cooling-header.jpg');
+     --bgi3: url('/bakedbybec/img/customer_review1_image3.jpg');
 
 }
 
