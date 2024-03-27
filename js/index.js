@@ -8,6 +8,8 @@ function initializeSite(){
 
     document.querySelector('.navigation-primary-logo-img').classList.add('reveal');
 
+    document.querySelector('.header-primary-subtext').classList.add('reveal');
+
     document.querySelectorAll('.navigation-primary-item').forEach( (child) => {
 
         child.classList.add('reveal');
