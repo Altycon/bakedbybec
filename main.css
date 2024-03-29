@@ -23,11 +23,11 @@
 
      --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
-     --bgi1: url('/bakedbybec/img/cookies_coastguard.jpg');
-     --bgi2: url('/bakedbybec/img/bbb-drop-cookie-lemon.jpg');
-     --bgi3: url('/bakedbybec/img/bbb-cake-nightmareXmans.jpg');
-     --bgi4: url('/bakedbybec/img/bbb-cupcakes-landscape.jpg');
-     --bgi5: url('/bakedbybec/img/bbb-cakepops-pink.jpg');
+     --bgi1: url('/img/cookies_coastguard.jpg');
+     --bgi2: url('/img/bbb-drop-cookie-lemon.jpg');
+     --bgi3: url('/img/bbb-cake-nightmareXmans.jpg');
+     --bgi4: url('/img/bbb-cupcakes-landscape.jpg');
+     --bgi5: url('/img/bbb-cakepops-pink.jpg');
 
      --nav-primary-size: 30vw;
 
@@ -380,7 +380,7 @@ body{
 .creations-hero,
 .announcement-hero{
     position: relative;
-    min-width: 300px;
+    
     padding: 1rem 2rem;
     margin-top: -6rem;
     text-align: center;
@@ -396,7 +396,7 @@ body{
 }
 .creations-hero > p,
 .announcement-hero > p{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 900;
     line-height: 1.5em;
 }
@@ -414,29 +414,6 @@ body{
     inset 2px 2px 3px hsl(0 0% 100% / 0.5);
     border-radius: 5px;
 
-}
-
-.creations-hero::before,
-.announcement-hero::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--site-gradient);
-    z-index: -1;
-}
-.creations-hero::after,
-.announcement-hero::after{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 95%;
-    height: 95%;
-    border-radius: inherit;
-    background-color: var(--bc-primary);
-    z-index: -1;
-
-    transform: translate(-50%,-50%);
 }
 
 
@@ -2290,97 +2267,6 @@ body{
 
 
 
-    /*
-    ===================================================|
-    ---------------------------------------------------|
-
-                COOKIES PAGE
-
-    ---------------------------------------------------|
-    ===================================================|
-    */
-    .cookies{
-        border: 1px solid blue;
-    }
-    .cookies > header{
-        border: 1px solid red;
-        padding: 1rem 1rem 0rem 1rem;
-        text-align: center;
-    }
-    .cookies-list{
-        list-style: none;
-        border: 1px solid green;
-        padding: 2rem;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4,400px);
-        gap: 2rem;
-    }
-    .cookies-item{
-        outline: 1px solid var(--fc-primary);
-    }
-    /*
-    ===================================================|
-    ---------------------------------------------------|
-
-                CAKES PAGE
-
-    ---------------------------------------------------|
-    ===================================================|
-    */
-    .cakes{
-        border: 1px solid blue;
-    }
-    .cakes > header{
-        border: 1px solid red;
-        padding: 1rem 1rem 0rem 1rem;
-        text-align: center;
-    }
-    .cakes-list{
-        list-style: none;
-        border: 1px solid green;
-        padding: 2rem;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4,400px);
-        gap: 2rem;
-    }
-    .cakes-item{
-        outline: 1px solid var(--fc-primary);
-    }
-    /*
-    ===================================================|
-    ---------------------------------------------------|
-
-                MISC GOODS PAGE
-
-    ---------------------------------------------------|
-    ===================================================|
-    */
-    .goods{
-        border: 1px solid blue;
-    }
-    .goods > header{
-        border: 1px solid red;
-        padding: 1rem 1rem 0rem 1rem;
-        text-align: center;
-    }
-    .goods-list{
-        list-style: none;
-        border: 1px solid green;
-        padding: 2rem;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4,400px);
-        gap: 2rem;
-    }
-    .goods-item{
-        outline: 1px solid var(--fc-primary);
-    }
-
      /*
     --------------------------------
 
@@ -2602,11 +2488,7 @@ body{
         font-weight: 900;
         line-height: 1.5em;
     }
-    .creations-hero::after,
-    .announcement-hero::after{
-        width: 98%;
-        height: 95%;
-    }
+ 
 }
 
 @media only screen and (max-width: 600px) {
