@@ -6,6 +6,7 @@ export const AImageViewer = {
     figureElement: document.querySelector('.image-viewer figure'),
     imageElement: document.querySelector('.image-viewer figure img'),
     imageCaption: document.querySelector('.image-viewer figure figcaption'),
+    testing: false,
 
     loadImage(event){
 
@@ -78,13 +79,17 @@ export const AImageViewer = {
 
         },100);
 
+        if(AImageViewer.testing) console.log('image click test: ', AImageViewer.imageCaption.textContent);
+
     },
 
-    initialize(imageElements){
+    initialize(imageElements,test = false){
 
         imageElements.forEach( imageElement =>{
 
             imageElement.addEventListener('click', AImageViewer.open);
-        })
+        });
+
+        if(test) AImageViewer.testing = true;
     }
 }
