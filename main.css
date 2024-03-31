@@ -1482,6 +1482,8 @@ body{
     grid-column: 1;
     grid-row: 2;
 
+    min-height: 100vh; /*I added this to try and stop jerking motion when loading page*/
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
@@ -1610,14 +1612,7 @@ body{
 .cakepop-gallery.show > header{
     opacity: 1;
 }
-/* .sugar-cookie-gallery.show > ul,
-.drop-cookie-gallery.show > ul,
-.cake-gallery.show > ul,
-.cupcake-gallery.show > ul,
-.cakepop-gallery.show > ul{
-    opacity: 1;
-    transform: translateX(0px);
-} */
+
 
 .sugar-cookie-gallery.show > ul > li,
 .drop-cookie-gallery.show > ul > li,
@@ -1629,46 +1624,78 @@ body{
 }
 
 
+/*
+===================================================|
+---------------------------------------------------|
 
+            COOKIE CLASS PAGE
 
-
-
-
-
-
-/* .sugar-cookie-gallery{
-    border: 1px solid red;
+---------------------------------------------------|
+===================================================|
+*/
+.classes-main > header{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
-.sugar-cookie-gallery > header{
-    padding: 1rem;
-    border: 1px solid white;
-}
-.sugar-cookie-gallery-list{
-    list-style: none;
-    padding: 2rem;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 200px;
-}
-.sugar-cookie-gallery-item{
-    border: 1px solid blue;
-
-    display: grid;
-    place-content: center;
-}
-.sugar-cookie-gallery-item > figure{
-    
-    max-width: 300px;
-    overflow: hidden;
-}
-.sugar-cookie-gallery-item > figure > img{
-    width: 100%;
-}
-.sugar-cookie-gallery-item > figure > figcaption{
-    padding: 1rem;
+.classes-main > header > p{
     text-align: center;
-} */
+    font-size: 3rem;
+    font-weight: 700;
+}
+.classes-main > header > h1{
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 900;
+}
+.class-information{
+    text-align: center;
+    padding: 2rem;
+}
+.class-information > p{
+    
+}
+.class-weekday{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: .5em;
+}
+.class-date{
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: .5em;
+}
+.class-date > sup{
+    font-size: .4em;
+}
+.class-time{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2em;
+}
+.class-place{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: .5em;
+}
+.class-address{
+    font-size: 1.5rem;
+    margin-bottom: 1.5em;
+}
+.class-price{
+    font-size: 1.2rem;
+    
+    margin-bottom: 1.5em;
+}
+.class-price > span{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.class-info{
+    max-width: 600px;
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    margin: 0 auto;
+}
 /*
 --------------------------------
 
