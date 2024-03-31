@@ -6,6 +6,38 @@ const galleryTabs = document.querySelectorAll('.navigation-gallery-item');
 const galleries = document.querySelectorAll('.gallery-content section');
 
 
+function setGalleryLink(sectionId){
+
+    galleryTabs.forEach( tab => {
+
+        const linkSectionId = tab.querySelector('a').href.split('#')[1];
+
+        if(linkSectionId === sectionId){
+
+            tab.classList.add('active');
+
+        }else{
+
+            if(tab.classList.contains('active')){
+
+                tab.classList.remove('active');
+            }
+        }
+    });
+
+
+    const galleryToActive = document.querySelector(`#${sectionId}`);
+
+    galleryToActive.classList.add('open');
+
+    setTimeout( ()=> {
+
+        galleryToActive.classList.add('show');
+
+    },100);
+}
+
+
 function activateGalleryTab(event){
 
     event.preventDefault();
@@ -58,7 +90,17 @@ function listenToGallery(){
 
 function initializeGallery(){
 
-    //tabs
+    console.log(window.location.hash)
+
+    if(window.location.hash && window.location.hash !== ""){
+
+        setGalleryLink(window.location.hash.split('#')[1]);
+
+    }else{
+
+        setGalleryLink('SugarCookies');
+    }
+    
 
     listenToGallery();
 
