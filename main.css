@@ -23,11 +23,11 @@
 
      --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
-     --bgi1: url('/img/cookies_coastguard.jpg');
-     --bgi2: url('/img/bbb-drop-cookie-lemon.jpg');
-     --bgi3: url('/img/bbb-cake-nightmareXmans.jpg');
-     --bgi4: url('/img/bbb-cupcakes-landscape.jpg');
-     --bgi5: url('/img/bbb-cakepops-pink.jpg');
+     --bgi1: url('/bakedbybec/img/cookies_coastguard.jpg');
+     --bgi2: url('/bakedbybec/img/bbb-drop-cookie-lemon.jpg');
+     --bgi3: url('/bakedbybec/img/bbb-cake-nightmareXmans.jpg');
+     --bgi4: url('/bakedbybec/img/bbb-cupcakes-landscape.jpg');
+     --bgi5: url('/bakedbybec/img/bbb-cakepops-pink.jpg');
 
      --nav-primary-size: 30vw;
 
