@@ -10,7 +10,7 @@ export const AImageViewer = {
 
     loadImage(event){
 
-        console.log('Image loaded successfully',event);
+        // console.log('Image loaded successfully',event);
     },
     imageError(error){
 
@@ -46,11 +46,9 @@ export const AImageViewer = {
         const imgWidth = event.target.width;
         const imgHeight = event.target.height;
 
-        
-
         if(imgWidth > imgHeight){
 
-            AImageViewer.figureElement.style.width = '800px';
+            AImageViewer.figureElement.style.width = '500px';
 
         }else{
 

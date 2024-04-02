@@ -10,9 +10,11 @@ function setGalleryLink(sectionId){
 
     galleryTabs.forEach( tab => {
 
-        const linkSectionId = tab.querySelector('a').href.split('#')[1];
+        const linkSectionId = tab.querySelector('a').href.split('#');
 
-        if(linkSectionId === sectionId){
+        window.localStorage.hash = linkSectionId;
+
+        if(linkSectionId[1] === sectionId){
 
             tab.classList.add('active');
 
@@ -89,8 +91,6 @@ function listenToGallery(){
 }
 
 function initializeGallery(){
-
-    console.log(window.location.hash)
 
     if(window.location.hash && window.location.hash !== ""){
 
