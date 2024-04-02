@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order | Baked By Bec</title>
+    <link rel="stylesheet" href="../main.css">
+    <script type="module" src="../js/pages/ordering/order.js"></script>
+</head>
+<body>
+    <header class="header-secondary">
+
+        <h1 class="website-title">
+            <a href="/">
+                <img src="/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
+            </a>
+        </h1>
+
+        <nav class="navigation-secondary">
+
+            <ul class="navigation-secondary-list">
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/pages/faqs.html" class="navigation-secondary-link">faqs</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/pages/product.html" class="navigation-secondary-link">product</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/pages/contact.html" class="navigation-secondary-link">contact</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/pages/meet.html" class="navigation-secondary-link">meet</a>
+
+                </li>
+
+            </ul>
+        </nav>
+
+        <nav class="navigation-social">
+
+            <ul class="navigation-social-list">
+
+                <li class="navigation-social-item">
+
+                    <a href="" class="navigation-social-link">
+
+                        <img src="/img/Facebook-icon.png" alt="" class="navigation-social-icon">
+
+                    </a>
+
+                </li>
+
+                <li class="navigation-social-item">
+
+                    <a href="" class="navigation-social-link">
+
+                        <img src="/img/Instagram-icon.png" alt="" class="navigation-social-icon">
+
+                    </a>
+
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <main class="order-main">
+
+        <header>
+            <h1>My Order</h1>
+           
+        </header>
+
+        <div class="order-information">
+
+            <div>
+                <p>Orders need to be placed a <span>minimum of two weeks before</span> needed for your event.</p>
+                <p>This allows me enough time to make your cookies as delicious and beautiful as possible.</p>
+            </div>
+
+            <div>
+                <h3>Sugar Cookies:</h3>
+                <p><span>$30</span>/dozen</p>
+                <h3>Drop Cookies:</h3>
+                <p><span>$20</span>/dozen</p>
+                <h3>Shipping Fee:</h3>
+                <p><span>$15</span> shipped via <span>USPS.</span></p>
+                <h3>Delivery Fee</h3>
+                <p><span>.65</span>/mile roundtrip.</p>
+            </div>
+            
+            <div>
+                <h3>Delivery times:</h3>
+                <p> M-F between 4-6 pm</p>
+                <h3>Pickup times:</h3>
+                <p> M-F between 4-6 pm, Saturdays from 9-12 noon.</p>
+            </div>
+            
+            <div>
+                <p>Invoices will be sent via email.</p>
+                <p>I look forward to adding something sweet to your next event.  Thank you for booking with Baked by Bec!</p>
+            </div>
+            
+
+        </div>
+
+       <form class="order-form">
+
+            <div class="personal-information">
+
+                <label for="OrderFormName">
+                    <div>Name</div>
+                    <input type="text" name="name" id="OrderFormName" data-input="name" autocomplete="off" required>
+                </label>
+
+                <label for="OrderFormEmail">
+                    <div>Email</div>
+                    <input type="email" name="email" id="OrderFormEmail" data-input="email" autocomplete="off" required>
+                </label>
+    
+                <label for="OrderFormPhoneNumber">
+                    <div>Phone Number</div>
+                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
+                </label>
+
+            </div>
+
+            <div class="item-information">
+
+                <div class="sugar-cookie-information open">
+
+                    <header>
+                        <h3>Sugar Cookies</h3>
+                        <button type="button" class="btn remove-order-btn" value="sugarcookie">X</button>
+                    </header>
+    
+                    <label for="SugarCookieTheme">
+                        <div>Theme/Occasion</div>
+                        <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="2" autocomplete="off" required></textarea>
+                    </label>
+    
+                    <label for="SugarCookiePersonalization">
+                        <div>Personalization</div>
+                        <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                    </label>
+
+                    <label for="SugarCookieQuantity">
+                        <div>Quantity ($30/dozen)</div>
+                        <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
+                            <option value="1" selected>1 dozen</option>
+                            <option value="2">2 dozen</option>
+                            <option value="3">3 dozen</option>
+                            <option value="4">4 dozen</option>
+                            <option value="5">5 dozen</option>
+                            <option value="6">6 dozen</option>
+                        </select>
+                    </label>
+    
+                    <label for="SugarCookieDateNeeded">
+                        <div>Date needed</div>
+                        <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" autocomplete="off" required>
+                    </label>
+                   
+                </div>
+
+                <div class="cake-information open">
+
+                    <header>
+                        <h3>Cake</h3>
+                        <button type="button" class="btn remove-order-btn" value="cake">X</button>
+                    </header>
+
+                    <label for="CakeFlavor">
+                        <div>Flavor</div>
+                        <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="strawberry">strawberry</option>
+                            <option value="redvelvet">red velvet</option>
+                            <option value="lemon">lemon</option>
+                        </select>
+                    </label>
+
+                    <label for="CakeFrosting">
+                        <div>Frosting</div>
+                        <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="strawberry">strawberry</option>
+                            <option value="lemon">lemon</option>
+                        </select>
+                    </label>
+    
+                    <label for="CakeTheme">
+                        <div>Theme/Occasion</div>
+                        <textarea name="caketheme" id="CakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
+                    </label>
+    
+                    <label for="CakePersonalization">
+                        <div>Personalization</div>
+                        <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                    </label>
+
+                    <label for="CakeSize">
+                        <div>Size</div>
+                        <select name="cakesize" id="CakeSize" autocomplete="off" required>
+                            <option value="8inch">8" (serves ~20)</option>
+                            <option value="10inch">10" (serves ~28)</option>
+                            <option value="2tier">2 tier (serves ~48)</option>
+                            <option value="smash">Smash Cake (serves ~12)</option>
+                        </select>
+                    </label>
+
+                    <label for="CakeQuantity">
+                        <div>Quantity</div>
+                        <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </label>
+    
+                    <label for="CakeDateNeeded">
+                        <div>Date needed</div>
+                        <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
+                    </label>
+                   
+                </div>
+
+                <div class="drop-cookie-information open">
+
+                    <header>
+                        <h3>Drop Cookies</h3>
+                        <button type="button" class="btn remove-order-btn" value="dropcookie">X</button>
+                    </header>
+
+                    <label for="DropCookieQuantity">
+                        <div>Quantity</div>
+                        <select name="quantity" id="DropCookieQuantity" autocomplete="off" required>
+                            <option value="1" selected>1 dozen</option>
+                            <option value="2">2 dozen</option>
+                            <option value="3">3 dozen</option>
+                            <option value="4">4 dozen</option>
+                            <option value="5">5 dozen</option>
+                            <option value="6">6 dozen</option>
+                        </select>
+                    </label>
+    
+                    <label for="DropCookieDateNeeded">
+                        <div>Date needed</div>
+                        <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" autocomplete="off" required>
+                    </label>
+    
+                    <label for="DropCookieFlavor">
+                        <div>Flavor</div>
+                        <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="lemon">lemon</option>
+                            <option value="raspberry">raspberry</option>
+                            <option value="strawberry">strawberry</option>
+                        </select>
+                    </label>
+    
+                    <label for="DropCookieAddon">
+                        <div>Add-on</div>
+                        <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
+                            <option value="chocolatechips" selected>chocolate chips</option>
+                            <option value="whitechocolatechips">white chocolate chips</option>
+                            <option value="peanutbutterchips">peanut butter chips</option>
+                        </select>
+                    </label>
+                   
+                </div>
+
+                <div class="cupcake-information open">
+
+                    <header>
+                        <h3>Cupcakes</h3>
+                        <button type="button" class="btn remove-order-btn" value="cupcake">X</button>
+                    </header>
+
+                    <label for="CupcakeFlavor">
+                        <div>Flavor</div>
+                        <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="strawberry">strawberry</option>
+                            <option value="redvelvet">red velvet</option>
+                            <option value="lemon">lemon</option>
+                        </select>
+                    </label>
+
+                    <label for="CupcakeFrosting">
+                        <div>Frosting</div>
+                        <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="strawberry">strawberry</option>
+                            <option value="lemon">lemon</option>
+                        </select>
+                    </label>
+    
+                    <label for="CupcakeTheme">
+                        <div>Theme/Occasion</div>
+                        <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
+                    </label>
+    
+                    <label for="CupcakePersonalization">
+                        <div>Personalization</div>
+                        <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                    </label>
+
+                    <label for="CupcakeQuantity">
+                        <div>Quantity</div>
+                        <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
+                            <option value="1" selected>1 dozen</option>
+                            <option value="2">2 dozen</option>
+                            <option value="3">3 dozen</option>
+                            <option value="4">4 dozen</option>
+                            <option value="5">5 dozen</option>
+                            <option value="6">6 dozen</option>
+                        </select>
+                    </label>
+    
+                    <label for="CupcakeDateNeeded">
+                        <div>Date needed</div>
+                        <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" autocomplete="off" required>
+                    </label>
+                   
+                </div>
+
+                <div class="cakepop-information open">
+
+                    <header>
+                        <h3>Cake Pops</h3>
+                        <button type="button" class="btn remove-order-btn" value="cakepop">X</button>
+                    </header>
+
+                    <label for="CakepopFlavor">
+                        <div>Flavor</div>
+                        <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="strawberry">strawberry</option>
+                            <option value="redvelvet">red velvet</option>
+                            <option value="lemon">lemon</option>
+                        </select>
+                    </label>
+
+                    <label for="CakepopFrosting">
+                        <div>Frosting</div>
+                        <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
+                            <option value="vanilla" selected>vanilla</option>
+                            <option value="chocolate">chocolate</option>
+                            <option value="strawberry">strawberry</option>
+                            <option value="lemon">lemon</option>
+                        </select>
+                    </label>
+    
+                    <label for="CakepopQuantity">
+                        <div>Quantity</div>
+                        <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
+                            <option value="1" selected>1 dozen</option>
+                            <option value="2">2 dozen</option>
+                            <option value="3">3 dozen</option>
+                            <option value="4">4 dozen</option>
+                            <option value="5">5 dozen</option>
+                            <option value="6">6 dozen</option>
+                        </select>
+                    </label>
+    
+                    <label for="CakepopDateNeeded">
+                        <div>Date needed</div>
+                        <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" autocomplete="off" required>
+                    </label>
+                   
+                </div>
+
+                <label for="OrderFormItem">
+                    <div>Add To Order</div>
+                    <select name="quantity" id="OrderFormItem" autocomplete="off" required>
+                        <option value="sugarcookies">sugar cookies</option>
+                        <option value="dropcookies">drop cookies</option>
+                        <option value="cake">Cake</option>
+                        <option value="cupcakes">cupcakes</option>
+                        <option value="cakepops">cake pops</option>
+                    </select>
+                </label>
+
+            </div>
+
+            
+
+            <div class="retrival-information">
+
+                <label for="OrderFormRetrival">
+                    <div>Pickup/Shipping/Delivery</div>
+                    <select name="" id="OrderFormRetrival" data-input="retrieval" autocomplete="off" required>
+                        <option value="pickup">Pickup&nbsp;&nbsp;(West Point, Iowa)</option>
+                        <option value="shipping">Shipping&nbsp;&nbsp;($15 via USPS)</option>
+                        <option value="delivery">Delivery&nbsp;&nbsp;($0.65/mile roundtrip)</option>
+                    </select>
+                </label>
+
+                <label for="OrderFormPaymentType">
+                    <div>Payment Type</div>
+                    <select name="paymenttype" id="OrderFormPaymentType" autocomplete="off" required>
+                        <option value="venmo" selected>Venmo</option>
+                        <option value="cash">Cash</option>
+                        <option value="card">Card</option>
+                    </select>
+                </label>
+
+               
+                <div class="address-information">
+
+                    <label for="OrderFormStreet">
+                        <div>Street</div>
+                        <input type="text" name="street" id="OrderFormStreet" data-input="street" autocomplete="off" required>
+                    </label>
+                    <label for="OrderFormCity">
+                        <div>City</div>
+                        <input type="text" name="city" id="OrderFormCity" data-input="city" autocomplete="off" required>
+                    </label>
+                    <label for="OrderFormState">
+                        <div>State</div>
+                        <input type="text" name="state" id="OrderFormState" data-input="state" autocomplete="off" required>
+                    </label>
+                    <label for="OrderFormZipCode">
+                        <div>Zip Code</div>
+                        <input type="text" name="zipcode" id="OrderFormZipCode" data-input="zipcode" autocomplete="off" required>
+                    </label>
+
+                </div>
+
+            </div>
+            <button type="button" class="btn order-submit-btn">Place order</button>
+       </form>
+
+       <section class="order-display">
+            <header>
+                <h2>your order</h2>
+            </header>
+            <div class="order-display-content">
+
+                <div class="order-display-items">
+                    <p>Items:</p>
+                    <ul class="order-display-items-list">
+
+                        <li class="order-display-item">
+                          
+                            <div><span>Type</span>
+                                <p>Sugar Cookies</p>
+                            </div>
+                            <div><span>Quantity</span>
+                                <p>2 dozen</p>
+                            </div>
+                            <div><span>Date</span>
+                                <p>06/05/2024</p>
+                            </div>
+                            <div><span>Size</span>
+                                <p>NA</p>
+                            </div>
+                            <div class="details"><span>Details</span>
+                                <p>Theme: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, distinctio?</span></p>
+                                <p>Personalization: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, in.</span></p>
+                            </div>
+                            <div class="item-total"><span>Total</span>
+                                <p>$&nbsp;<span>60.00</span></p>
+                            </div>
+
+                        </li>
+
+                        <li class="order-display-item">
+                          
+                            <div><span>Type</span>
+                                <p>Cakes</p>
+                            </div>
+                            <div><span>Quantity</span>
+                                <p>1</p>
+                            </div>
+                            <div><span>Date</span>
+                                <p>06/05/2024</p>
+                            </div>
+                            <div><span>Size</span>
+                                <p>8"</p>
+                            </div>
+                            <div class="details"><span>Details</span>
+                                <p>Flavor: <span>Vanilla</span></p>
+                                <p>Frosting: <span>Strawberry</span></p>
+                                <p>Theme: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, distinctio?</span></p>
+                                <p>Personalization: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, in.</span></p>
+                            </div>
+                            <div class="item-total"><span>Total</span>
+                                <p>$&nbsp;<span>60.00</span></p>
+                            </div>
+                        </li>
+
+                        <li class="order-display-item">
+                          
+                            <div><span>Type</span>
+                                <p>Drop Cookies</p>
+                            </div>
+                            <div><span>Quantity</span>
+                                <p>2 dozen</p>
+                            </div>
+                            <div><span>Date</span>
+                                <p>06/05/2024</p>
+                            </div>
+                            <div><span>Size</span>
+                                <p>NA</p>
+                            </div>
+                            <div class="details"><span>Details</span>
+                                <p>Flavor: <span>Chocolate</span></p>
+                                <p>Addon: <span>Peanut Butter Chips</span></p>
+                            </div>
+                            <div class="item-total"><span>Total</span>
+                                <p>$&nbsp;<span>60.00</span></p>
+                            </div>
+
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                
+                <div class="order-display-personal">
+                    <div><span>Name:</span>
+                        <p data-output="name">clayton mcdaniel</p>
+                    </div>
+                    <div><span>Email:</span>
+                        <p data-output="email">somelongemailaddress@thisandthat.com</p>
+                    </div>
+                    <div><span>Phone:</span>
+                        <p data-output="phonenumber">3455555678</p>
+                    </div>
+                    <div class="address"><span>Address:</span>
+                        <p  data-output="street">456 somwhere ave apt #34</p>
+                        <p><span data-output="city">Somwhere</span>,&nbsp;<span data-output="state">ZA</span>&nbsp;<span data-output="zipcode">45654</span></p>
+                    </div>
+                </div>
+                
+                <div class="order-display-retrieval">
+                    <div><span>Retrieval</span>
+                        <p data-output="retrieval">Shipping</p>
+                    </div>
+                    <div><span>Payment</span>
+                        <p>Venmo</p>
+                    </div>
+                    
+                </div>
+
+                <div class="order-display-total-amount">
+                    <div><span>Sub-Total:</span>
+                        <p>$&nbsp;<span>60.00</span></p>
+                    </div>
+                    <div><span>Pickup:</span>
+                        <p>free</p>
+                    </div>
+                    <div><span>Delivery:</span>
+                        <p>$&nbsp;<span>0.00</span></p>
+                    </div>
+                    <div><span>Shipping:</span>
+                        <p>$&nbsp;<span>15.00</span></p>
+                    </div>
+                    <div><span>Total:</span>
+                        <p>$&nbsp;<span>75.00</span></p>
+                    </div>
+                </div>
+            </div>
+       </section>
+
+    </main>
+
+    <footer class="footer-primary">
+
+        <nav class="footer-navigation">
+
+            <ul class="footer-navigation-pages-list">
+
+                <li class="footer-navigation-pages-item">
+
+                    <a href="/pages/product.html" class="footer-navigation-pages-link">products</a>
+
+                </li>
+
+                <li class="footer-navigation-pages-item">
+
+                    <a href="/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
+
+                </li>
+
+                <li class="footer-navigation-pages-item">
+
+                    <a href="/pages/contact.html" class="footer-navigation-pages-link">contact</a>
+
+                </li>
+
+                <li class="footer-navigation-pages-item">
+
+                    <a href="/pages/meet.html" class="footer-navigation-pages-link">meet</a>
+
+                </li>
+
+            </ul>
+
+            <ul class="footer-navigation-products-list">
+
+                <li class="footer-navigation-products-item">
+
+                    <a href="/pages/gallery.html" class="footer-navigation-products-link">creations</a>
+
+                </li>
+
+                <li class="footer-navigation-products-item">
+
+                    <a href="/pages/classes.html" class="footer-navigation-products-link">classes</a>
+
+                </li>
+
+                <li class="footer-navigation-products-item">
+
+                    <a href="/" class="footer-navigation-products-link">home</a>
+
+                </li>
+
+            </ul>
+
+            <div class="footer-logo">
+
+                <div class="logo-ring"></div>
+
+                <a href="/">
+
+                    <img src="/img/bbb-logo1.png" alt="Baked by Bec logo">
+
+                </a>
+
+            </div>
+
+        </nav>
+
+        <p class="footer-copyright">&copy;&nbsp;2024</p>
+
+        <div class="footer-created-by">
+            <p>Created by Clayton McDaniel</p>
+            <a href="https://github.com/Altycon">https://github.com/Altycon</a>
+        </div>
+        
+    </footer>
+
+    <div class="image-viewer">
+        <div class="overlay"></div>
+        <figure>
+            <img src="" alt="">
+            <figcaption></figcaption>
+        </figure>
+    </div>
+    
+</body>
+</html>
