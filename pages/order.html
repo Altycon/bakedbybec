@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order | Baked By Bec</title>
     <link rel="stylesheet" href="../main.css">
-    <script type="module" src="../js/pages/ordering/order.js"></script>
+    <script type="module" src="../js/bakedbybec/ordering/order.js"></script>
 </head>
 <body>
     <header class="header-secondary">
@@ -22,25 +22,25 @@
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
+                    <a href="/bakedbybec/faqs.html" class="navigation-secondary-link">faqs</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
+                    <a href="/bakedbybec/product.html" class="navigation-secondary-link">product</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/pages/contact.html" class="navigation-secondary-link">contact</a>
+                    <a href="/bakedbybec/contact.html" class="navigation-secondary-link">contact</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
+                    <a href="/bakedbybec/meet.html" class="navigation-secondary-link">meet</a>
 
                 </li>
 
@@ -78,7 +78,7 @@
     <main class="order-main">
 
         <header>
-            <h1>My Order</h1>
+            <h1>Ordering</h1>
            
         </header>
 
@@ -116,27 +116,30 @@
         </div>
 
        <form class="order-form">
+            <header>
+                <h2>Order Form</h2>
+            </header>
 
-            <div class="personal-information">
-
-                <label for="OrderFormName">
-                    <div>Name</div>
-                    <input type="text" name="name" id="OrderFormName" data-input="name" autocomplete="off" required>
-                </label>
-
-                <label for="OrderFormEmail">
-                    <div>Email</div>
-                    <input type="email" name="email" id="OrderFormEmail" data-input="email" autocomplete="off" required>
-                </label>
-    
-                <label for="OrderFormPhoneNumber">
-                    <div>Phone Number</div>
-                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
-                </label>
-
-            </div>
+            <label for="OrderFormItem">
+                <div>What would you like to order?</div>
+                <select name="quantity" id="OrderFormItem" autocomplete="off" required>
+                    <option value="sugar-cookies">sugar cookies</option>
+                    <option value="drop-cookies">drop cookies</option>
+                    <option value="cake">cake</option>
+                    <option value="cupcakes">cupcakes</option>
+                    <option value="cake-pops">cake pops</option>
+                </select>
+            </label>
 
             <div class="item-information">
+
+                <header>
+                    <div>sugar<br>cookie</div>
+                    <!-- <div>drop<br>cookie</div>
+                    <div>cake</div>
+                    <div>cakepop</div>
+                    <div>cupcake</div> -->
+                </header>
 
                 <div class="sugar-cookie-information open">
 
@@ -144,19 +147,9 @@
                         <h3>Sugar Cookies</h3>
                         <button type="button" class="btn remove-order-btn" value="sugarcookie">X</button>
                     </header>
-    
-                    <label for="SugarCookieTheme">
-                        <div>Theme/Occasion</div>
-                        <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
-    
-                    <label for="SugarCookiePersonalization">
-                        <div>Personalization</div>
-                        <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
 
                     <label for="SugarCookieQuantity">
-                        <div>Quantity ($30/dozen)</div>
+                        <div>How many would you like?</div>
                         <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
                             <option value="1" selected>1 dozen</option>
                             <option value="2">2 dozen</option>
@@ -168,13 +161,23 @@
                     </label>
     
                     <label for="SugarCookieDateNeeded">
-                        <div>Date needed</div>
-                        <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" autocomplete="off" required>
+                        <div>When are they needed?</div>
+                        <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" min="2024-04-17" autocomplete="off" required>
+                    </label>
+    
+                    <label for="SugarCookieTheme">
+                        <div>Theme/Occasion</div>
+                        <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="1" autocomplete="off" required></textarea>
+                    </label>
+    
+                    <label for="SugarCookiePersonalization">
+                        <div>Personalization</div>
+                        <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
                     </label>
                    
                 </div>
 
-                <div class="cake-information open">
+                <div class="cake-information">
 
                     <header>
                         <h3>Cake</h3>
@@ -237,7 +240,7 @@
                    
                 </div>
 
-                <div class="drop-cookie-information open">
+                <div class="drop-cookie-information">
 
                     <header>
                         <h3>Drop Cookies</h3>
@@ -283,7 +286,7 @@
                    
                 </div>
 
-                <div class="cupcake-information open">
+                <div class="cupcake-information">
 
                     <header>
                         <h3>Cupcakes</h3>
@@ -340,7 +343,7 @@
                    
                 </div>
 
-                <div class="cakepop-information open">
+                <div class="cakepop-information">
 
                     <header>
                         <h3>Cake Pops</h3>
@@ -387,17 +390,6 @@
                    
                 </div>
 
-                <label for="OrderFormItem">
-                    <div>Add To Order</div>
-                    <select name="quantity" id="OrderFormItem" autocomplete="off" required>
-                        <option value="sugarcookies">sugar cookies</option>
-                        <option value="dropcookies">drop cookies</option>
-                        <option value="cake">Cake</option>
-                        <option value="cupcakes">cupcakes</option>
-                        <option value="cakepops">cake pops</option>
-                    </select>
-                </label>
-
             </div>
 
             
@@ -423,6 +415,11 @@
                 </label>
 
                
+                
+
+            </div>
+
+            <div class="personal-information">
                 <div class="address-information">
 
                     <label for="OrderFormStreet">
@@ -438,11 +435,26 @@
                         <input type="text" name="state" id="OrderFormState" data-input="state" autocomplete="off" required>
                     </label>
                     <label for="OrderFormZipCode">
-                        <div>Zip Code</div>
+                        <div>Zip</div>
                         <input type="text" name="zipcode" id="OrderFormZipCode" data-input="zipcode" autocomplete="off" required>
                     </label>
 
                 </div>
+
+                <label for="OrderFormName">
+                    <div>Name</div>
+                    <input type="text" name="name" id="OrderFormName" data-input="name" autocomplete="off" required>
+                </label>
+
+                <label for="OrderFormEmail">
+                    <div>Email</div>
+                    <input type="email" name="email" id="OrderFormEmail" data-input="email" autocomplete="off" required>
+                </label>
+    
+                <label for="OrderFormPhoneNumber">
+                    <div>Phone Number</div>
+                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
+                </label>
 
             </div>
             <button type="button" class="btn order-submit-btn">Place order</button>
@@ -482,7 +494,7 @@
 
                         </li>
 
-                        <li class="order-display-item">
+                        <!-- <li class="order-display-item">
                           
                             <div><span>Type</span>
                                 <p>Cakes</p>
@@ -505,9 +517,9 @@
                             <div class="item-total"><span>Total</span>
                                 <p>$&nbsp;<span>60.00</span></p>
                             </div>
-                        </li>
+                        </li> -->
 
-                        <li class="order-display-item">
+                        <!-- <li class="order-display-item">
                           
                             <div><span>Type</span>
                                 <p>Drop Cookies</p>
@@ -529,7 +541,7 @@
                                 <p>$&nbsp;<span>60.00</span></p>
                             </div>
 
-                        </li>
+                        </li> -->
                         
                     </ul>
                     
@@ -591,25 +603,25 @@
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/pages/product.html" class="footer-navigation-pages-link">products</a>
+                    <a href="/bakedbybec/product.html" class="footer-navigation-pages-link">products</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
+                    <a href="/bakedbybec/faqs.html" class="footer-navigation-pages-link">faqs</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/pages/contact.html" class="footer-navigation-pages-link">contact</a>
+                    <a href="/bakedbybec/contact.html" class="footer-navigation-pages-link">contact</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/pages/meet.html" class="footer-navigation-pages-link">meet</a>
+                    <a href="/bakedbybec/meet.html" class="footer-navigation-pages-link">meet</a>
 
                 </li>
 
@@ -619,13 +631,13 @@
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="/bakedbybec/pages/gallery.html" class="footer-navigation-products-link">creations</a>
+                    <a href="/bakedbybec/gallery.html" class="footer-navigation-products-link">creations</a>
 
                 </li>
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="/bakedbybec/pages/classes.html" class="footer-navigation-products-link">classes</a>
+                    <a href="/bakedbybec/classes.html" class="footer-navigation-products-link">classes</a>
 
                 </li>
 
