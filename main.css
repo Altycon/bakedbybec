@@ -23,12 +23,12 @@
 
      --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
-     --bgi1: url('/bakedbybec/img/cookies_coastguard.jpg');
-     --bgi2: url('/bakedbybec/img/bbb-drop-cookie-lemon.jpg');
-     --bgi3: url('/bakedbybec/img/bbb-cake-nightmareXmans.jpg');
-     --bgi4: url('/bakedbybec/img/bbb-cupcakes-landscape.jpg');
-     --bgi5: url('/bakedbybec/img/bbb-cakepops-pink.jpg');
-     --bgi6: url('/bakedbybec/img/bbb-cookies-landscapes.jpg');
+     --bgi1: url('bakedbybec/img/cookies_coastguard.jpg');
+     --bgi2: url('bakedbybec/img/bbb-drop-cookie-lemon.jpg');
+     --bgi3: url('bakedbybec/img/bbb-cake-nightmareXmans.jpg');
+     --bgi4: url('bakedbybec/img/bbb-cupcakes-landscape.jpg');
+     --bgi5: url('bakedbybec/img/bbb-cakepops-pink.jpg');
+     --bgi6: url('bakedbybec/img/bbb-cookies-landscapes.jpg');
 
      --nav-primary-size: 30vw;
 
@@ -1868,10 +1868,7 @@ body{
     width: 100%;
     line-height: 1.2em;
 }
-.order-form input,
-.order-form textarea{
-    
-}
+
 .order-form select,
 .order-form input[type=date]{
     text-align: center;
@@ -1890,17 +1887,51 @@ body{
     padding-bottom: .8em;
 }
 
-label[for=OrderFormItem]{
-    grid-column: 1;
-    grid-row: 2;
 
-    padding-bottom: 1rem;
+.order-form .retrival-information{
+    padding: 1rem;
+
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr auto;
     grid-template-rows: auto;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
-    justify-content: flex-start;
+}
+label[for=OrderFormRetrival]{
+    grid-column: 1;
+    grid-row: 1;
+
+    text-align: center;
+}
+select[id=OrderFormRetrival]{
+    
+    
+}
+label[for=OrderFormPaymentType]{
+    grid-column: 2;
+    grid-row: 1;
+
+    text-align: center;
+}
+select[id=OrderFormPaymentType]{
+   
+}
+.order-form .retrival-information .retrieval-times{
+    grid-column: 1/3;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 1rem;
+    
+}
+.order-form .retrival-information .retrieval-times > div{
+    font-size: .7rem;
+    line-height: 1.5em;
+    text-align: center;
+}
+.order-form .retrival-information .retrieval-times > div span{
+    font-weight: 700;
 }
 
 .order-form .personal-information{
@@ -1912,59 +1943,34 @@ label[for=OrderFormItem]{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-    gap: 2rem;
+    gap: 1rem;
 }
-
-
-
-
-.order-form .retrival-information{
-    padding: 1rem;
-
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto;
-    gap: 2rem;
+/* label[for=OrderFormName]{
+    align-self: flex-start;
 }
-label[for=OrderFormRetrival]{
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: center;
+label[for=OrderFormEmail]{
+    align-self: flex-start;
+}
+label[for=OrderFormName]{
+    align-self: flex-start;
+} */
 
-    text-align: center;
-}
-select[id=OrderFormRetrival]{
-    
-    
-}
-label[for=OrderFormPaymentType]{
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: center;
 
-    text-align: center;
-}
-select[id=OrderFormPaymentType]{
-   
-}
 .order-form .address-information{
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 4;
 
-    display: none;
+    display: grid;
     grid-template-columns: 3fr 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 1rem;
 
-    transform-origin: top;
-    transform: scaleY(0);
-    transition: transform 300ms ease-in-out;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
 }
-.order-form .address-information.open{
-    display: grid;
-}
+
 .order-form .address-information.show{
-    transform: scaleY(1);
+    opacity: 1;
 }
 .order-form .address-information > label{
    opacity: 0;
@@ -1976,18 +1982,20 @@ select[id=OrderFormPaymentType]{
 .order-form .address-information > label > div{
     font-size: 1rem;
     padding-bottom: 1.2em;
-    text-align: center;
+    /* text-align: center; */
 }
 label[for=OrderFormStreet]{
     grid-column: 1/4;
     grid-row: 1;
 
-    display: grid;
+    /* display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto;
-    gap: 1rem;
+    gap: 1rem; */
 }
-
+label[for=OrderFormStreet] > div{
+    text-align: left;
+}
 label[for=OrderFormCity]{
     grid-column: 1;
     grid-row: 2;
@@ -2006,48 +2014,78 @@ label[for=OrderFormZipCode]{
 
 .order-form .item-information{
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2/4;
+}
+
+
+label[for=OrderFormItem]{
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 1rem;
+
+    padding: 1rem 1rem 0rem 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+
+
+
+.item-information-tabs{
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: auto;
+}
+.item-information-tabs > div{
+   font-size: .8rem;
+   line-height: 1.2em;
+   font-weight: 700;
+   text-align: center;
+   background-color: hsl(0 0% 4%);
+   border-top-right-radius: 10px;
+   border-right: 1px solid hsl(0 0% 10%);
+   padding: 5px;
+   opacity: 0;
+
+   display: grid;
+   place-content: center;
+
+   transition: opacity 300ms ease-in-out;
+}
+.item-information-tabs > div.active{
+    background-color: hsl(0 0% 0%);
+}
+.item-information-tabs > div.show{
+    opacity: 1;
+}
+
+.order-item-list{
 
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
 }
+.order-form .item-information .order-item{
+    grid-column: 1;
+    grid-row: 1;
 
-.order-form .item-information > div{
     padding: 1rem;
-    background-color: black;
-    border-radius: 10px;
+    background-color: hsl(0 0% 0%);
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     margin-bottom: 1rem;
 }
-.order-form .item-information > header{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-}
-.order-form .item-information > header > div{
-   font-size: .8rem;
-   line-height: 1.2em;
-   font-weight: 700;
-   text-align: center;
-   background-color: hsl(0 0% 3%);
-   border-top-right-radius: 10px;
-   border-right: 1px solid hsl(0 0% 10%);
-
-   display: grid;
-   place-content: center;
-}
-
-
-.order-form .sugar-cookie-information > header,
-.order-form .drop-cookie-information > header,
-.order-form .cake-information > header,
-.order-form .cupcake-information > header,
-.order-form .cakepop-information > header{
+.order-form .item-information .order-item > header{
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto;
-    
 }
+
 .order-form .remove-order-btn{
     grid-column: 2;
     grid-row: 1;
