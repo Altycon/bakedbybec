@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order | Baked By Bec</title>
     <link rel="stylesheet" href="../main.css">
-    <script type="module" src="../js/bakedbybec/ordering/order.js"></script>
+    <script type="module" src="../js/pages/ordering/order.js"></script>
 </head>
 <body>
     <header class="header-secondary">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/">
-                <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
+            <a href="bakedbybec/">
+                <img src="bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
 
@@ -22,25 +22,25 @@
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/faqs.html" class="navigation-secondary-link">faqs</a>
+                    <a href="bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/product.html" class="navigation-secondary-link">product</a>
+                    <a href="bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/contact.html" class="navigation-secondary-link">contact</a>
+                    <a href="bakedbybec/pages/contact.html" class="navigation-secondary-link">contact</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/meet.html" class="navigation-secondary-link">meet</a>
+                    <a href="bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
 
                 </li>
 
@@ -55,7 +55,7 @@
 
                     <a href="" class="navigation-social-link">
 
-                        <img src="/bakedbybec/img/Facebook-icon.png" alt="" class="navigation-social-icon">
+                        <img src="bakedbybec/img/Facebook-icon.png" alt="" class="navigation-social-icon">
 
                     </a>
 
@@ -65,7 +65,7 @@
 
                     <a href="" class="navigation-social-link">
 
-                        <img src="/bakedbybec/img/Instagram-icon.png" alt="" class="navigation-social-icon">
+                        <img src="bakedbybec/img/Instagram-icon.png" alt="" class="navigation-social-icon">
 
                     </a>
 
@@ -120,279 +120,285 @@
                 <h2>Order Form</h2>
             </header>
 
-            <label for="OrderFormItem">
-                <div>What would you like to order?</div>
-                <select name="quantity" id="OrderFormItem" autocomplete="off" required>
-                    <option value="sugar-cookies">sugar cookies</option>
-                    <option value="drop-cookies">drop cookies</option>
-                    <option value="cake">cake</option>
-                    <option value="cupcakes">cupcakes</option>
-                    <option value="cake-pops">cake pops</option>
-                </select>
-            </label>
-
             <div class="item-information">
 
-                <header>
-                    <div>sugar<br>cookie</div>
-                    <!-- <div>drop<br>cookie</div>
-                    <div>cake</div>
-                    <div>cakepop</div>
-                    <div>cupcake</div> -->
+                <label for="OrderFormItem">
+                    <div>What would you like?</div>
+                    <select name="quantity" id="OrderFormItem" autocomplete="off" required>
+                        <option value=""selected>--Please select</option>
+                        <option value="sugar-cookies">sugar cookies</option>
+                        <option value="drop-cookies">drop cookies</option>
+                        <option value="cakes">cake</option>
+                        <option value="cupcakes">cupcakes</option>
+                        <option value="cake-pops">cake pops</option>
+                    </select>
+                </label>
+
+                <header class="item-information-tabs">
+                    <div data-item-tab="sugar-cookies">sugar<br>cookie</div>
+                    <div data-item-tab="drop-cookies">drop<br>cookie</div>
+                    <div data-item-tab="cakes">cake</div>
+                    <div data-item-tab="cupcakes">cakepcake</div>
+                    <div data-item-tab="cake-pops">cake pops</div>
                 </header>
 
-                <div class="sugar-cookie-information open">
+                <ul class="order-item-list">
 
-                    <header>
-                        <h3>Sugar Cookies</h3>
-                        <button type="button" class="btn remove-order-btn" value="sugarcookie">X</button>
-                    </header>
+                    <li class="order-item sugar-cookie-information" data-order-item="sugar-cookies">
 
-                    <label for="SugarCookieQuantity">
-                        <div>How many would you like?</div>
-                        <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
-                            <option value="1" selected>1 dozen</option>
-                            <option value="2">2 dozen</option>
-                            <option value="3">3 dozen</option>
-                            <option value="4">4 dozen</option>
-                            <option value="5">5 dozen</option>
-                            <option value="6">6 dozen</option>
-                        </select>
-                    </label>
+                        <header>
+                            <h3>Sugar Cookies</h3>
+                            <button type="button" class="btn remove-order-btn" value="sugar-cookies">X</button>
+                        </header>
     
-                    <label for="SugarCookieDateNeeded">
-                        <div>When are they needed?</div>
-                        <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" min="2024-04-17" autocomplete="off" required>
-                    </label>
+                        <label for="SugarCookieQuantity">
+                            <div>How many would you like?</div>
+                            <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
+                                <option value="1" selected>1 dozen</option>
+                                <option value="2">2 dozen</option>
+                                <option value="3">3 dozen</option>
+                                <option value="4">4 dozen</option>
+                                <option value="5">5 dozen</option>
+                                <option value="6">6 dozen</option>
+                            </select>
+                        </label>
+        
+                        <label for="SugarCookieDateNeeded">
+                            <div>When are they needed?</div>
+                            <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" min="2024-04-17" autocomplete="off" required>
+                        </label>
+        
+                        <label for="SugarCookieTheme">
+                            <div>Theme/Occasion</div>
+                            <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="1" autocomplete="off" required></textarea>
+                        </label>
+        
+                        <label for="SugarCookiePersonalization">
+                            <div>Personalization</div>
+                            <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                        </label>
+                       
+                    </li>
     
-                    <label for="SugarCookieTheme">
-                        <div>Theme/Occasion</div>
-                        <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="1" autocomplete="off" required></textarea>
-                    </label>
+                    <li class="order-item cake-information" data-order-item="cakes">
     
-                    <label for="SugarCookiePersonalization">
-                        <div>Personalization</div>
-                        <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
-                   
+                        <header>
+                            <h3>Cake</h3>
+                            <button type="button" class="btn remove-order-btn" value="cakes">X</button>
+                        </header>
+    
+                        <label for="CakeFlavor">
+                            <div>Flavor</div>
+                            <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="redvelvet">red velvet</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+    
+                        <label for="CakeFrosting">
+                            <div>Frosting</div>
+                            <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+        
+                        <label for="CakeTheme">
+                            <div>Theme/Occasion</div>
+                            <textarea name="caketheme" id="CakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
+                        </label>
+        
+                        <label for="CakePersonalization">
+                            <div>Personalization</div>
+                            <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                        </label>
+    
+                        <label for="CakeSize">
+                            <div>Size</div>
+                            <select name="cakesize" id="CakeSize" autocomplete="off" required>
+                                <option value="8inch">8" (serves ~20)</option>
+                                <option value="10inch">10" (serves ~28)</option>
+                                <option value="2tier">2 tier (serves ~48)</option>
+                                <option value="smash">Smash Cake (serves ~12)</option>
+                            </select>
+                        </label>
+    
+                        <label for="CakeQuantity">
+                            <div>Quantity</div>
+                            <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </label>
+        
+                        <label for="CakeDateNeeded">
+                            <div>Date needed</div>
+                            <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
+                        </label>
+                       
+                    </li>
+    
+                    <li class="order-item drop-cookie-information" data-order-item="drop-cookies">
+    
+                        <header>
+                            <h3>Drop Cookies</h3>
+                            <button type="button" class="btn remove-order-btn" value="drop-cookies">X</button>
+                        </header>
+    
+                        <label for="DropCookieQuantity">
+                            <div>Quantity</div>
+                            <select name="quantity" id="DropCookieQuantity" autocomplete="off" required>
+                                <option value="1" selected>1 dozen</option>
+                                <option value="2">2 dozen</option>
+                                <option value="3">3 dozen</option>
+                                <option value="4">4 dozen</option>
+                                <option value="5">5 dozen</option>
+                                <option value="6">6 dozen</option>
+                            </select>
+                        </label>
+        
+                        <label for="DropCookieDateNeeded">
+                            <div>Date needed</div>
+                            <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" autocomplete="off" required>
+                        </label>
+        
+                        <label for="DropCookieFlavor">
+                            <div>Flavor</div>
+                            <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="lemon">lemon</option>
+                                <option value="raspberry">raspberry</option>
+                                <option value="strawberry">strawberry</option>
+                            </select>
+                        </label>
+        
+                        <label for="DropCookieAddon">
+                            <div>Add-on</div>
+                            <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
+                                <option value="chocolatechips" selected>chocolate chips</option>
+                                <option value="whitechocolatechips">white chocolate chips</option>
+                                <option value="peanutbutterchips">peanut butter chips</option>
+                            </select>
+                        </label>
+                       
+                    </li>
+    
+                    <li class="order-item cupcake-information" data-order-item="cupcakes">
+    
+                        <header>
+                            <h3>Cupcakes</h3>
+                            <button type="button" class="btn remove-order-btn" value="cupcakes">X</button>
+                        </header>
+    
+                        <label for="CupcakeFlavor">
+                            <div>Flavor</div>
+                            <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="redvelvet">red velvet</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+    
+                        <label for="CupcakeFrosting">
+                            <div>Frosting</div>
+                            <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+        
+                        <label for="CupcakeTheme">
+                            <div>Theme/Occasion</div>
+                            <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
+                        </label>
+        
+                        <label for="CupcakePersonalization">
+                            <div>Personalization</div>
+                            <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                        </label>
+    
+                        <label for="CupcakeQuantity">
+                            <div>Quantity</div>
+                            <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
+                                <option value="1" selected>1 dozen</option>
+                                <option value="2">2 dozen</option>
+                                <option value="3">3 dozen</option>
+                                <option value="4">4 dozen</option>
+                                <option value="5">5 dozen</option>
+                                <option value="6">6 dozen</option>
+                            </select>
+                        </label>
+        
+                        <label for="CupcakeDateNeeded">
+                            <div>Date needed</div>
+                            <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" autocomplete="off" required>
+                        </label>
+                       
+                    </li>
+    
+                    <li class="order-item cakepop-information" data-order-item="cake-pops">
+    
+                        <header>
+                            <h3>Cake Pops</h3>
+                            <button type="button" class="btn remove-order-btn" value="cake-pops">X</button>
+                        </header>
+    
+                        <label for="CakepopFlavor">
+                            <div>Flavor</div>
+                            <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="redvelvet">red velvet</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+    
+                        <label for="CakepopFrosting">
+                            <div>Frosting</div>
+                            <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
+                                <option value="vanilla" selected>vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+        
+                        <label for="CakepopQuantity">
+                            <div>Quantity</div>
+                            <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
+                                <option value="1" selected>1 dozen</option>
+                                <option value="2">2 dozen</option>
+                                <option value="3">3 dozen</option>
+                                <option value="4">4 dozen</option>
+                                <option value="5">5 dozen</option>
+                                <option value="6">6 dozen</option>
+                            </select>
+                        </label>
+        
+                        <label for="CakepopDateNeeded">
+                            <div>Date needed</div>
+                            <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" autocomplete="off" required>
+                        </label>
+                       
+                    </li>
+    
                 </div>
-
-                <div class="cake-information">
-
-                    <header>
-                        <h3>Cake</h3>
-                        <button type="button" class="btn remove-order-btn" value="cake">X</button>
-                    </header>
-
-                    <label for="CakeFlavor">
-                        <div>Flavor</div>
-                        <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="strawberry">strawberry</option>
-                            <option value="redvelvet">red velvet</option>
-                            <option value="lemon">lemon</option>
-                        </select>
-                    </label>
-
-                    <label for="CakeFrosting">
-                        <div>Frosting</div>
-                        <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="strawberry">strawberry</option>
-                            <option value="lemon">lemon</option>
-                        </select>
-                    </label>
     
-                    <label for="CakeTheme">
-                        <div>Theme/Occasion</div>
-                        <textarea name="caketheme" id="CakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
-    
-                    <label for="CakePersonalization">
-                        <div>Personalization</div>
-                        <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
 
-                    <label for="CakeSize">
-                        <div>Size</div>
-                        <select name="cakesize" id="CakeSize" autocomplete="off" required>
-                            <option value="8inch">8" (serves ~20)</option>
-                            <option value="10inch">10" (serves ~28)</option>
-                            <option value="2tier">2 tier (serves ~48)</option>
-                            <option value="smash">Smash Cake (serves ~12)</option>
-                        </select>
-                    </label>
+                </ul>
 
-                    <label for="CakeQuantity">
-                        <div>Quantity</div>
-                        <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
-                            <option value="1" selected>1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </label>
-    
-                    <label for="CakeDateNeeded">
-                        <div>Date needed</div>
-                        <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
-                    </label>
-                   
-                </div>
-
-                <div class="drop-cookie-information">
-
-                    <header>
-                        <h3>Drop Cookies</h3>
-                        <button type="button" class="btn remove-order-btn" value="dropcookie">X</button>
-                    </header>
-
-                    <label for="DropCookieQuantity">
-                        <div>Quantity</div>
-                        <select name="quantity" id="DropCookieQuantity" autocomplete="off" required>
-                            <option value="1" selected>1 dozen</option>
-                            <option value="2">2 dozen</option>
-                            <option value="3">3 dozen</option>
-                            <option value="4">4 dozen</option>
-                            <option value="5">5 dozen</option>
-                            <option value="6">6 dozen</option>
-                        </select>
-                    </label>
-    
-                    <label for="DropCookieDateNeeded">
-                        <div>Date needed</div>
-                        <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" autocomplete="off" required>
-                    </label>
-    
-                    <label for="DropCookieFlavor">
-                        <div>Flavor</div>
-                        <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="lemon">lemon</option>
-                            <option value="raspberry">raspberry</option>
-                            <option value="strawberry">strawberry</option>
-                        </select>
-                    </label>
-    
-                    <label for="DropCookieAddon">
-                        <div>Add-on</div>
-                        <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
-                            <option value="chocolatechips" selected>chocolate chips</option>
-                            <option value="whitechocolatechips">white chocolate chips</option>
-                            <option value="peanutbutterchips">peanut butter chips</option>
-                        </select>
-                    </label>
-                   
-                </div>
-
-                <div class="cupcake-information">
-
-                    <header>
-                        <h3>Cupcakes</h3>
-                        <button type="button" class="btn remove-order-btn" value="cupcake">X</button>
-                    </header>
-
-                    <label for="CupcakeFlavor">
-                        <div>Flavor</div>
-                        <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="strawberry">strawberry</option>
-                            <option value="redvelvet">red velvet</option>
-                            <option value="lemon">lemon</option>
-                        </select>
-                    </label>
-
-                    <label for="CupcakeFrosting">
-                        <div>Frosting</div>
-                        <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="strawberry">strawberry</option>
-                            <option value="lemon">lemon</option>
-                        </select>
-                    </label>
-    
-                    <label for="CupcakeTheme">
-                        <div>Theme/Occasion</div>
-                        <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
-    
-                    <label for="CupcakePersonalization">
-                        <div>Personalization</div>
-                        <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-                    </label>
-
-                    <label for="CupcakeQuantity">
-                        <div>Quantity</div>
-                        <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
-                            <option value="1" selected>1 dozen</option>
-                            <option value="2">2 dozen</option>
-                            <option value="3">3 dozen</option>
-                            <option value="4">4 dozen</option>
-                            <option value="5">5 dozen</option>
-                            <option value="6">6 dozen</option>
-                        </select>
-                    </label>
-    
-                    <label for="CupcakeDateNeeded">
-                        <div>Date needed</div>
-                        <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" autocomplete="off" required>
-                    </label>
-                   
-                </div>
-
-                <div class="cakepop-information">
-
-                    <header>
-                        <h3>Cake Pops</h3>
-                        <button type="button" class="btn remove-order-btn" value="cakepop">X</button>
-                    </header>
-
-                    <label for="CakepopFlavor">
-                        <div>Flavor</div>
-                        <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="strawberry">strawberry</option>
-                            <option value="redvelvet">red velvet</option>
-                            <option value="lemon">lemon</option>
-                        </select>
-                    </label>
-
-                    <label for="CakepopFrosting">
-                        <div>Frosting</div>
-                        <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
-                            <option value="vanilla" selected>vanilla</option>
-                            <option value="chocolate">chocolate</option>
-                            <option value="strawberry">strawberry</option>
-                            <option value="lemon">lemon</option>
-                        </select>
-                    </label>
-    
-                    <label for="CakepopQuantity">
-                        <div>Quantity</div>
-                        <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
-                            <option value="1" selected>1 dozen</option>
-                            <option value="2">2 dozen</option>
-                            <option value="3">3 dozen</option>
-                            <option value="4">4 dozen</option>
-                            <option value="5">5 dozen</option>
-                            <option value="6">6 dozen</option>
-                        </select>
-                    </label>
-    
-                    <label for="CakepopDateNeeded">
-                        <div>Date needed</div>
-                        <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" autocomplete="off" required>
-                    </label>
-                   
-                </div>
-
-            </div>
-
-            
+                
 
             <div class="retrival-information">
 
@@ -414,12 +420,35 @@
                     </select>
                 </label>
 
-               
+                <div class="retrieval-times">
+                    <div><span>Delivery Time:</span>
+                        <p>Mon-Fri <strong>4</strong>pm-<strong>6</strong>pm</p>
+                    </div>
+                    <div><span>Pickup Times:</span>
+                        <p>Mon-Fri <strong>4</strong>pm-<strong>6</strong>pm</p>
+                        <p>Sat <strong>9</strong>am-<strong>12</strong>pm</p>
+                    </div>
+                </div>
                 
-
             </div>
 
             <div class="personal-information">
+
+                <label for="OrderFormName">
+                    <div>Name</div>
+                    <input type="text" name="name" id="OrderFormName" data-input="name" autocomplete="off" required>
+                </label>
+
+                <label for="OrderFormEmail">
+                    <div>Email</div>
+                    <input type="email" name="email" id="OrderFormEmail" data-input="email" autocomplete="off" required>
+                </label>
+    
+                <label for="OrderFormPhoneNumber">
+                    <div>Phone Number</div>
+                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
+                </label>
+
                 <div class="address-information">
 
                     <label for="OrderFormStreet">
@@ -441,20 +470,7 @@
 
                 </div>
 
-                <label for="OrderFormName">
-                    <div>Name</div>
-                    <input type="text" name="name" id="OrderFormName" data-input="name" autocomplete="off" required>
-                </label>
 
-                <label for="OrderFormEmail">
-                    <div>Email</div>
-                    <input type="email" name="email" id="OrderFormEmail" data-input="email" autocomplete="off" required>
-                </label>
-    
-                <label for="OrderFormPhoneNumber">
-                    <div>Phone Number</div>
-                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
-                </label>
 
             </div>
             <button type="button" class="btn order-submit-btn">Place order</button>
@@ -549,7 +565,7 @@
                 
                 <div class="order-display-personal">
                     <div><span>Name:</span>
-                        <p data-output="name">clayton mcdaniel</p>
+                        <p data-output="name">Relendret Neru</p>
                     </div>
                     <div><span>Email:</span>
                         <p data-output="email">somelongemailaddress@thisandthat.com</p>
@@ -603,25 +619,25 @@
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/product.html" class="footer-navigation-pages-link">products</a>
+                    <a href="bakedbybec/pages/product.html" class="footer-navigation-pages-link">products</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/faqs.html" class="footer-navigation-pages-link">faqs</a>
+                    <a href="bakedbybec/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/contact.html" class="footer-navigation-pages-link">contact</a>
+                    <a href="bakedbybec/pages/contact.html" class="footer-navigation-pages-link">contact</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="/bakedbybec/meet.html" class="footer-navigation-pages-link">meet</a>
+                    <a href="bakedbybec/pages/meet.html" class="footer-navigation-pages-link">meet</a>
 
                 </li>
 
@@ -631,13 +647,13 @@
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="/bakedbybec/gallery.html" class="footer-navigation-products-link">creations</a>
+                    <a href="bakedbybec/pages/gallery.html" class="footer-navigation-products-link">creations</a>
 
                 </li>
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="/bakedbybec/classes.html" class="footer-navigation-products-link">classes</a>
+                    <a href="bakedbybec/pages/classes.html" class="footer-navigation-products-link">classes</a>
 
                 </li>
 
@@ -655,7 +671,7 @@
 
                 <a href="/">
 
-                    <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo">
+                    <img src="bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo">
 
                 </a>
 
