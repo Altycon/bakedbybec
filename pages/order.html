@@ -12,7 +12,7 @@
 
         <h1 class="website-title">
             <a href="/">
-                <img src="bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
+                <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
 
@@ -22,25 +22,25 @@
 
                 <li class="navigation-secondary-item">
 
-                    <a href="bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
+                    <a href="/bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
+                    <a href="/bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="bakedbybec/pages/contact.html" class="navigation-secondary-link">contact</a>
+                    <a href="/bakedbybec/pages/contact.html" class="navigation-secondary-link">contact</a>
 
                 </li>
 
                 <li class="navigation-secondary-item">
 
-                    <a href="bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
+                    <a href="/bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
 
                 </li>
 
@@ -55,7 +55,7 @@
 
                     <a href="" class="navigation-social-link">
 
-                        <img src="bakedbybec/img/Facebook-icon.png" alt="" class="navigation-social-icon">
+                        <img src="/bakedbybec/img/Facebook-icon.png" alt="" class="navigation-social-icon">
 
                     </a>
 
@@ -65,7 +65,7 @@
 
                     <a href="" class="navigation-social-link">
 
-                        <img src="bakedbybec/img/Instagram-icon.png" alt="" class="navigation-social-icon">
+                        <img src="/bakedbybec/img/Instagram-icon.png" alt="" class="navigation-social-icon">
 
                     </a>
 
@@ -125,7 +125,7 @@
                 <label for="OrderFormItem">
                     <div>What would you like?</div>
                     <select name="quantity" id="OrderFormItem" autocomplete="off" required>
-                        <option value=""selected>--Please select</option>
+                        <option value=""selected disabled>-- Please select</option>
                         <option value="sugar-cookies">sugar cookies</option>
                         <option value="drop-cookies">drop cookies</option>
                         <option value="cakes">cake</option>
@@ -135,11 +135,11 @@
                 </label>
 
                 <header class="item-information-tabs">
-                    <div data-item-tab="sugar-cookies">sugar<br>cookie</div>
-                    <div data-item-tab="drop-cookies">drop<br>cookie</div>
-                    <div data-item-tab="cakes">cake</div>
-                    <div data-item-tab="cupcakes">cakepcake</div>
-                    <div data-item-tab="cake-pops">cake pops</div>
+                    <div data-item-tab=""></div>
+                    <div data-item-tab=""></div>
+                    <div data-item-tab=""></div>
+                    <div data-item-tab=""></div>
+                    <div data-item-tab=""></div>
                 </header>
 
                 <ul class="order-item-list">
@@ -148,18 +148,19 @@
 
                         <header>
                             <h3>Sugar Cookies</h3>
-                            <button type="button" class="btn remove-order-btn" value="sugar-cookies">X</button>
+                            <button type="button" class="btn remove-order-btn" value="sugar-cookies">remove&nbsp;&#10007;</button>
                         </header>
     
                         <label for="SugarCookieQuantity">
                             <div>How many would you like?</div>
                             <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
-                                <option value="1" selected>1 dozen</option>
-                                <option value="2">2 dozen</option>
-                                <option value="3">3 dozen</option>
-                                <option value="4">4 dozen</option>
-                                <option value="5">5 dozen</option>
-                                <option value="6">6 dozen</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="1">1 dozen $30</option>
+                                <option value="2">2 dozen $60</option>
+                                <option value="3">3 dozen $90</option>
+                                <option value="4">4 dozen $120</option>
+                                <option value="5">5 dozen $150</option>
+                                <option value="6">6 dozen $180</option>
                             </select>
                         </label>
         
@@ -184,13 +185,41 @@
     
                         <header>
                             <h3>Cake</h3>
-                            <button type="button" class="btn remove-order-btn" value="cakes">X</button>
+                            <button type="button" class="btn remove-order-btn" value="cakes">remove&nbsp;&#10007;</button>
                         </header>
+
+                        
+
+                        <label for="CakeQuantity">
+                            <div>How many would you like?</div>
+                            <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
+                                <option value=""selected disabled>-- Please select</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </label>
+        
+                        <label for="CakeDateNeeded">
+                            <div>Date needed</div>
+                            <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
+                        </label>
+
+                        <label for="CakeSize">
+                            <div>What size of cake are you ordering?</div>
+                            <select name="cakesize" id="CakeSize" autocomplete="off" required>
+                                <option value=""selected disabled>-- size</option>
+                                <option value="8inch">8" (serves ~20)</option>
+                                <option value="10inch">10" (serves ~28)</option>
+                                <option value="2tier">2 tier (serves ~48)</option>
+                                <option value="smash">Smash Cake (serves ~12)</option>
+                            </select>
+                        </label>
     
                         <label for="CakeFlavor">
                             <div>Flavor</div>
                             <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
                                 <option value="redvelvet">red velvet</option>
@@ -201,7 +230,8 @@
                         <label for="CakeFrosting">
                             <div>Frosting</div>
                             <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
                                 <option value="lemon">lemon</option>
@@ -217,43 +247,21 @@
                             <div>Personalization</div>
                             <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
                         </label>
-    
-                        <label for="CakeSize">
-                            <div>Size</div>
-                            <select name="cakesize" id="CakeSize" autocomplete="off" required>
-                                <option value="8inch">8" (serves ~20)</option>
-                                <option value="10inch">10" (serves ~28)</option>
-                                <option value="2tier">2 tier (serves ~48)</option>
-                                <option value="smash">Smash Cake (serves ~12)</option>
-                            </select>
-                        </label>
-    
-                        <label for="CakeQuantity">
-                            <div>Quantity</div>
-                            <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
-                                <option value="1" selected>1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </label>
-        
-                        <label for="CakeDateNeeded">
-                            <div>Date needed</div>
-                            <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
-                        </label>
-                       
+      
                     </li>
     
                     <li class="order-item drop-cookie-information" data-order-item="drop-cookies">
     
                         <header>
                             <h3>Drop Cookies</h3>
-                            <button type="button" class="btn remove-order-btn" value="drop-cookies">X</button>
+                            <button type="button" class="btn remove-order-btn" value="drop-cookies">remove&nbsp;&#10007;</button>
                         </header>
     
                         <label for="DropCookieQuantity">
-                            <div>Quantity</div>
+                            <div>How many would you like?</div>
                             <select name="quantity" id="DropCookieQuantity" autocomplete="off" required>
-                                <option value="1" selected>1 dozen</option>
+                                <option value=""selected disabled>-- Quantity</option>
+                                <option value="1">1 dozen</option>
                                 <option value="2">2 dozen</option>
                                 <option value="3">3 dozen</option>
                                 <option value="4">4 dozen</option>
@@ -270,7 +278,8 @@
                         <label for="DropCookieFlavor">
                             <div>Flavor</div>
                             <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="lemon">lemon</option>
                                 <option value="raspberry">raspberry</option>
@@ -281,7 +290,8 @@
                         <label for="DropCookieAddon">
                             <div>Add-on</div>
                             <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
-                                <option value="chocolatechips" selected>chocolate chips</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="chocolatechips">chocolate chips</option>
                                 <option value="whitechocolatechips">white chocolate chips</option>
                                 <option value="peanutbutterchips">peanut butter chips</option>
                             </select>
@@ -293,13 +303,14 @@
     
                         <header>
                             <h3>Cupcakes</h3>
-                            <button type="button" class="btn remove-order-btn" value="cupcakes">X</button>
+                            <button type="button" class="btn remove-order-btn" value="cupcakes">remove&nbsp;&#10007;</button>
                         </header>
     
                         <label for="CupcakeFlavor">
                             <div>Flavor</div>
                             <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
                                 <option value="redvelvet">red velvet</option>
@@ -310,7 +321,8 @@
                         <label for="CupcakeFrosting">
                             <div>Frosting</div>
                             <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
                                 <option value="lemon">lemon</option>
@@ -328,9 +340,10 @@
                         </label>
     
                         <label for="CupcakeQuantity">
-                            <div>Quantity</div>
+                            <div>How many would you like?</div>
                             <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
-                                <option value="1" selected>1 dozen</option>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="1">1 dozen</option>
                                 <option value="2">2 dozen</option>
                                 <option value="3">3 dozen</option>
                                 <option value="4">4 dozen</option>
@@ -350,13 +363,14 @@
     
                         <header>
                             <h3>Cake Pops</h3>
-                            <button type="button" class="btn remove-order-btn" value="cake-pops">X</button>
+                            <button type="button" class="btn remove-order-btn" value="cake-pops">remove&nbsp;&#10007;</button>
                         </header>
     
                         <label for="CakepopFlavor">
                             <div>Flavor</div>
                             <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- Quantity</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
                                 <option value="redvelvet">red velvet</option>
@@ -367,7 +381,8 @@
                         <label for="CakepopFrosting">
                             <div>Frosting</div>
                             <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
-                                <option value="vanilla" selected>vanilla</option>
+                                <option value=""selected disabled>-- Quantity</option>
+                                <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
                                 <option value="lemon">lemon</option>
@@ -375,9 +390,10 @@
                         </label>
         
                         <label for="CakepopQuantity">
-                            <div>Quantity</div>
+                            <div>How many would you like?</div>
                             <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
-                                <option value="1" selected>1 dozen</option>
+                                <option value=""selected disabled>-- Quantity</option>
+                                <option value="1">1 dozen</option>
                                 <option value="2">2 dozen</option>
                                 <option value="3">3 dozen</option>
                                 <option value="4">4 dozen</option>
@@ -392,14 +408,17 @@
                         </label>
                        
                     </li>
-    
-                </div>
-    
 
                 </ul>
 
-                
+                <!-- <div class="order-form-read-before">
 
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, recusandae.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis sit, ducimus quia ullam dolorem ab?</p>
+
+                </div> -->
+                
+            </div>
             <div class="retrival-information">
 
                 <label for="OrderFormRetrival">
@@ -476,17 +495,17 @@
             <button type="button" class="btn order-submit-btn">Place order</button>
        </form>
 
-       <section class="order-display">
+       <section class="order-invoice">
             <header>
                 <h2>your order</h2>
             </header>
-            <div class="order-display-content">
+            <div class="order-invoice-content">
 
-                <div class="order-display-items">
+                <div class="order-invoice-items">
                     <p>Items:</p>
-                    <ul class="order-display-items-list">
+                    <ul class="order-invoice-items-list">
 
-                        <li class="order-display-item">
+                        <!-- <li class="order-invoice-item">
                           
                             <div><span>Type</span>
                                 <p>Sugar Cookies</p>
@@ -508,9 +527,9 @@
                                 <p>$&nbsp;<span>60.00</span></p>
                             </div>
 
-                        </li>
+                        </li> -->
 
-                        <!-- <li class="order-display-item">
+                        <!-- <li class="order-invoice-item">
                           
                             <div><span>Type</span>
                                 <p>Cakes</p>
@@ -535,7 +554,7 @@
                             </div>
                         </li> -->
 
-                        <!-- <li class="order-display-item">
+                        <!-- <li class="order-invoice-item">
                           
                             <div><span>Type</span>
                                 <p>Drop Cookies</p>
@@ -563,23 +582,23 @@
                     
                 </div>
                 
-                <div class="order-display-personal">
+                <div class="order-invoice-personal">
                     <div><span>Name:</span>
-                        <p data-output="name">Relendret Neru</p>
+                        <p data-output="name"></p>
                     </div>
                     <div><span>Email:</span>
-                        <p data-output="email">somelongemailaddress@thisandthat.com</p>
+                        <p data-output="email"></p>
                     </div>
                     <div><span>Phone:</span>
-                        <p data-output="phonenumber">3455555678</p>
+                        <p data-output="phonenumber"></p>
                     </div>
                     <div class="address"><span>Address:</span>
-                        <p  data-output="street">456 somwhere ave apt #34</p>
-                        <p><span data-output="city">Somwhere</span>,&nbsp;<span data-output="state">ZA</span>&nbsp;<span data-output="zipcode">45654</span></p>
+                        <p  data-output="street"></p>
+                        <p><span data-output="city"></span>&nbsp;<span data-output="state"></span>&nbsp;<span data-output="zipcode"></span></p>
                     </div>
                 </div>
                 
-                <div class="order-display-retrieval">
+                <div class="order-invoice-retrieval">
                     <div><span>Retrieval</span>
                         <p data-output="retrieval">Shipping</p>
                     </div>
@@ -589,9 +608,9 @@
                     
                 </div>
 
-                <div class="order-display-total-amount">
+                <div class="order-invoice-total-amount">
                     <div><span>Sub-Total:</span>
-                        <p>$&nbsp;<span>60.00</span></p>
+                        <p>$&nbsp;<span>00.00</span></p>
                     </div>
                     <div><span>Pickup:</span>
                         <p>free</p>
@@ -600,10 +619,10 @@
                         <p>$&nbsp;<span>0.00</span></p>
                     </div>
                     <div><span>Shipping:</span>
-                        <p>$&nbsp;<span>15.00</span></p>
+                        <p>$&nbsp;<span>00.00</span></p>
                     </div>
                     <div><span>Total:</span>
-                        <p>$&nbsp;<span>75.00</span></p>
+                        <p>$&nbsp;<span>00.00</span></p>
                     </div>
                 </div>
             </div>
@@ -619,25 +638,25 @@
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="bakedbybec/pages/product.html" class="footer-navigation-pages-link">products</a>
+                    <a href="/bakedbybec/pages/product.html" class="footer-navigation-pages-link">products</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="bakedbybec/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
+                    <a href="/bakedbybec/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="bakedbybec/pages/contact.html" class="footer-navigation-pages-link">contact</a>
+                    <a href="/bakedbybec/pages/contact.html" class="footer-navigation-pages-link">contact</a>
 
                 </li>
 
                 <li class="footer-navigation-pages-item">
 
-                    <a href="bakedbybec/pages/meet.html" class="footer-navigation-pages-link">meet</a>
+                    <a href="/bakedbybec/pages/meet.html" class="footer-navigation-pages-link">meet</a>
 
                 </li>
 
@@ -647,13 +666,13 @@
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="bakedbybec/pages/gallery.html" class="footer-navigation-products-link">creations</a>
+                    <a href="/bakedbybec/pages/gallery.html" class="footer-navigation-products-link">creations</a>
 
                 </li>
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="bakedbybec/pages/classes.html" class="footer-navigation-products-link">classes</a>
+                    <a href="/bakedbybec/pages/classes.html" class="footer-navigation-products-link">classes</a>
 
                 </li>
 
@@ -671,7 +690,7 @@
 
                 <a href="/">
 
-                    <img src="bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo">
+                    <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo">
 
                 </a>
 

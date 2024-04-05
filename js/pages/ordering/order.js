@@ -59,6 +59,93 @@ function createSugarCookieFormItem(){
     </div>`;
 };
 
+
+const OrderInvoice = {
+    element: undefined,
+    itemListElement: undefined,
+
+    createItemOutputElement(title,value){
+        const div = document.createElement('div');
+        const span = document.createElement('span');
+        span.textContent = title;
+        const p = document.createElement('p');
+        p.textContent = value;
+        div.append(span,p);
+        return div;
+    },
+    createItemDetailsElement(details){
+        const div = document.createElement('div');
+        div.classList.add('details');
+        const span = document.createElement('span');
+        span.textContent = 'Details';
+        div.appendChild(span);
+    
+        Object.keys(details).forEach( key => {
+    
+            const p = document.createElement('p');
+            p.textContent = key;
+            const span = document.createElement('span');
+            span.textContent = details[key];
+            p.appendChild(span);
+            
+            div.appendChild(p);
+        });
+    
+        return div;
+    },
+    createItemTotalElement(totalPrice){
+        const div = document.createElement('div');
+        div.classList.add('item-total');
+        const span = document.createElement('span');
+        span.textContent = 'Total';
+        div.appendChild(span);
+    
+        const p = document.createElement('p');
+        p.innerHTML = `$&nbsp;<span>${totalPrice}</span>`;
+    
+        div.appendChild(p);
+        return div;
+    },
+    createItem(itemType){
+
+        let itemName;
+
+        const parts = itemType.split('-');
+
+        if(parts.length > 1){
+            itemName = parts[0] + ' ' + parts[1];
+        }else{
+            itemName = itemType;
+        }
+
+        const item = document.createElement('li');
+        item.classList.add('order-invoice-item');
+    
+        item.append(
+            OrderInvoice.createItemOutputElement('Type',itemName),
+            OrderInvoice.createItemOutputElement('Quantity', 'N/A'),
+            OrderInvoice.createItemOutputElement('Date', 'N/A'),
+            OrderInvoice.createItemOutputElement('Size', `'N/A`),
+            OrderInvoice.createItemDetailsElement({none: 'no details added'}),
+            OrderInvoice.createItemTotalElement('N/A')
+        );
+    
+        return item;
+    },
+    addItemToInvoice(itemType){
+        
+        OrderInvoice.itemListElement.appendChild(
+            OrderInvoice.createItem(itemType)
+        )
+        
+    },
+    initialize(){
+        OrderInvoice.element = document.querySelector('.order-invoice');
+        OrderInvoice.itemListElement = document.querySelector('.order-invoice-items-list');
+    }
+};
+
+
 const OrderForm = {
     form: undefined,
     itemSelectElement: undefined,
@@ -114,25 +201,120 @@ const OrderForm = {
 
         dateElement.setAttribute('min', dateString);
     },
-    addItemToOrder(event){
+    
+    addItemTab(targetValue){
+
         OrderForm.itemTabs.forEach( itemTab => {
-            if(itemTab.classList.contains('active')){
+            if(itemTab.classList.contains('show')){
                 itemTab.classList.remove('active');
             }
         });
 
-        OrderForm.orderItemElements.forEach( orderItem => {
-            if(orderItem.classList.contains('open')){
-                orderItem.classList.remove('open');
+        for(let i = 0; i < OrderForm.itemTabs.length; i++){
+
+            if(!OrderForm.itemTabs[i].classList.contains('active') && !OrderForm.itemTabs[i].classList.contains('show')){
+
+                const parts = targetValue.split('-');
+                if(parts.length > 1){
+
+                    OrderForm.itemTabs[i].textContent = parts[0] + ' ' + parts[1];
+
+                }else{
+
+                    OrderForm.itemTabs[i].textContent = targetValue;
+                }
+
+                OrderForm.itemTabs[i].setAttribute('data-item-tab', targetValue);
+                
+
+                OrderForm.itemTabs[i].classList.add('active');
+                OrderForm.itemTabs[i].classList.add('show');
+
+                break;
             }
-        });
+        }
+    },
+    removeItemTab(orderItemValue){
+
+        for(let i = 0; i < OrderForm.itemTabs.length; i++){
+
+            if(OrderForm.itemTabs[i].dataset.itemTab === orderItemValue){
+
+                OrderForm.itemTabs[i].classList.remove('active');
+                OrderForm.itemTabs[i].classList.remove('show');
+
+                OrderForm.itemTabs[i].dataset.itemTab = "";
+                OrderForm.itemTabs[i].textContent = "";
+
+                if(OrderForm.itemTabs[i - 1]){
+
+                    OrderForm.itemTabs[i - 1].classList.add('active');
+                    const orderItem = OrderForm.form.querySelector(`[data-order-item="${OrderForm.itemTabs[i-1].dataset.itemTab}"]`);
+                    
+                    OrderForm.activateOrderItem(orderItem);
+                }
+                break;
+            }
+        }
+    },
+    inableItemSelection(itemSelection,itemValue){
+
+        itemSelection.querySelector(`option[value="${itemValue}"]`).removeAttribute('disabled');
+
+        OrderForm.itemSelectElement.value = "";
+    },
+    removeItemFromOrder(event){
+
+        event.preventDefault();
+
+        const orderItem = event.target.closest('li');
+
+        orderItem.classList.remove('open');
+
+        orderItem.classList.remove('active');
+
+        OrderForm.removeItemTab(orderItem.dataset.orderItem);
+
+        OrderForm.inableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
+    },
+    
+    disableItemSelection(itemSelection,itemValue){
+      
+        itemSelection.querySelector(`option[value="${itemValue}"]`).setAttribute('disabled', 'true');
+    },
+    activateOrderItem(orderItem){
+
+        orderItem.classList.add('open');
+
+        orderItem.classList.add('active'); // active state
+
+        orderItem.querySelector('.remove-order-btn').addEventListener('click', OrderForm.removeItemFromOrder)
+
+       
+    },
+    
+    addItemToOrder(event){
+
         if(event.target.value){
-            const itemTab = document.querySelector(`[data-item-tab="${event.target.value}"]`);
-            itemTab.classList.add('active');
-            itemTab.classList.add('show');
+
+            OrderForm.orderItemElements.forEach( orderItem => {
+                if(orderItem.classList.contains('open')){
+                    orderItem.classList.remove('open');
+                }
+            });
 
             const orderItem = document.querySelector(`[data-order-item="${event.target.value}"]`);
-            orderItem.classList.add('open');
+
+            OrderForm.disableItemSelection(event.target,event.target.value)
+
+            OrderForm.activateOrderItem(orderItem);
+
+            OrderForm.addItemTab(event.target.value);
+
+
+            // invoice
+
+            OrderInvoice.addItemToInvoice(event.target.value);
         }
         
 
@@ -197,6 +379,8 @@ const OrderForm = {
 };
 
 function initializeOrderCookiePage(){
+
+    OrderInvoice.initialize();
 
     OrderForm.initialize();
     OrderForm.listen();
