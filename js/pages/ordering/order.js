@@ -106,6 +106,7 @@ const OrderInvoice = {
         div.appendChild(span);
     
         const p = document.createElement('p');
+        p.classList.add('item-total-price')
         p.innerHTML = `$&nbsp;<span data-output="${itemId}totalprice">${totalPrice}</span>`;
     
         div.appendChild(p);
@@ -161,9 +162,9 @@ const OrderInvoice = {
     
         item.append(
             OrderInvoice.createItemOutputElement('Type',itemName,itemId),
-            OrderInvoice.createItemOutputElement('Quantity', 'N/A',itemId),
-            OrderInvoice.createItemOutputElement('Date', 'N/A',itemId),
-            OrderInvoice.createItemOutputElement('Size', `N/A`,itemId),
+            OrderInvoice.createItemOutputElement('Quantity', 'none',itemId),
+            OrderInvoice.createItemOutputElement('Date', 'none',itemId),
+            OrderInvoice.createItemOutputElement('Size', `none`,itemId),
             OrderInvoice.createItemDetailsElement(details,itemId),
             OrderInvoice.createItemTotalElement('00.00',itemId)
         );
@@ -187,6 +188,42 @@ const OrderInvoice = {
 
         OrderInvoice.element.querySelector(`[data-output="${event.target.dataset.input}"]`).textContent = event.target.value;
     },
+    calculateInvoiceTotal(){
+
+        let sum = 0;
+
+        OrderInvoice.element.querySelectorAll('.item-total-price').forEach( itemTotalElement => {
+
+            const totalItemPrice = Number(itemTotalElement.textContent.substring(2));
+
+            sum += totalItemPrice;
+        });
+
+        OrderInvoice.element.querySelector(`[data-output="sub-total"]`).textContent = `${sum}.00`;
+
+        const deliveryPriceElement = OrderInvoice.element.querySelector('[data-output="delivery"]');
+        const deliveryPrice = Number(deliveryPriceElement.textContent.substring(2));
+
+        console.log('delivery', deliveryPrice)
+
+        if(deliveryPrice > 0){
+
+            sum += deliveryPrice;
+        }
+
+        const shippingPriceElement = OrderInvoice.element.querySelector('[data-output="shipping"]');
+        const shippingPrice = Number(shippingPriceElement.textContent);
+
+        
+        
+        if(shippingPrice > 0){
+
+            sum += shippingPrice;
+        }
+
+        OrderInvoice.element.querySelector(`[data-output="total"]`).textContent = `${sum}.00`
+
+    },
     initialize(){
         OrderInvoice.element = document.querySelector('.order-invoice');
         OrderInvoice.itemListElement = document.querySelector('.order-invoice-items-list');
@@ -209,15 +246,28 @@ const OrderForm = {
         }
 
     },
-    handleAddressDisplay(event){
+    handleRetrievalSelect(event){
 
         if(event.target.value === 'shipping' || event.target.value === 'delivery'){
+
+            if(event.target.value === 'shipping'){
+
+                document.querySelector(`[data-output="shipping"]`).textContent = `15.00`;
+
+                OrderInvoice.calculateInvoiceTotal();
+
+            }else{
+
+                // open a delivery milage price calculator?
+            }
 
             if(!OrderForm.addressInformationDisplay.classList.contains('show')){
 
                 OrderForm.addressInformationDisplay.classList.add('show');
 
             }   
+
+            
 
         }else{
 
@@ -369,6 +419,84 @@ const OrderForm = {
         orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
 
             dataInput.addEventListener('input', OrderInvoice.addDataToInvoice);
+        });
+
+        orderItemElement.querySelectorAll('select').forEach( selectElement => {
+
+            if(selectElement.name.includes('cake') && !selectElement.name.includes('cup') && !selectElement.name.includes('pop')){
+
+                if(selectElement.name.includes('size')){
+
+                    selectElement.addEventListener('input', (event)=>{
+                        [...event.target.children].forEach( option => {
+                            if(option.value === event.target.value){
+
+                                const itemPrice = Number(option.dataset.price);
+
+                                const cakeQuantity = orderItemElement.querySelector('select[name="cakequantity"]').value;
+
+                                if(cakeQuantity){
+
+                                    const currentItemPrice = Number(cakeQuantity) * itemPrice;
+
+                                    document.querySelector(`[data-output="${orderItemElement.dataset.itemId}totalprice"]`).textContent = `${currentItemPrice}.00`;
+
+                                    OrderInvoice.calculateInvoiceTotal();
+
+                                }
+
+                            }
+                        })
+                    })
+                }
+
+                if(selectElement.name.includes('quantity')){
+
+                    selectElement.addEventListener('input', (event)=>{
+
+                        const cakeSizeElement = orderItemElement.querySelector('select[name="cakesize"]');
+
+                        if(cakeSizeElement && cakeSizeElement.value !== ""){
+
+                            [...cakeSizeElement.children].forEach( option => {
+
+                                if(option.value === cakeSizeElement.value){
+
+                                    const optionPrice = option.dataset.price;
+
+                                    const newPrice = Number(optionPrice) * Number(event.target.value);
+
+                                    document.querySelector(`[data-output="${orderItemElement.dataset.itemId}totalprice"]`).textContent = `${newPrice}.00`;
+
+                                    OrderInvoice.calculateInvoiceTotal();
+                                }
+                            })
+                        }
+
+                    })
+                }
+
+            }else{
+
+                if(selectElement.name.includes('quantity')){
+
+                    selectElement.addEventListener('input', (event)=>{
+                        [...event.target.children].forEach( option => {
+                            if(option.value === event.target.value){
+
+                                const itemPrice = option.dataset.price;
+
+                                document.querySelector(`[data-output="${orderItemElement.dataset.itemId}totalprice"]`).textContent = `${itemPrice}.00`;
+
+                                OrderInvoice.calculateInvoiceTotal();
+                            }
+                        })
+                    })
+                }
+
+            }
+
+            
         })
     },
     addItemToOrder(event){
@@ -419,7 +547,7 @@ const OrderForm = {
         });
         
         
-        OrderForm.retrivalTypeSelect.addEventListener('input', OrderForm.handleAddressDisplay);
+        OrderForm.retrivalTypeSelect.addEventListener('input', OrderForm.handleRetrievalSelect);
 
     },
     initialize(){
