@@ -10,7 +10,7 @@
     <header class="header-secondary">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/">
+            <a href="/">
                 <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
@@ -79,8 +79,7 @@
         <header>
 
             <div class="form-links">
-                <a href="/bakedbybec/pages/order.html" class="cookie-form-link">Order Cookies >>></a>
-                <a href="/bakedbybec/pages/order.html" class="cake-form-link">Order Cakes >>></a>
+                <a href="/bakedbybec/pages/order.html" class="cookie-form-link">Order >>></a>
             </div>
 
         </header>
@@ -99,18 +98,19 @@
 
             <div class="input-wrapper">
                 <label for="">Name</label>
-                <input type="text" name="name" id="">
+                <input type="text" name="name" id=""  autocomplete="off" required>
             </div>
 
             <div class="input-wrapper">
                 <label for="">Email</label>
-                <input type="text" name="name" id="">
+                <input type="text" name="name" id=""  autocomplete="off" required>
             </div>
 
             <div class="input-wrapper">
                 <label for="">Topic</label>
-                <select name="" id="">
-                    <option value="cookies" selected>cookies</option>
+                <select name="" id="" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="cookies">cookies</option>
                     <option value="cakes">cakes</option>
                     <option value="pricing">pricing</option>
                     <option value="availability">availability</option>
@@ -120,7 +120,7 @@
 
             <div class="textarea-wrapper">
                 <label for="">Message</label>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <textarea name="" id="" cols="30" rows="10"  autocomplete="off" required></textarea>
             </div>
 
             <p>* It can take up to 24 hours for a response.</p>
