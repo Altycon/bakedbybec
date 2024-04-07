@@ -64,16 +64,20 @@ const OrderInvoice = {
     element: undefined,
     itemListElement: undefined,
 
-    createItemOutputElement(title,value){
+    createItemOutputElement(title,value,itemId){
         const div = document.createElement('div');
         const span = document.createElement('span');
         span.textContent = title;
         const p = document.createElement('p');
+        if(title !== 'Type'){
+           
+            p.setAttribute('data-output', `${itemId}${title.toLowerCase()}`);
+        }
         p.textContent = value;
         div.append(span,p);
         return div;
     },
-    createItemDetailsElement(details){
+    createItemDetailsElement(details,itemId){
         const div = document.createElement('div');
         div.classList.add('details');
         const span = document.createElement('span');
@@ -83,8 +87,9 @@ const OrderInvoice = {
         Object.keys(details).forEach( key => {
     
             const p = document.createElement('p');
-            p.textContent = key;
+            p.textContent = `${key}:`;
             const span = document.createElement('span');
+            span.setAttribute('data-output', `${itemId}${key.toLowerCase()}`);
             span.textContent = details[key];
             p.appendChild(span);
             
@@ -93,7 +98,7 @@ const OrderInvoice = {
     
         return div;
     },
-    createItemTotalElement(totalPrice){
+    createItemTotalElement(totalPrice,itemId){
         const div = document.createElement('div');
         div.classList.add('item-total');
         const span = document.createElement('span');
@@ -101,12 +106,12 @@ const OrderInvoice = {
         div.appendChild(span);
     
         const p = document.createElement('p');
-        p.innerHTML = `$&nbsp;<span>${totalPrice}</span>`;
+        p.innerHTML = `$&nbsp;<span data-output="${itemId}totalprice">${totalPrice}</span>`;
     
         div.appendChild(p);
         return div;
     },
-    createItem(itemType){
+    createItem(itemType,itemId){
 
         let itemName;
 
@@ -118,26 +123,69 @@ const OrderInvoice = {
             itemName = itemType;
         }
 
+        let details = {};
+
+        switch(itemType){
+
+            case 'sugar-cookies':
+                details.theme = 'none';
+                details.personalization = 'none';
+            break;
+            case 'cakes':
+                details.flavor = 'none';
+                details.frosting = 'none';
+                details.theme = 'none';
+                details.personalization = 'none';
+            break;
+            case 'cupcakes':
+                details.flavor = 'none';
+                details.frosting = 'none';
+                details.theme = 'none';
+                details.personalization = 'none';
+            break;
+            case 'drop-cookies':
+                details.flavor = 'none';
+                details.addon = 'none';
+            break;
+            case 'cake-pops':
+                details.flavor = 'none';
+                details.frosting = 'none';
+            break;
+        }
+
+        
+
         const item = document.createElement('li');
         item.classList.add('order-invoice-item');
+        item.setAttribute('data-item-id',itemId);
     
         item.append(
-            OrderInvoice.createItemOutputElement('Type',itemName),
-            OrderInvoice.createItemOutputElement('Quantity', 'N/A'),
-            OrderInvoice.createItemOutputElement('Date', 'N/A'),
-            OrderInvoice.createItemOutputElement('Size', `'N/A`),
-            OrderInvoice.createItemDetailsElement({none: 'no details added'}),
-            OrderInvoice.createItemTotalElement('N/A')
+            OrderInvoice.createItemOutputElement('Type',itemName,itemId),
+            OrderInvoice.createItemOutputElement('Quantity', 'N/A',itemId),
+            OrderInvoice.createItemOutputElement('Date', 'N/A',itemId),
+            OrderInvoice.createItemOutputElement('Size', `N/A`,itemId),
+            OrderInvoice.createItemDetailsElement(details,itemId),
+            OrderInvoice.createItemTotalElement('00.00',itemId)
         );
     
         return item;
     },
-    addItemToInvoice(itemType){
+    addItemToInvoice(itemType,itemId){
         
         OrderInvoice.itemListElement.appendChild(
-            OrderInvoice.createItem(itemType)
+            OrderInvoice.createItem(itemType,itemId)
         )
         
+    },
+    removeItemFromInvoice(itemId){
+
+        const invoiceItem = OrderInvoice.element.querySelector(`[data-item-id="${itemId}"]`);
+        const parent = invoiceItem.closest('ul');
+        parent.removeChild(invoiceItem);
+    },
+    addDataToInvoice(event){
+
+        OrderInvoice.element.querySelector(`[data-output="${event.target.dataset.input}"]`).textContent = event.target.value;
     },
     initialize(){
         OrderInvoice.element = document.querySelector('.order-invoice');
@@ -152,7 +200,6 @@ const OrderForm = {
     retrivalTypeSelect: undefined,
     addressInformationDisplay: undefined,
     orderItemElements: undefined,
-    itemTabs: undefined,
 
     displayInformation(event){
         
@@ -201,61 +248,84 @@ const OrderForm = {
 
         dateElement.setAttribute('min', dateString);
     },
-    
-    addItemTab(targetValue){
+    handleItemTabSwitch({target}){
 
-        OrderForm.itemTabs.forEach( itemTab => {
-            if(itemTab.classList.contains('show')){
-                itemTab.classList.remove('active');
+        if(target.classList.contains('show')){
+
+            const itemTabs = document.querySelector('.item-information-tabs');
+
+           [...itemTabs.children].forEach( tab => {
+                if(tab.classList.contains('active')){
+                    tab.classList.remove('active');
+                }
+            });
+
+            target.classList.add('active');
+
+            OrderForm.orderItemElements.forEach( orderItem => {
+                if(orderItem.classList.contains('open')){
+                    orderItem.classList.remove('open');
+                }
+            });
+
+            document.querySelector(`[data-item-id="${target.dataset.connectionId}"]`).classList.add('open');
+
+        }
+    },
+    removeItemTab(itemId){
+        
+        const itemTabs = document.querySelector('.item-information-tabs');
+
+        [...itemTabs.children].forEach( (tab,index) => {
+         
+            if(tab && tab.dataset.connectionId === itemId){
+                itemTabs.removeChild(tab);
+
+                if(itemTabs.children[index - 1]){
+                    itemTabs.children[index - 1].classList.add('active');
+
+                    const connectionId = itemTabs.children[index - 1].dataset.connectionId;
+
+                    document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
+                }
+            }
+        })
+    },
+    createItemTab(connectionId,itemType){
+        const div = document.createElement('div');
+        div.classList.add('item-tab');
+        div.setAttribute('data-connection-id', connectionId);
+
+        const parts = itemType.split('-');
+        if(parts.length > 1){
+
+            div.textContent = parts[0] + ' ' + parts[1];
+
+        }else{
+
+            div.textContent = itemType
+        }
+        
+        return div;
+    },
+    addItemTab(connectionId,itemType){
+
+        const itemTabs = document.querySelector('.item-information-tabs');
+
+        [...itemTabs.children].forEach( tab => {
+
+            if(tab.classList.contains('active')){
+                tab.classList.remove('active');
             }
         });
 
-        for(let i = 0; i < OrderForm.itemTabs.length; i++){
+        const newTab = OrderForm.createItemTab(connectionId,itemType);
+        newTab.classList.add('show');
+        newTab.classList.add('active');
+        newTab.addEventListener('click', OrderForm.handleItemTabSwitch);
 
-            if(!OrderForm.itemTabs[i].classList.contains('active') && !OrderForm.itemTabs[i].classList.contains('show')){
-
-                const parts = targetValue.split('-');
-                if(parts.length > 1){
-
-                    OrderForm.itemTabs[i].textContent = parts[0] + ' ' + parts[1];
-
-                }else{
-
-                    OrderForm.itemTabs[i].textContent = targetValue;
-                }
-
-                OrderForm.itemTabs[i].setAttribute('data-item-tab', targetValue);
-                
-
-                OrderForm.itemTabs[i].classList.add('active');
-                OrderForm.itemTabs[i].classList.add('show');
-
-                break;
-            }
-        }
-    },
-    removeItemTab(orderItemValue){
-
-        for(let i = 0; i < OrderForm.itemTabs.length; i++){
-
-            if(OrderForm.itemTabs[i].dataset.itemTab === orderItemValue){
-
-                OrderForm.itemTabs[i].classList.remove('active');
-                OrderForm.itemTabs[i].classList.remove('show');
-
-                OrderForm.itemTabs[i].dataset.itemTab = "";
-                OrderForm.itemTabs[i].textContent = "";
-
-                if(OrderForm.itemTabs[i - 1]){
-
-                    OrderForm.itemTabs[i - 1].classList.add('active');
-                    const orderItem = OrderForm.form.querySelector(`[data-order-item="${OrderForm.itemTabs[i-1].dataset.itemTab}"]`);
-                    
-                    OrderForm.activateOrderItem(orderItem);
-                }
-                break;
-            }
-        }
+        const tabParent = document.querySelector('.item-information-tabs');
+        tabParent.appendChild(newTab);
     },
     inableItemSelection(itemSelection,itemValue){
 
@@ -273,9 +343,11 @@ const OrderForm = {
 
         orderItem.classList.remove('active');
 
-        OrderForm.removeItemTab(orderItem.dataset.orderItem);
+        OrderForm.removeItemTab(orderItem.dataset.itemId);
 
         OrderForm.inableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
+
+        OrderInvoice.removeItemFromInvoice(orderItem.dataset.itemId);
     },
     
     disableItemSelection(itemSelection,itemValue){
@@ -292,10 +364,18 @@ const OrderForm = {
 
        
     },
-    
+    listenToOrderItem(orderItemElement){
+
+        orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
+
+            dataInput.addEventListener('input', OrderInvoice.addDataToInvoice);
+        })
+    },
     addItemToOrder(event){
 
         if(event.target.value){
+
+            
 
             OrderForm.orderItemElements.forEach( orderItem => {
                 if(orderItem.classList.contains('open')){
@@ -305,43 +385,26 @@ const OrderForm = {
 
             const orderItem = document.querySelector(`[data-order-item="${event.target.value}"]`);
 
+            OrderForm.addItemTab(orderItem.dataset.itemId,event.target.value );
+
             OrderForm.disableItemSelection(event.target,event.target.value)
 
             OrderForm.activateOrderItem(orderItem);
 
-            OrderForm.addItemTab(event.target.value);
-
+            
 
             // invoice
 
-            OrderInvoice.addItemToInvoice(event.target.value);
+            OrderInvoice.addItemToInvoice(event.target.value,orderItem.dataset.itemId);
+
+
+            OrderForm.listenToOrderItem(orderItem);
         }
         
 
         
     },
-    handleItemTabSwitch({target}){
-
-        if(target.classList.contains('show')){
-
-            OrderForm.itemTabs.forEach( itemTab => {
-                if(itemTab.classList.contains('active')){
-                    itemTab.classList.remove('active');
-                }
-            });
-
-            target.classList.add('active');
-
-            OrderForm.orderItemElements.forEach( orderItem => {
-                if(orderItem.classList.contains('open')){
-                    orderItem.classList.remove('open');
-                }
-            });
-
-            document.querySelector(`[data-order-item="${target.dataset.itemTab}"]`).classList.add('open');
-
-        }
-    },
+    
     listen(){
 
         OrderForm.itemSelectElement.addEventListener('input', OrderForm.addItemToOrder);
@@ -358,9 +421,6 @@ const OrderForm = {
         
         OrderForm.retrivalTypeSelect.addEventListener('input', OrderForm.handleAddressDisplay);
 
-        OrderForm.itemTabs.forEach( itemTab => {
-            itemTab.addEventListener('click', OrderForm.handleItemTabSwitch)
-        });
     },
     initialize(){
         OrderForm.form = document.querySelector('.order-form');
@@ -374,7 +434,6 @@ const OrderForm = {
         });
 
         OrderForm.orderItemElements = document.querySelectorAll('.order-item');
-        OrderForm.itemTabs = document.querySelectorAll('[data-item-tab]');
     }
 };
 

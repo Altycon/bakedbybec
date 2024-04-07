@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order | Baked By Bec</title>
     <link rel="stylesheet" href="../main.css">
-    <script type="module" src="../js/pages/ordering/order.js"></script>
+    <script type="module" src="../js/bakedbybec/pages/ordering/order.js"></script>
 </head>
 <body>
     <header class="header-secondary">
@@ -84,34 +84,64 @@
 
         <div class="order-information">
 
-            <div>
-                <p>Orders need to be placed a <span>minimum of two weeks before</span> needed for your event.</p>
-                <p>This allows me enough time to make your cookies as delicious and beautiful as possible.</p>
+            <div class="pricing-information">
+               
+                <div class="sugar-cookie-pricing">
+                    <p>sugar cookies</p>
+                    <p><span>$30</span><span>/dozen</span></p>
+                </div>
+                <div class="drop-cookie-pricing">
+                   
+                    <p>drop cookies</p>
+                    <p><span>$25</span><span>/dozen</span></p>
+
+                </div>
+                <div class="cupcake-pricing">
+                    
+                    <p>cupcakes</p>
+                    <p><span>$20</span><span>/dozen</span></p>
+                  
+                </div>
+                <div class="cakepop-pricing">
+                   
+                    <p>cake pops</p>
+                    <p><span>$18</span><span>/dozen</span></p>
+                  
+                </div>
+                <div class="cake-pricing">
+                    
+                    <div>
+                        <p>6" smash cake</p>
+                        <p>3 layers</p>
+                        <p>$25</p>
+                    </div>
+                    <div>
+                        <p>8" cake</p>
+                        <p>2 layers</p>
+                        <p>$35</p>
+                    </div>
+                    <div>
+                       
+                        <p>10" cake</p>
+                        <p>2 layers</p>
+                        <p>$40</p>
+                    </div>
+                    <div>
+                        
+                        <p>2 Tier cake</p>
+                        <p>(Bottom: 2-10"; top: 2-6")</p>
+                        <p>$65</p>
+                    </div>
+                </div>
+                
             </div>
 
-            <div>
-                <h3>Sugar Cookies:</h3>
-                <p><span>$30</span>/dozen</p>
-                <h3>Drop Cookies:</h3>
-                <p><span>$20</span>/dozen</p>
-                <h3>Shipping Fee:</h3>
-                <p><span>$15</span> shipped via <span>USPS.</span></p>
-                <h3>Delivery Fee</h3>
-                <p><span>.65</span>/mile roundtrip.</p>
-            </div>
-            
-            <div>
-                <h3>Delivery times:</h3>
-                <p> M-F between 4-6 pm</p>
-                <h3>Pickup times:</h3>
-                <p> M-F between 4-6 pm, Saturdays from 9-12 noon.</p>
-            </div>
-            
-            <div>
+            <div class="extra-order-information">
+                <p>Orders need to be placed a <span>minimum of two weeks before</span> needed for your event.</p>
+                <p>This allows me enough time to make your cookies as delicious and beautiful as possible.</p>
                 <p>Invoices will be sent via email.</p>
                 <p>I look forward to adding something sweet to your next event.  Thank you for booking with Baked by Bec!</p>
             </div>
-            
 
         </div>
 
@@ -135,16 +165,12 @@
                 </label>
 
                 <header class="item-information-tabs">
-                    <div data-item-tab=""></div>
-                    <div data-item-tab=""></div>
-                    <div data-item-tab=""></div>
-                    <div data-item-tab=""></div>
-                    <div data-item-tab=""></div>
+                   
                 </header>
 
                 <ul class="order-item-list">
 
-                    <li class="order-item sugar-cookie-information" data-order-item="sugar-cookies">
+                    <li class="order-item sugar-cookie-information" data-order-item="sugar-cookies" data-item-id="sc">
 
                         <header>
                             <h3>Sugar Cookies</h3>
@@ -153,7 +179,7 @@
     
                         <label for="SugarCookieQuantity">
                             <div>How many would you like?</div>
-                            <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
+                            <select name="sugarcookiequantity" id="SugarCookieQuantity" data-input="scquantity" data autocomplete="off" required>
                                 <option value=""selected disabled>-- select</option>
                                 <option value="1">1 dozen $30</option>
                                 <option value="2">2 dozen $60</option>
@@ -166,22 +192,35 @@
         
                         <label for="SugarCookieDateNeeded">
                             <div>When are they needed?</div>
-                            <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" min="2024-04-17" autocomplete="off" required>
+                            <input type="date"
+                                name="sugarcookiedate" 
+                                id="SugarCookieDateNeeded" 
+                                min="2024-04-17" 
+                                data-input="scdate" 
+                                autocomplete="off" required>
                         </label>
         
                         <label for="SugarCookieTheme">
                             <div>Theme/Occasion</div>
-                            <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="1" autocomplete="off" required></textarea>
+                            <textarea name="sugarcookietheme" 
+                                id="SugarCookieTheme" 
+                                cols="30" rows="1" 
+                                data-input="sctheme" 
+                                autocomplete="off" required></textarea>
                         </label>
         
                         <label for="SugarCookiePersonalization">
                             <div>Personalization</div>
-                            <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                            <textarea name="sugarcookiepersonalization"
+                                id="SugarCookiePersonalization" 
+                                cols="30" rows="2" 
+                                data-input="scpersonalization" 
+                                autocomplete="off" required></textarea>
                         </label>
                        
                     </li>
     
-                    <li class="order-item cake-information" data-order-item="cakes">
+                    <li class="order-item cake-information" data-order-item="cakes" data-item-id="ck">
     
                         <header>
                             <h3>Cake</h3>
@@ -192,7 +231,7 @@
 
                         <label for="CakeQuantity">
                             <div>How many would you like?</div>
-                            <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
+                            <select name="cakequantity" id="CakeQuantity" data-input="ckquantity" autocomplete="off" required>
                                 <option value=""selected disabled>-- Please select</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -201,23 +240,23 @@
         
                         <label for="CakeDateNeeded">
                             <div>Date needed</div>
-                            <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
+                            <input type="date" name="cakedateneeded" id="CakeDateNeeded" data-input="ckdate" autocomplete="off" required>
                         </label>
 
                         <label for="CakeSize">
-                            <div>What size of cake are you ordering?</div>
-                            <select name="cakesize" id="CakeSize" autocomplete="off" required>
+                            <div>What size of cake?</div>
+                            <select name="cakesize" id="CakeSize" data-input="cksize" autocomplete="off" required>
                                 <option value=""selected disabled>-- size</option>
                                 <option value="8inch">8" (serves ~20)</option>
                                 <option value="10inch">10" (serves ~28)</option>
                                 <option value="2tier">2 tier (serves ~48)</option>
-                                <option value="smash">Smash Cake (serves ~12)</option>
+                                <option value="6inch">Smash Cake (serves ~12)</option>
                             </select>
                         </label>
     
                         <label for="CakeFlavor">
                             <div>Flavor</div>
-                            <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
+                            <select name="cakeflavor" id="CakeFlavor" data-input="ckflavor" autocomplete="off" required>
                                 <option value=""selected disabled>-- select</option>
                                 <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
@@ -229,7 +268,7 @@
     
                         <label for="CakeFrosting">
                             <div>Frosting</div>
-                            <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
+                            <select name="cakefrosting" id="CakeFrosting" data-input="ckfrosting" autocomplete="off" required>
                                 <option value=""selected disabled>-- select</option>
                                 <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
@@ -240,17 +279,17 @@
         
                         <label for="CakeTheme">
                             <div>Theme/Occasion</div>
-                            <textarea name="caketheme" id="CakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
+                            <textarea name="caketheme" id="CakeTheme" cols="30" rows="2" data-input="cktheme" autocomplete="off" required></textarea>
                         </label>
         
                         <label for="CakePersonalization">
                             <div>Personalization</div>
-                            <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                            <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" data-input="ckpersonalization" autocomplete="off" required></textarea>
                         </label>
       
                     </li>
     
-                    <li class="order-item drop-cookie-information" data-order-item="drop-cookies">
+                    <li class="order-item drop-cookie-information" data-order-item="drop-cookies" data-item-id="dc">
     
                         <header>
                             <h3>Drop Cookies</h3>
@@ -259,7 +298,7 @@
     
                         <label for="DropCookieQuantity">
                             <div>How many would you like?</div>
-                            <select name="quantity" id="DropCookieQuantity" autocomplete="off" required>
+                            <select name="quantity" id="DropCookieQuantity" data-input="dcquantity" autocomplete="off" required>
                                 <option value=""selected disabled>-- Quantity</option>
                                 <option value="1">1 dozen</option>
                                 <option value="2">2 dozen</option>
@@ -272,12 +311,12 @@
         
                         <label for="DropCookieDateNeeded">
                             <div>Date needed</div>
-                            <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" autocomplete="off" required>
+                            <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" data-input="dcdate" autocomplete="off" required>
                         </label>
         
                         <label for="DropCookieFlavor">
                             <div>Flavor</div>
-                            <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
+                            <select name="dropcookieflavor" id="DropCookieFlavor" data-input="dcflavor" autocomplete="off" required>
                                 <option value=""selected disabled>-- select</option>
                                 <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
@@ -289,59 +328,26 @@
         
                         <label for="DropCookieAddon">
                             <div>Add-on</div>
-                            <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
+                            <select name="dropcookieaddon" id="DropCookieAddon" data-input="dcaddon" autocomplete="off" required>
                                 <option value=""selected disabled>-- select</option>
-                                <option value="chocolatechips">chocolate chips</option>
-                                <option value="whitechocolatechips">white chocolate chips</option>
-                                <option value="peanutbutterchips">peanut butter chips</option>
+                                <option value="chocolate chips">chocolate chips</option>
+                                <option value="white chocolate chips">white chocolate chips</option>
+                                <option value="peanut butter chips">peanut butter chips</option>
                             </select>
                         </label>
                        
                     </li>
     
-                    <li class="order-item cupcake-information" data-order-item="cupcakes">
+                    <li class="order-item cupcake-information" data-order-item="cupcakes" data-item-id="cc">
     
                         <header>
                             <h3>Cupcakes</h3>
                             <button type="button" class="btn remove-order-btn" value="cupcakes">remove&nbsp;&#10007;</button>
                         </header>
-    
-                        <label for="CupcakeFlavor">
-                            <div>Flavor</div>
-                            <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="redvelvet">red velvet</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-    
-                        <label for="CupcakeFrosting">
-                            <div>Frosting</div>
-                            <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-        
-                        <label for="CupcakeTheme">
-                            <div>Theme/Occasion</div>
-                            <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="2" autocomplete="off" required></textarea>
-                        </label>
-        
-                        <label for="CupcakePersonalization">
-                            <div>Personalization</div>
-                            <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-                        </label>
-    
+
                         <label for="CupcakeQuantity">
                             <div>How many would you like?</div>
-                            <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
+                            <select name="cupcakequantity" id="CupcakeQuantity" data-input="ccquantity" autocomplete="off" required>
                                 <option value=""selected disabled>-- select</option>
                                 <option value="1">1 dozen</option>
                                 <option value="2">2 dozen</option>
@@ -354,22 +360,13 @@
         
                         <label for="CupcakeDateNeeded">
                             <div>Date needed</div>
-                            <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" autocomplete="off" required>
+                            <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" data-input="ccdate" autocomplete="off" required>
                         </label>
-                       
-                    </li>
     
-                    <li class="order-item cakepop-information" data-order-item="cake-pops">
-    
-                        <header>
-                            <h3>Cake Pops</h3>
-                            <button type="button" class="btn remove-order-btn" value="cake-pops">remove&nbsp;&#10007;</button>
-                        </header>
-    
-                        <label for="CakepopFlavor">
+                        <label for="CupcakeFlavor">
                             <div>Flavor</div>
-                            <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
-                                <option value=""selected disabled>-- Quantity</option>
+                            <select name="cupcakeflavor" id="CupcakeFlavor" data-input="ccflavor"  autocomplete="off" required>
+                                <option value=""selected disabled>-- select</option>
                                 <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
@@ -378,10 +375,10 @@
                             </select>
                         </label>
     
-                        <label for="CakepopFrosting">
+                        <label for="CupcakeFrosting">
                             <div>Frosting</div>
-                            <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
-                                <option value=""selected disabled>-- Quantity</option>
+                            <select name="cupcakefrosting" id="CupcakeFrosting" data-input="ccfrosting" autocomplete="off" required>
+                                <option value=""selected disabled>-- select</option>
                                 <option value="vanilla">vanilla</option>
                                 <option value="chocolate">chocolate</option>
                                 <option value="strawberry">strawberry</option>
@@ -389,10 +386,31 @@
                             </select>
                         </label>
         
+                        <label for="CupcakeTheme">
+                            <div>Theme/Occasion</div>
+                            <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="2" data-input="cctheme" autocomplete="off" required></textarea>
+                        </label>
+        
+                        <label for="CupcakePersonalization">
+                            <div>Personalization</div>
+                            <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" data-input="ccpersonalization" autocomplete="off" required></textarea>
+                        </label>
+    
+                        
+                       
+                    </li>
+    
+                    <li class="order-item cakepop-information" data-order-item="cake-pops" data-item-id="cp">
+    
+                        <header>
+                            <h3>Cake Pops</h3>
+                            <button type="button" class="btn remove-order-btn" value="cake-pops">remove&nbsp;&#10007;</button>
+                        </header>
+
                         <label for="CakepopQuantity">
                             <div>How many would you like?</div>
-                            <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
-                                <option value=""selected disabled>-- Quantity</option>
+                            <select name="cakepopquantity" id="CakepopQuantity" data-input="cpquantity" autocomplete="off" required>
+                                <option value=""selected disabled>-- quantity</option>
                                 <option value="1">1 dozen</option>
                                 <option value="2">2 dozen</option>
                                 <option value="3">3 dozen</option>
@@ -404,8 +422,33 @@
         
                         <label for="CakepopDateNeeded">
                             <div>Date needed</div>
-                            <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" autocomplete="off" required>
+                            <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" data-input="cpdate" autocomplete="off" required>
                         </label>
+    
+                        <label for="CakepopFlavor">
+                            <div>Flavor</div>
+                            <select name="cakepopflavor" id="CakepopFlavor" data-input="cpflavor" autocomplete="off" required>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="redvelvet">red velvet</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+    
+                        <label for="CakepopFrosting">
+                            <div>Frosting</div>
+                            <select name="cakepopfrosting" id="CakepopFrosting" data-input="cpfrosting" autocomplete="off" required>
+                                <option value=""selected disabled>-- select</option>
+                                <option value="vanilla">vanilla</option>
+                                <option value="chocolate">chocolate</option>
+                                <option value="strawberry">strawberry</option>
+                                <option value="lemon">lemon</option>
+                            </select>
+                        </label>
+        
+                        
                        
                     </li>
 
@@ -424,6 +467,7 @@
                 <label for="OrderFormRetrival">
                     <div>Pickup/Shipping/Delivery</div>
                     <select name="" id="OrderFormRetrival" data-input="retrieval" autocomplete="off" required>
+                        <option value=""selected disabled>-- please select</option>
                         <option value="pickup">Pickup&nbsp;&nbsp;(West Point, Iowa)</option>
                         <option value="shipping">Shipping&nbsp;&nbsp;($15 via USPS)</option>
                         <option value="delivery">Delivery&nbsp;&nbsp;($0.65/mile roundtrip)</option>
@@ -431,9 +475,10 @@
                 </label>
 
                 <label for="OrderFormPaymentType">
-                    <div>Payment Type</div>
-                    <select name="paymenttype" id="OrderFormPaymentType" autocomplete="off" required>
-                        <option value="venmo" selected>Venmo</option>
+                    <div>Payment</div>
+                    <select name="paymenttype" id="OrderFormPaymentType" data-input="paymenttype" autocomplete="off" required>
+                        <option value=""selected disabled>-- select</option>
+                        <option value="venmo">Venmo</option>
                         <option value="cash">Cash</option>
                         <option value="card">Card</option>
                     </select>
@@ -600,29 +645,29 @@
                 
                 <div class="order-invoice-retrieval">
                     <div><span>Retrieval</span>
-                        <p data-output="retrieval">Shipping</p>
+                        <p data-output="retrieval"></p>
                     </div>
                     <div><span>Payment</span>
-                        <p>Venmo</p>
+                        <p data-output="paymenttype"></p>
                     </div>
                     
                 </div>
 
-                <div class="order-invoice-total-amount">
-                    <div><span>Sub-Total:</span>
+                <div class="order-invoice-total">
+                    <div class="order-invoice-sub-total"><span data-output="sub-total">Sub-Total:</span>
                         <p>$&nbsp;<span>00.00</span></p>
                     </div>
-                    <div><span>Pickup:</span>
+                    <div class="order-invoice-pickup"><span>Pickup:</span>
                         <p>free</p>
                     </div>
-                    <div><span>Delivery:</span>
-                        <p>$&nbsp;<span>0.00</span></p>
+                    <div class="order-invoice-delivery"><span>Delivery:</span>
+                        <p>$&nbsp;<span data-output="delivery">0.00</span></p>
                     </div>
-                    <div><span>Shipping:</span>
-                        <p>$&nbsp;<span>00.00</span></p>
+                    <div class="order-invoice-shipping"><span>Shipping:</span>
+                        <p>$&nbsp;<span data-output="shipping">00.00</span></p>
                     </div>
-                    <div><span>Total:</span>
-                        <p>$&nbsp;<span>00.00</span></p>
+                    <div class="order-invoice-total-amount"><span>Total:</span>
+                        <p>$&nbsp;<span data-ouput="total">00.00</span></p>
                     </div>
                 </div>
             </div>
