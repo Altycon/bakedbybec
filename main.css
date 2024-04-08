@@ -485,12 +485,15 @@ body{
 */
 
 .header-secondary{
-    padding: 1rem;
+    position: relative;
+    
+    background-color: var(--bc-primary);
 
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: auto 1fr auto;
     grid-template-rows: auto;
     align-items: center;
+    /* justify-content: space-between; */
    
     gap: 2rem;
 }
@@ -498,20 +501,30 @@ body{
     grid-column: 1;
     grid-row: 1;
     text-align: center;
+    
+    padding: 1rem;
 }
 .navigation-secondary{
     grid-column: 2;
     grid-row: 1;
+
+    background-color: var(--bc-primary);
+    padding: 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+    gap: 2rem;
 }
 .navigation-secondary-list{
-    
     list-style: none;
     padding: 1rem;
 
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(7,auto);
     grid-template-rows: auto;
-    gap: 1.5rem;
+    justify-content: center;
+    gap: 1.5em;
 }
 .navigation-secondary-item{
     --nav-sec-size: 60px;
@@ -558,13 +571,8 @@ body{
     text-shadow: 2px 2px 3px black;
 }
 
-.navigation-social{
-    grid-column: 3;
-    grid-row: 1;
-    list-style: none;
-    padding: 1rem;
-}
 .navigation-social-list{
+    
     list-style: none;
 
     display: grid;
@@ -581,6 +589,23 @@ body{
 .navigation-social-item:hover .navigation-social-icon{
     box-shadow: 0px 0px 5px black;
 }
+
+.navigation-secondary-open-btn{
+    grid-column: 3;
+    grid-row: 1;
+
+    border: none;
+    margin-right: 1rem;
+    outline: 1px solid var(--fc-primary);
+    color: var(--fc-primary);
+    background-color: hsl(0 0% 5%);
+    font-size: 2rem;
+    padding: 3px 10px;
+    border-radius: 5px;
+
+    display: none;
+}
+
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -863,7 +888,7 @@ body{
 }
 .faqs .answer .option{
     position: relative;
-    isolation: isolate;
+    /* isolation: isolate; */
     padding: 2rem 1rem;
     
     /* background-color: black; */
@@ -1038,22 +1063,68 @@ body{
     grid-row: 1;
     width: 100%;
 } */
-.products-item > h2{
+.products-item > header{
     grid-column: 1;
     grid-row: 1;
     align-self: flex-start;
 
     position: relative;
-    padding-top: 2rem;
+    padding-top: 1rem;
     padding-bottom: 1rem;
-    /* margin-left: -10px;
-    margin-right: -5px; */
-    font-size: 2rem;
-    text-shadow: 2px 2px 5px black;
+    padding-right: 1rem;
+    padding-left: 1rem;
     background-color: hsl(0 0% 0% / 0.4);
     box-shadow: 0px 5px 5px black;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+    align-items: center;
+}
+.products-item > header > h2{
+    font-size: 2rem;
+    text-shadow: 2px 2px 5px black;
 }
 
+.products-item > header > p > span:first-of-type{
+    font-weight: 700;
+    font-size: 1.5em;
+    padding: .25em;
+    color: var(--site-color-accent1);
+    text-shadow: 2px 2px 5px black;
+}
+.products-list .products-item:nth-child(3) > header{
+
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    
+}
+.products-list .cake-pricing{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto;
+}
+.products-list .cake-pricing > div > p{
+    font-size: .8em;
+    text-shadow: 2px 2px 5px black;
+    white-space: nowrap;
+}
+.products-list .cake-pricing > div > p:first-of-type{
+   
+    font-weight: 700;
+}
+.products-list .cake-pricing > div > p:nth-child(2){
+    font-size: .6em;
+}
+.products-list .cake-pricing > div > p:last-of-type{
+    font-weight: 700;
+    font-size: 1.5em;
+    padding: .25em;
+    color: var(--site-color-accent1);
+    text-shadow: 2px 2px 5px black;
+}
 .product-item-links{
     grid-column: 1;
     grid-row: 2;
@@ -1528,22 +1599,6 @@ body{
 }
 
 
-.sugar-cookie-gallery{
-
-}
-.drop-cookie-gallery{
-
-}
-.cake-gallery{
-
-}
-.cupcake-gallery{
-
-}
-.cakepop-gallery{
-
-}
-
 .sugar-cookie-gallery,
 .drop-cookie-gallery,
 .cake-gallery,
@@ -1724,127 +1779,39 @@ body{
 ===================================================|
 */
 .order-main{
-    padding: 0 2rem;
+    padding: 0rem 2rem;
 
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: auto auto auto;
-    gap: 2rem;
+    gap: 1rem;
 }
 .order-main > header{
     grid-column: 1/3;
     grid-row: 1;
     
-    padding: 2rem;
+    
 }
 .order-main > header > h1{
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .order-information{
     grid-column: 1/3;
     grid-row: 2;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-}
-.order-information .pricing-information{
-    text-align: center;
-    grid-column: 1;
-    grid-row: 1;
-
-    display: grid;
-    grid-template-columns: repeat(4,auto);
-    grid-template-rows: auto auto;
-    gap: 2rem;
 }
 
 
-.order-information .pricing-information > div{
-    justify-self: stretch;
-}
-.order-information .pricing-information > div > p:first-of-type{
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: .5em;
-}
-.order-information .pricing-information > div > p:last-of-type > span:first-of-type{
-    font-size: 2rem;
-    font-weight: 700;
-    margin-right: .3em;
-}
-.order-information .pricing-information > div > p:last-of-type > span:last-of-type{
-    font-size: .8rem;
-}
-.sugar-cookie-pricing{
-    grid-column: 1;
-    grid-row: 1;
 
-    border-radius: 10px;
-    padding: .5em;
-    background-color: hsl(0 0% 15%);
-
-    display: grid;
-    place-content: center;
-}
-.cake-pricing{
-    grid-column:1/5;
-    grid-row: 2;
-
-    display: grid;
-    grid-template-columns: repeat(4,auto);
-    grid-template-rows: auto auto;
-    column-gap: .5rem;
-}
-.cake-pricing > div{
-    border-radius: 10px;
-    padding: .5em;
-    background-color: hsl(0 0% 15%);
-}
-.cake-pricing > div > p:first-of-type{
-   font-size: 1rem;
-   font-weight: 700;
-   margin-bottom: .5em;
-}
-.cake-pricing > div > p:last-of-type{
-    font-size: 2rem;
-    font-weight: 700;
-}
-.drop-cookie-pricing{
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: center;
-
-    border-radius: 10px;
-    padding: .5em;
-    background-color: hsl(0 0% 15%);
-}
-
-.cupcake-pricing{
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: center;
-
-    border-radius: 10px;
-    padding: .5em;
-    background-color: hsl(0 0% 15%);
-}
-.cakepop-pricing{
-    grid-column: 4;
-    grid-row: 1;
-    justify-self: center;
-
-    border-radius: 10px;
-    padding: .5em;
-    background-color: hsl(0 0% 15%);
-}
 
 .order-information .extra-order-information{
-    padding: 1.5rem;
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
     text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
 }
 .order-information .extra-order-information > p{
    line-height: 1.5em;
@@ -1871,6 +1838,8 @@ body{
 
     position: relative;
     width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 2rem;
     isolation: isolate;
     
@@ -2005,15 +1974,7 @@ label[for=OrderFormPaymentType]{
     grid-template-rows: auto;
     gap: 1rem;
 }
-/* label[for=OrderFormName]{
-    align-self: flex-start;
-}
-label[for=OrderFormEmail]{
-    align-self: flex-start;
-}
-label[for=OrderFormName]{
-    align-self: flex-start;
-} */
+
 
 
 .order-form .address-information{
@@ -2460,23 +2421,21 @@ label[for=CakepopFrosting] > div{
     grid-row: 3;
     /* align-self: flex-end; */
 
-    padding: 1rem;
+    padding: .5rem;
     height: fit-content;
     outline: 8px solid hsl(120 50% 50%);
     border-radius: 10px;
 }
 .order-invoice > header{
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: .5rem;
 }
 
-.order-invoice-items{
-    margin-bottom: 1rem;
-}
+
 .order-invoice-items > p{
     margin-bottom: 10px;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 .order-invoice-items-list{
     list-style: none;
@@ -2486,7 +2445,7 @@ label[for=CakepopFrosting] > div{
     background-color: black;
     border-radius: 10px;
     padding: 10px;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -2500,7 +2459,7 @@ label[for=CakepopFrosting] > div{
 }
 .order-invoice-item > div > span{
     text-transform: uppercase;
-    font-size: .9rem;
+    font-size: .8rem;
 }
 
 .order-invoice-item > div > span{
@@ -2541,10 +2500,10 @@ label[for=CakepopFrosting] > div{
 
 
 .order-invoice-personal{
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     border-radius: 10px;
     outline: 2px solid hsl(0 0% 10%);
-    padding: 1em;
+    padding: .5rem;
 }
 .order-invoice-personal > div{
     margin-bottom: 10px;
@@ -2555,7 +2514,7 @@ label[for=CakepopFrosting] > div{
 }
 .order-invoice-personal > div > span{
     font-weight: 700;
-    
+    font-size: .8em;
 }
 .order-invoice-personal > div > p{
     grid-column: 2;
@@ -2568,7 +2527,7 @@ label[for=CakepopFrosting] > div{
 
 
 .order-invoice-retrieval{
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2596,6 +2555,7 @@ label[for=CakepopFrosting] > div{
 }
 .order-invoice-total > div{
     margin-bottom: 10px;
+    font-size: .8em;
 
     display: grid;
     grid-template-columns: auto 1fr;
@@ -2611,7 +2571,7 @@ label[for=CakepopFrosting] > div{
 .order-invoice-total > div > p{
     grid-column: 2;
     justify-self: flex-end;
-    font-size: .9rem;
+    font-size: .8em;
     margin-left: .5em;
 }
 
@@ -3062,7 +3022,7 @@ label[for=CakepopFrosting] > div{
 */
 @media only screen and (max-width: 1240px){
     .order-main{
-        padding: 0 2rem;
+        padding: 0rem 0rem;
     
         display: grid;
         grid-template-columns: 1fr;
@@ -3072,11 +3032,10 @@ label[for=CakepopFrosting] > div{
     .order-main > header{
         grid-column: 1;
         grid-row: 1;
-        
-        padding: 2rem;
+        padding: 1rem;
     }
     .order-main > header > h1{
-        font-size: 3rem;
+        font-size: 2rem;
     }
     
     .order-information{
@@ -3087,18 +3046,8 @@ label[for=CakepopFrosting] > div{
         grid-template-columns: 1fr;
         grid-template-rows: auto;
     }
-    .order-information .pricing-information{
-        text-align: center;
-        grid-column: 1;
-        grid-row: 2;
     
-        display: grid;
-        grid-template-columns: repeat(4,auto);
-        grid-template-rows: auto auto;
-        gap: 2rem;
-    }
     .order-information .extra-order-information{
-        padding: 1.5rem;
         grid-column: 1;
         grid-row: 1;
         text-align: center;
@@ -3109,7 +3058,7 @@ label[for=CakepopFrosting] > div{
     
         position: relative;
         width: 100%;
-        padding: 2rem;
+        padding: 1rem;
         isolation: isolate;
         
         display: grid;
@@ -3201,6 +3150,48 @@ label[for=CakepopFrosting] > div{
 
 @media only screen and (max-width: 1100px){
 
+     /*
+    --------------------------------
+
+        |    HEADER SECONDARY 
+
+    --------------------------------
+    */
+  
+    .navigation-secondary{
+        grid-column: 1/4;
+        grid-row: 1;
+        isolation: isolate;
+        
+        position: absolute;
+        top: 100%; left: 0;
+        width: 100%;
+        padding: 1rem;
+        z-index: 1;
+
+        transform-origin: top;
+        transform: scaleY(0);
+    
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto;
+        gap: 2rem;
+
+        transition: transform 300ms ease-in-out;
+    }
+    .navigation-secondary.show{
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    .navigation-secondary-open-btn{
+    
+        display: block;
+    }
+
+
+
+
+
     .products-list{
       
         grid-template-columns: 1fr;
@@ -3241,9 +3232,18 @@ label[for=CakepopFrosting] > div{
 }
 
 @media only screen and (max-width: 1000px){
+
+
     .navigation-primary-list{
         --nav-primary-size: 50vw;
     }
+
+
+
+
+
+    
+
 
 
 
@@ -3335,7 +3335,6 @@ label[for=CakepopFrosting] > div{
     --------------------------------
     */
     .footer-primary{
-        padding: 1rem;
     }
     .footer-navigation{
         
@@ -3435,6 +3434,97 @@ label[for=CakepopFrosting] > div{
         row-gap: 4rem;
     }
 
+     /*
+    --------------------------------
+
+        |    HEADER SECONDARY 
+
+    --------------------------------
+    */
+    .header-secondary{
+        gap: 1rem;
+        background-color: black;
+    }   
+    .navigation-secondary{
+        padding: 0rem;
+        padding-bottom: 1rem;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: black;
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 2rem;
+    }
+    .navigation-secondary-list{
+        padding: 1em;
+    
+       
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(7,auto);
+        gap: 1em;
+    }
+    .navigation-secondary-item{
+        --nav-sec-size: 30px;
+    
+        justify-self: unset;
+
+        position: relative;
+        padding: .5em;
+        background-color: hsl(0 0% 15%);
+        isolation: isolate;
+    
+        opacity: 0;
+        transform: translateX(50px);
+
+        transition: transform 300ms ease-in-out 100ms,
+        opacity 300ms ease-in-out;
+    }
+    .navigation-secondary.show .navigation-secondary-item{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    .navigation-secondary-item:hover{
+        transform: unset;
+    }
+    .navigation-secondary-item.active::before{
+        
+        content: "";
+        position: absolute;
+        top: 50%; left: unset; right: 2%;
+        width: var(--nav-sec-size);
+        height: var(--nav-sec-size);
+        border-radius: 50%;
+        background: var(--site-gradient);
+        z-index: -1;
+    
+        transform: translate(0%, -50%);
+    }
+    .navigation-secondary-item.active::after{
+        
+        content: "";
+        position: absolute;
+        top: 50%; left: unset; right: calc(2% + var(--nav-sec-size) * .66 / 4);
+        width: calc(var(--nav-sec-size) * .66);
+        height: calc(var(--nav-sec-size) * .66);
+        border-radius: 50%;
+        background-color: inherit;
+        z-index: -1;
+    
+        transform: translate(0%, -50%);
+    }
+    .navigation-secondary-link{
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: var(--fc-primary);
+        font-size: 1.5rem;
+        text-shadow: 2px 2px 3px black;
+    }
+
+
+
     .creations-hero{
         grid-column: 1/3;
         grid-row: 2;
@@ -3453,37 +3543,9 @@ label[for=CakepopFrosting] > div{
 
 
 
-      /*
-    --------------------------------
+     
 
-        |    HEADER SECONDARY / PAGE
 
-    --------------------------------
-    */
-
-    .header-secondary{
-  
-        grid-template-columns: repeat(2,auto);
-        grid-template-rows: auto auto;
-        align-items: center;
-        gap: 0rem;
-    }
-    .header-secondary .website-title{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .navigation-secondary{
-        grid-column: 1/3;
-        grid-row: 2;
-    }
-    .navigation-secondary-list{
-        grid-template-columns: repeat(4,1fr);
-        grid-template-rows: auto;
-    }
-    .navigation-social{
-        grid-column: 2;
-        grid-row: 1;
-    }
 
 
 
@@ -3895,9 +3957,6 @@ label[for=CakepopFrosting] > div{
         gap: 1rem;
     }
 
-    .navigation-secondary-list{
-        gap: 1rem;
-    }
 
     .header-primary-subtext{
         font-size: .8rem;    
@@ -3926,7 +3985,266 @@ label[for=CakepopFrosting] > div{
     }
 
 
+     /*
+    --------------------------------
 
+        |    ORDERING PAGE/FORM/INVOICE
+
+    --------------------------------
+    */
+    .order-form > div > label > div{
+        padding-bottom: 0em; 
+    }
+    label[for=OrderFormItem]{
+
+        padding: 1rem 1rem 0rem 1rem;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+    }
+    .item-information-tabs > div{
+        font-size: .7em;
+        line-height: 1.2em;
+        font-weight: 700;
+     }
+  
+    label[for=SugarCookieQuantity]{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    label[for=SugarCookieDateNeeded]{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    label[for=DropCookieQuantity]{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        align-items: center;
+    }
+    label[for=DropCookieDateNeeded]{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 1rem;
+    }
+
+
+    .order-form .cupcake-information{
+
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(7,auto);
+        gap: 1rem;
+    }
+   
+    .order-form .cupcake-information > header{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    label[for=CupcakeQuantity]{
+        grid-column: 1;
+        grid-row: 2;
+        
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        align-items: center;
+    }
+    label[for=CupcakeDateNeeded]{
+        grid-column: 1;
+        grid-row: 3;
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 1rem;
+    }
+    label[for=CupcakeFlavor]{
+        grid-column: 1;
+        grid-row: 4;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+    
+    label[for=CupcakeFrosting]{
+        grid-column: 1;
+        grid-row: 5;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+    
+    label[for=CupcakeTheme]{
+        grid-column: 1;
+        grid-row: 6;
+        
+    }
+    label[for=CupcakePersonalization]{
+        grid-column: 1;
+        grid-row: 7;
+    }
+    .order-form .cakepop-information{
+
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5,auto);
+        gap: 1rem;
+    }
+
+    .order-form .cakepop-information > header{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    label[for=CakepopQuantity]{
+        grid-column: 1;
+        grid-row: 2;
+        
+       
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        align-items: center;
+    }
+    label[for=CakepopDateNeeded]{
+        grid-column: 1;
+        grid-row: 3;
+    
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    label[for=CakepopFlavor]{
+        grid-column: 1;
+        grid-row: 4;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+    
+    label[for=CakepopFrosting]{
+        grid-column: 1;
+        grid-row: 5;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+
+    .order-form .retrival-information{
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1rem;
+        align-items: center;
+    }
+    label[for=OrderFormRetrival]{
+        grid-column: 1;
+        grid-row: 1;
+    
+        text-align: center;
+    }
+    
+    label[for=OrderFormPaymentType]{
+        grid-column: 1;
+        grid-row: 2;
+    
+        text-align: center;
+    }
+
+    .order-form .cake-information{
+
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(8,auto);
+        gap: 1rem;
+    }
+ 
+    .order-form .cake-information > header{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    label[for=CakeQuantity]{
+        grid-column: 1;
+        grid-row: 2;
+        
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        align-items: center;
+    }
+    label[for=CakeDateNeeded]{
+        grid-column: 1;
+        grid-row: 3;
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    label[for=CakeSize]{
+        grid-column: 1;
+        grid-row: 4;
+    }
+    label[for=CakeFlavor]{
+        grid-column: 1;
+        grid-row: 5;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+    label[for=CakeFrosting]{
+        grid-column: 1;
+        grid-row: 6;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+    }
+    label[for=CakeTheme]{
+        grid-column: 1;
+        grid-row: 7;
+        
+    }
+    label[for=CakePersonalization]{
+        grid-column: 1;
+        grid-row: 8;
+    }
+    
+    .order-form .retrival-information .retrieval-times{
+        grid-column: 1;
+        grid-row: 3;
+    
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 1rem;
+        
+    }
+    
 
      /*
     --------------------------------
@@ -3984,16 +4302,13 @@ label[for=CakepopFrosting] > div{
         background-color: hsl(0 0% 20% / 0.3);
     }
 
-    .navigation-secondary-list{
-        padding: 1rem .5rem;
-    }
+
+
+  
     .navigation-secondary-link{
         font-size: 1.2rem;
     }
-    .navigation-secondary-icon{
-        width: 25px;
-        filter: invert(100%);
-    }
+  
 
     /* Customer Reviews */
 
@@ -4075,9 +4390,4 @@ label[for=CakepopFrosting] > div{
     .navigation-primary-link{
         font-size: 1rem;
     }
-
-
-
-   
-   
 }
