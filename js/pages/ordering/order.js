@@ -398,6 +398,8 @@ const OrderForm = {
         OrderForm.inableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
 
         OrderInvoice.removeItemFromInvoice(orderItem.dataset.itemId);
+
+        OrderInvoice.calculateInvoiceTotal();
     },
     
     disableItemSelection(itemSelection,itemValue){
@@ -566,6 +568,13 @@ const OrderForm = {
 };
 
 function initializeOrderCookiePage(){
+
+    if(innerWidth < 1100){
+
+        document.querySelector('.navigation-secondary-open-btn').addEventListener('click', (event)=>{
+            document.querySelector('.navigation-secondary').classList.toggle('show');
+        });
+    }
 
     OrderInvoice.initialize();
 
