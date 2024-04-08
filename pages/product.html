@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products | Baked By Bec</title>
     <link rel="stylesheet" href="../main.css">
+    <script type="module" src="../js/pages/product/product.js"></script>
 </head>
 <body>
     <header class="header-secondary">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/">
+            <a href="/bakedbybec/index.html">
                 <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
@@ -19,15 +20,33 @@
 
             <ul class="navigation-secondary-list">
 
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
-
-                </li>
-
                 <li class="navigation-secondary-item active">
 
                     <a href="/bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/bakedbybec/pages/order.html" class="navigation-secondary-link">order</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/bakedbybec/pages/gallery.html" class="navigation-secondary-link">creations</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/bakedbybec/pages/classes.html" class="navigation-secondary-link">classes</a>
+
+                </li>
+
+                <li class="navigation-secondary-item">
+
+                    <a href="/bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
 
                 </li>
 
@@ -39,14 +58,11 @@
 
                 <li class="navigation-secondary-item">
 
-                    <a href="/bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
+                    <a href="/bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
 
-                </li>
+                </li>      
 
             </ul>
-        </nav>
-
-        <nav class="navigation-social">
 
             <ul class="navigation-social-list">
 
@@ -72,6 +88,8 @@
             </ul>
         </nav>
 
+        <button type="button" class="navigation-secondary-open-btn">&#9776;</button>
+
     </header>
 
     <main class="product-main">
@@ -82,7 +100,12 @@
 
                 <li class="products-item">
 
-                    <h2>sugar cookies</h2>
+                    <header>
+
+                        <h2>sugar cookies</h2>
+
+                        <p><span>$30</span><span>/dozen</span></p>
+                    </header>
 
                     <div class="product-item-links">
 
@@ -96,7 +119,11 @@
 
                 <li class="products-item">
 
-                    <h2>drop cookies</h2>
+                    <header>
+                        <h2>drop cookies</h2>
+
+                        <p><span>$25</span><span>/dozen</span></p>
+                    </header>
 
                     <div class="product-item-links">
 
@@ -110,7 +137,34 @@
 
                 <li class="products-item">
 
-                    <h2>cakes</h2>
+                    <header>
+
+                        <h2>cakes</h2>
+
+                        <div class="cake-pricing">
+                    
+                            <div>
+                                <p>6" smash</p>
+                                <p>(3 layers)</p>
+                                <p>$25</p>
+                            </div>
+                            <div>
+                                <p>8"</p>
+                                <p>(2 layers)</p>
+                                <p>$35</p>
+                            </div>
+                            <div>
+                                <p>10"</p>
+                                <p>(2 layers)</p>
+                                <p>$40</p>
+                            </div>
+                            <div>
+                                <p>2 Tier</p>
+                                <p>(B: 2-10"; T: 2-6")</p>
+                                <p>$65</p>
+                            </div>
+                        </div>
+                    </header>
 
                     <div class="product-item-links">
 
@@ -124,7 +178,12 @@
 
                 <li class="products-item">
 
-                    <h2>cupcakes</h2>
+                    <header>
+
+                        <h2>cupcakes</h2>
+
+                        <p><span>$20</span><span>/dozen</span></p>
+                    </header>
 
                     <div class="product-item-links">
 
@@ -138,7 +197,12 @@
 
                 <li class="products-item">
 
-                    <h2>cake pops</h2>
+                    <header>
+
+                        <h2>cake pops</h2>
+
+                        <p><span>$18</span><span>/dozen</span></p>
+                    </header>
 
                     <div class="product-item-links">
 
@@ -203,7 +267,7 @@
 
                 <li class="footer-navigation-products-item">
 
-                    <a href="/" class="footer-navigation-products-link">home</a>
+                    <a href="/bakedbybec/pages/order.html" class="footer-navigation-products-link">order</a>
 
                 </li>
 
