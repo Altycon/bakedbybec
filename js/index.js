@@ -45,6 +45,8 @@ function initializeSite(){
 
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
 
+
+    confirm('clay...notes: add animations to product page, finish classes and order form, push invoice off screen, consider starting over..');
    
 }
 initializeSite();

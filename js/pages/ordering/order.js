@@ -224,6 +224,33 @@ const OrderInvoice = {
         OrderInvoice.element.querySelector(`[data-output="total"]`).textContent = `${sum}.00`
 
     },
+    closeInvoice(event){
+
+        event.preventDefault();
+
+        OrderInvoice.element.classList.remove('show');
+
+        setTimeout( ()=> {
+
+            OrderInvoice.element.classList.remove('open');
+
+        },500)
+    },
+    openInvoice(event){
+
+        event.preventDefault();
+
+        OrderInvoice.element.classList.add('open');
+
+        setTimeout( ()=> {
+
+            OrderInvoice.element.classList.add('show');
+
+        },100);
+
+        document.querySelector('.order-invoice-close-btn').addEventListener('click', OrderInvoice.closeInvoice);
+    },
+    
     initialize(){
         OrderInvoice.element = document.querySelector('.order-invoice');
         OrderInvoice.itemListElement = document.querySelector('.order-invoice-items-list');
@@ -377,7 +404,7 @@ const OrderForm = {
         const tabParent = document.querySelector('.item-information-tabs');
         tabParent.appendChild(newTab);
     },
-    inableItemSelection(itemSelection,itemValue){
+    enableItemSelection(itemSelection,itemValue){
 
         itemSelection.querySelector(`option[value="${itemValue}"]`).removeAttribute('disabled');
 
@@ -393,9 +420,12 @@ const OrderForm = {
 
         orderItem.classList.remove('active');
 
+        OrderForm.disableOrderItemInputs(orderItem);
+
         OrderForm.removeItemTab(orderItem.dataset.itemId);
 
-        OrderForm.inableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
+        OrderForm.enableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
+
 
         OrderInvoice.removeItemFromInvoice(orderItem.dataset.itemId);
 
@@ -501,6 +531,18 @@ const OrderForm = {
             
         })
     },
+    disableOrderItemInputs(orderItemElement){
+        orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
+
+            dataInput.setAttribute('disabled',true);
+        });
+    },
+    enableOrderItemInputs(orderItemElement){
+        orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
+
+            dataInput.removeAttribute('disabled');
+        });
+    },
     addItemToOrder(event){
 
         if(event.target.value){
@@ -521,7 +563,7 @@ const OrderForm = {
 
             OrderForm.activateOrderItem(orderItem);
 
-            
+            OrderForm.enableOrderItemInputs(orderItem);
 
             // invoice
 
@@ -567,7 +609,7 @@ const OrderForm = {
     }
 };
 
-function initializeOrderCookiePage(){
+function initializeOrderingPage(){
 
     if(innerWidth < 1100){
 
@@ -581,5 +623,7 @@ function initializeOrderCookiePage(){
     OrderForm.initialize();
     OrderForm.listen();
 
+    document.querySelector('.order-form-invoice-open-btn').addEventListener('click', OrderInvoice.openInvoice);
+
 };
-initializeOrderCookiePage();
+initializeOrderingPage();
