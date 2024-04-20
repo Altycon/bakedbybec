@@ -8,87 +8,60 @@
     <script type="module" src="../js/pages/product/product.js"></script>
 </head>
 <body>
-    <header class="header-secondary">
+    <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/index.html">
+            <a href="/bakedbybec/" class="link">
                 <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
 
-        <nav class="navigation-secondary">
-
-            <ul class="navigation-secondary-list">
-
-                <li class="navigation-secondary-item active">
-
-                    <a href="/bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
-
+        <nav class="page-navigation-primary">
+            <!-- This is the navigation menu to open -->
+            <ul class="page-navigation-primary-list">
+                <li class="page-navigation-primary-item" style="--i:2;">
+                    <a href="/bakedbybec/pages/product.html" class="link page-navigation-primary-link active">product</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/order.html" class="navigation-secondary-link">order</a>
-
+                <li class="page-navigation-primary-item" style="--i:1.5;">
+                    <a href="/bakedbybec/pages/gallery.html" class="link page-navigation-primary-link">creations</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/gallery.html" class="navigation-secondary-link">creations</a>
-
+                <li class="page-navigation-primary-item" style="--i:1;">
+                    <a href="/bakedbybec/pages/meet.html" class="link page-navigation-primary-link">meet</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/classes.html" class="navigation-secondary-link">classes</a>
-
+                <li class="page-navigation-primary-item" style="--i:1;">
+                    <a href="/bakedbybec/pages/contact.html" class="link page-navigation-primary-link">contact</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
-
+                <li class="page-navigation-primary-item" style="--i:1.5;">
+                    <a href="/bakedbybec/pages/order.html" class="link page-navigation-primary-link">order</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/contact.html" class="navigation-secondary-link">contact</a>
-
-                </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
-
+                <li class="page-navigation-primary-item" style="--i:1.3;">
+                    <a href="/bakedbybec/pages/classes.html" class="link page-navigation-primary-link">request class</a>
                 </li>      
-
             </ul>
+        </nav>
 
-            <ul class="navigation-social-list">
-
-                <li class="navigation-social-item">
-
-                    <a href="" class="navigation-social-link">
-
-                        <img src="/bakedbybec/img/Facebook-icon.png" alt="" class="navigation-social-icon">
-
+        <nav class="page-navigation-social">
+            <ul class="page-navigation-social-list">
+                <li class="page-navigation-social-item">
+                    <a href="" class="link page-navigation-social-link">
+                        <img src="/bakedbybec/img/Facebook-icon.png" alt="Facebook icon" class="icon-png page-navigation-social-icon">
                     </a>
-
                 </li>
-
-                <li class="navigation-social-item">
-
-                    <a href="" class="navigation-social-link">
-
-                        <img src="/bakedbybec/img/Instagram-icon.png" alt="" class="navigation-social-icon">
-
+                <li class="page-navigation-social-item">
+                    <a href="" class="link page-navigation-social-link">
+                        <img src="/bakedbybec/img/Instagram-icon.png" alt="Instagram icon" class="icon-png page-navigation-social-icon">
                     </a>
-
                 </li>
             </ul>
         </nav>
 
-        <button type="button" class="navigation-secondary-open-btn">&#9776;</button>
+        <div class="btn page-navigation-primary-open-btn">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <!-- <button type="button" class="page-navigation-primary-open-btn">&#9776;</button> -->
 
     </header>
 
@@ -220,80 +193,27 @@
     </main>
 
     <footer class="footer-primary">
-
         <nav class="footer-navigation">
-
-            <ul class="footer-navigation-pages-list">
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/product.html" class="footer-navigation-pages-link">products</a>
-
-                </li>
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
-
-                </li>
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/contact.html" class="footer-navigation-pages-link">contact</a>
-
-                </li>
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/meet.html" class="footer-navigation-pages-link">meet</a>
-
-                </li>
-
+            <ul>
+                <li><a href="/bakedbybec/pages/product.html" class="link">product</a></li>
+                <li><a href="/bakedbybec/pages/creations.html" class="link">creations</a></li>
+                <li><a href="/bakedbybec/pages/meet.html" class="link">meet</a></li>
             </ul>
-
-            <ul class="footer-navigation-products-list">
-
-                <li class="footer-navigation-products-item">
-
-                    <a href="/bakedbybec/pages/gallery.html" class="footer-navigation-products-link">creations</a>
-
-                </li>
-
-                <li class="footer-navigation-products-item">
-
-                    <a href="/bakedbybec/pages/classes.html" class="footer-navigation-products-link">classes</a>
-
-                </li>
-
-                <li class="footer-navigation-products-item">
-
-                    <a href="/bakedbybec/pages/order.html" class="footer-navigation-products-link">order</a>
-
-                </li>
-
+            <ul>
+                <li><a href="/bakedbybec/pages/order.html" class="link">order</a></li>
+                <li><a href="/bakedbybec/pages/contact.html" class="link">contact</a></li>
+                <li><a href="/bakedbybec/pages/classes.html" class="link">request class</a></li>
             </ul>
-
             <div class="footer-logo">
-
                 <div class="logo-ring"></div>
-
-                <a href="/">
-
-                    <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo">
-
-                </a>
-
+                <a href="/index.html"><img src="/bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo"></a>
             </div>
-
         </nav>
-
         <p class="footer-copyright">&copy;&nbsp;2024</p>
-
         <div class="footer-created-by">
             <p>Created by Clayton McDaniel</p>
             <a href="https://github.com/Altycon">https://github.com/Altycon</a>
         </div>
-        
     </footer>
     
 </body>

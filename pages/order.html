@@ -8,87 +8,60 @@
     <script type="module" src="../js/pages/ordering/order.js"></script>
 </head>
 <body>
-    <header class="header-secondary">
+    <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/index.html">
+            <a href="/bakedbybec/" class="link">
                 <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
 
-        <nav class="navigation-secondary">
-
-            <ul class="navigation-secondary-list">
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/product.html" class="navigation-secondary-link">product</a>
-
+        <nav class="page-navigation-primary">
+            <!-- This is the navigation menu to open -->
+            <ul class="page-navigation-primary-list">
+                <li class="page-navigation-primary-item" style="--i:2;">
+                    <a href="/bakedbybec/pages/product.html" class="link page-navigation-primary-link active">product</a>
                 </li>
-
-                <li class="navigation-secondary-item active">
-
-                    <a href="/bakedbybec/pages/order.html" class="navigation-secondary-link">order</a>
-
+                <li class="page-navigation-primary-item" style="--i:1.5;">
+                    <a href="/bakedbybec/pages/gallery.html" class="link page-navigation-primary-link">creations</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/gallery.html" class="navigation-secondary-link">creations</a>
-
+                <li class="page-navigation-primary-item" style="--i:1;">
+                    <a href="/bakedbybec/pages/meet.html" class="link page-navigation-primary-link">meet</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/classes.html" class="navigation-secondary-link">classes</a>
-
+                <li class="page-navigation-primary-item" style="--i:1;">
+                    <a href="/bakedbybec/pages/contact.html" class="link page-navigation-primary-link">contact</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/meet.html" class="navigation-secondary-link">meet</a>
-
+                <li class="page-navigation-primary-item" style="--i:1.5;">
+                    <a href="/bakedbybec/pages/order.html" class="link page-navigation-primary-link">order</a>
                 </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/contact.html" class="navigation-secondary-link">contact</a>
-
-                </li>
-
-                <li class="navigation-secondary-item">
-
-                    <a href="/bakedbybec/pages/faqs.html" class="navigation-secondary-link">faqs</a>
-
+                <li class="page-navigation-primary-item" style="--i:1.3;">
+                    <a href="/bakedbybec/pages/classes.html" class="link page-navigation-primary-link">request class</a>
                 </li>      
-
             </ul>
+        </nav>
 
-            <ul class="navigation-social-list">
-
-                <li class="navigation-social-item">
-
-                    <a href="" class="navigation-social-link">
-
-                        <img src="/bakedbybec/img/Facebook-icon.png" alt="" class="navigation-social-icon">
-
+        <nav class="page-navigation-social">
+            <ul class="page-navigation-social-list">
+                <li class="page-navigation-social-item">
+                    <a href="" class="link page-navigation-social-link">
+                        <img src="/bakedbybec/img/Facebook-icon.png" alt="Facebook icon" class="icon-png page-navigation-social-icon">
                     </a>
-
                 </li>
-
-                <li class="navigation-social-item">
-
-                    <a href="" class="navigation-social-link">
-
-                        <img src="/bakedbybec/img/Instagram-icon.png" alt="" class="navigation-social-icon">
-
+                <li class="page-navigation-social-item">
+                    <a href="" class="link page-navigation-social-link">
+                        <img src="/bakedbybec/img/Instagram-icon.png" alt="Instagram icon" class="icon-png page-navigation-social-icon">
                     </a>
-
                 </li>
             </ul>
         </nav>
 
-        <button type="button" class="navigation-secondary-open-btn">&#9776;</button>
+        <div class="btn page-navigation-primary-open-btn">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <!-- <button type="button" class="page-navigation-primary-open-btn">&#9776;</button> -->
 
     </header>
 
@@ -110,7 +83,7 @@
 
         </div> -->
 
-       <form class="order-form">
+       <form class="order-form" action="./order_success.html">
             <header>
                 <h2>get started</h2>
 
@@ -139,288 +112,7 @@
 
                 <ul class="order-item-list">
 
-                    <li class="order-item sugar-cookie-information" data-order-item="sugar-cookies" data-item-id="sc">
-
-                        <header>
-                            <h3>Sugar Cookies</h3>
-                            <button type="button" class="btn remove-order-btn" value="sugar-cookies">remove&nbsp;&#10007;</button>
-                        </header>
-    
-                        <label for="SugarCookieQuantity">
-                            <div>How many would you like?</div>
-                            <select name="sugarcookiequantity" id="SugarCookieQuantity" data-input="scquantity" data autocomplete="off" required disabled>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="1" data-price="30">1 dozen</option>
-                                <option value="2" data-price="60">2 dozen</option>
-                                <option value="3" data-price="90">3 dozen</option>
-                                <option value="4" data-price="120">4 dozen</option>
-                                <option value="5" data-price="150">5 dozen</option>
-                                <option value="6" data-price="180">6 dozen</option>
-                            </select>
-                        </label>
-        
-                        <label for="SugarCookieDateNeeded">
-                            <div>When are they needed?</div>
-                            <input type="date"
-                                name="sugarcookiedate" 
-                                id="SugarCookieDateNeeded" 
-                                min="" 
-                                data-input="scdate" 
-                                autocomplete="off" required disabled>
-                        </label>
-        
-                        <label for="SugarCookieTheme">
-                            <div>Theme/Occasion</div>
-                            <textarea name="sugarcookietheme" 
-                                id="SugarCookieTheme" 
-                                cols="30" rows="1" 
-                                data-input="sctheme" 
-                                autocomplete="off" required disabled></textarea>
-                        </label>
-        
-                        <label for="SugarCookiePersonalization">
-                            <div>Personalization</div>
-                            <textarea name="sugarcookiepersonalization"
-                                id="SugarCookiePersonalization" 
-                                cols="30" rows="2" 
-                                data-input="scpersonalization" 
-                                autocomplete="off" required disabled></textarea>
-                        </label>
-                       
-                    </li>
-    
-                    <li class="order-item cake-information" data-order-item="cakes" data-item-id="ck">
-    
-                        <header>
-                            <h3>Cake</h3>
-                            <button type="button" class="btn remove-order-btn" value="cakes">remove&nbsp;&#10007;</button>
-                        </header>
-
-                        
-
-                        <label for="CakeQuantity">
-                            <div>How many would you like?</div>
-                            <select name="cakequantity" id="CakeQuantity" data-input="ckquantity" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </label>
-        
-                        <label for="CakeDateNeeded">
-                            <div>Date needed</div>
-                            <input type="date" name="cakedateneeded" id="CakeDateNeeded" data-input="ckdate" autocomplete="off" required>
-                        </label>
-
-                        <label for="CakeSize">
-                            <div>What size of cake?</div>
-                            <select name="cakesize" id="CakeSize" data-input="cksize" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="6inch" data-price="25">Smash Cake (serves ~12)</option>
-                                <option value="8inch" data-price="35">8" (serves ~20)</option>
-                                <option value="10inch" data-price="40">10" (serves ~28)</option>
-                                <option value="2tier" data-price="65">2 tier (serves ~48)</option>
-                                
-                            </select>
-                        </label>
-    
-                        <label for="CakeFlavor">
-                            <div>Flavor</div>
-                            <select name="cakeflavor" id="CakeFlavor" data-input="ckflavor" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="redvelvet">red velvet</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-    
-                        <label for="CakeFrosting">
-                            <div>Frosting</div>
-                            <select name="cakefrosting" id="CakeFrosting" data-input="ckfrosting" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-        
-                        <label for="CakeTheme">
-                            <div>Theme/Occasion</div>
-                            <textarea name="caketheme" id="CakeTheme" cols="30" rows="1" data-input="cktheme" autocomplete="off" required></textarea>
-                        </label>
-        
-                        <label for="CakePersonalization">
-                            <div>Personalization</div>
-                            <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" data-input="ckpersonalization" autocomplete="off" required></textarea>
-                        </label>
-      
-                    </li>
-    
-                    <li class="order-item drop-cookie-information" data-order-item="drop-cookies" data-item-id="dc">
-    
-                        <header>
-                            <h3>Drop Cookies</h3>
-                            <button type="button" class="btn remove-order-btn" value="drop-cookies">remove&nbsp;&#10007;</button>
-                        </header>
-    
-                        <label for="DropCookieQuantity">
-                            <div>How many would you like?</div>
-                            <select name="dropcookiequantity" id="DropCookieQuantity" data-input="dcquantity" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="1" data-price="25">1 dozen</option>
-                                <option value="2" data-price="50">2 dozen</option>
-                                <option value="3" data-price="75">3 dozen</option>
-                                <option value="4" data-price="100">4 dozen</option>
-                                <option value="5" data-price="125">5 dozen</option>
-                                <option value="6" data-price="150">6 dozen</option>
-                            </select>
-                        </label>
-        
-                        <label for="DropCookieDateNeeded">
-                            <div>Date needed</div>
-                            <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" data-input="dcdate" autocomplete="off" required>
-                        </label>
-        
-                        <label for="DropCookieFlavor">
-                            <div>Flavor</div>
-                            <select name="dropcookieflavor" id="DropCookieFlavor" data-input="dcflavor" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="lemon">lemon</option>
-                                <option value="raspberry">raspberry</option>
-                                <option value="strawberry">strawberry</option>
-                            </select>
-                        </label>
-        
-                        <label for="DropCookieAddon">
-                            <div>Add-on</div>
-                            <select name="dropcookieaddon" id="DropCookieAddon" data-input="dcaddon" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="chocolate chips">chocolate chips</option>
-                                <option value="white chocolate chips">white chocolate chips</option>
-                                <option value="peanut butter chips">peanut butter chips</option>
-                            </select>
-                        </label>
-                       
-                    </li>
-    
-                    <li class="order-item cupcake-information" data-order-item="cupcakes" data-item-id="cc">
-    
-                        <header>
-                            <h3>Cupcakes</h3>
-                            <button type="button" class="btn remove-order-btn" value="cupcakes">remove&nbsp;&#10007;</button>
-                        </header>
-
-                        <label for="CupcakeQuantity">
-                            <div>How many would you like?</div>
-                            <select name="cupcakequantity" id="CupcakeQuantity" data-input="ccquantity" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="1" data-price="20">1 dozen</option>
-                                <option value="2" data-price="40">2 dozen</option>
-                                <option value="3" data-price="60">3 dozen</option>
-                                <option value="4" data-price="80">4 dozen</option>
-                                <option value="5" data-price="100">5 dozen</option>
-                                <option value="6" data-price="120">6 dozen</option>
-                            </select>
-                        </label>
-        
-                        <label for="CupcakeDateNeeded">
-                            <div>Date needed</div>
-                            <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" data-input="ccdate" autocomplete="off" required>
-                        </label>
-    
-                        <label for="CupcakeFlavor">
-                            <div>Flavor</div>
-                            <select name="cupcakeflavor" id="CupcakeFlavor" data-input="ccflavor"  autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="redvelvet">red velvet</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-    
-                        <label for="CupcakeFrosting">
-                            <div>Frosting</div>
-                            <select name="cupcakefrosting" id="CupcakeFrosting" data-input="ccfrosting" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-        
-                        <label for="CupcakeTheme">
-                            <div>Theme/Occasion</div>
-                            <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="1" data-input="cctheme" autocomplete="off" required></textarea>
-                        </label>
-        
-                        <label for="CupcakePersonalization">
-                            <div>Personalization</div>
-                            <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" data-input="ccpersonalization" autocomplete="off" required></textarea>
-                        </label>
-    
-                        
-                       
-                    </li>
-    
-                    <li class="order-item cakepop-information" data-order-item="cake-pops" data-item-id="cp">
-    
-                        <header>
-                            <h3>Cake Pops</h3>
-                            <button type="button" class="btn remove-order-btn" value="cake-pops">remove&nbsp;&#10007;</button>
-                        </header>
-
-                        <label for="CakepopQuantity">
-                            <div>How many would you like?</div>
-                            <select name="cakepopquantity" id="CakepopQuantity" data-input="cpquantity" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="1" data-price="18">1 dozen</option>
-                                <option value="2" data-price="36">2 dozen</option>
-                                <option value="3" data-price="54">3 dozen</option>
-                                <option value="4" data-price="72">4 dozen</option>
-                                <option value="5" data-price="90">5 dozen</option>
-                                <option value="6" data-price="108">6 dozen</option>
-                            </select>
-                        </label>
-        
-                        <label for="CakepopDateNeeded">
-                            <div>Date needed</div>
-                            <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" data-input="cpdate" autocomplete="off" required>
-                        </label>
-    
-                        <label for="CakepopFlavor">
-                            <div>Flavor</div>
-                            <select name="cakepopflavor" id="CakepopFlavor" data-input="cpflavor" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="redvelvet">red velvet</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-    
-                        <label for="CakepopFrosting">
-                            <div>Frosting</div>
-                            <select name="cakepopfrosting" id="CakepopFrosting" data-input="cpfrosting" autocomplete="off" required>
-                                <option value=""selected disabled>-- select</option>
-                                <option value="vanilla">vanilla</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="strawberry">strawberry</option>
-                                <option value="lemon">lemon</option>
-                            </select>
-                        </label>
-        
-                        
-                       
-                    </li>
+                    <!-- order items injected here -->
 
                 </ul>
 
@@ -493,31 +185,12 @@
                     <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
                 </label>
 
-                <div class="address-information">
-
-                    <label for="OrderFormStreet">
-                        <div>Street</div>
-                        <input type="text" name="street" id="OrderFormStreet" data-input="street" autocomplete="off" required>
-                    </label>
-                    <label for="OrderFormCity">
-                        <div>City</div>
-                        <input type="text" name="city" id="OrderFormCity" data-input="city" autocomplete="off" required>
-                    </label>
-                    <label for="OrderFormState">
-                        <div>State</div>
-                        <input type="text" name="state" id="OrderFormState" data-input="state" autocomplete="off" required>
-                    </label>
-                    <label for="OrderFormZipCode">
-                        <div>Zip</div>
-                        <input type="text" name="zipcode" id="OrderFormZipCode" data-input="zipcode" autocomplete="off" required>
-                    </label>
-
-                </div>
-
-
+                <!-- address information injected here if needed -->
 
             </div>
+
             <button type="button" class="btn order-submit-btn">confirm order</button>
+
        </form>
 
        <section class="order-invoice">
@@ -533,78 +206,7 @@
                     <p>Items:</p>
                     <ul class="order-invoice-items-list">
 
-                        <!-- <li class="order-invoice-item">
-                          
-                            <div><span>Type</span>
-                                <p>Sugar Cookies</p>
-                            </div>
-                            <div><span>Quantity</span>
-                                <p>2 dozen</p>
-                            </div>
-                            <div><span>Date</span>
-                                <p>06/05/2024</p>
-                            </div>
-                            <div><span>Size</span>
-                                <p>NA</p>
-                            </div>
-                            <div class="details"><span>Details</span>
-                                <p>Theme: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, distinctio?</span></p>
-                                <p>Personalization: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, in.</span></p>
-                            </div>
-                            <div class="item-total"><span>Total</span>
-                                <p>$&nbsp;<span>60.00</span></p>
-                            </div>
-
-                        </li> -->
-
-                        <!-- <li class="order-invoice-item">
-                          
-                            <div><span>Type</span>
-                                <p>Cakes</p>
-                            </div>
-                            <div><span>Quantity</span>
-                                <p>1</p>
-                            </div>
-                            <div><span>Date</span>
-                                <p>06/05/2024</p>
-                            </div>
-                            <div><span>Size</span>
-                                <p>8"</p>
-                            </div>
-                            <div class="details"><span>Details</span>
-                                <p>Flavor: <span>Vanilla</span></p>
-                                <p>Frosting: <span>Strawberry</span></p>
-                                <p>Theme: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, distinctio?</span></p>
-                                <p>Personalization: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, in.</span></p>
-                            </div>
-                            <div class="item-total"><span>Total</span>
-                                <p>$&nbsp;<span>60.00</span></p>
-                            </div>
-                        </li> -->
-
-                        <!-- <li class="order-invoice-item">
-                          
-                            <div><span>Type</span>
-                                <p>Drop Cookies</p>
-                            </div>
-                            <div><span>Quantity</span>
-                                <p>2 dozen</p>
-                            </div>
-                            <div><span>Date</span>
-                                <p>06/05/2024</p>
-                            </div>
-                            <div><span>Size</span>
-                                <p>NA</p>
-                            </div>
-                            <div class="details"><span>Details</span>
-                                <p>Flavor: <span>Chocolate</span></p>
-                                <p>Addon: <span>Peanut Butter Chips</span></p>
-                            </div>
-                            <div class="item-total"><span>Total</span>
-                                <p>$&nbsp;<span>60.00</span></p>
-                            </div>
-
-                        </li> -->
+                        <!-- invoice item information injected here -->
                         
                     </ul>
                     
@@ -659,80 +261,27 @@
     </main>
 
     <footer class="footer-primary">
-
         <nav class="footer-navigation">
-
-            <ul class="footer-navigation-pages-list">
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/product.html" class="footer-navigation-pages-link">products</a>
-
-                </li>
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/faqs.html" class="footer-navigation-pages-link">faqs</a>
-
-                </li>
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/contact.html" class="footer-navigation-pages-link">contact</a>
-
-                </li>
-
-                <li class="footer-navigation-pages-item">
-
-                    <a href="/bakedbybec/pages/meet.html" class="footer-navigation-pages-link">meet</a>
-
-                </li>
-
+            <ul>
+                <li><a href="/bakedbybec/pages/product.html" class="link">product</a></li>
+                <li><a href="/bakedbybec/pages/creations.html" class="link">creations</a></li>
+                <li><a href="/bakedbybec/pages/meet.html" class="link">meet</a></li>
             </ul>
-
-            <ul class="footer-navigation-products-list">
-
-                <li class="footer-navigation-products-item">
-
-                    <a href="/bakedbybec/pages/gallery.html" class="footer-navigation-products-link">creations</a>
-
-                </li>
-
-                <li class="footer-navigation-products-item">
-
-                    <a href="/bakedbybec/pages/classes.html" class="footer-navigation-products-link">classes</a>
-
-                </li>
-
-                <li class="footer-navigation-products-item">
-
-                    <a href="/bakedbybec/pages/order.html" class="footer-navigation-products-link">order</a>
-
-                </li>
-
+            <ul>
+                <li><a href="/bakedbybec/pages/order.html" class="link">order</a></li>
+                <li><a href="/bakedbybec/pages/contact.html" class="link">contact</a></li>
+                <li><a href="/bakedbybec/pages/classes.html" class="link">request class</a></li>
             </ul>
-
             <div class="footer-logo">
-
                 <div class="logo-ring"></div>
-
-                <a href="/">
-
-                    <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo">
-
-                </a>
-
+                <a href="/index.html"><img src="/bakedbybec/img/bbb-logo1.png" alt="Baked by Bec logo"></a>
             </div>
-
         </nav>
-
         <p class="footer-copyright">&copy;&nbsp;2024</p>
-
         <div class="footer-created-by">
             <p>Created by Clayton McDaniel</p>
             <a href="https://github.com/Altycon">https://github.com/Altycon</a>
         </div>
-        
     </footer>
 
     <div class="image-viewer">
