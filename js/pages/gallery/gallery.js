@@ -1,5 +1,6 @@
 
 import { AImageViewer } from "../../image_viewer.js";
+import { pageNavigation } from "../../navigation.js";
 
 const galleryTabs = document.querySelectorAll('.navigation-gallery-item');
 
@@ -101,12 +102,7 @@ function initializeGallery(){
         setGalleryLink('SugarCookies');
     }
 
-    if(innerWidth < 1100){
-
-        document.querySelector('.navigation-secondary-open-btn').addEventListener('click', (event)=>{
-            document.querySelector('.navigation-secondary').classList.toggle('show');
-        });
-    }
+    pageNavigation();
     
 
     listenToGallery();

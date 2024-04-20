@@ -1,3 +1,4 @@
+import { pageNavigation } from "../../navigation.js";
 
 function createSugarCookieFormItem(){
 
@@ -234,11 +235,13 @@ const OrderInvoice = {
 
             OrderInvoice.element.classList.remove('open');
 
+            event.target.removeEventListener('click', OrderInvoice.closeInvoice);
+
         },500)
     },
     openInvoice(event){
 
-        event.preventDefault();
+        if(event) event.preventDefault();
 
         OrderInvoice.element.classList.add('open');
 
@@ -260,10 +263,10 @@ const OrderInvoice = {
 
 const OrderForm = {
     form: undefined,
+    submitButton: undefined,
     itemSelectElement: undefined,
     retrivalTypeSelect: undefined,
     addressInformationDisplay: undefined,
-    orderItemElements: undefined,
 
     displayInformation(event){
         
@@ -277,6 +280,16 @@ const OrderForm = {
 
         if(event.target.value === 'shipping' || event.target.value === 'delivery'){
 
+            const addressComponent = OrderForm.addressFormComponent();
+
+            OrderForm.form.querySelector('.personal-information').appendChild(new DocumentFragment().appendChild(addressComponent));
+
+            setTimeout( ()=> {
+
+                addressComponent.classList.add('show');
+            },100)
+
+
             if(event.target.value === 'shipping'){
 
                 document.querySelector(`[data-output="shipping"]`).textContent = `15.00`;
@@ -288,21 +301,22 @@ const OrderForm = {
                 // open a delivery milage price calculator?
             }
 
-            if(!OrderForm.addressInformationDisplay.classList.contains('show')){
-
-                OrderForm.addressInformationDisplay.classList.add('show');
-
-            }   
-
-            
-
         }else{
 
-            if(OrderForm.addressInformationDisplay.classList.contains('show')){
+            const addressElement = document.querySelector('.address-information');
 
-                OrderForm.addressInformationDisplay.classList.remove('show');
+            if(addressElement){
 
-            }               
+                addressElement.classList.remove('show');
+
+                setTimeout( ()=>{
+
+                    OrderForm.form.querySelector('.personal-information').removeChild(addressElement);
+
+                },500)
+
+            }
+                      
         }
     },
     zeroPadLeftToString(num){
@@ -325,6 +339,366 @@ const OrderForm = {
 
         dateElement.setAttribute('min', dateString);
     },
+    capatilizeWord(word){
+        
+        return word[0].toUpperCase() + word.substring(1);
+
+    },
+    initialWords(words){
+        let initials = '';
+
+        for(let i = 0; i < words.length; i++){
+
+            initials += words[i][0]; 
+        }
+
+        return initials;
+    },
+    cakepopComponent(){
+        
+        const li = document.createElement('li');
+        li.classList.add('order-item','cakepop-information');
+        li.setAttribute('data-order-item','cake-pops');
+        li.setAttribute('data-item-id','cp');
+
+        li.innerHTML += `<header>
+                <h3>Cake Pops</h3>
+                <button type="button" class="btn remove-order-btn" value="cake-pops">remove&nbsp;&#10007;</button>
+            </header>
+
+            <label for="CakepopQuantity">
+                <div>How many would you like?</div>
+                <select name="cakepopquantity" id="CakepopQuantity" data-input="cpquantity" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="1" data-price="18">1 dozen</option>
+                    <option value="2" data-price="36">2 dozen</option>
+                    <option value="3" data-price="54">3 dozen</option>
+                    <option value="4" data-price="72">4 dozen</option>
+                    <option value="5" data-price="90">5 dozen</option>
+                    <option value="6" data-price="108">6 dozen</option>
+                </select>
+            </label>
+
+            <label for="CakepopDateNeeded">
+                <div>Date needed</div>
+                <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" data-input="cpdate" autocomplete="off" required>
+            </label>
+
+            <label for="CakepopFlavor">
+                <div>Flavor</div>
+                <select name="cakepopflavor" id="CakepopFlavor" data-input="cpflavor" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="redvelvet">red velvet</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="CakepopFrosting">
+                <div>Frosting</div>
+                <select name="cakepopfrosting" id="CakepopFrosting" data-input="cpfrosting" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>`;
+        
+        return li;
+    },
+    cupcakeComponent(){
+
+        const li = document.createElement('li');
+        li.classList.add('order-item','cupcake-information');
+        li.setAttribute('data-order-item','cupcakes');
+        li.setAttribute('data-item-id','cc');
+
+        li.innerHTML += `<header>
+                <h3>Cupcakes</h3>
+                <button type="button" class="btn remove-order-btn" value="cupcakes">remove&nbsp;&#10007;</button>
+            </header>
+
+            <label for="CupcakeQuantity">
+                <div>How many would you like?</div>
+                <select name="cupcakequantity" id="CupcakeQuantity" data-input="ccquantity" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="1" data-price="20">1 dozen</option>
+                    <option value="2" data-price="40">2 dozen</option>
+                    <option value="3" data-price="60">3 dozen</option>
+                    <option value="4" data-price="80">4 dozen</option>
+                    <option value="5" data-price="100">5 dozen</option>
+                    <option value="6" data-price="120">6 dozen</option>
+                </select>
+            </label>
+
+            <label for="CupcakeDateNeeded">
+                <div>Date needed</div>
+                <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" data-input="ccdate" autocomplete="off" required>
+            </label>
+
+            <label for="CupcakeFlavor">
+                <div>Flavor</div>
+                <select name="cupcakeflavor" id="CupcakeFlavor" data-input="ccflavor"  autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="redvelvet">red velvet</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="CupcakeFrosting">
+                <div>Frosting</div>
+                <select name="cupcakefrosting" id="CupcakeFrosting" data-input="ccfrosting" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="CupcakeTheme">
+                <div>Theme/Occasion</div>
+                <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="1" data-input="cctheme" autocomplete="off" required></textarea>
+            </label>
+
+            <label for="CupcakePersonalization">
+                <div>Personalization</div>
+                <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" data-input="ccpersonalization" autocomplete="off" required></textarea>
+            </label>`;
+
+        return li;
+    },
+    dropCookieComponent(){
+
+        const li = document.createElement('li');
+        li.classList.add('order-item','drop-cookie-information');
+        li.setAttribute('data-order-item','drop-cookies');
+        li.setAttribute('data-item-id','dc');
+
+        li.innerHTML += `<header>
+            <h3>Drop Cookies</h3>
+            <button type="button" class="btn remove-order-btn" value="drop-cookies">remove&nbsp;&#10007;</button>
+            </header>
+
+            <label for="DropCookieQuantity">
+                <div>How many would you like?</div>
+                <select name="dropcookiequantity" id="DropCookieQuantity" data-input="dcquantity" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="1" data-price="25">1 dozen</option>
+                    <option value="2" data-price="50">2 dozen</option>
+                    <option value="3" data-price="75">3 dozen</option>
+                    <option value="4" data-price="100">4 dozen</option>
+                    <option value="5" data-price="125">5 dozen</option>
+                    <option value="6" data-price="150">6 dozen</option>
+                </select>
+            </label>
+
+            <label for="DropCookieDateNeeded">
+                <div>Date needed</div>
+                <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" data-input="dcdate" autocomplete="off" required>
+            </label>
+
+            <label for="DropCookieFlavor">
+                <div>Flavor</div>
+                <select name="dropcookieflavor" id="DropCookieFlavor" data-input="dcflavor" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="lemon">lemon</option>
+                    <option value="raspberry">raspberry</option>
+                    <option value="strawberry">strawberry</option>
+                </select>
+            </label>
+
+            <label for="DropCookieAddon">
+                <div>Add-on</div>
+                <select name="dropcookieaddon" id="DropCookieAddon" data-input="dcaddon" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="chocolate chips">chocolate chips</option>
+                    <option value="white chocolate chips">white chocolate chips</option>
+                    <option value="peanut butter chips">peanut butter chips</option>
+                </select>
+            </label>`;
+
+        return li;
+    },
+    cakeComponent(){
+        const li = document.createElement('li');
+        li.classList.add('order-item','cake-information');
+        li.setAttribute('data-order-item','cakes');
+        li.setAttribute('data-item-id','ck');
+
+        li.innerHTML += `<header>
+                <h3>Cake</h3>
+                <button type="button" class="btn remove-order-btn" value="cakes">remove&nbsp;&#10007;</button>
+            </header>
+
+            
+
+            <label for="CakeQuantity">
+                <div>How many would you like?</div>
+                <select name="cakequantity" id="CakeQuantity" data-input="ckquantity" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </label>
+
+            <label for="CakeDateNeeded">
+                <div>Date needed</div>
+                <input type="date" name="cakedateneeded" id="CakeDateNeeded" data-input="ckdate" autocomplete="off" required>
+            </label>
+
+            <label for="CakeSize">
+                <div>What size of cake?</div>
+                <select name="cakesize" id="CakeSize" data-input="cksize" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="6inch" data-price="25">Smash Cake (serves ~12)</option>
+                    <option value="8inch" data-price="35">8" (serves ~20)</option>
+                    <option value="10inch" data-price="40">10" (serves ~28)</option>
+                    <option value="2tier" data-price="65">2 tier (serves ~48)</option>
+                    
+                </select>
+            </label>
+
+            <label for="CakeFlavor">
+                <div>Flavor</div>
+                <select name="cakeflavor" id="CakeFlavor" data-input="ckflavor" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="redvelvet">red velvet</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="CakeFrosting">
+                <div>Frosting</div>
+                <select name="cakefrosting" id="CakeFrosting" data-input="ckfrosting" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="CakeTheme">
+                <div>Theme/Occasion</div>
+                <textarea name="caketheme" id="CakeTheme" cols="30" rows="1" data-input="cktheme" autocomplete="off" required></textarea>
+            </label>
+
+            <label for="CakePersonalization">
+                <div>Personalization</div>
+                <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" data-input="ckpersonalization" autocomplete="off" required></textarea>
+            </label>`;
+
+        return li;
+    },
+    sugarCookieComponent(){
+
+        const li = document.createElement('li');
+        li.classList.add('order-item','sugar-cookie-information');
+        li.setAttribute('data-order-item','sugar-cookies');
+        li.setAttribute('data-item-id','sc');
+
+        li.innerHTML += `<header>
+            <h3>Sugar Cookies</h3>
+            <button type="button" class="btn remove-order-btn" value="sugar-cookies">remove&nbsp;&#10007;</button>
+            </header>
+
+            <label for="SugarCookiesQuantity">
+                <div>How many would you like?</div>
+                <select name="sugarcookiesquantity" id="SugarCookiesQuantity" data-input="scquantity" autocomplete="off" required disabled>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="1" data-price="30">1 dozen</option>
+                    <option value="2" data-price="60">2 dozen</option>
+                    <option value="3" data-price="90">3 dozen</option>
+                    <option value="4" data-price="120">4 dozen</option>
+                    <option value="5" data-price="150">5 dozen</option>
+                    <option value="6" data-price="180">6 dozen</option>
+                </select>
+            </label>
+
+            <label for="SugarCookiesDateNeeded">
+                <div>When are they needed?</div>
+                <input type="date"
+                    name="sugarcookiesdate" 
+                    id="SugarCookiesDateNeeded" 
+                    min="" 
+                    data-input="scdate" 
+                    autocomplete="off" required disabled>
+            </label>
+
+            <label for="SugarCookiesTheme">
+                <div>Theme/Occasion</div>
+                <textarea name="sugarcookiestheme" 
+                    id="SugarCookiesTheme" 
+                    cols="30" rows="1" 
+                    data-input="sctheme" 
+                    autocomplete="off" required disabled></textarea>
+            </label>
+
+            <label for="SugarCookiesPersonalization">
+                <div>Personalization</div>
+                <textarea name="sugarcookiespersonalization"
+                    id="SugarCookiesPersonalization" 
+                    cols="30" rows="2" 
+                    data-input="scpersonalization" 
+                    autocomplete="off" required disabled></textarea>
+            </label>`;
+
+        return li;
+    },
+    addressFormComponent(){
+
+        const div = document.createElement('div');
+        div.classList.add('address-information');
+
+        div.innerHTML += `<label for="OrderFormStreet">
+            <div>Street</div>
+                <input type="text" name="street" id="OrderFormStreet" data-input="street" autocomplete="off" required>
+            </label>
+            <label for="OrderFormCity">
+                <div>City</div>
+                <input type="text" name="city" id="OrderFormCity" data-input="city" autocomplete="off" required>
+            </label>
+            <label for="OrderFormState">
+                <div>State</div>
+                <input type="text" name="state" id="OrderFormState" data-input="state" autocomplete="off" required>
+            </label>
+            <label for="OrderFormZipCode">
+                <div>Zip</div>
+                <input type="text" name="zipcode" id="OrderFormZipCode" data-input="zipcode" autocomplete="off" required>
+            </label>`;
+
+        return div;
+    },
+    createOrderItem(itemType){
+
+        switch(itemType){
+
+            case 'sugar-cookies': return OrderForm.sugarCookieComponent();
+
+            case 'cakes': return OrderForm.cakeComponent();
+
+            case 'drop-cookies': return OrderForm.dropCookieComponent();
+            
+            case 'cupcakes': return OrderForm.cupcakeComponent();
+
+            case 'cake-pops': return OrderForm.cakepopComponent();
+
+        }
+     
+
+    },
     handleItemTabSwitch({target}){
 
         if(target.classList.contains('show')){
@@ -339,7 +713,7 @@ const OrderForm = {
 
             target.classList.add('active');
 
-            OrderForm.orderItemElements.forEach( orderItem => {
+            [...OrderForm.form.querySelectorAll('.order-item')].forEach( orderItem => {
                 if(orderItem.classList.contains('open')){
                     orderItem.classList.remove('open');
                 }
@@ -421,6 +795,10 @@ const OrderForm = {
         orderItem.classList.remove('active');
 
         OrderForm.disableOrderItemInputs(orderItem);
+
+        orderItem.closest('ul').removeChild(orderItem);
+
+
 
         OrderForm.removeItemTab(orderItem.dataset.itemId);
 
@@ -545,17 +923,18 @@ const OrderForm = {
     },
     addItemToOrder(event){
 
-        if(event.target.value){
+        if(event.target.value){ 
 
-            
-
-            OrderForm.orderItemElements.forEach( orderItem => {
+            [...OrderForm.form.querySelectorAll('.order-item')].forEach( orderItem => {
                 if(orderItem.classList.contains('open')){
                     orderItem.classList.remove('open');
                 }
             });
+            
+          
+            const orderItem = OrderForm.createOrderItem(event.target.value); //document.querySelector(`[data-order-item="${event.target.value}"]`);
 
-            const orderItem = document.querySelector(`[data-order-item="${event.target.value}"]`);
+            document.querySelector('.order-item-list').appendChild(new DocumentFragment().appendChild(orderItem));
 
             OrderForm.addItemTab(orderItem.dataset.itemId,event.target.value );
 
@@ -569,6 +948,7 @@ const OrderForm = {
 
             OrderInvoice.addItemToInvoice(event.target.value,orderItem.dataset.itemId);
 
+            OrderForm.limitDateSelection(orderItem.querySelector('input[type="date"]'),14);
 
             OrderForm.listenToOrderItem(orderItem);
         }
@@ -576,7 +956,33 @@ const OrderForm = {
 
         
     },
-    
+    confirmOrder(event){
+
+        event.preventDefault();
+
+        OrderInvoice.openInvoice();
+
+        const orderInvoiceCloseButton = document.querySelector('.order-invoice-close-btn');
+        orderInvoiceCloseButton.innerHTML = `confirm&nbsp;&#10003;`;
+        orderInvoiceCloseButton.addEventListener('click', (event)=>{
+            OrderForm.submitButton.setAttribute('type', 'submit');
+            OrderForm.submitButton.textContent = 'Place order!';
+            
+
+            OrderForm.form.addEventListener('submit', (event)=>{
+                // event.preventDefault();
+
+                const formData = new FormData(event.target);
+
+                const action = event.target.getAttribute('action');
+                const clientName = formData.get('name');
+
+                console.log(action,clientName)
+            })
+        });
+
+        OrderForm.submitButton.removeEventListener('click', OrderForm.confirmOrder);
+    },
     listen(){
 
         OrderForm.itemSelectElement.addEventListener('input', OrderForm.addItemToOrder);
@@ -593,6 +999,8 @@ const OrderForm = {
         
         OrderForm.retrivalTypeSelect.addEventListener('input', OrderForm.handleRetrievalSelect);
 
+        OrderForm.submitButton.addEventListener('click', OrderForm.confirmOrder);
+
     },
     initialize(){
         OrderForm.form = document.querySelector('.order-form');
@@ -600,23 +1008,13 @@ const OrderForm = {
         OrderForm.retrivalTypeSelect = document.querySelector('#OrderFormRetrival');
         OrderForm.addressInformationDisplay = document.querySelector('.address-information');
 
-        OrderForm.form.querySelectorAll('input[type=date]').forEach( dateInputElement => {
-
-            OrderForm.limitDateSelection(dateInputElement,14);
-        });
-
-        OrderForm.orderItemElements = document.querySelectorAll('.order-item');
+        OrderForm.submitButton = document.querySelector('.order-submit-btn');
     }
 };
 
 function initializeOrderingPage(){
 
-    if(innerWidth < 1100){
-
-        document.querySelector('.navigation-secondary-open-btn').addEventListener('click', (event)=>{
-            document.querySelector('.navigation-secondary').classList.toggle('show');
-        });
-    }
+    pageNavigation();
 
     OrderInvoice.initialize();
 
