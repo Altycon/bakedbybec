@@ -11,7 +11,7 @@
     <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/" class="link">
+            <a href="/bakedbybec/" class="link">
                 <img src="/bakedbybec/img/bbb-logo1.png" alt="Baked By Bec Text Logo">
             </a>
         </h1>
@@ -82,18 +82,18 @@
         <form class="contact-form">
 
             <div class="input-wrapper">
-                <label for="">Name</label>
-                <input type="text" name="name" id=""  autocomplete="off" required>
+                <label for="ContactNameInput">Name</label>
+                <input type="text" name="name" id="ContactNameInput"  autocomplete="off" required>
             </div>
 
             <div class="input-wrapper">
-                <label for="">Email</label>
-                <input type="text" name="name" id=""  autocomplete="off" required>
+                <label for="ContactEmailInput">Email</label>
+                <input type="text" name="name" id="ContactEmailInput"  autocomplete="off" required>
             </div>
 
             <div class="input-wrapper">
-                <label for="">Topic</label>
-                <select name="" id="" autocomplete="off" required>
+                <label for="ContactTopicSelect">Topic</label>
+                <select name="" id="ContactTopicSelect" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="cookies">cookies</option>
                     <option value="cakes">cakes</option>
@@ -104,13 +104,14 @@
             </div>
 
             <div class="textarea-wrapper">
-                <label for="">Message</label>
-                <textarea name="" id="" cols="30" rows="10"  autocomplete="off" required></textarea>
+                <label for="ContactMessageTextarea">Message</label>
+                <textarea name="" id="ContactMessageTextarea" cols="30" rows="10"  autocomplete="off" required></textarea>
             </div>
 
-            <p>* It can take up to 24 hours for a response.</p>
-
-            <p>** Any messages after 6pm will be handled the following business day.</p>
+            <div class="information">
+                <p>* It can take up to 24 hours for a response.</p>
+                <p>** Any messages after 6pm will be handled the following business day.</p>
+            </div>
             
             <button type="button" class="btn contact-form-submit-btn">Send</button>
         </form>
