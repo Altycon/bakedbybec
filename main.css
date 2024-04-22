@@ -46,6 +46,7 @@
      --bgi4: url('/bakedbybec/img/bbb-cupcakes-landscape.jpg');
      --bgi5: url('/bakedbybec/img/bbb-cakepops-pink.jpg');
      --bgi6: url('/bakedbybec/img/bbb-cookies-landscapes.jpg');
+     --bgi7: url('/bakedbybec/img/bbb-cookie-space1.jpg');
 
      /* --nav-primary-size: 30vw; */
 
@@ -1153,7 +1154,7 @@ body{
 
     opacity: 0;
     transform-origin: bottom;
-    transform: translateZ(-100px) rotateX(-10deg) rotateY(10deg);
+    transform: translateZ(-50px) rotateX(-10deg) rotateY(10deg);
     transition: opacity var(--cookie-hero-trans-duration) ease calc(var(--cookie-hero-trans-delay) * 2),
     transform var(--cookie-hero-trans-duration) ease calc(var(--cookie-hero-trans-delay) * 2);
 }
@@ -1167,9 +1168,9 @@ body{
 
     opacity: 0;
     transform-origin: bottom;
-    transform: translateZ(-100px) rotateX(0deg) rotateY(0deg);
-    transition: opacity var(--cookie-hero-trans-duration) ease calc(var(--cookie-hero-trans-delay) * 2),
-    transform var(--cookie-hero-trans-duration) ease calc(var(--cookie-hero-trans-delay) * 2);
+    transform: translateZ(-5px) rotateX(-5deg) rotateY(-5deg);
+    transition: opacity var(--cookie-hero-trans-duration) ease-in calc(var(--cookie-hero-trans-delay) * 2),
+    transform var(--cookie-hero-trans-duration) ease-in calc(var(--cookie-hero-trans-delay) * 2);
 }
 .custom-cookies-hero.show .bottom-images .img-wrapper:nth-child(2){
     opacity: 1;
@@ -1275,10 +1276,13 @@ body{
     margin: 0 auto;
 
     opacity: 0;
-    transition: opacity 800ms ease;
+    transform-origin: center;
+    transform: scale(0.9);
+    transition: opacity 800ms ease 500ms, transform 500ms ease-in 500ms;
 }
 .home-recent-orders > article.show > div:nth-of-type(1){
     opacity: 1;
+    transform: scale(1);
 }
 .home-recent-orders > article > div:nth-of-type(2){
     grid-column: 1;
@@ -1579,7 +1583,7 @@ body{
 
     transform-origin: center;
     transform: scaleX(0);
-    transition: transform 500ms ease-in-out calc(var(--i) * 100ms);
+    transition: transform 800ms ease-in-out calc(var(--i) * 100ms);
 }
 .faqs .answer.show .option::before{
     transform: scaleX(1);
@@ -1655,6 +1659,49 @@ body{
     z-index: -1;
 
     transform: translate(-50%,-50%);
+}
+
+
+/* === HOME THANKS === */
+
+.home-thanks{
+    min-height: 100vh;
+
+    background-color: hsl(0 0% 0% / 0.7);
+    background-image: var(--bgi7);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    background-blend-mode: overlay;
+
+    display: grid;
+    place-content: center;
+}
+/* .home-thanks::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: hsl();
+} */
+.home-thanks .img-wrapper{
+    position: relative;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 50%;
+    box-shadow: 0px 0px 50px black;
+    overflow: hidden;
+}
+.home-thanks .img-wrapper::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(transparent, black);
+}
+.home-thanks .img-wrapper > img{
+    width:110%;
+    height: 110%;
+    opacity: 1;
 }
 
 /*
