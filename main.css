@@ -1374,7 +1374,7 @@ body{
     font-family: system-ui;
     line-height: 2em;
 }
-.customer-review-title.show{
+.customer-review-item.show .customer-review-title{
     animation: reviewTitleFluctuate 500ms linear 500ms forwards;
 }
 @keyframes reviewTitleFluctuate {
@@ -1576,6 +1576,13 @@ body{
     background: var(--site-gradient);
     z-index: -1;
     border-radius: 10px;
+
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: transform 500ms ease-in-out calc(var(--i) * 100ms);
+}
+.faqs .answer.show .option::before{
+    transform: scaleX(1);
 }
 .faqs .answer .option::after{
     content: "";
