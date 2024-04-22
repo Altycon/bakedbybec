@@ -1377,6 +1377,8 @@ body{
     font-size: 3rem;
     font-family: system-ui;
     line-height: 2em;
+    color: var(--site-color-accent1);
+    text-shadow: 2px 2px 5px black;
 }
 .customer-review-item.show .customer-review-title{
     animation: reviewTitleFluctuate 500ms linear 500ms forwards;
@@ -1391,7 +1393,7 @@ body{
     color: var(--fc-primary);
     font-size: 1.5rem;
     line-height: 1.5em;
-    margin-bottom: .5em;
+    margin-bottom: 1em;
 }
 .customer-review-name{
     color: var(--fc-primary);
@@ -1399,7 +1401,7 @@ body{
     padding-bottom: 1rem;
     white-space: nowrap;
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 .customer-review-images{
