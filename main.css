@@ -978,10 +978,9 @@ body{
     text-align: center;
 }
 .home-header-quick-links > div > a{
-    padding: 10px;
+    padding: 2rem 1rem;
     width: 100%;
     max-width: 500px;
-    height: 75px;
     font-size: 1rem;
     font-weight: 700;
     text-shadow: 1px 1px 1px black;
@@ -1027,7 +1026,6 @@ body{
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0px 0px 50px hsl(300 100% 50% / 0.2);
-
     
     transform-origin: left;
     transform: rotateY(0deg) rotateX(0deg);
@@ -1042,6 +1040,7 @@ body{
     inset: 0;
     background-color: hsl(0 0% 0% / 0.5);
     z-index: 1;
+    pointer-events: none;
 
     opacity: 1;
     transition: opacity 300ms ease;
@@ -1062,6 +1061,7 @@ body{
 .custom-cookies-hero > h2{
     grid-column: 2;
     grid-row: 1;
+    pointer-events: none;
 
     transform-origin: center;
     transform: translateZ(-100px);
@@ -1104,6 +1104,7 @@ body{
     inset: 0;
     background-color: hsl(0 0% 0% / 0.5);
     z-index: 1;
+    pointer-events: none;
 
     opacity: 1;
     transition: opacity 300ms ease;
@@ -1144,6 +1145,7 @@ body{
     inset: 0;
     background-color: hsl(0 0% 0% / 0.5);
     z-index: 1;
+    pointer-events: none;
 
     opacity: 1;
     transition: opacity 300ms ease;
@@ -1271,6 +1273,7 @@ body{
     inset: 0;
     background-color: hsl(0 0% 0% / 0.5);
     z-index: 1;
+    pointer-events: none;
 
     opacity: 1;
     transition: opacity 300ms ease;
@@ -1460,6 +1463,7 @@ body{
     inset: 0;
     background-color: hsl(0 0% 0% / 0.5);
     z-index: 1;
+    pointer-events: none;
 
     opacity: 1;
     transition: opacity 300ms;
@@ -2599,11 +2603,9 @@ body{
 
 
 /*
---------------------------------
-
-    |    ORDER FORM
-
---------------------------------
+=========================================|
+        ORDER FORM
+=========================================|
 */
 .order-form{
     position: relative;
@@ -2723,7 +2725,7 @@ label[for=OrderFormItem]{
     font-weight: 700;
 }
 
-
+/* RETRIEVAL INFORMATION */
 .order-form .retrival-information{
     grid-column: 2;
     grid-row: 2;
@@ -2767,7 +2769,7 @@ label[for=OrderFormPaymentType]{
 .order-form .retrival-information .retrieval-times > div span{
     font-weight: 700;
 }
-
+/* ORDER INFORMATION */
 .order-form .order-information{
     grid-column: 2;
     grid-row: 3;
@@ -2793,7 +2795,7 @@ label[for=OrderFormPaymentType]{
 }
 
 
-
+/* ORDER PERSONAL INFORMATION */
 
 .order-form .personal-information{
     grid-column: 3;
@@ -2806,10 +2808,12 @@ label[for=OrderFormPaymentType]{
 }
 
 
-
+/* ORDER ADDRESS INFORMATION */
 .order-form .address-information{
     grid-column: 1;
     grid-row: 4;
+
+    margin-bottom: 1rem;
 
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
@@ -2854,15 +2858,52 @@ label[for=OrderFormZipCode]{
     grid-column: 3;
     grid-row: 2;
 }
+/* ORDER DELIVERY ESTIMATOR */
+.order-form .delivery-estimator{
+    grid-column: 1/4;
 
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+.order-form .delivery-estimator.show{
+    opacity: 1;
+}
+.order-form .delivery-estimator > p{
+    font-size: .8rem;
+    text-align: center;
+    margin-bottom: 1em;
+}
 
-
+.order-form .delivery-estimator > div{
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+}
+.order-form .delivery-estimator > div > button{
+    border: none;
+    color: var(--fc-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    background-color: var(--site-color-accent2);
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px black,
+    inset -2px -2px 3px black,
+    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
+}
+.order-form .delivery-estimator > div > p{
+    font-size: .8rem;
+    text-align: center;
+}
+.order-form .delivery-estimator > div > p > span{
+    font-weight: 700;
+}
+/* ORDER ITEMS  */
 .order-form .item-information{
     grid-column: 1;
     grid-row: 2/4;
 }
-
-
 
 
 .item-information-tabs{
@@ -2914,6 +2955,12 @@ label[for=OrderFormZipCode]{
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}
+.order-form .item-information .order-item.show{
+    opacity: 1;
 }
 .order-form .item-information .order-item > header{
     display: grid;
@@ -3238,7 +3285,11 @@ label[for=CakepopFrosting] > div{
 
 
 
-/* ORDER INVOICE DISPLAY */
+/*
+    =========================================|
+            ORDER INVOICE
+    =========================================|
+    */
 .order-invoice{
     position: fixed;
     top: 0; right: left;
@@ -3507,6 +3558,7 @@ label[for=CakepopFrosting] > div{
     width: 100vw;
     height: 100vh;
     isolation: isolate;
+    z-index: 1;
 
     display: none;
     place-content: center;
@@ -4071,7 +4123,7 @@ label[for=CakepopFrosting] > div{
 }
 @media only screen and (max-width: 800px) {
 
-     /*
+    /*
     =========================================|
             PAGE HEADER
     =========================================|
@@ -4372,6 +4424,9 @@ label[for=CakepopFrosting] > div{
     
         display: grid;
         place-content: center;
+    }
+    .custom-cookies-hero > h2 > div{
+        font-size: 1.5rem;
     }
     .custom-cookies-hero .right-images{
         grid-column: 2;

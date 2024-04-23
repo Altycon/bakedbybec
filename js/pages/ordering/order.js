@@ -1,65 +1,5 @@
 import { pageNavigation } from "../../navigation.js";
 
-function createSugarCookieFormItem(){
-
-    const sugarCookieItem = document.createElement('div');
-    sugarCookieItem.classList.add('sugar-cookie-information','open');
-
-    const header = document.createElement('header');
-
-    const h3 = document.createElement('h3');
-    h3.textContent = 'sugar cookies';
-    const removeButton = document.createElement('button');
-    removeButton.setAttribute('type', 'button');
-    removeButton.setAttribute('value', 'sugar-cookie');
-    removeButton.classList.add('btn','remove-order-btn');
-    removeButton.textContent = 'X';
-
-    header.append(h3,removeButton);
-
-    const quantityDozenLabel = document.createElement('label');
-    quantityDozenLabel.setAttribute('for', 'SugarCookieQuantity');
-
-    const quantityDozenLabelTextElement = document.createElement('div');
-    quantityDozenLabelTextElement.textContent = 'How many would you like?';
-
-    // stoped here....
-
-    return `<div class="sugar-cookie-information open">
-        <header>
-            <h3>Sugar Cookies</h3>
-            <button type="button" class="btn remove-order-btn" value="sugarcookie">X</button>
-        </header>
-
-        <label for="SugarCookieQuantity">
-            <div>How many would you like?</div>
-            <select name="sugarcookiequantity" id="SugarCookieQuantity" autocomplete="off" required>
-                <option value="1" selected>1 dozen</option>
-                <option value="2">2 dozen</option>
-                <option value="3">3 dozen</option>
-                <option value="4">4 dozen</option>
-                <option value="5">5 dozen</option>
-                <option value="6">6 dozen</option>
-            </select>
-        </label>
-
-        <label for="SugarCookieDateNeeded">
-            <div>When are they needed?</div>
-            <input type="date" name="sugarcookiedate" id="SugarCookieDateNeeded" min="2024-04-17" autocomplete="off" required>
-        </label>
-
-        <label for="SugarCookieTheme">
-            <div>Theme/Occasion</div>
-            <textarea name="sugarcookietheme" id="SugarCookieTheme" cols="30" rows="1" autocomplete="off" required></textarea>
-        </label>
-
-        <label for="SugarCookiePersonalization">
-            <div>Personalization</div>
-            <textarea name="sugarcookiepersonalization" id="SugarCookiePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-        </label>
-    </div>`;
-};
-
 
 const OrderInvoice = {
     element: undefined,
@@ -205,8 +145,6 @@ const OrderInvoice = {
         const deliveryPriceElement = OrderInvoice.element.querySelector('[data-output="delivery"]');
         const deliveryPrice = Number(deliveryPriceElement.textContent.substring(2));
 
-        console.log('delivery', deliveryPrice)
-
         if(deliveryPrice > 0){
 
             sum += deliveryPrice;
@@ -278,32 +216,75 @@ const OrderForm = {
     },
     handleRetrievalSelect(event){
 
-        if(event.target.value === 'shipping' || event.target.value === 'delivery'){
+        const addressElement = document.querySelector('.address-information');
 
-            const addressComponent = OrderForm.addressFormComponent();
+        const personalInformationElement = OrderForm.form.querySelector('.personal-information');
 
-            OrderForm.form.querySelector('.personal-information').appendChild(new DocumentFragment().appendChild(addressComponent));
+        const deliveryEstimatorElement = OrderForm.form.querySelector('.delivery-estimator');
 
-            setTimeout( ()=> {
+        if(event.target.value === 'shipping'){
 
-                addressComponent.classList.add('show');
-            },100)
+            if(!addressElement){
 
+                const addressComponent = OrderForm.addressFormComponent(event.target.value);
 
-            if(event.target.value === 'shipping'){
+                personalInformationElement.appendChild(new DocumentFragment().appendChild(addressComponent));
 
-                document.querySelector(`[data-output="shipping"]`).textContent = `15.00`;
+                setTimeout( ()=> {
 
-                OrderInvoice.calculateInvoiceTotal();
-
-            }else{
-
-                // open a delivery milage price calculator?
+                    addressComponent.classList.add('show');
+    
+                },100);
             }
 
-        }else{
+            if(deliveryEstimatorElement){
 
-            const addressElement = document.querySelector('.address-information');
+                personalInformationElement.removeChild(deliveryEstimatorElement);
+
+            }
+
+            document.querySelector(`[data-output="shipping"]`).textContent = `15.00`;
+
+            OrderInvoice.calculateInvoiceTotal();
+
+            
+
+        }else if(event.target.value === 'delivery'){
+
+            if(!addressElement){
+
+                const addressComponent = OrderForm.addressFormComponent(event.target.value);
+
+                const deliveryEsitmatorComponent = OrderForm.deliveryEstimatorComponent();
+
+                personalInformationElement.appendChild(new DocumentFragment().appendChild(addressComponent));
+
+                personalInformationElement.appendChild(new DocumentFragment().appendChild(deliveryEsitmatorComponent));
+
+                setTimeout( ()=> {
+
+                    addressComponent.classList.add('show');
+
+                    deliveryEsitmatorComponent.classList.add('show');
+    
+                },100)
+            }
+
+            if(!deliveryEstimatorElement){
+
+                const deliveryEsitmatorComponent = OrderForm.deliveryEstimatorComponent();
+
+                personalInformationElement.appendChild(new DocumentFragment().appendChild(deliveryEsitmatorComponent));
+
+                setTimeout( ()=> {
+
+                    deliveryEsitmatorComponent.classList.add('show');
+    
+                },100)
+
+            }
+
+        }else if(event.target.value === 'pickup'){
 
             if(addressElement){
 
@@ -311,12 +292,16 @@ const OrderForm = {
 
                 setTimeout( ()=>{
 
-                    OrderForm.form.querySelector('.personal-information').removeChild(addressElement);
+                    personalInformationElement.removeChild(addressElement);
 
                 },500)
 
             }
-                      
+
+            if(deliveryEstimatorElement){
+
+                personalInformationElement.removeChild(deliveryEstimatorElement);
+            }
         }
     },
     zeroPadLeftToString(num){
@@ -657,7 +642,7 @@ const OrderForm = {
 
         return li;
     },
-    addressFormComponent(){
+    addressFormComponent(type){
 
         const div = document.createElement('div');
         div.classList.add('address-information');
@@ -678,6 +663,19 @@ const OrderForm = {
                 <div>Zip</div>
                 <input type="text" name="zipcode" id="OrderFormZipCode" data-input="zipcode" autocomplete="off" required>
             </label>`;
+
+        return div;
+    },
+    deliveryEstimatorComponent(){
+        const div = document.createElement('div');
+        div.classList.add('delivery-estimator');
+
+        div.innerHTML += `<p>Estimate delivery price based on above address information</p>
+        <div>
+            <button type="button">Calculate</button>
+            <p>Approx. miles:&nbsp;<span class="delivery-estimator-miles">0</span></p>
+            <p>Approx. price:&nbsp;$<span class="delivery-estimator-price">0</span></p>
+        </div>`;
 
         return div;
     },
@@ -738,6 +736,22 @@ const OrderForm = {
                     const connectionId = itemTabs.children[index - 1].dataset.connectionId;
 
                     document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
+
+                }else if(itemTabs.children[index]){
+
+                    itemTabs.children[index].classList.add('active');
+
+                    const connectionId = itemTabs.children[index].dataset.connectionId;
+
+                    document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
+
+                }else if(itemTabs.children[index + 1]){
+
+                    itemTabs.children[index + 1].classList.add('active');
+
+                    const connectionId = itemTabs.children[index + 1].dataset.connectionId;
+
+                    document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
                 }
             }
         })
@@ -750,7 +764,8 @@ const OrderForm = {
         const parts = itemType.split('-');
         if(parts.length > 1){
 
-            div.textContent = parts[0] + ' ' + parts[1];
+            //div.textContent = parts[0] + ' ' + parts[1];
+            div.innerHTML = `${parts[0]}<br>${parts[1]}`;
 
         }else{
 
@@ -771,12 +786,16 @@ const OrderForm = {
         });
 
         const newTab = OrderForm.createItemTab(connectionId,itemType);
-        newTab.classList.add('show');
+        // newTab.classList.add('show');
         newTab.classList.add('active');
         newTab.addEventListener('click', OrderForm.handleItemTabSwitch);
 
         const tabParent = document.querySelector('.item-information-tabs');
         tabParent.appendChild(newTab);
+
+        setTimeout( ()=> {
+            newTab.classList.add('show');
+        },100)
     },
     enableItemSelection(itemSelection,itemValue){
 
@@ -951,6 +970,10 @@ const OrderForm = {
             OrderForm.limitDateSelection(orderItem.querySelector('input[type="date"]'),14);
 
             OrderForm.listenToOrderItem(orderItem);
+
+            setTimeout( ()=>{
+                orderItem.classList.add('show');
+            },100)
         }
         
 
