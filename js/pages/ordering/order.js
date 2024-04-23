@@ -443,7 +443,13 @@ const OrderForm = {
 
             <label for="CupcakeTheme">
                 <div>Theme/Occasion</div>
-                <textarea name="cupcaketheme" id="CupcakeTheme" cols="30" rows="1" data-input="cctheme" autocomplete="off" required></textarea>
+                <input name="cupcaketheme" 
+                id="CupcakeTheme" 
+                list="ItemThemes"
+                cols="30" 
+                rows="1" 
+                data-input="cctheme" 
+                autocomplete="off" required/>
             </label>
 
             <label for="CupcakePersonalization">
@@ -571,7 +577,12 @@ const OrderForm = {
 
             <label for="CakeTheme">
                 <div>Theme/Occasion</div>
-                <textarea name="caketheme" id="CakeTheme" cols="30" rows="1" data-input="cktheme" autocomplete="off" required></textarea>
+                <input name="caketheme" 
+                id="CakeTheme"
+                list="ItemThemes" 
+                cols="30" rows="1" 
+                data-input="cktheme" 
+                autocomplete="off" required/>
             </label>
 
             <label for="CakePersonalization">
@@ -618,11 +629,12 @@ const OrderForm = {
 
             <label for="SugarCookiesTheme">
                 <div>Theme/Occasion</div>
-                <textarea name="sugarcookiestheme" 
-                    id="SugarCookiesTheme" 
+                <input name="sugarcookiestheme" 
+                    id="SugarCookiesTheme"
+                    list="ItemThemes" 
                     cols="30" rows="1" 
                     data-input="sctheme" 
-                    autocomplete="off" required disabled></textarea>
+                    autocomplete="off" required disabled/>
             </label>
 
             <label for="SugarCookiesPersonalization">

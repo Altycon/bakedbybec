@@ -68,35 +68,56 @@
     <main class="classes-main">
 
         <header>
-            <div class="img-wrapper">
-
-            </div>
-            <p>Easter</p>
-            <h1>COOKIE CLASS</h1>
+            
+            <h1>request class</h1>
 
         </header>
 
-        <div class="class-side-left-img-wrapper">
+        <form class="request-class-form">
+            <label for="RequestClassFormNameInput">
+                <div>Name</div>
+                <input type="text" 
+                name="name" 
+                id="RequestClassFormNameInput" 
+                autocomplete="off" required>
+            </label>
 
-        </div>
+            <label for="RequestClassFormEmailInput">
+                <div>Email</div>
+                <input type="email" 
+                name="email" 
+                id="RequestClassFormEmailInput" 
+                autocomplete="off" required>
+            </label>
 
-        <div class="class-information">
-            <p class="class-weekday">Saturday</p>
-            <p class="class-date">April 1<sup>st</sup> 2024</p>
-            <p class="class-time">1:00-3:00 PM</p>
-            <p class="class-place">Kim's Confections</p>
-            <p class="class-address">423 Ave D. West Point, Iowa</p>
-            <p class="class-price">Tickets:&nbsp;<span>$30</span>&nbsp;/person</p>
-            <div class="class-info">
-                <p>Decorate 6 cookies with 3 designs using ____ ???? I feel like there should be more of a description about what is happening or something. I don't know.</p>
-                <p>Beginners welcome!</p>
-            </div>
-        </div>
+            <label for="OrderFormPhoneNumberInput">
+                <div>Phone Number</div>
+                <input type="tel" 
+                name="phonenumber" 
+                id="RequestClassFormPhoneNumberInput" 
+                autocomplete="off" required>
+            </label>
 
-        <div class="class-side-right-img-wrapper">
-            
-        </div>
+            <label for="RequestClassFormVenueInput">
+                <div>Where would you like to hold the class?</div>
+                <input type="text" 
+                name="venue" 
+                id="RequestClassFormVenueInput" 
+                autocomplete="off" required>
+            </label>
 
+            <label for="RequestClassFormNumberOfPeopleInput">
+                <div>Estimated number of people?</div>
+                <input type="number" 
+                name="numberofpeople" 
+                id="RequestClassFormNumberOfPeopleInput" 
+                autocomplete="off" required>
+            </label>
+
+            <button type="button" class="btn request-class-submit-btn">Request Class</button>
+        </form>
+
+     
     </main>
 
     <footer class="footer-primary">
