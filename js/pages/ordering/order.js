@@ -255,17 +255,11 @@ const OrderForm = {
 
                 const addressComponent = OrderForm.addressFormComponent(event.target.value);
 
-                const deliveryEsitmatorComponent = OrderForm.deliveryEstimatorComponent();
-
                 personalInformationElement.appendChild(new DocumentFragment().appendChild(addressComponent));
-
-                personalInformationElement.appendChild(new DocumentFragment().appendChild(deliveryEsitmatorComponent));
 
                 setTimeout( ()=> {
 
                     addressComponent.classList.add('show');
-
-                    deliveryEsitmatorComponent.classList.add('show');
     
                 },100)
             }
@@ -672,7 +666,7 @@ const OrderForm = {
 
         div.innerHTML += `<p>Estimate delivery price based on above address information</p>
         <div>
-            <button type="button">Calculate</button>
+            <button type="button" class="btn">Calculate</button>
             <p>Approx. miles:&nbsp;<span class="delivery-estimator-miles">0</span></p>
             <p>Approx. price:&nbsp;$<span class="delivery-estimator-price">0</span></p>
         </div>`;
