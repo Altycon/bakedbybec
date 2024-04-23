@@ -137,10 +137,11 @@ function initializeSite(){
 
     handleDesktopHomeHoverLinksAnimation();
     
-    createIntersectionObserver('.intersection',0.75)
+    if(innerWidth > 800){
+        createIntersectionObserver('.intersection',0.5);
+    }
 
-
-    //handleNotes();
+    handleNotes();
 
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
 
