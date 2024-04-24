@@ -4,29 +4,16 @@ import { AImageViewer } from "./image_viewer.js";
 function handleNotes(){
 
     document.querySelector('.notes-open-btn').addEventListener('click', (event)=>{
-
         const notes = document.querySelector('.notes');
-
         notes.querySelector('.notes-close-btn').addEventListener('click', function close(){
-
             notes.classList.remove('show');
-
             setTimeout( ()=>{
-                
                 notes.classList.remove('open');
-
                 event.target.removeEventListener('click', close);
-
             },200)            
         })
-
         notes.classList.add('open');
-
-        setTimeout( ()=>{
-            
-            notes.classList.add('show');
-
-        },100)
+        setTimeout( ()=> { notes.classList.add('show') },100);
     });
 };
 
@@ -93,40 +80,59 @@ function handleMobileHomeNavigation(){
 
 function handleDesktopHomeHoverLinksAnimation(){
 
-    document.querySelectorAll('.home-navigation-primary-list div a').forEach( (navLink,index) =>{
+    const blobs = document.querySelectorAll('.home-background .blob');
 
-        const blobs = document.querySelectorAll('.home-background .blob');
+    const productLink = document.querySelector('.home-navigation-primary-list div:nth-of-type(1) a');
+    const orderLink = document.querySelector('.home-navigation-primary-list div:nth-of-type(5) a');
+    const contactLink = document.querySelector('.home-navigation-primary-list div:nth-of-type(4) a');
+    
+    productLink.addEventListener('mouseenter', (enterEvent)=>{
 
-        navLink.addEventListener('mouseenter', (event)=>{
-            if(!blobs[0].classList.contains('active') && !blobs[1].classList.contains('active')){
+        if(!blobs[0].classList.contains('active')){
 
-                if(navLink.href.includes('product')){
-                    blobs[0].classList.add('active');
-                }else if(navLink.href.includes('contact')){
-                    blobs[1].classList.add('active');
-                }else if(navLink.href.includes('order')){
-                    blobs[0].classList.add('active');
-                    blobs[1].classList.add('active');
-                }
-            
-            } 
-        })
+            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
 
-        navLink.addEventListener('mouseleave', (event)=>{
-            if(blobs[0].classList.contains('active') || blobs[1].classList.contains('active')){
-                
-                if(navLink.href.includes('product')){
-                    blobs[0].classList.remove('active');
-                }else if(navLink.href.includes('contact')){
-                    blobs[1].classList.remove('active');
-                }else if(navLink.href.includes('order')){
-                    blobs[0].classList.remove('active');
-                    blobs[1].classList.remove('active');
-                }
-            } 
-        })
+                blobs[0].classList.remove('active');
 
+                leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
+            })
+
+            blobs[0].classList.add('active');
+        }
     });
+
+    orderLink.addEventListener('mouseenter', (enterEvent)=>{
+
+        if(!blobs[0].classList.contains('active') && !blobs[1].classList.contains('active')){
+
+            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
+
+                blobs[0].classList.remove('active');
+                blobs[1].classList.remove('active');
+
+                leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
+            })
+
+            blobs[0].classList.add('active');
+            blobs[1].classList.add('active');
+        }
+    });
+
+    contactLink.addEventListener('mouseenter', (enterEvent)=>{
+
+        if(!blobs[1].classList.contains('active')){
+
+            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
+
+                blobs[1].classList.remove('active');
+
+                leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
+            })
+
+            blobs[1].classList.add('active');
+        }
+    });
+
 };
 
 function initializeSite(){
