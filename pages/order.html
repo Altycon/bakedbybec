@@ -8,6 +8,7 @@
     <script type="module" src="../js/pages/ordering/order.js"></script>
 </head>
 <body>
+    <div class="page-background"></div>
     <header class="page-header">
 
         <h1 class="website-title">
@@ -61,8 +62,6 @@
             <div class="bar"></div>
         </div>
 
-        <!-- <button type="button" class="page-navigation-primary-open-btn">&#9776;</button> -->
-
     </header>
 
     <main class="order-main">
@@ -86,8 +85,6 @@
                     </select>
                 </label>
 
-                <button type="button" class="btn order-form-invoice-open-btn">Invoice</button>
-
             </header>
 
             <div class="item-information">
@@ -103,13 +100,6 @@
 
                 </ul>
 
-                <!-- <div class="order-form-read-before">
-
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, recusandae.</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis sit, ducimus quia ullam dolorem ab?</p>
-
-                </div> -->
-
                 <datalist id="ItemThemes">
                     <option value="birthday">birthday</option>
                     <option value="graduation">graduation</option>
@@ -124,7 +114,7 @@
 
                 <label for="OrderFormRetrival">
                     <div>Pickup/Shipping/Delivery</div>
-                    <select name="" id="OrderFormRetrival" data-input="retrieval" autocomplete="off" required>
+                    <select name="" id="OrderFormRetrival" autocomplete="off" required>
                         <option value=""selected disabled>-- select</option>
                         <option value="pickup">Pickup&nbsp;&nbsp;(West Point, Iowa)</option>
                         <option value="shipping">Shipping&nbsp;&nbsp;($15 via USPS)</option>
@@ -134,7 +124,7 @@
 
                 <label for="OrderFormPaymentType">
                     <div>Payment</div>
-                    <select name="paymenttype" id="OrderFormPaymentType" data-input="paymenttype" autocomplete="off" required>
+                    <select name="paymenttype" id="OrderFormPaymentType" autocomplete="off" required>
                         <option value=""selected disabled>-- select</option>
                         <option value="venmo">Venmo</option>
                         <option value="cash">Cash</option>
@@ -168,17 +158,17 @@
 
                 <label for="OrderFormName">
                     <div>Name</div>
-                    <input type="text" name="name" id="OrderFormName" data-input="name" autocomplete="off" required>
+                    <input type="text" name="name" id="OrderFormName" autocomplete="off" required>
                 </label>
 
                 <label for="OrderFormEmail">
                     <div>Email</div>
-                    <input type="email" name="email" id="OrderFormEmail" data-input="email" autocomplete="off" required>
+                    <input type="email" name="email" id="OrderFormEmail" autocomplete="off" required>
                 </label>
     
                 <label for="OrderFormPhoneNumber">
                     <div>Phone Number</div>
-                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" data-input="phonenumber" autocomplete="off" required>
+                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" autocomplete="off" required>
                 </label>
 
                 <!-- address information injected here if needed -->
@@ -189,70 +179,7 @@
 
        </form>
 
-       <section class="order-invoice">
-        <div class="overlay"></div>
-            
-            <div class="order-invoice-content">
-                <header>
-                    <h2>invoice</h2>
-                    <button type="button" class="btn order-invoice-close-btn">close&nbsp;&#10007;</button>
-                </header>
-
-                <div class="order-invoice-items">
-                    <p>Items:</p>
-                    <ul class="order-invoice-items-list">
-
-                        <!-- invoice item information injected here -->
-                        
-                    </ul>
-                    
-                </div>
-                
-                <div class="order-invoice-personal">
-                    <div><span>Name:</span>
-                        <p data-output="name"></p>
-                    </div>
-                    <div><span>Email:</span>
-                        <p data-output="email"></p>
-                    </div>
-                    <div><span>Phone:</span>
-                        <p data-output="phonenumber"></p>
-                    </div>
-                    <div class="address"><span>Address:</span>
-                        <p  data-output="street"></p>
-                        <p><span data-output="city"></span>&nbsp;<span data-output="state"></span>&nbsp;<span data-output="zipcode"></span></p>
-                    </div>
-                </div>
-                
-                <div class="order-invoice-retrieval">
-                    <div><span>Retrieval</span>
-                        <p data-output="retrieval">none</p>
-                    </div>
-                    <div><span>Payment</span>
-                        <p data-output="paymenttype">none</p>
-                    </div>
-                    
-                </div>
-
-                <div class="order-invoice-total">
-                    <div class="order-invoice-sub-total"><span>Sub-Total:</span>
-                        <p>$&nbsp;<span  data-output="sub-total">00.00</span></p>
-                    </div>
-                    <div class="order-invoice-pickup"><span>Pickup:</span>
-                        <p>free</p>
-                    </div>
-                    <div class="order-invoice-delivery"><span>Delivery:</span>
-                        <p>$&nbsp;<span data-output="delivery">0.00</span></p>
-                    </div>
-                    <div class="order-invoice-shipping"><span>Shipping:</span>
-                        <p>$&nbsp;<span data-output="shipping">00.00</span></p>
-                    </div>
-                    <div class="order-invoice-total-amount"><span>Total:</span>
-                        <p>$&nbsp;<span data-output="total">00.00</span></p>
-                    </div>
-                </div>
-            </div>
-       </section>
+       
 
     </main>
 

@@ -1,203 +1,6 @@
 import { pageNavigation } from "../../navigation.js";
 
 
-const OrderInvoice = {
-    element: undefined,
-    itemListElement: undefined,
-
-    createItemOutputElement(title,value,itemId){
-        const div = document.createElement('div');
-        const span = document.createElement('span');
-        span.textContent = title;
-        const p = document.createElement('p');
-        if(title !== 'Type'){
-           
-            p.setAttribute('data-output', `${itemId}${title.toLowerCase()}`);
-        }
-        p.textContent = value;
-        div.append(span,p);
-        return div;
-    },
-    createItemDetailsElement(details,itemId){
-        const div = document.createElement('div');
-        div.classList.add('details');
-        const span = document.createElement('span');
-        span.textContent = 'Details';
-        div.appendChild(span);
-    
-        Object.keys(details).forEach( key => {
-    
-            const p = document.createElement('p');
-            p.textContent = `${key}:`;
-            const span = document.createElement('span');
-            span.setAttribute('data-output', `${itemId}${key.toLowerCase()}`);
-            span.textContent = details[key];
-            p.appendChild(span);
-            
-            div.appendChild(p);
-        });
-    
-        return div;
-    },
-    createItemTotalElement(totalPrice,itemId){
-        const div = document.createElement('div');
-        div.classList.add('item-total');
-        const span = document.createElement('span');
-        span.textContent = 'Total';
-        div.appendChild(span);
-    
-        const p = document.createElement('p');
-        p.classList.add('item-total-price')
-        p.innerHTML = `$&nbsp;<span data-output="${itemId}totalprice">${totalPrice}</span>`;
-    
-        div.appendChild(p);
-        return div;
-    },
-    createItem(itemType,itemId){
-
-        let itemName;
-
-        const parts = itemType.split('-');
-
-        if(parts.length > 1){
-            itemName = parts[0] + ' ' + parts[1];
-        }else{
-            itemName = itemType;
-        }
-
-        let details = {};
-
-        switch(itemType){
-
-            case 'sugar-cookies':
-                details.theme = 'none';
-                details.personalization = 'none';
-            break;
-            case 'cakes':
-                details.flavor = 'none';
-                details.frosting = 'none';
-                details.theme = 'none';
-                details.personalization = 'none';
-            break;
-            case 'cupcakes':
-                details.flavor = 'none';
-                details.frosting = 'none';
-                details.theme = 'none';
-                details.personalization = 'none';
-            break;
-            case 'drop-cookies':
-                details.flavor = 'none';
-                details.addon = 'none';
-            break;
-            case 'cake-pops':
-                details.flavor = 'none';
-                details.frosting = 'none';
-            break;
-        }
-
-        
-
-        const item = document.createElement('li');
-        item.classList.add('order-invoice-item');
-        item.setAttribute('data-item-id',itemId);
-    
-        item.append(
-            OrderInvoice.createItemOutputElement('Type',itemName,itemId),
-            OrderInvoice.createItemOutputElement('Quantity', 'none',itemId),
-            OrderInvoice.createItemOutputElement('Date', 'none',itemId),
-            OrderInvoice.createItemOutputElement('Size', `none`,itemId),
-            OrderInvoice.createItemDetailsElement(details,itemId),
-            OrderInvoice.createItemTotalElement('00.00',itemId)
-        );
-    
-        return item;
-    },
-    addItemToInvoice(itemType,itemId){
-        
-        OrderInvoice.itemListElement.appendChild(
-            OrderInvoice.createItem(itemType,itemId)
-        )
-        
-    },
-    removeItemFromInvoice(itemId){
-
-        const invoiceItem = OrderInvoice.element.querySelector(`[data-item-id="${itemId}"]`);
-        const parent = invoiceItem.closest('ul');
-        parent.removeChild(invoiceItem);
-    },
-    addDataToInvoice(event){
-
-        OrderInvoice.element.querySelector(`[data-output="${event.target.dataset.input}"]`).textContent = event.target.value;
-    },
-    calculateInvoiceTotal(){
-
-        let sum = 0;
-
-        OrderInvoice.element.querySelectorAll('.item-total-price').forEach( itemTotalElement => {
-
-            const totalItemPrice = Number(itemTotalElement.textContent.substring(2));
-
-            sum += totalItemPrice;
-        });
-
-        OrderInvoice.element.querySelector(`[data-output="sub-total"]`).textContent = `${sum}.00`;
-
-        const deliveryPriceElement = OrderInvoice.element.querySelector('[data-output="delivery"]');
-        const deliveryPrice = Number(deliveryPriceElement.textContent.substring(2));
-
-        if(deliveryPrice > 0){
-
-            sum += deliveryPrice;
-        }
-
-        const shippingPriceElement = OrderInvoice.element.querySelector('[data-output="shipping"]');
-        const shippingPrice = Number(shippingPriceElement.textContent);
-
-        
-        
-        if(shippingPrice > 0){
-
-            sum += shippingPrice;
-        }
-
-        OrderInvoice.element.querySelector(`[data-output="total"]`).textContent = `${sum}.00`
-
-    },
-    closeInvoice(event){
-
-        event.preventDefault();
-
-        OrderInvoice.element.classList.remove('show');
-
-        setTimeout( ()=> {
-
-            OrderInvoice.element.classList.remove('open');
-
-            event.target.removeEventListener('click', OrderInvoice.closeInvoice);
-
-        },500)
-    },
-    openInvoice(event){
-
-        if(event) event.preventDefault();
-
-        OrderInvoice.element.classList.add('open');
-
-        setTimeout( ()=> {
-
-            OrderInvoice.element.classList.add('show');
-
-        },100);
-
-        document.querySelector('.order-invoice-close-btn').addEventListener('click', OrderInvoice.closeInvoice);
-    },
-    
-    initialize(){
-        OrderInvoice.element = document.querySelector('.order-invoice');
-        OrderInvoice.itemListElement = document.querySelector('.order-invoice-items-list');
-    }
-};
-
 
 const OrderForm = {
     form: undefined,
@@ -206,14 +9,6 @@ const OrderForm = {
     retrivalTypeSelect: undefined,
     addressInformationDisplay: undefined,
 
-    displayInformation(event){
-        
-        if(event.target.dataset.input){
-
-            document.querySelector(`[data-output=${event.target.dataset.input}]`).textContent = event.target.value;
-        }
-
-    },
     handleRetrievalSelect(event){
 
         const addressElement = document.querySelector('.address-information');
@@ -245,9 +40,6 @@ const OrderForm = {
 
             document.querySelector(`[data-output="shipping"]`).textContent = `15.00`;
 
-            OrderInvoice.calculateInvoiceTotal();
-
-            
 
         }else if(event.target.value === 'delivery'){
 
@@ -347,7 +139,7 @@ const OrderForm = {
 
             <label for="CakepopQuantity">
                 <div>How many would you like?</div>
-                <select name="cakepopquantity" id="CakepopQuantity" data-input="cpquantity" autocomplete="off" required>
+                <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="1" data-price="18">1 dozen</option>
                     <option value="2" data-price="36">2 dozen</option>
@@ -360,12 +152,12 @@ const OrderForm = {
 
             <label for="CakepopDateNeeded">
                 <div>Date needed</div>
-                <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" data-input="cpdate" autocomplete="off" required>
+                <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" autocomplete="off" required>
             </label>
 
             <label for="CakepopFlavor">
                 <div>Flavor</div>
-                <select name="cakepopflavor" id="CakepopFlavor" data-input="cpflavor" autocomplete="off" required>
+                <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -377,7 +169,7 @@ const OrderForm = {
 
             <label for="CakepopFrosting">
                 <div>Frosting</div>
-                <select name="cakepopfrosting" id="CakepopFrosting" data-input="cpfrosting" autocomplete="off" required>
+                <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -402,7 +194,7 @@ const OrderForm = {
 
             <label for="CupcakeQuantity">
                 <div>How many would you like?</div>
-                <select name="cupcakequantity" id="CupcakeQuantity" data-input="ccquantity" autocomplete="off" required>
+                <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="1" data-price="20">1 dozen</option>
                     <option value="2" data-price="40">2 dozen</option>
@@ -415,12 +207,12 @@ const OrderForm = {
 
             <label for="CupcakeDateNeeded">
                 <div>Date needed</div>
-                <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" data-input="ccdate" autocomplete="off" required>
+                <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" autocomplete="off" required>
             </label>
 
             <label for="CupcakeFlavor">
                 <div>Flavor</div>
-                <select name="cupcakeflavor" id="CupcakeFlavor" data-input="ccflavor"  autocomplete="off" required>
+                <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -432,7 +224,7 @@ const OrderForm = {
 
             <label for="CupcakeFrosting">
                 <div>Frosting</div>
-                <select name="cupcakefrosting" id="CupcakeFrosting" data-input="ccfrosting" autocomplete="off" required>
+                <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -447,14 +239,13 @@ const OrderForm = {
                 id="CupcakeTheme" 
                 list="ItemThemes"
                 cols="30" 
-                rows="1" 
-                data-input="cctheme" 
+                rows="1"  
                 autocomplete="off" required/>
             </label>
 
             <label for="CupcakePersonalization">
                 <div>Personalization</div>
-                <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" data-input="ccpersonalization" autocomplete="off" required></textarea>
+                <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
             </label>`;
 
         return li;
@@ -473,7 +264,7 @@ const OrderForm = {
 
             <label for="DropCookieQuantity">
                 <div>How many would you like?</div>
-                <select name="dropcookiequantity" id="DropCookieQuantity" data-input="dcquantity" autocomplete="off" required>
+                <select name="dropcookiequantity" id="DropCookieQuantity" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="1" data-price="25">1 dozen</option>
                     <option value="2" data-price="50">2 dozen</option>
@@ -486,12 +277,12 @@ const OrderForm = {
 
             <label for="DropCookieDateNeeded">
                 <div>Date needed</div>
-                <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" data-input="dcdate" autocomplete="off" required>
+                <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" autocomplete="off" required>
             </label>
 
             <label for="DropCookieFlavor">
                 <div>Flavor</div>
-                <select name="dropcookieflavor" id="DropCookieFlavor" data-input="dcflavor" autocomplete="off" required>
+                <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -503,7 +294,7 @@ const OrderForm = {
 
             <label for="DropCookieAddon">
                 <div>Add-on</div>
-                <select name="dropcookieaddon" id="DropCookieAddon" data-input="dcaddon" autocomplete="off" required>
+                <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="chocolate chips">chocolate chips</option>
                     <option value="white chocolate chips">white chocolate chips</option>
@@ -528,7 +319,7 @@ const OrderForm = {
 
             <label for="CakeQuantity">
                 <div>How many would you like?</div>
-                <select name="cakequantity" id="CakeQuantity" data-input="ckquantity" autocomplete="off" required>
+                <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -537,12 +328,12 @@ const OrderForm = {
 
             <label for="CakeDateNeeded">
                 <div>Date needed</div>
-                <input type="date" name="cakedateneeded" id="CakeDateNeeded" data-input="ckdate" autocomplete="off" required>
+                <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
             </label>
 
             <label for="CakeSize">
                 <div>What size of cake?</div>
-                <select name="cakesize" id="CakeSize" data-input="cksize" autocomplete="off" required>
+                <select name="cakesize" id="CakeSize" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="6inch" data-price="25">Smash Cake (serves ~12)</option>
                     <option value="8inch" data-price="35">8" (serves ~20)</option>
@@ -554,7 +345,7 @@ const OrderForm = {
 
             <label for="CakeFlavor">
                 <div>Flavor</div>
-                <select name="cakeflavor" id="CakeFlavor" data-input="ckflavor" autocomplete="off" required>
+                <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -566,7 +357,7 @@ const OrderForm = {
 
             <label for="CakeFrosting">
                 <div>Frosting</div>
-                <select name="cakefrosting" id="CakeFrosting" data-input="ckfrosting" autocomplete="off" required>
+                <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -580,14 +371,13 @@ const OrderForm = {
                 <input name="caketheme" 
                 id="CakeTheme"
                 list="ItemThemes" 
-                cols="30" rows="1" 
-                data-input="cktheme" 
+                cols="30" rows="1"  
                 autocomplete="off" required/>
             </label>
 
             <label for="CakePersonalization">
                 <div>Personalization</div>
-                <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" data-input="ckpersonalization" autocomplete="off" required></textarea>
+                <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
             </label>`;
 
         return li;
@@ -606,7 +396,7 @@ const OrderForm = {
 
             <label for="SugarCookiesQuantity">
                 <div>How many would you like?</div>
-                <select name="sugarcookiesquantity" id="SugarCookiesQuantity" data-input="scquantity" autocomplete="off" required disabled>
+                <select name="sugarcookiesquantity" id="SugarCookiesQuantity" autocomplete="off" required disabled>
                     <option value=""selected disabled>-- select</option>
                     <option value="1" data-price="30">1 dozen</option>
                     <option value="2" data-price="60">2 dozen</option>
@@ -622,8 +412,7 @@ const OrderForm = {
                 <input type="date"
                     name="sugarcookiesdate" 
                     id="SugarCookiesDateNeeded" 
-                    min="" 
-                    data-input="scdate" 
+                    min=""  
                     autocomplete="off" required disabled>
             </label>
 
@@ -632,8 +421,7 @@ const OrderForm = {
                 <input name="sugarcookiestheme" 
                     id="SugarCookiesTheme"
                     list="ItemThemes" 
-                    cols="30" rows="1" 
-                    data-input="sctheme" 
+                    cols="30" rows="1"  
                     autocomplete="off" required disabled/>
             </label>
 
@@ -641,8 +429,7 @@ const OrderForm = {
                 <div>Personalization</div>
                 <textarea name="sugarcookiespersonalization"
                     id="SugarCookiesPersonalization" 
-                    cols="30" rows="2" 
-                    data-input="scpersonalization" 
+                    cols="30" rows="2"  
                     autocomplete="off" required disabled></textarea>
             </label>`;
 
@@ -655,19 +442,19 @@ const OrderForm = {
 
         div.innerHTML += `<label for="OrderFormStreet">
             <div>Street</div>
-                <input type="text" name="street" id="OrderFormStreet" data-input="street" autocomplete="off" required>
+                <input type="text" name="street" id="OrderFormStreet" autocomplete="off" required>
             </label>
             <label for="OrderFormCity">
                 <div>City</div>
-                <input type="text" name="city" id="OrderFormCity" data-input="city" autocomplete="off" required>
+                <input type="text" name="city" id="OrderFormCity" autocomplete="off" required>
             </label>
             <label for="OrderFormState">
                 <div>State</div>
-                <input type="text" name="state" id="OrderFormState" data-input="state" autocomplete="off" required>
+                <input type="text" name="state" id="OrderFormState" autocomplete="off" required>
             </label>
             <label for="OrderFormZipCode">
                 <div>Zip</div>
-                <input type="text" name="zipcode" id="OrderFormZipCode" data-input="zipcode" autocomplete="off" required>
+                <input type="text" name="zipcode" id="OrderFormZipCode" autocomplete="off" required>
             </label>`;
 
         return div;
@@ -829,10 +616,6 @@ const OrderForm = {
 
         OrderForm.enableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
 
-
-        OrderInvoice.removeItemFromInvoice(orderItem.dataset.itemId);
-
-        OrderInvoice.calculateInvoiceTotal();
     },
     
     disableItemSelection(itemSelection,itemValue){
@@ -850,11 +633,6 @@ const OrderForm = {
        
     },
     listenToOrderItem(orderItemElement){
-
-        orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
-
-            dataInput.addEventListener('input', OrderInvoice.addDataToInvoice);
-        });
 
         orderItemElement.querySelectorAll('select').forEach( selectElement => {
 
@@ -969,13 +747,9 @@ const OrderForm = {
 
             OrderForm.enableOrderItemInputs(orderItem);
 
-            // invoice
-
-            OrderInvoice.addItemToInvoice(event.target.value,orderItem.dataset.itemId);
-
             OrderForm.limitDateSelection(orderItem.querySelector('input[type="date"]'),14);
 
-            OrderForm.listenToOrderItem(orderItem);
+            //OrderForm.listenToOrderItem(orderItem);
 
             setTimeout( ()=>{
                 orderItem.classList.add('show');
@@ -985,50 +759,20 @@ const OrderForm = {
 
         
     },
-    confirmOrder(event){
+    submitOrder(event){
 
         event.preventDefault();
 
-        OrderInvoice.openInvoice();
-
-        const orderInvoiceCloseButton = document.querySelector('.order-invoice-close-btn');
-        orderInvoiceCloseButton.innerHTML = `confirm&nbsp;&#10003;`;
-        orderInvoiceCloseButton.addEventListener('click', (event)=>{
-            OrderForm.submitButton.setAttribute('type', 'submit');
-            OrderForm.submitButton.textContent = 'Place order!';
-            
-
-            OrderForm.form.addEventListener('submit', (event)=>{
-                // event.preventDefault();
-
-                const formData = new FormData(event.target);
-
-                const action = event.target.getAttribute('action');
-                const clientName = formData.get('name');
-
-                console.log(action,clientName)
-            })
-        });
-
-        OrderForm.submitButton.removeEventListener('click', OrderForm.confirmOrder);
+        alert("order not sent")
+        
     },
     listen(){
 
         OrderForm.itemSelectElement.addEventListener('input', OrderForm.addItemToOrder);
-
-        OrderForm.form.querySelectorAll('input').forEach( inputElement => {
-
-            inputElement.addEventListener('input', OrderForm.displayInformation)
-        });
-        OrderForm.form.querySelectorAll('select').forEach( selectElement => {
-
-            selectElement.addEventListener('input', OrderForm.displayInformation)
-        });
-        
         
         OrderForm.retrivalTypeSelect.addEventListener('input', OrderForm.handleRetrievalSelect);
 
-        OrderForm.submitButton.addEventListener('click', OrderForm.confirmOrder);
+        OrderForm.submitButton.addEventListener('click', OrderForm.submitOrder);
 
     },
     initialize(){
@@ -1045,12 +789,8 @@ function initializeOrderingPage(){
 
     pageNavigation();
 
-    OrderInvoice.initialize();
-
     OrderForm.initialize();
     OrderForm.listen();
-
-    document.querySelector('.order-form-invoice-open-btn').addEventListener('click', OrderInvoice.openInvoice);
 
 };
 initializeOrderingPage();
