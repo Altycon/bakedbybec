@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classes | Baked By Bec</title>
     <link rel="stylesheet" href="../main.css">
-    <script type="module" src="../js/pages/classes/classes.js"></script>
+    <script type="module" src="../js/bakedbybec/pages/classes/classes.js"></script>
 </head>
 <body>
+    <div class="page-background"></div>
     <header class="page-header">
 
         <h1 class="website-title">
@@ -61,15 +62,22 @@
             <div class="bar"></div>
         </div>
 
-        <!-- <button type="button" class="page-navigation-primary-open-btn">&#9776;</button> -->
-
     </header>
 
     <main class="classes-main">
 
         <header>
             
-            <h1>request class</h1>
+            <h2>
+                <div>Interested in learning</div>
+                <div>how to take your cookies</div>
+                <div>to the next level?</div>
+            </h2>
+            <h3> Join me for a decorating workshop!</h3>
+            
+            <p>In the workshop, you'll learn the basics <span>(yes, it's beginner friendly!)</span> of decorating including: how to keep icing from dripping over the sides of your cookie, how to make different designs pop, icing consistency, and more.</p>
+            <p>All supplies are included! I provide the cookies, icing, practice sheets, recipe cards, and decorating tools; you bring yourself (and a friend!)  If you want to take your skills home, you can purchase an add-on kit to take with you after the class.</p>
+            <p>If you're interested in a class, please fill out the form on this page. No theme or occasion is off-limits! <span>Tickets are $30/seat</span>, and class sessions are set to <span>1.5 hours</span> - plenty of time to learn all the things! Please indicate if and how many add-on kits you need for your event <span>($20/kit)</span>.</p>
 
         </header>
 
@@ -106,6 +114,14 @@
                 autocomplete="off" required>
             </label>
 
+            <label for="RequestClassFormThemeInput">
+                <div>What theme would you like?</div>
+                <input type="text" 
+                name="venue" 
+                id="RequestClassFormThemeInput" 
+                autocomplete="off" required>
+            </label>
+
             <label for="RequestClassFormNumberOfPeopleInput">
                 <div>Estimated number of people?</div>
                 <input type="number" 
@@ -116,7 +132,6 @@
 
             <button type="button" class="btn request-class-submit-btn">Request Class</button>
         </form>
-
      
     </main>
 
