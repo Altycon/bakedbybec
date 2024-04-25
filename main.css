@@ -2203,7 +2203,7 @@ body{
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto auto;
+    grid-template-rows: 400px auto auto auto auto;
     gap: 2rem;
     justify-content: space-evenly;
 }
@@ -2272,26 +2272,29 @@ body{
 }
 .meet-para2{
     grid-column: 1/3;
-    grid-row: 3;
+    grid-row: 4;
     justify-self: center;
 }
 .meet-para3{
     grid-column: 1/3;
-    grid-row: 4;
+    grid-row: 5;
     justify-self: center;
 }
 .meet-para4{
     grid-column: 1/3;
-    grid-row: 5;
+    grid-row: 6;
     justify-self: center;
 }
 .meet-para5{
     grid-column: 1/3;
-    grid-row: 6;
+    grid-row: 7;
     justify-self: center;
 }
 
 .meet-img-wrapper{
+    grid-column: 1/3;
+    grid-row: 8;
+
     position: relative;
     isolation: isolate;
     
@@ -2301,8 +2304,13 @@ body{
     overflow: hidden;
 }
 .meet-img-wrapper2{
-    border-radius: 50%;
+    grid-column: 1/3;
+    grid-row: 3;
+    height: 100%;
+    overflow: hidden;
+    /* border-radius: 50%; */
 }
+
 .meet-img-wrapper::before{
     content: "";
     position: absolute;
@@ -2313,17 +2321,16 @@ body{
 .meet-img-wrapper2::before{
     background-color: hsl(0 0% 0% / 0.6);
 }
+/* .meet-img-wrapper2::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--bc-primary),transparent,transparent,var(--bc-primary));
+} */
 .meet-img{
     width: 100%;
 }
-.meet-img-wrapper1{
-    grid-column: 2;
-    grid-row: 1;
-}
-.meet-img-wrapper2{
-    grid-column: 1;
-    grid-row: 3/5;
-}
+
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -2628,18 +2635,23 @@ body{
     padding: .5em;
     background-color: hsl(0 0% 10%);
 }
-.request-class-form > label:nth-of-type(6){
+.request-class-form > label:nth-of-type(6),
+.request-class-form > label:nth-of-type(7){
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     gap: 2rem;
 }
-.request-class-form > label:nth-of-type(6) > div{
+.request-class-form > label:nth-of-type(6) > div,
+.request-class-form > label:nth-of-type(7) > div{
     white-space: nowrap;
 }
-.request-class-form > label:nth-of-type(6) > input{
+.request-class-form > label:nth-of-type(6) > input,
+.request-class-form > label:nth-of-type(7) > input{
+    justify-self: flex-end;
     width: 100px;
 }
+
 .request-class-submit-btn{
     border: none;
     color: var(--fc-primary);
@@ -2693,7 +2705,7 @@ body{
     grid-row: 1;
 
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto;
     grid-template-rows: auto;
     justify-content: flex-start;
     align-items: center;
@@ -2713,23 +2725,7 @@ label[for=OrderFormItem]{
 label[for=OrderFormItem] > div{
     white-space: nowrap;
 }
-.order-form-invoice-open-btn{
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: flex-end;
-    
-    border: none;
-    color: var(--fc-primary);
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 2px black;
-    padding: 5px 10px;
-    background-color: var(--site-color-accent2);
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
-}
+
 .order-submit-btn{
     grid-column: 1/4;
     grid-row: 4;
@@ -3374,234 +3370,6 @@ label[for=CakepopFrosting] > div{
 }
 
 
-
-/*
-    =========================================|
-            ORDER INVOICE
-    =========================================|
-    */
-.order-invoice{
-    position: fixed;
-    top: 0; right: left;
-    width: 100vw; height: 100vh;
-    isolation: isolate;
-    z-index: 1;
-    display: none;
-}
-.order-invoice.open{
-    display: block;
-}
-.order-invoice .overlay{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: hsl(0 0% 0% / 0.9);
-    z-index: -1;
-    opacity: 0;
-    transition: 100ms ease-in-out;
-}
-.order-invoice.show .overlay{
-    opacity: 1;
-}
-.order-invoice-content{
-    
-    width: 100vw;
-    max-width: 800px;
-    height: 100vh;
-    margin-left: auto;
-    
-    background-color: var(--bc-primary);
-    overflow-x: scroll;
-    padding: 1rem;
-    box-shadow: inset 0px 0px 0px 8px hsl(120 50% 50%);
-    border-radius: 10px;
-
-    opacity: 0;
-    transform: translateX(50px);
-    transition: 200ms ease-in-out;
-}
-
-.order-invoice.show .order-invoice-content{
-    transform: translateX(0px);
-    opacity: 1;
-}
-.order-invoice-content > header{
-    text-align: center;
-    padding-top: 5px;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;   
-    
-}
-.order-invoice-content > header > h2{
-    color: var(--site-color-accent1);
-}
-.order-invoice-close-btn{
-    justify-self: flex-end;
-
-    border: none;
-    color: var(--fc-primary);
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 2px black;
-    padding: 5px 10px;
-    background-color: var(--site-color-accent2);
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
-}
-.order-invoice-items > p{
-    margin-bottom: 10px;
-    font-weight: 700;
-    font-size: 1rem;
-}
-.order-invoice-items-list{
-    list-style: none;
-    padding-bottom: 10px;
-    
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 10px;
-}
-.order-invoice-items-list:has(li:nth-child(3)){
-    grid-template-columns: 1fr 1fr;
-}
-.order-invoice-item{
-    background-color: black;
-    border-radius: 10px;
-    padding: 5px;
-    
-
-    display: grid;
-    grid-template-columns: repeat(4,auto);
-    grid-template-rows: auto auto;
-    gap: 10px;
-}
-
-.order-invoice-item > div{
-    text-align: center;
-}
-.order-invoice-item > div > span{
-    text-transform: uppercase;
-    font-size: .8rem;
-}
-
-.order-invoice-item > div > span{
-    display: inline-block;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-.order-invoice-item > div > p{
-    font-size: .8rem;
-    line-height: 1.2em;
-}
-.order-invoice-item .details{
-    grid-column: 1/4;
-
-    text-align: left;
-}
-
-.order-invoice-item .details > p{
-    font-weight: 700;
-    padding: 0em;
-}
-.order-invoice-item .details > p > span{
-    font-weight: normal;
-    margin-left: 1em;
-}
-.order-invoice-item .item-total{
-    grid-column: 4;
-    align-self: flex-end;
-    justify-self: center;
-    text-align: left;
-}
-.order-invoice-item .item-total > span{
-    text-decoration: underline;
-}
-.order-invoice-item .item-total > p{
-    font-size: 1rem;
-}
-
-
-.order-invoice-personal{
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    
-   
-}
-.order-invoice-personal > div{
-    margin-bottom: 10px;
-
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-}
-.order-invoice-personal > div > span{
-    font-weight: 700;
-    font-size: .8em;
-}
-.order-invoice-personal > div > p{
-    grid-column: 2;
-    justify-self: flex-end;
-    font-size: .9rem;
-    margin-left: .5em;
-    text-transform: uppercase;
-}
-
-
-
-.order-invoice-retrieval{
-    margin-bottom: 1rem;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: .5rem;
-}
-.order-invoice-retrieval > div{
-    text-align: center;
-}
-.order-invoice-retrieval > div > span{
-    display: inline-block;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-.order-invoice-retrieval > div > p{
-    font-size: .7rem;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
-
-
-.order-invoice-total{
-    margin-bottom: 1rem;
-}
-.order-invoice-total > div{
-    margin-bottom: 10px;
-    font-size: .8em;
-
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-}
-.order-invoice-total > div:last-of-type{
-    border-top: 1px solid var(--fc-primary);
-    padding-top: 10px;
-}
-.order-invoice-total > div > span{
-    font-weight: 700;
-}
-.order-invoice-total > div > p{
-    grid-column: 2;
-    justify-self: flex-end;
-    font-size: .8em;
-    margin-left: .5em;
-}
 
 
 
@@ -4958,6 +4726,12 @@ label[for=CakepopFrosting] > div{
     .order-main{
         padding: 2rem 0rem;
     }
+    .order-form > header{
+
+        justify-content: center;
+        align-items: center;
+        
+    }
 }
 
 
@@ -5014,22 +4788,15 @@ label[for=CakepopFrosting] > div{
 
     --------------------------------
     */
+    .order-form > header{
+        justify-content: unset;
+        align-items: center;  
+    }
     .order-form > div > label > div{
         padding-bottom: .5em; 
     }
-    .order-form > header{
-        
-    
-      
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 1rem;
-    }
     label[for=OrderFormItem]{
-
-        padding: 1rem 1rem 0rem 1rem;
+        text-align: center;
 
         display: grid;
         grid-template-columns: 1fr;
