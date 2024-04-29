@@ -2233,7 +2233,7 @@ body{
     position: absolute;
     top: 0; left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 50vh;
     background-image: var(--bgi8);
     background-repeat: no-repeat;
     background-size: cover;
@@ -2245,7 +2245,7 @@ body{
     position: absolute;
     top: 0; left: 0;
     width: 100%;
-    height: 100vh;
+    height: 50vh;
     background-image: linear-gradient(hsl(0 0% 0% / 0.5),hsl(0 0% 0% / 0.5),var(--bc-primary));
     z-index: -1;
 }
