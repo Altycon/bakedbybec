@@ -80,64 +80,38 @@ function handleMobileHomeNavigation(){
 
 function handleDesktopHomeHoverLinksAnimation(){
 
-    const blobs = document.querySelectorAll('.home-background .blob');
+    const navigationCircle = document.querySelector('.home-navigation-primary-circle');
+   
+    const circleNavigationLinks = document.querySelectorAll('.js-circle-link');
 
-    const productLink = document.querySelector('.home-navigation-primary-list div:nth-of-type(1) a');
-    const orderLink = document.querySelector('.home-navigation-primary-list div:nth-of-type(5) a');
-    const contactLink = document.querySelector('.home-navigation-primary-list div:nth-of-type(4) a');
+    circleNavigationLinks.forEach( navLink => {
+
+        navLink.addEventListener('mouseenter', (enterEvent)=>{
+
+            navigationCircle.style.animation = `none`;
+
+            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
     
-    productLink.addEventListener('mouseenter', (enterEvent)=>{
-
-        if(!blobs[0].classList.contains('active')){
-
-            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
-
-                blobs[0].classList.remove('active');
-
+                navigationCircle.classList.remove(`${navLink.dataset.position}-hovered`);
+    
                 leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
             })
 
-            blobs[0].classList.add('active');
-        }
-    });
-
-    orderLink.addEventListener('mouseenter', (enterEvent)=>{
-
-        if(!blobs[0].classList.contains('active') && !blobs[1].classList.contains('active')){
-
-            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
-
-                blobs[0].classList.remove('active');
-                blobs[1].classList.remove('active');
-
-                leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
-            })
-
-            blobs[0].classList.add('active');
-            blobs[1].classList.add('active');
-        }
-    });
-
-    contactLink.addEventListener('mouseenter', (enterEvent)=>{
-
-        if(!blobs[1].classList.contains('active')){
-
-            enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
-
-                blobs[1].classList.remove('active');
-
-                leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
-            })
-
-            blobs[1].classList.add('active');
-        }
-    });
+            navigationCircle.classList.add(`${navLink.dataset.position}-hovered`);
+            navigationCircle.style.animation = `slideCircleBackgroundLeft 1s linear forwards`;
+            
+        });
+    })
 
 };
+
+
 
 function initializeSite(){
 
     siteOpeningTransition();
+
+  
 
     handleMobileHomeNavigation();
 
