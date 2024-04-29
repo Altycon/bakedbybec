@@ -2212,81 +2212,132 @@ body{
 ===================================================|
 ---------------------------------------------------|
 
-            COOKIE CLASS PAGE
+            BOOK EVENT PAGE
 
 ---------------------------------------------------|
 ===================================================|
 */
-.classes-main{
+.book-event-main{
     position: relative;
     isolation: isolate;
     padding-block: 4rem;
 
-    display: grid;
+    /* display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto;
     justify-content: space-evenly;
-    gap: 3rem;
+    gap: 3rem; */
 }
-.classes-main::before{
+.book-event-main::before{
     content: "";
     position: absolute;
     top: 0; left: 0;
     width: 100vw;
-    height: 67vh;
+    height: 100vh;
     background-image: var(--bgi8);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     z-index: -1;
 }
-.classes-main::after{
+.book-event-main::after{
     content: "";
     position: absolute;
     top: 0; left: 0;
     width: 100%;
-    height: 67vh;
-    background-color: hsl(0 0% 0% / 0.7);
+    height: 100vh;
+    background-image: linear-gradient(hsl(0 0% 0% / 0.5),hsl(0 0% 0% / 0.5),var(--bc-primary));
     z-index: -1;
 }
 
-.classes-main > header{
-    max-width: 600px;
+.book-event-main > header{
+    /* max-width: 600px; */
 }
-.classes-main > header > h2{
+.book-event-main > header > h2{
+    position: relative;
     font-size: 2.5rem;
     line-height: 1em;
+    padding: 2rem;
     margin-bottom: 1rem;
     text-shadow: 2px 2px 3px black;
 }
-.classes-main > header > h3{
+
+.book-event-main > header > h3{
     font-size: 1.5rem;
     margin-bottom: 1em;
-    max-width: 450px;
+    padding-left: 4rem;
     color: var(--site-color-accent1);
     text-shadow: 2px 2px 3px black;
 }
-.classes-main > header > p{
+.book-event-main > header > section{
+    padding: 2rem;
+}
+.book-event-main > header > section:nth-of-type(1) > h4{
+    padding: 1rem;
+    margin-bottom: 1.4em;
+}
+.book-event-main > header > section:nth-of-type(1) > ul{
+    list-style: none;
+    
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows:150px;
+    gap: 1rem;
+}
+.book-event-main > header > section:nth-of-type(1) > ul > li{
+    text-align: center;
+    background-color: hsl(0 0% 0% / 0.8);
+
+    display: grid;
+    place-content: center;
+}
+.book-event-main > header > section:nth-of-type(2){
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: auto;
+    gap: 1rem;
+    justify-content: space-evenly;
+}
+.book-event-main > header > section:nth-of-type(2) > div > h4{
+    padding: 1rem;
+}
+.book-event-main > header > section:nth-of-type(2) > div > ul{
+    list-style-position: inside;
+    padding-left: 1.4em;
+}
+.book-event-main > header > section:nth-of-type(2) > div > ul > li{
+    font-size: 1rem;
+    padding: .5em;
+}
+.book-event-main > header > p{
+    padding-block: 4rem;
+    max-width: 800px;
     font-size: 1.2rem;
     line-height: 1.4em;
-    margin-bottom: 1rem;
+    text-align: center;
+    margin: 0 auto;
     text-shadow: 2px 2px 3px black;
 }
-.classes-main > header > p > span{
+.book-event-main > header > p > span{
     font-weight: 700;
 }
-.request-class-form{
+
+
+
+
+.book-event-form{
     position: relative;
     isolation: isolate;
     padding: 2rem;
-    width: 500px;
+    max-width: 1000px;
+    margin: 0 auto;
 
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(5,auto);
     gap: 1.5rem;
 }
-.request-class-form::before{
+.book-event-form::before{
     content: "";
     position: absolute;
     inset: 0;
@@ -2295,7 +2346,7 @@ body{
     z-index: -1;
 }
 
-.request-class-form::after{
+.book-event-form::after{
     content: "";
     position: absolute;
     inset: 5px;
@@ -2303,11 +2354,39 @@ body{
     border-radius: 10px;
     z-index: -1;
 }
-.request-class-form > label > div{
+label[for=BookEventFormNameInput]{
+    grid-column: 1;
+    grid-row: 1;
+}
+label[for=BookEventFormEmailInput]{
+    grid-column: 1;
+    grid-row: 2;
+}
+label[for=BookEventFormPhoneNumberInput]{
+    grid-column: 1;
+    grid-row: 3/5;
+}
+label[for=BookEventFormVenueInput]{
+    grid-column: 2;
+    grid-row: 1;
+}
+label[for=BookEventFormThemeInput]{
+    grid-column: 2;
+    grid-row: 2;
+}
+label[for=BookEventFormNumberOfPeopleInput]{
+    grid-column: 2;
+    grid-row: 3;
+}
+label[for=BookEventFormAddonInput]{
+    grid-column: 2;
+    grid-row: 4;
+}
+.book-event-form > label > div{
     font-size: 1rem;
     padding-bottom: .5em;
 }
-.request-class-form > label > input{
+.book-event-form > label > input{
     width: 100%;
     border: none;
     font-size: 1rem;
@@ -2315,25 +2394,29 @@ body{
     padding: .5em;
     background-color: hsl(0 0% 10%);
 }
-.request-class-form > label:nth-of-type(6),
-.request-class-form > label:nth-of-type(7){
+.book-event-form > label:nth-of-type(6),
+.book-event-form > label:nth-of-type(7){
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     gap: 2rem;
 }
-.request-class-form > label:nth-of-type(6) > div,
-.request-class-form > label:nth-of-type(7) > div{
+.book-event-form > label:nth-of-type(6) > div,
+.book-event-form > label:nth-of-type(7) > div{
     white-space: nowrap;
 }
-.request-class-form > label:nth-of-type(6) > input,
-.request-class-form > label:nth-of-type(7) > input{
+.book-event-form > label:nth-of-type(6) > input,
+.book-event-form > label:nth-of-type(7) > input{
     justify-self: flex-end;
     width: 100px;
 }
 
-.request-class-submit-btn{
+.book-event-submit-btn{
+    grid-column: 1/3;
+    grid-row: 5;
     border: none;
+    width: fit-content;
+    margin: 0 auto;
     color: var(--fc-primary);
     font-size: 1.5rem;
     font-weight: 700;
