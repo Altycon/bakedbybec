@@ -1962,12 +1962,18 @@ body{
     background-position: center;
     background-size: cover;
     background-blend-mode: overlay;
+
+    opacity: 0;
+    transition: opacity 500ms ease-in 500ms;
 }
 .meet-background::before{
     content: "";
     position: absolute;
     inset: 0;
     background-image: linear-gradient(var(--bc-primary),transparent,transparent,var(--bc-primary));
+}
+.meet-background.reveal{
+    opacity: 1;
 }
 .meet-main > header{
     grid-column: 1;
@@ -2298,6 +2304,9 @@ body{
     background-size: cover;
     background-position: center;
     z-index: -1;
+
+    opacity: 0;
+    transition: opacity 500ms ease-in 500ms;
 }
 .book-event-main::after{
     content: "";
@@ -2307,8 +2316,14 @@ body{
     height: 100vh;
     background-image: linear-gradient(hsl(0 0% 0% / 0.5),hsl(0 0% 0% / 0.5),var(--bc-primary));
     z-index: -1;
-}
 
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}
+.book-event-main.reveal::before,
+.book-event-main.reveal::after{
+    opacity: 1;
+}
 .book-event-main > header{
     /* max-width: 600px; */
 }
