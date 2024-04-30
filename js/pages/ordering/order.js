@@ -396,7 +396,7 @@ const OrderForm = {
 
             <label for="SugarCookiesQuantity">
                 <div>How many would you like?</div>
-                <select name="sugarcookiesquantity" id="SugarCookiesQuantity" autocomplete="off" required disabled>
+                <select name="sugarcookiesquantity" id="SugarCookiesQuantity" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="1" data-price="30">1 dozen</option>
                     <option value="2" data-price="60">2 dozen</option>
@@ -413,7 +413,7 @@ const OrderForm = {
                     name="sugarcookiesdate" 
                     id="SugarCookiesDateNeeded" 
                     min=""  
-                    autocomplete="off" required disabled>
+                    autocomplete="off" required>
             </label>
 
             <label for="SugarCookiesTheme">
@@ -422,7 +422,7 @@ const OrderForm = {
                     id="SugarCookiesTheme"
                     list="ItemThemes" 
                     cols="30" rows="1"  
-                    autocomplete="off" required disabled/>
+                    autocomplete="off" required/>
             </label>
 
             <label for="SugarCookiesPersonalization">
@@ -430,7 +430,7 @@ const OrderForm = {
                 <textarea name="sugarcookiespersonalization"
                     id="SugarCookiesPersonalization" 
                     cols="30" rows="2"  
-                    autocomplete="off" required disabled></textarea>
+                    autocomplete="off" required></textarea>
             </label>`;
 
         return li;

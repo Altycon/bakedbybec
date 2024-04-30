@@ -1008,11 +1008,7 @@ body{
     text-shadow: 1px 1px 1px black;
     color: var(--fc-primary);
     background-color: hsl(0 0% 10%);
-    /* border-radius: 5px; */
-    /* box-shadow: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.5); */
-
+    
     display: inline-block;
 }
 
@@ -1134,16 +1130,21 @@ body{
 .customer-review-images > div:nth-child(1){
     grid-column: 1;
     grid-row: 1;
+
+    transform: translate(20px,20px);
 }
 .customer-review-images > div:nth-child(2){
     grid-column: 2;
     grid-row: 1;
+
+    transform: translate(-30px,40px);
 }
 .customer-review-images > div:nth-child(3){
     grid-column: 1/3;
     grid-row: 2;
 
     max-width: 300px;
+    transform: translateY(-20px);
 }
 .customer-review-img-wrapper{
     position: relative;
@@ -1221,9 +1222,9 @@ body{
     padding-bottom: 6rem;
 }
 .faqs > h2{
-    font-size: 1.5rem;
-    text-align: center;
-    
+    text-align: left;
+    padding-left: 1rem;
+    opacity: 0.2;
     margin-bottom: 2rem;
 }
 .faqs > article{
@@ -1508,6 +1509,7 @@ body{
     grid-row: 1;
 
     position: relative;
+    isolation: isolate;
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-right: 1rem;
@@ -1519,6 +1521,44 @@ body{
     grid-template-rows: auto;
     align-items: center;
     justify-content: space-evenly;
+}
+.products-item > header::before{
+    content: "";
+    position: absolute;
+    top: 0%; right: 20%;
+    width: 200px;
+    aspect-ratio: 16/9;
+    border-radius: 5px;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    z-index: -1;
+    transform: translate(-20px,-20px);
+    transition: opacity 500ms ease-in, transform 500ms ease-in;
+}
+.products-item:hover > header::before{
+    opacity: 0.4;
+    transform: translate(0px,0px);
+}
+.products-list .products-item:nth-of-type(1) > header::before{
+    background-image: var(--bgi1);
+}
+.products-list .products-item:nth-of-type(2) > header::before{
+    background-image: var(--bgi2);
+}
+.products-list .products-item:nth-of-type(3) > header::before{
+    right: 33%;
+    aspect-ratio: 16/12;
+    background-position: top;
+    background-image: var(--bgi3);
+}
+.products-list .products-item:nth-of-type(4) > header::before{
+    background-image: var(--bgi4);
+}
+.products-list .products-item:nth-of-type(5) > header::before{
+    background-image: var(--bgi5);
 }
 .products-item > header > h2{
     grid-column: 1;
@@ -1651,22 +1691,29 @@ body{
 ===================================================|
 */
 .contact-main{
-    padding-top: 2rem;
     padding-bottom: 4rem;
 }
+.contact-main > header{
+
+}
+.contact-main > header > h1{
+    text-align: left;
+    padding-left: 1rem;
+    opacity: 0.2;
+}
 .contact-main .other-contact-links{
-    padding: 2rem;
+    padding: 1rem;
 
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    gap: 2rem;
-    justify-content: flex-end;
+    gap: 5px;
 }
 .contact-main .other-contact-links > a{
     position: relative;
     isolation: isolate;
-    width: fit-content;
+    /* width: fit-content; */
+    text-align: center;
     padding: 1rem 2rem;
     color: var(--fc-primary);
     background-color: hsl(0 0% 10%);
@@ -1698,7 +1745,7 @@ body{
     column-gap: 2rem;
     row-gap: .5rem;
 }
-.contact-main .contact-form::before{
+/* .contact-main .contact-form::before{
     content: "";
     position: absolute;
     top: 0%; left: 0%;
@@ -1718,7 +1765,7 @@ body{
     z-index: -1;
     border-radius: 10px;
     transform: translate(-50%,-50%);
-}
+} */
 .contact-main .contact-form .input-wrapper{
     
    display: grid;
@@ -2450,13 +2497,15 @@ label[for=BookEventFormAddonInput]{
 ===================================================|
 */
 .order-main{
-   padding: 2rem;
+   
 
 }
+.order-main > header{
+    padding: 1rem;
+}
 .order-main > header > h1{
-    font-size: 2rem;
     padding-left: 2rem;
-    padding-bottom: 1rem;
+    opacity: 0.2;
 }
 
 /*
@@ -2467,7 +2516,8 @@ label[for=BookEventFormAddonInput]{
 .order-form{
     position: relative;
     width: 100%;
-    padding: 2rem;
+    padding-inline: 2rem;
+    margin-bottom: 4rem;
     isolation: isolate;
     
     display: grid;
@@ -2507,7 +2557,8 @@ label[for=OrderFormItem] > div{
     align-self: center;
     justify-self: center;
 
-    min-width: 200px;
+    min-width: 300px;
+    margin-top: 1rem;
     border: none;
     color: var(--fc-primary);
     font-size: 1.5rem;
@@ -2519,7 +2570,7 @@ label[for=OrderFormItem] > div{
     inset -2px -2px 3px black,
     inset 2px 2px 3px hsl(0 0% 100% / 0.5);
 }
-.order-form::before{
+/* .order-form::before{
     content: "";
     position: absolute;
     inset: 0;
@@ -2534,7 +2585,7 @@ label[for=OrderFormItem] > div{
     background-color: var(--bc-primary);
     border-radius: 10px;
     z-index: -1;
-}
+} */
 .order-form input,
 .order-form textarea,
 .order-form select{
