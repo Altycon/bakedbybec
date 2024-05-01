@@ -36,8 +36,11 @@
     /* --bc-primary: hsl(0 0% 5%); */
     --site-color-accent1: hsl(300 100% 50%);
     --site-color-accent2: hsl(220 100% 50%);
-    --site-gradient: linear-gradient(90deg, var(--site-color-accent1), var(--site-color-accent2));
 
+    --site-link-color: hsl(260 50% 25%);
+    --site-input-color: hsl(0 0% 15%);
+
+    --site-gradient: linear-gradient(90deg, var(--site-color-accent1), var(--site-color-accent2));
     --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
     --home-background-color-black: hsl(0 0% 5% / 0.5);
@@ -74,6 +77,23 @@
 ===================================================|
 */
 *,::before,::after{margin: 0;padding: 0;box-sizing: border-box;}
+input,
+textarea,
+select{
+    background-color: var(--site-input-color);
+    color: var(--fc-primary);
+    border: none;
+    font-size: 1rem;
+    font-family: var(--ff-secondary);
+    padding: .4em;
+    width: 100%;
+    line-height: 1.2em;
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+    outline: 1px solid var(--site-color-accent2);
+}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -88,6 +108,14 @@
 }
 .link{
     text-decoration: none;
+}
+.site-box-link{
+    font-size: 1rem;
+    color: var(--fc-primary);
+    text-shadow: 1px 1px 3px black;
+    font-weight: 700;
+    text-transform: lowercase;
+    background-color:var(--site-link-color);
 }
 .btn{
     cursor: pointer;
@@ -944,7 +972,7 @@ body{
     position: relative;
     isolation: isolate;
     text-align: center;
-    background-color: hsl(0 0% 10%);
+    background-color: var(--site-link-color);
     padding: 1rem;
 
     opacity: 0;
@@ -982,7 +1010,7 @@ body{
     padding: 10px;
     font-size: 1rem;
     font-weight: 700;
-    text-shadow: 1px 1px 1px black;
+    text-shadow: 2px 2px 4px black;
     color: var(--fc-primary);
 
     display: inline-block;
@@ -1007,8 +1035,7 @@ body{
     font-weight: 700;
     text-shadow: 1px 1px 1px black;
     color: var(--fc-primary);
-    background-color: hsl(0 0% 10%);
-    
+    background-color:var(--site-link-color);
     display: inline-block;
 }
 
@@ -1199,7 +1226,9 @@ body{
     padding: 20px 10px;
     text-align: center;
     color: var(--fc-primary);
-    background-color: hsl(0 0% 10%);
+    font-weight: 700;
+    text-shadow: 2px 2px 4px black;
+    background-color:var(--site-link-color);
     text-transform: lowercase;
 }
 .customer-review-item-links > a::before{
@@ -1658,13 +1687,7 @@ body{
 .products-link{
     position: relative;
     isolation: isolate;
-    font-size: 1rem;
-    text-transform: lowercase;
-    text-decoration: none;
-    color: var(--fc-primary);
-    
     padding: 1rem 2rem;
-    background-color: hsl(0 0% 10%);
 }
 .products-link::before{
     content: "";
@@ -1712,11 +1735,8 @@ body{
 .contact-main .other-contact-links > a{
     position: relative;
     isolation: isolate;
-    /* width: fit-content; */
-    text-align: center;
     padding: 1rem 2rem;
-    color: var(--fc-primary);
-    background-color: hsl(0 0% 10%);
+    text-align: center;
 }
 .contact-main .other-contact-links > a::before{
     content: "";
@@ -1791,21 +1811,8 @@ body{
     text-transform: uppercase;
     font-weight: 700;
 }
-.contact-main .contact-form .input-wrapper > input{
-    border: none;
-    font-size: 1rem;
-    color: var(--fc-primary);
-    padding: .5em;
-    background-color: hsl(0 0% 10%);
-}
-.contact-main .contact-form .input-wrapper > select{
-    border: none;
-    font-size: 1rem;
-    color: var(--fc-primary);
-    text-align: center;
-    padding: .5em;
-    background-color: hsl(0 0% 10%);
-}
+
+
 .contact-main .contact-form .textarea-wrapper{
     grid-column: 2;
     grid-row: 1/4;
@@ -1818,11 +1825,6 @@ body{
     text-align: center;
 }
 .contact-main .contact-form .textarea-wrapper > textarea{
-    border: none;
-    font-size: 1rem;
-    color: var(--fc-primary);
-    padding: .5em;
-    background-color: hsl(0 0% 10%);
     resize: none;
 }
 .contact-main .contact-form .information{
@@ -2601,18 +2603,6 @@ label[for=OrderFormItem] > div{
     border-radius: 10px;
     z-index: -1;
 } */
-.order-form input,
-.order-form textarea,
-.order-form select{
-    background-color: hsl(0 0% 10%);
-    color: var(--fc-primary);
-    border: none;
-    font-size: 1rem;
-    font-family: var(--ff-secondary);
-    padding: .4em;
-    width: 100%;
-    line-height: 1.2em;
-}
 
 .order-form select,
 .order-form input[type=date]{
@@ -2623,7 +2613,7 @@ label[for=OrderFormItem] > div{
     resize: none;
 }
 .order-form > div{
-    outline: 3px solid hsl(0 0% 20%);
+    outline: 3px solid hsl(0 0% 10%);
    
     border-radius: 10px;
 }
