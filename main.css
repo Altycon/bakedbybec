@@ -46,16 +46,16 @@
     --home-background-color-black: hsl(0 0% 5% / 0.5);
     --home-background-color-bright:hsl(300 30% 10%);
 
-    --bgi1: url('/img/cookies_coastguard.jpg');
-    --bgi2: url('/img/bbb-drop-cookie-lemon.jpg');
-    --bgi3: url('/img/bbb-cake-nightmareXmans.jpg');
-    --bgi4: url('/img/bbb-cupcakes-landscape.jpg');
-    --bgi5: url('/img/bbb-cakepops-pink.jpg');
-    --bgi6: url('/img/bbb-cookies-landscapes.jpg');
-    --bgi7: url('/img/bbb-cookie-space1.jpg');
-    --bgi8: url('/img/bbb-class-first-setup.jpg');
-    --bgi9: url('/img/bbb-working1.jpg');
-    --bgi10: url('/img/bbb-science-fair-cookie1-2024.jpg');
+    --bgi1: url('/bakedbybec/img/cookies_coastguard.jpg');
+    --bgi2: url('/bakedbybec/img/bbb-drop-cookie-lemon.jpg');
+    --bgi3: url('/bakedbybec/img/bbb-cake-nightmareXmans.jpg');
+    --bgi4: url('/bakedbybec/img/bbb-cupcakes-landscape.jpg');
+    --bgi5: url('/bakedbybec/img/bbb-cakepops-pink.jpg');
+    --bgi6: url('/bakedbybec/img/bbb-cookies-landscapes.jpg');
+    --bgi7: url('/bakedbybec/img/bbb-cookie-space1.jpg');
+    --bgi8: url('/bakedbybec/img/bbb-class-first-setup.jpg');
+    --bgi9: url('/bakedbybec/img/bbb-working1.jpg');
+    --bgi10: url('/bakedbybec/img/bbb-science-fair-cookie1-2024.jpg');
 
     /* --nav-primary-size: 30vw; */
 
