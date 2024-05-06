@@ -304,36 +304,36 @@ const OrderForm = {
 
         return li;
     },
-    cakeComponent(){
+    layerCakeComponent(){
         const li = document.createElement('li');
-        li.classList.add('order-item','cake-information');
-        li.setAttribute('data-order-item','cakes');
-        li.setAttribute('data-item-id','ck');
+        li.classList.add('order-item','layer-cake-information');
+        li.setAttribute('data-order-item','layer-cake');
+        li.setAttribute('data-item-id','lck');
 
         li.innerHTML += `<header>
-                <h3>Cake</h3>
-                <button type="button" class="btn remove-order-btn" value="cakes">remove&nbsp;&#10007;</button>
+                <h3>Layer Cake</h3>
+                <button type="button" class="btn remove-order-btn" value="layer-cake">remove&nbsp;&#10007;</button>
             </header>
 
             
 
-            <label for="CakeQuantity">
+            <label for="LayerCakeQuantity">
                 <div>How many would you like?</div>
-                <select name="cakequantity" id="CakeQuantity" autocomplete="off" required>
+                <select name="layercakequantity" id="LayerCakeQuantity" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </select>
             </label>
 
-            <label for="CakeDateNeeded">
+            <label for="LayerCakeDateNeeded">
                 <div>Date needed</div>
-                <input type="date" name="cakedateneeded" id="CakeDateNeeded" autocomplete="off" required>
+                <input type="date" name="layercakedateneeded" id="LayerCakeDateNeeded" autocomplete="off" required>
             </label>
 
-            <label for="CakeSize">
+            <label for="LayerCakeSize">
                 <div>What size of cake?</div>
-                <select name="cakesize" id="CakeSize" autocomplete="off" required>
+                <select name="layercakesize" id="LayerCakeSize" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="6inch" data-price="25">Smash Cake (serves ~12)</option>
                     <option value="8inch" data-price="35">8" (serves ~20)</option>
@@ -343,9 +343,9 @@ const OrderForm = {
                 </select>
             </label>
 
-            <label for="CakeFlavor">
+            <label for="LayerCakeFlavor">
                 <div>Flavor</div>
-                <select name="cakeflavor" id="CakeFlavor" autocomplete="off" required>
+                <select name="layercakeflavor" id="LayerCakeFlavor" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -355,9 +355,9 @@ const OrderForm = {
                 </select>
             </label>
 
-            <label for="CakeFrosting">
+            <label for="LayerCakeFrosting">
                 <div>Frosting</div>
-                <select name="cakefrosting" id="CakeFrosting" autocomplete="off" required>
+                <select name="layercakefrosting" id="LayerCakeFrosting" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="vanilla">vanilla</option>
                     <option value="chocolate">chocolate</option>
@@ -366,18 +366,96 @@ const OrderForm = {
                 </select>
             </label>
 
-            <label for="CakeTheme">
+            <label for="LayerCakeTheme">
                 <div>Theme/Occasion</div>
-                <input name="caketheme" 
-                id="CakeTheme"
+                <input name="layercaketheme" 
+                id="LayerCakeTheme"
                 list="ItemThemes" 
                 cols="30" rows="1"  
                 autocomplete="off" required/>
             </label>
 
-            <label for="CakePersonalization">
+            <label for="LayerCakePersonalization">
                 <div>Personalization</div>
-                <textarea name="cakepersonalization" id="CakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+                <textarea name="layercakepersonalization" id="LayerCakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
+            </label>`;
+
+        return li;
+    },
+    sheetCakeComponent(){
+        const li = document.createElement('li');
+        li.classList.add('order-item','sheet-cake-information');
+        li.setAttribute('data-order-item','sheet-cake');
+        li.setAttribute('data-item-id','sck');
+
+        li.innerHTML += `<header>
+                <h3>sheet cake</h3>
+                <button type="button" class="btn remove-order-btn" value="sheet-cake">remove&nbsp;&#10007;</button>
+            </header>
+
+            
+
+            <label for="SheetCakeQuantity">
+                <div>How many would you like?</div>
+                <select name="sheetcakequantity" id="SheetCakeQuantity" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </label>
+
+            <label for="SheetCakeDateNeeded">
+                <div>Date needed</div>
+                <input type="date" name="cakedateneeded" id="SheetCakeDateNeeded" autocomplete="off" required>
+            </label>
+
+            <label for="SheetCakeSize">
+                <div>What size of cake?</div>
+                <select name="sheetcakesize" id="SheetCakeSize" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="6" data-price="25">6x12x2</option>
+                    <option value="8" data-price="35">12x24x2</option>
+                    <option value="10" data-price="40">24x48x4</option>
+                    <option value="2tier" data-price="65">2-12x24x2</option>
+                    
+                </select>
+            </label>
+
+            <label for="SheetCakeFlavor">
+                <div>Flavor</div>
+                <select name="sheetcakeflavor" id="SheetCakeFlavor" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="redvelvet">red velvet</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="SheetCakeFrosting">
+                <div>Frosting</div>
+                <select name="sheetcakefrosting" id="SheetCakeFrosting" autocomplete="off" required>
+                    <option value=""selected disabled>-- select</option>
+                    <option value="vanilla">vanilla</option>
+                    <option value="chocolate">chocolate</option>
+                    <option value="strawberry">strawberry</option>
+                    <option value="lemon">lemon</option>
+                </select>
+            </label>
+
+            <label for="SheetCakeTheme">
+                <div>Theme/Occasion</div>
+                <input name="sheetcaketheme" 
+                id="SheetCakeTheme"
+                list="ItemThemes" 
+                cols="30" rows="1"  
+                autocomplete="off" required/>
+            </label>
+
+            <label for="SheetCakePersonalization">
+                <div>Personalization</div>
+                <textarea name="sheetcakepersonalization" id="SheetCakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
             </label>`;
 
         return li;
@@ -478,7 +556,9 @@ const OrderForm = {
 
             case 'sugar-cookies': return OrderForm.sugarCookieComponent();
 
-            case 'cakes': return OrderForm.cakeComponent();
+            case 'layer-cake': return OrderForm.layerCakeComponent();
+
+            case 'sheet-cake': return OrderForm.sheetCakeComponent();
 
             case 'drop-cookies': return OrderForm.dropCookieComponent();
             
@@ -635,79 +715,6 @@ const OrderForm = {
     listenToOrderItem(orderItemElement){
 
         orderItemElement.querySelectorAll('select').forEach( selectElement => {
-
-            if(selectElement.name.includes('cake') && !selectElement.name.includes('cup') && !selectElement.name.includes('pop')){
-
-                if(selectElement.name.includes('size')){
-
-                    selectElement.addEventListener('input', (event)=>{
-                        [...event.target.children].forEach( option => {
-                            if(option.value === event.target.value){
-
-                                const itemPrice = Number(option.dataset.price);
-
-                                const cakeQuantity = orderItemElement.querySelector('select[name="cakequantity"]').value;
-
-                                if(cakeQuantity){
-
-                                    const currentItemPrice = Number(cakeQuantity) * itemPrice;
-
-                                    document.querySelector(`[data-output="${orderItemElement.dataset.itemId}totalprice"]`).textContent = `${currentItemPrice}.00`;
-
-                                    OrderInvoice.calculateInvoiceTotal();
-
-                                }
-
-                            }
-                        })
-                    })
-                }
-
-                if(selectElement.name.includes('quantity')){
-
-                    selectElement.addEventListener('input', (event)=>{
-
-                        const cakeSizeElement = orderItemElement.querySelector('select[name="cakesize"]');
-
-                        if(cakeSizeElement && cakeSizeElement.value !== ""){
-
-                            [...cakeSizeElement.children].forEach( option => {
-
-                                if(option.value === cakeSizeElement.value){
-
-                                    const optionPrice = option.dataset.price;
-
-                                    const newPrice = Number(optionPrice) * Number(event.target.value);
-
-                                    document.querySelector(`[data-output="${orderItemElement.dataset.itemId}totalprice"]`).textContent = `${newPrice}.00`;
-
-                                    OrderInvoice.calculateInvoiceTotal();
-                                }
-                            })
-                        }
-
-                    })
-                }
-
-            }else{
-
-                if(selectElement.name.includes('quantity')){
-
-                    selectElement.addEventListener('input', (event)=>{
-                        [...event.target.children].forEach( option => {
-                            if(option.value === event.target.value){
-
-                                const itemPrice = option.dataset.price;
-
-                                document.querySelector(`[data-output="${orderItemElement.dataset.itemId}totalprice"]`).textContent = `${itemPrice}.00`;
-
-                                OrderInvoice.calculateInvoiceTotal();
-                            }
-                        })
-                    })
-                }
-
-            }
 
             
         })
