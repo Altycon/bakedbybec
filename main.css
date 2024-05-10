@@ -263,6 +263,7 @@ body{
     height: var(--footer-logo-size);
     background: var(--site-gradient);
     border-radius: 50%;
+    z-index: -1;
 }
 .footer-logo .logo-ring::before{
     content: "";
@@ -281,7 +282,6 @@ body{
 }
 .footer-logo > a > img{
     width: 150px;
-    filter: invert(100%);
 }
 .footer-copyright{
     text-align: center;
