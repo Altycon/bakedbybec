@@ -735,14 +735,17 @@ const OrderForm = {
 
         if(event.target.value){ 
 
-            [...OrderForm.form.querySelectorAll('.order-item')].forEach( orderItem => {
-                if(orderItem.classList.contains('open')){
-                    orderItem.classList.remove('open');
-                }
-            });
+            const orderItems = [...OrderForm.form.querySelectorAll('.order-item')];
+
+            if(orderItems && orderItems.length > 0){
+                orderItems.forEach( orderItem => {
+                    if(orderItem.classList.contains('open')){
+                        orderItem.classList.remove('open');
+                    }
+                });
+            }
             
-          
-            const orderItem = OrderForm.createOrderItem(event.target.value); //document.querySelector(`[data-order-item="${event.target.value}"]`);
+            const orderItem = OrderForm.createOrderItem(event.target.value);
 
             document.querySelector('.order-item-list').appendChild(new DocumentFragment().appendChild(orderItem));
 
@@ -766,6 +769,7 @@ const OrderForm = {
 
         
     },
+    
     submitOrder(event){
 
         event.preventDefault();
@@ -789,15 +793,27 @@ const OrderForm = {
         OrderForm.addressInformationDisplay = document.querySelector('.address-information');
 
         OrderForm.submitButton = document.querySelector('.order-submit-btn');
+
+      
     }
 };
 
 function initializeOrderingPage(){
 
+    let externalItemValue = undefined;
+
+    if(window.location.hash && window.location.hash !== ""){
+
+        externalItemValue = window.location.hash.split('#')[1];
+
+    }
+
     pageNavigation();
 
     OrderForm.initialize();
     OrderForm.listen();
+
+    
 
 };
 initializeOrderingPage();
