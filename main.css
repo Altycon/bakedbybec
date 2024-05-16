@@ -1503,12 +1503,12 @@ body{
 .products-item::before{
     content: "";
     position: absolute;
-    top: 0%; left: -30%;
-    width: 100%;
-    height: 100%;
+    top: 0%; left: -400px;
+    width: 1200px;
+    height: 500px;
     background-image: var(--bgi12);
     background-repeat: no-repeat;
-    background-position: left;
+    background-position: 50% 50%;
     background-size: 80%;
     opacity: 0;
     z-index: -1;
@@ -1638,7 +1638,7 @@ body{
     isolation: isolate;
     display: inline-block;
     
-    width: 25vw;
+    width: 300px;
     height: fit-content;
     padding: 1rem 2rem;
     text-align: center;
