@@ -1,4 +1,6 @@
 import { AImageViewer } from "./image_viewer.js";
+import { pageNavigation } from "./navigation.js";
+import { createIntersectionObserver } from "./intersection_observer.js";
 
 
 function handleNotes(){
@@ -17,29 +19,7 @@ function handleNotes(){
     });
 };
 
-function createIntersectionObserver(className,threshold = 0){
 
-    const intersections = document.querySelectorAll(className);
-
-    const homeObserver = new IntersectionObserver(entries=>{
-
-       entries.forEach( entry => {
-
-            if(entry.isIntersecting){
-
-                entry.target.classList.add('show');
-            }
-       })
-       
-    }, {
-        root: null,
-        threshold: threshold,
-    });
-
-    intersections.forEach( intersection => {
-        homeObserver.observe(intersection);
-    })
-};
 function siteOpeningTransition(){
 
     document.querySelector('.home-navigation-primary').classList.add('reveal');
@@ -47,36 +27,7 @@ function siteOpeningTransition(){
     
 };
 
-function handleMobileHomeNavigation(){
 
-    document.querySelector('.page-navigation-primary-open-btn').addEventListener('click', (event)=>{
-
-        // extra bit
-
-        const homeHeaderHead = document.querySelector('.home-header-head');
-
-        // main bit
-        const pageNavigationElement = document.querySelector('.home-navigation-primary-list');
-         if(pageNavigationElement.classList.contains('open')){
-            document.body.style.overflow = 'auto';
-            event.currentTarget.classList.remove('active');
-            pageNavigationElement.classList.remove('show');
-            
-            setTimeout( ()=> {
-                pageNavigationElement.classList.remove('open');
-                homeHeaderHead.classList.remove('active');
-            },100);
-         }else{
-            setTimeout( ()=> {
-                pageNavigationElement.classList.add('show');
-            },100);
-            document.body.style.overflow = 'hidden';
-            homeHeaderHead.classList.add('active');
-            event.currentTarget.classList.add('active');
-            pageNavigationElement.classList.add('open');
-         }
-    });
-};
 
 function handleDesktopHomeHoverLinksAnimation(){
 
@@ -111,15 +62,11 @@ function initializeSite(){
 
     siteOpeningTransition();
 
-  
-
-    handleMobileHomeNavigation();
+    pageNavigation();
 
     handleDesktopHomeHoverLinksAnimation();
     
-    if(innerWidth > 800){
-        createIntersectionObserver('.intersection',0.5);
-    }
+    createIntersectionObserver('.intersection',0.5);
 
     handleNotes();
 
