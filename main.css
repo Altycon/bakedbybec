@@ -1925,12 +1925,10 @@ body{
         justify-self: flex-end;
     }
     .products-item > header > .product-price > span:first-of-type{
-    
         font-weight: 700;
         font-size: 3rem;
         padding: .25em;
         color: var(--site-color-accent1);
-        text-shadow: 2px 2px 5px black;
     }
     .product-item-links{
    
@@ -1971,9 +1969,9 @@ body{
         justify-self: center;
         
         max-width: 500px;
-        padding: 1em;
+        padding: 1rem 0rem;
         font-size: 1rem;
-        line-height: 1.8em;
+        line-height: 1.4em;
         text-align: center;
     }
     .products-list .cake-pricing{
@@ -1991,6 +1989,19 @@ body{
     }
 }
 @media only screen and (max-width: 500px){
+    .product-main{
+        padding-bottom: 4rem;
+    }
+    .product-main > header{
+        padding-block: 0rem;
+        padding-bottom: 1rem;
+    }
+    .product-main > header > h1{
+        text-align: left;
+        padding-left: 1em;
+        color: var(--fc-rare);
+        font-size: 1rem;
+    }
     .products-list{
         list-style: none;
         overflow-y: hidden;
@@ -2000,22 +2011,24 @@ body{
     
         display: grid;
         grid-template-columns: repeat(6,1fr);
-        grid-template-rows: auto;
+        grid-template-rows: fit-content;
         gap: 1rem;
     }
     .products-item{
+        width: 90vw;
         padding-bottom: 2rem;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 4rem;
 
-        scroll-snap-align: start;
+        scroll-snap-align: center;
        
         border-radius: 10px;
         background-image: var(--bg-gradient-glass-reverse);
     }
     .products-item::before{
-        content: "";
+        display: none;
+        /* content: "";
         position: absolute;
         top: 0%; left: 0;
         width: 100%;
@@ -2028,7 +2041,7 @@ body{
         opacity: 0;
         z-index: -1;
         
-        transition: opacity 800ms ease-in;
+        transition: opacity 800ms ease-in; */
     }
     .products-item.show::before{
         opacity: 0.2;
@@ -2040,17 +2053,57 @@ body{
         padding-left: 2rem;
         
    
-        row-gap: 2rem;
+        row-gap: 1rem;
+    }
+    .products-item > header > h2{
+        
+        justify-self: flex-start;
     }
     .products-item > header > h2 > div:nth-of-type(1){
-        padding-left: 1.4em;
-        margin-bottom: -1.4rem;
-        font-size: 2rem;
+        padding-left: 2em;
+        margin-bottom: -1.2rem;
+        font-size: 1rem;
     }
     .products-item > header > h2 > div:nth-of-type(2){
-        font-size: 4rem;
-        text-transform: capitalize;
+        font-size: 3rem;
     }
+    .products-item > header > .product-price{
+      
+        justify-self: flex-end;
+        
+    }
+    .products-item > header > .product-price > span:first-of-type{
+        font-weight: 700;
+        font-size: 2rem;
+        padding: .25em;
+        color: var(--site-color-accent1);
+    }
+
+    .products-list .products-item:nth-of-type(3) .cake-pricing{
+        gap: 1rem;
+    }
+    .products-list .products-item:nth-of-type(4) .cake-pricing{
+        gap: 1rem;
+    }
+    .products-list .cake-pricing > div > p{
+        font-size: 1rem;
+    }
+    .products-list .cake-pricing > div > p:first-of-type{
+        margin-bottom: .5em;
+        font-weight: 700;
+    }
+    .products-list .cake-pricing > div > p:nth-child(2){
+        font-size: .8rem;
+        margin-bottom: 1em;
+    }
+    .products-list .cake-pricing > div > p:last-of-type{
+        font-weight: 700;
+        font-size: 1.2rem;
+        padding: .25em;
+        color: var(--site-color-accent1);
+        text-shadow: 2px 2px 5px black;
+    }
+
     .product-item-links{
         padding: 0rem 0rem;
     }
