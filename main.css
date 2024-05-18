@@ -4387,7 +4387,7 @@ label[for=CakepopFrosting] > div{
     .home-header-quick-links{
         grid-column: 1/3;
         grid-row: 3;
-        display: block;
+        display: none;
 
         padding: 4rem 1rem 4rem 1rem;
     }
