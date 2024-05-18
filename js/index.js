@@ -65,8 +65,12 @@ function initializeSite(){
     pageNavigation();
 
     handleDesktopHomeHoverLinksAnimation();
+    let threshold = 0.5;
+    if(innerWidth < 800){
+        threshold = 0.1;
+    }
     
-    createIntersectionObserver('.intersection',0.5);
+    createIntersectionObserver('.intersection',threshold);
 
     handleNotes();
 

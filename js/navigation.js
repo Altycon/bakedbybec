@@ -9,6 +9,7 @@ export function pageNavigation(){
             pageNavigationElement.classList.remove('show');
             setTimeout( ()=> {
                 pageNavigationElement.classList.remove('open');
+                document.body.style.overflow = 'auto';
             },200);
         }else{
             setTimeout( ()=> {
@@ -16,6 +17,7 @@ export function pageNavigation(){
             },100);
             event.currentTarget.classList.add('active');
             pageNavigationElement.classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
     });
 
