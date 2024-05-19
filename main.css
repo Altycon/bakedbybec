@@ -91,14 +91,26 @@
 input,
 textarea,
 select{
-    background-color: var(--site-input-color);
+    /* background-color: var(--site-input-color); */
+    background-color: transparent;
+    
     color: var(--fc-primary);
     border: none;
+    
     font-size: 1rem;
     font-family: var(--ff-secondary);
     padding: .4em;
     width: 100%;
     line-height: 1.2em;
+}
+input,textarea{
+    border-bottom: 1px solid var(--site-input-color);
+}
+textarea{
+    background-color: hsl(0 0% 100% / 0.1);
+}
+select{
+    background-color: hsl(0 0% 100% / 0.1);
 }
 input:focus-visible,
 textarea:focus-visible,
@@ -1768,7 +1780,7 @@ body{
     column-gap: 200px;
 }
 .products-list .products-item:nth-of-type(4) > header{
-    column-gap: 200px;
+    column-gap: 300px;
 }
 .products-item > header > h2{
     grid-column: 1;
@@ -1831,7 +1843,7 @@ body{
 }
 .products-list .products-item:nth-of-type(4) .cake-pricing{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     grid-template-rows: auto;
     gap: 3rem;
 }
@@ -2139,32 +2151,7 @@ body{
     padding-left: 1rem;
     color: var(--fc-rare);
 }
-.contact-main .other-contact-links{
-    padding: 1rem;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 5px;
-}
-.contact-main .other-contact-links > a{
-    position: relative;
-    isolation: isolate;
-    padding: 1rem 2rem;
-    text-align: center;
-}
-.contact-main .other-contact-links > a::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--site-gradient);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 100ms ease-in;
-}
-.contact-main .other-contact-links > a:hover::before{
-    opacity: 1;
-}
 .contact-main .contact-form{
     position: relative;
     width: 100vw;
@@ -2180,33 +2167,15 @@ body{
     column-gap: 2rem;
     row-gap: .5rem;
 }
-/* .contact-main .contact-form::before{
-    content: "";
-    position: absolute;
-    top: 0%; left: 0%;
-    width: 100%;
-    height: 100%;
-    background: var(--site-gradient);
-    z-index: -1;
-    border-radius: 10px;
-}
-.contact-main .contact-form::after{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: calc(100% - .5rem);
-    height:calc(100% - .5rem);
-    background-color: var(--bc-primary);
-    z-index: -1;
-    border-radius: 10px;
-    transform: translate(-50%,-50%);
-} */
+
 .contact-main .contact-form .input-wrapper{
     
    display: grid;
    grid-template-columns: auto;
    grid-template-rows: auto auto;
+
 }
+
 .contact-main .contact-form .input-wrapper:nth-child(1){
     grid-column: 1;
     grid-row: 1;
@@ -2222,12 +2191,20 @@ body{
 
 .contact-main .contact-form .input-wrapper > label,
 .contact-main .contact-form .textarea-wrapper > label{
+   
     padding: .5em;
     text-transform: uppercase;
     font-weight: 700;
 }
 
-
+.contact-main .contact-form .input-wrapper > input,
+.contact-main .contact-form .input-wrapper > select,
+.contact-main .contact-form .textarea-wrapper > textarea{
+    width: 100%;
+}
+.contact-main .contact-form .input-wrapper > select{
+    text-align: center;
+}
 .contact-main .contact-form .textarea-wrapper{
     grid-column: 2;
     grid-row: 1/4;
@@ -2313,36 +2290,8 @@ body{
         justify-self: center;
     }
 }
-@media only screen and (max-width: 500px){
-    .contact-main > article > p{
-        font-size: 1rem;
-        line-height: 2em;
-    }
-}
-@media only screen and (max-width: 440px) {
-    .contact-main .contact-form .input-wrapper > input,
-    .contact-main .contact-form .input-wrapper > select,
-    .contact-main .contact-form .textarea-wrapper > textarea{
-        width: 300px;
-        margin: 0 auto;
-    }
-}
-@media only screen and (max-width: 360px) {
-    .contact-main .contact-form .input-wrapper > input,
-    .contact-main .contact-form .input-wrapper > select,
-    .contact-main .contact-form .textarea-wrapper > textarea{
-        width: 250px;
-        margin: 0 auto;
-    }
-}
-@media only screen and (max-width: 316px) {
-    .contact-main .contact-form .input-wrapper > input,
-    .contact-main .contact-form .input-wrapper > select,
-    .contact-main .contact-form .textarea-wrapper > textarea{
-        width: 200px;
-        margin: 0 auto;
-    }
-}
+
+
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -2871,14 +2820,7 @@ body{
 */
 .book-event-main{
     position: relative;
-    isolation: isolate;
     padding-block: 4rem;
-
-    /* display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto;
-    justify-content: space-evenly;
-    gap: 3rem; */
 }
 .book-event-main::before{
     content: "";
@@ -2901,7 +2843,7 @@ body{
     top: 4rem; left: 0;
     width: 100%;
     height: 100vh;
-    background-image: linear-gradient(hsl(0 0% 0% / 0.5),hsl(0 0% 0% / 0.5),var(--bc-primary));
+    background-image: linear-gradient(hsl(0 0% 0% / 0.6),hsl(0 0% 0% / 0.6),var(--bc-primary));
     z-index: -1;
 
     opacity: 0;
@@ -2911,78 +2853,33 @@ body{
 .book-event-main.reveal::after{
     opacity: 1;
 }
-.book-event-main > header{
-    /* max-width: 600px; */
-}
-.book-event-main > header > h2{
-    position: relative;
-    font-size: 2.5rem;
-    line-height: 1em;
-    padding: 2rem;
-    margin-bottom: 1rem;
+.book-event-main > header > h1{
+    padding-inline: 6rem;
+    padding-block: 6rem;
     text-shadow: 2px 2px 3px black;
+    text-align: left;
 }
-
-.book-event-main > header > h3{
-    font-size: 1.5rem;
-    margin-bottom: 1em;
-    padding-left: 4rem;
-    color: var(--site-color-accent1);
-    text-shadow: 2px 2px 3px black;
+.book-event-main > header > h1 > div:nth-of-type(1){
+    padding-left: 1.6em;
+    margin-bottom: -3rem;
+    font-size: 3rem;
 }
-.book-event-main > header > section{
-    padding: 2rem;
+.book-event-main > header > h1 > div:nth-of-type(2){
+    font-size: 8rem;
+    text-transform: capitalize;
 }
-.book-event-main > header > section:nth-of-type(1) > h4{
-    padding: 1rem;
-    margin-bottom: 1.4em;
-}
-.book-event-main > header > section:nth-of-type(1) > ul{
-    list-style: none;
-    
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-template-rows:150px;
-    gap: 1rem;
-}
-.book-event-main > header > section:nth-of-type(1) > ul > li{
-    text-align: center;
-    background-color: hsl(0 0% 0% / 0.8);
-
-    display: grid;
-    place-content: center;
-}
-.book-event-main > header > section:nth-of-type(2){
-    display: grid;
-    grid-template-columns: repeat(3,auto);
-    grid-template-rows: auto;
-    gap: 1rem;
-    justify-content: space-evenly;
-}
-.book-event-main > header > section:nth-of-type(2) > div > h4{
-    padding: 1rem;
-}
-.book-event-main > header > section:nth-of-type(2) > div > ul{
-    list-style-position: inside;
-    padding-left: 1.4em;
-}
-.book-event-main > header > section:nth-of-type(2) > div > ul > li{
-    font-size: 1rem;
-    padding: .5em;
-}
-.book-event-main > header > p{
-    padding-block: 4rem;
+.book-event-main > section > p{
     max-width: 800px;
+    margin: 0 auto 1em auto;
+    text-align: center;
     font-size: 1.2rem;
     line-height: 1.4em;
-    text-align: center;
-    margin: 0 auto;
+    /* background-color: hsl(0 0% 100% / 0.2); */
+    background-image: var(--bg-gradient-glass);
+    border-radius: 10px;
+    padding: 1rem;
     text-shadow: 2px 2px 3px black;
 }
-.book-event-main > header > p > span{
-    font-weight: 700;
-}
-
 
 
 
@@ -2992,91 +2889,31 @@ body{
     padding: 2rem;
     max-width: 1000px;
     margin: 0 auto;
+    background-image: var(--bg-gradient-glass);
+    border-radius: 10px;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(5,auto);
-    gap: 1.5rem;
-}
-.book-event-form::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--site-gradient);
-    border-radius: 10px;
-    z-index: -1;
-}
-
-.book-event-form::after{
-    content: "";
-    position: absolute;
-    inset: 5px;
-    background-color: var(--bc-primary);
-    border-radius: 10px;
-    z-index: -1;
-}
-label[for=BookEventFormNameInput]{
-    grid-column: 1;
-    grid-row: 1;
-}
-label[for=BookEventFormEmailInput]{
-    grid-column: 1;
-    grid-row: 2;
-}
-label[for=BookEventFormPhoneNumberInput]{
-    grid-column: 1;
-    grid-row: 3/5;
-}
-label[for=BookEventFormVenueInput]{
-    grid-column: 2;
-    grid-row: 1;
-}
-label[for=BookEventFormThemeInput]{
-    grid-column: 2;
-    grid-row: 2;
-}
-label[for=BookEventFormNumberOfPeopleInput]{
-    grid-column: 2;
-    grid-row: 3;
-}
-label[for=BookEventFormAddonInput]{
-    grid-column: 2;
-    grid-row: 4;
+    grid-template-rows: auto;
+    gap: 1rem;
+    align-items: center;
 }
 .book-event-form > label > div{
     font-size: 1rem;
     padding-bottom: .5em;
 }
 .book-event-form > label > input{
-    width: 100%;
-    border: none;
     font-size: 1rem;
     color: var(--fc-primary);
     padding: .5em;
-    background-color: hsl(0 0% 10%);
-}
-.book-event-form > label:nth-of-type(6),
-.book-event-form > label:nth-of-type(7){
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 2rem;
-}
-.book-event-form > label:nth-of-type(6) > div,
-.book-event-form > label:nth-of-type(7) > div{
-    white-space: nowrap;
-}
-.book-event-form > label:nth-of-type(6) > input,
-.book-event-form > label:nth-of-type(7) > input{
-    justify-self: flex-end;
-    width: 100px;
+    border-bottom: 1px solid white;
+    margin-bottom: 1em;
 }
 
+
 .book-event-submit-btn{
-    grid-column: 1/3;
-    grid-row: 5;
     border: none;
-    width: fit-content;
+   
     margin: 0 auto;
     color: var(--fc-primary);
     font-size: 1.5rem;
@@ -3088,6 +2925,31 @@ label[for=BookEventFormAddonInput]{
     box-shadow: 5px 5px 10px black,
     inset -2px -2px 3px black,
     inset 2px 2px 3px hsl(0 0% 100% / 0.5);
+}
+@media only screen and (max-width: 600px){
+    .book-event-main > header > h1{
+        padding-inline: 2rem;
+        padding-block: 6rem;
+        text-shadow: 2px 2px 3px black;
+        text-align: left;
+    }
+    .book-event-main > header > h1 > div:nth-of-type(1){
+        padding-left: 1.8em;
+        margin-bottom: -1.4rem;
+        font-size: 1rem;
+    }
+    .book-event-main > header > h1 > div:nth-of-type(2){
+        font-size: 3rem;
+    }
+
+.book-event-form{
+    padding: 2rem;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    align-items: center;
+}
 }
 /*
 ===================================================|
@@ -3172,22 +3034,6 @@ label[for=OrderFormItem] > div{
     inset -2px -2px 3px black,
     inset 2px 2px 3px hsl(0 0% 100% / 0.5);
 }
-/* .order-form::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--site-gradient);
-    border-radius: 10px;
-    z-index: -1;
-}
-.order-form::after{
-    content: "";
-    position: absolute;
-    inset: 8px;
-    background-color: var(--bc-primary);
-    border-radius: 10px;
-    z-index: -1;
-} */
 
 .order-form select,
 .order-form input[type=date]{
@@ -4531,11 +4377,19 @@ label[for=CakepopFrosting] > div{
     .order-main{
         padding: 2rem 0rem;
     }
+    .order-form{
+        padding: 0rem;
+    }
     .order-form > header{
-
+        padding-inline: 2rem;
         justify-content: center;
         align-items: center;
         
+    }
+    .order-form > div{
+        outline: none;
+       
+        border-radius: 0px;
     }
 }
 
