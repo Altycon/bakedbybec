@@ -1514,7 +1514,7 @@ body{
     font-weight: 900;
     text-transform: uppercase;
 }
-.faqs .answer .option > p{
+.faqs .answer .option > p:not(:last-of-type){
     max-width: 300px;
     text-align: center;
     font-size: 1.2rem;
@@ -1573,8 +1573,9 @@ body{
     .faqs{
         padding-bottom: 0rem;
     }
+  
     .faqs > article:nth-of-type(2) .answer{
-        padding: 0 0rem;
+        padding: 0rem 0rem;
 
         display: grid;
         grid-template-columns: 1fr;
@@ -1613,6 +1614,9 @@ body{
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5){
         grid-column: 1;
         grid-row: 5;
+
+        column-gap: .5em;
+        row-gap: 2rem;
     }
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6){
         grid-column: 1;
@@ -1626,7 +1630,7 @@ body{
         font-size: 1.2rem;
         line-height: 1.5em;
         margin: 0 auto;
-        padding: 2rem; 
+        padding: 1rem; 
     }
    
     .faqs > article:nth-of-type(4) .answer{
