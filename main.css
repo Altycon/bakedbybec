@@ -217,6 +217,92 @@ body{
     transform: translateX(-50%) translateY(300%);
 }
 
+/*
+=========================================|
+        PAGES HEADER
+=========================================|
+*/
+.page-header{
+    position: relative;
+    padding: 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+/*+++++++++++++++++++++++++++++++*/
+.page-header .website-title{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+/*+++++++++++++++++++++++++++++++*/
+.page-navigation-primary{
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+    align-content: center;
+}
+.page-navigation-primary.home{
+    display: none;
+}
+/*+++++++++++++++++++++++++++++++*/
+.page-navigation-primary-list{
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: repeat(5,auto);
+    grid-template-rows: auto;
+    gap: 2em;
+}
+.page-navigation-primary-list > li:last-of-type{
+    display: none;
+}
+.page-navigation-primary-item{
+    text-align: center;
+}
+.page-navigation-primary-link{
+    display: inline-block;
+    color: var(--fc-primary);
+    font-size: 1.2rem;
+    white-space: nowrap;
+}
+/*+++++++++++++++++++++++++++++++*/
+.page-navigation-social{
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: flex-end;
+}
+/*+++++++++++++++++++++++++++++++*/
+.page-navigation-social-list{
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;;
+}
+.page-navigation-social-item{
+    text-align: center;
+}
+.page-navigation-social-link{
+
+}
+.page-navigation-social-icon{
+    width: 30px;
+    /* margin-top: 5px; */
+}
+/*+++++++++++++++++++++++++++++++*/
+.page-header .page-navigation-primary-open-btn{
+    grid-column: 3;
+    grid-row: 1;
+}
 
 /*
 =========================================|
@@ -334,93 +420,44 @@ body{
 ===================================================|
 */
 
-
 /*
-=========================================|
-        PAGES HEADER
-=========================================|
+===================================================|
+---------------------------------------------------|
+
+            PAGE BACKGROUND
+
+---------------------------------------------------|
+===================================================|
 */
-.page-header{
-    position: relative;
-    padding: 1rem;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
+.page-background{
+    position: fixed;
+    top: 0; left: 0;
+    inset: 0;
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.3;
+}
+.page-background::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 25vmax;
+    height: 25vmax;
+    transform: translateY(-50%) translateX(-50%);
+    background: var(--site-gradient);
+    border-radius: 50%;
+}
+.page-background::after{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 22vmax;
+    height: 22vmax;
+    transform: translateY(-50%) translateX(-50%);
+    background: var(--bc-primary);
+    border-radius: 50%;
 }
 
-/*+++++++++++++++++++++++++++++++*/
-.page-header .website-title{
-    grid-column: 1;
-    grid-row: 1;
-}
-
-/*+++++++++++++++++++++++++++++++*/
-.page-navigation-primary{
-    grid-column: 2;
-    grid-row: 1;
-
-    display: grid;
-    align-content: center;
-}
-.page-navigation-primary.home{
-    display: none;
-}
-/*+++++++++++++++++++++++++++++++*/
-.page-navigation-primary-list{
-    list-style: none;
-
-    display: grid;
-    grid-template-columns: repeat(5,auto);
-    grid-template-rows: auto;
-    gap: 2em;
-}
-.page-navigation-primary-list > li:last-of-type{
-    display: none;
-}
-.page-navigation-primary-item{
-    text-align: center;
-}
-.page-navigation-primary-link{
-    display: inline-block;
-    color: var(--fc-primary);
-    font-size: 1.2rem;
-    white-space: nowrap;
-}
-/*+++++++++++++++++++++++++++++++*/
-.page-navigation-social{
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: flex-end;
-}
-/*+++++++++++++++++++++++++++++++*/
-.page-navigation-social-list{
-    list-style: none;
-
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;;
-}
-.page-navigation-social-item{
-    text-align: center;
-}
-.page-navigation-social-link{
-
-}
-.page-navigation-social-icon{
-    width: 30px;
-    /* margin-top: 5px; */
-}
-/*+++++++++++++++++++++++++++++++*/
-.page-header .page-navigation-primary-open-btn{
-    grid-column: 3;
-    grid-row: 1;
-}
 
 
 /*
@@ -1661,43 +1698,7 @@ body{
 .home-thanks.show::after{
     transform: translate(-50%, -50%) scale(1);
 }
-/*
-===================================================|
----------------------------------------------------|
 
-            PAGE BACKGROUND
-
----------------------------------------------------|
-===================================================|
-*/
-.page-background{
-    position: fixed;
-    top: 0; left: 0;
-    inset: 0;
-    z-index: -1;
-    filter: blur(20px);
-    opacity: 0.3;
-}
-.page-background::before{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 25vw;
-    height: 25vw;
-    transform: translateY(-50%) translateX(-50%);
-    background: var(--site-gradient);
-    border-radius: 50%;
-}
-.page-background::after{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 22vw;
-    height: 22vw;
-    transform: translateY(-50%) translateX(-50%);
-    background: var(--bc-primary);
-    border-radius: 50%;
-}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -4139,11 +4140,13 @@ label[for=CakepopFrosting] > div{
     }
     /*+++++++++++++++++++++++++++++++*/
     .page-navigation-primary-list{
+        padding-top: 2rem;
         background-color: hsl(0 0% 0% / 0.8);
 
         grid-template-columns: 1fr;
         grid-template-rows: repeat(6,auto);
-        gap: 0em;
+        gap: 0rem;
+        align-content: flex-start;
 
         opacity: 0;
         transition: opacity 100ms ease-in-out;
@@ -4156,12 +4159,7 @@ label[for=CakepopFrosting] > div{
     }
     .page-navigation-primary-item{
         --trans-delay: calc(var(--i) * 100ms);
-
-        justify-self: flex-end;
-
-        width: calc(var(--i) * 40vw);
-        max-width: 100vw;
-        /* background-color: black; */
+        height: fit-content;
         text-align: right;
 
         opacity: 0;
@@ -4174,7 +4172,8 @@ label[for=CakepopFrosting] > div{
         opacity: 1;
     }
     .page-navigation-primary-link{
-        padding: 1rem;
+        padding-block: 1rem;
+        padding-inline: 2em;
     }
     /*+++++++++++++++++++++++++++++++*/
     .page-navigation-social{
@@ -4208,6 +4207,12 @@ label[for=CakepopFrosting] > div{
 
     --------------------------------
     */
+    .home-background{
+        display: none;
+    }
+    .page-background.home{
+        display: none;
+    }
     /*
     =========================================|
             HOME HEADER -->> mobile
