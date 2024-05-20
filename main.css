@@ -107,10 +107,10 @@ input,textarea{
     border-bottom: 1px solid var(--site-input-color);
 }
 textarea{
-    background-color: hsl(0 0% 100% / 0.1);
+    /* background-color: hsl(0 0% 50% / 0.1); */
 }
 select{
-    background-color: hsl(0 0% 100% / 0.1);
+    background-color: hsl(0 0% 50% / 0.1);
 }
 input:focus-visible,
 textarea:focus-visible,
@@ -1713,7 +1713,7 @@ body{
 ===================================================|
 */
 .product-main{
-    padding-bottom: 4rem;
+    
 }
 .product-main > header{
     padding-block: 1rem;
@@ -1820,8 +1820,9 @@ body{
     max-width: 500px;
     padding: 1em;
     font-size: 1rem;
-    line-height: 1.8em;
+    line-height: 1.4em;
     text-align: center;
+    text-wrap: pretty;
 }
 .products-item > header > .product-price > span:first-of-type{
 
@@ -1954,6 +1955,7 @@ body{
       }
 }
 @media only screen and (max-width: 800px){
+   
     .products-item > header{
         padding-top: 1rem;
         padding-bottom: 1rem;
@@ -1999,16 +2001,12 @@ body{
     }
 }
 @media only screen and (max-width: 650px){
-    
     .product-item-links .products-link:nth-of-type(1){
         margin-right: 0rem;
         margin-bottom: 2rem;
     }
 }
 @media only screen and (max-width: 500px){
-    .product-main{
-        padding-bottom: 4rem;
-    }
     .product-main > header{
         padding-block: 0rem;
         padding-bottom: 1rem;
@@ -2036,7 +2034,7 @@ body{
         padding-bottom: 2rem;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
 
         scroll-snap-align: center;
        
@@ -2258,6 +2256,12 @@ body{
     background-color: hsl(0 0% 10%);
 }
 @media only screen and (max-width: 700px){
+    .contact-main > header > h1{
+        text-align: left;
+        padding-left: 1rem;
+        color: var(--fc-rare);
+        font-size: 1rem;
+    }
     .contact-main .contact-form{
 
         grid-template-columns: 1fr;
@@ -2631,7 +2635,7 @@ body{
     list-style: none;
 
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(6,1fr);
     grid-template-rows: auto;
     gap: 2px;
 }
@@ -2749,7 +2753,8 @@ body{
 
 .sugar-cookie-gallery,
 .drop-cookie-gallery,
-.cake-gallery,
+.layer-cake-gallery,
+.sheet-cake-gallery,
 .cupcake-gallery,
 .cakepop-gallery{
     display: none;
@@ -2757,7 +2762,8 @@ body{
 
 .sugar-cookie-gallery > header,
 .drop-cookie-gallery > header,
-.cake-gallery > header,
+.layer-cake-gallery > header,
+.sheet-cake-gallery > header,
 .cupcake-gallery > header,
 .cakepop-gallery > header{
     opacity: 0;
@@ -2767,7 +2773,8 @@ body{
 
 .sugar-cookie-gallery > ul,
 .drop-cookie-gallery > ul,
-.cake-gallery > ul,
+.layer-cake-gallery > ul,
+.sheet-cake-gallery > ul,
 .cupcake-gallery > ul,
 .cakepop-gallery > ul{
     opacity: 1;
@@ -2779,7 +2786,8 @@ body{
 
 .sugar-cookie-gallery > ul > li,
 .drop-cookie-gallery > ul > li,
-.cake-gallery > ul > li,
+.layer-cake-gallery > ul > li,
+.sheet-cake-gallery > ul > li,
 .cupcake-gallery > ul > li,
 .cakepop-gallery > ul > li{
     opacity: 0;
@@ -2790,14 +2798,16 @@ body{
 
 .sugar-cookie-gallery.open,
 .drop-cookie-gallery.open,
-.cake-gallery.open,
+.layer-cake-gallery.open,
+.sheet-cake-gallery.open,
 .cupcake-gallery.open,
 .cakepop-gallery.open{
     display: block;
 }
 .sugar-cookie-gallery.show > header,
 .drop-cookie-gallery.show > header,
-.cake-gallery.show > header,
+.layer-cake-gallery.show > header,
+.sheet-cake-gallery.show > header,
 .cupcake-gallery.show > header,
 .cakepop-gallery.show > header{
     opacity: 1;
@@ -2806,7 +2816,8 @@ body{
 
 .sugar-cookie-gallery.show > ul > li,
 .drop-cookie-gallery.show > ul > li,
-.cake-gallery.show > ul > li,
+.layer-cake-gallery.show > ul > li,
+.sheet-cake-gallery.show > ul > li,
 .cupcake-gallery.show > ul > li,
 .cakepop-gallery.show > ul > li{
     opacity: 1;
@@ -2830,7 +2841,7 @@ body{
 .book-event-main::before{
     content: "";
     position: fixed;
-    top: 4rem; left: 0;
+    top: 72px; left: 0;
     width: 100vw;
     height: 100vh;
     background-image: var(--bgi8);
@@ -2845,7 +2856,7 @@ body{
 .book-event-main::after{
     content: "";
     position: fixed;
-    top: 4rem; left: 0;
+    top: 72px; left: 0;
     width: 100%;
     height: 100vh;
     background-image: linear-gradient(hsl(0 0% 0% / 0.6),hsl(0 0% 0% / 0.6),var(--bc-primary));
@@ -4020,31 +4031,12 @@ label[for=CakepopFrosting] > div{
 
 
 
-@media only screen and (max-width: 1100px){
-
-     /*
-    --------------------------------
-
-        |    PRODUCTS PAGE 
-
-    --------------------------------
-    */
-
-
-}
-
 @media only screen and (max-width: 1000px){
 
     .home-navigation-primary{
         --circle-size: 40vw;
     }
 
-   
-    /* === CUSTOMER REVIEWS === */
-    
-
-
- 
 }
 
 @media only screen and (max-width: 840px){
@@ -4346,33 +4338,13 @@ label[for=CakepopFrosting] > div{
     .navigation-gallery-item{
         padding: .5rem;
     }
-    .navigation-gallery-list .navigation-gallery-item:nth-child(1){
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .navigation-gallery-list .navigation-gallery-item:nth-child(2){
-        grid-column: 2;
-        grid-row: 1;
-    }
-    .navigation-gallery-list .navigation-gallery-item:nth-child(3){
-        grid-column: 3;
-        grid-row: 1;
-    }
-    .navigation-gallery-list .navigation-gallery-item:nth-child(4){
-        grid-column: 1/3;
-        grid-row: 2;
-        justify-self: center;
-        width: 50%;
-    }
-    .navigation-gallery-list .navigation-gallery-item:nth-child(5){
-        grid-column: 2/4;
-        grid-row: 2;
-        justify-self: center;
-        width: 50%;
-    }
 
     .navigation-gallery-item > a{
         font-size: .8rem;
+    }
+    .gallery-content > section > header > h2{
+        color: var(--fc-rare);
+        font-size: 1rem;
     }
     .gallery-content > section > ul{
         padding: 2rem;
@@ -4381,16 +4353,24 @@ label[for=CakepopFrosting] > div{
         grid-template-rows: repeat(6,auto);
         gap: 2rem;
     }
-
+   
 
     .order-main{
-        padding: 2rem 0rem;
+        padding: 0rem 0rem;
+    }
+    .order-main > header{
+        padding: 0rem;
+    }
+    .order-main > header > h1{
+        padding-left: 1rem;
+        color: var(--fc-rare);
+        font-size: 1rem;
     }
     .order-form{
         padding: 0rem;
     }
     .order-form > header{
-        padding-inline: 2rem;
+        padding-inline: 1rem;
         justify-content: center;
         align-items: center;
         
