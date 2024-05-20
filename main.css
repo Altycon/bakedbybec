@@ -3826,22 +3826,20 @@ label[for=CakepopFrosting] > div{
 .notes .content > ul{
     list-style-position: inside;
     text-align: left;
-    max-width: 1000px;
-    margin: 0 auto 1rem auto;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 2rem;
-    border-radius: 50px;
-    box-shadow: 2px 2px 10px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
+     overflow-x: auto;
 }
 .notes .content > ul > li{
     color: var(--fc-primary);
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.2em;
     padding: .5rem;
 }
 .notes .content > p{
-    font-size: 1.2rem;
-    line-height: 1.5em;
+    font-size: 1rem;
+    line-height: 1.2em;
     font-weight: 700;
 }
 .notes-close-btn{
@@ -3849,10 +3847,10 @@ label[for=CakepopFrosting] > div{
     border: none;
     background: none;
     color: var(--fc-primary);
-    font-size: 1.5rem;
+    font-size: 1rem;
+    padding: 1rem 2rem;
     font-weight: 700;
     text-transform: uppercase;
-    padding: 3px 10px;
     outline: 1px solid var(--fc-primary);
 }
 .notes.show .content{
@@ -4392,6 +4390,16 @@ label[for=CakepopFrosting] > div{
     }
     .page-navigation-social-icon{
         width: 20px;
+    }
+
+
+
+    .home-navigation-primary-logo-subtext{
+        position: absolute;
+        top: 80%; left: 50%;
+        font-size: .8rem;
+        white-space: nowrap;
+        font-weight: 700;
     }
 
      /*
