@@ -12,9 +12,11 @@ function handleNotes(){
             setTimeout( ()=>{
                 notes.classList.remove('open');
                 event.target.removeEventListener('click', close);
+                document.body.style.overflow = 'auto';
             },200)            
         })
         notes.classList.add('open');
+        document.body.style.overflow = 'hidden';
         setTimeout( ()=> { notes.classList.add('show') },100);
     });
 };

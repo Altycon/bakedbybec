@@ -413,11 +413,8 @@ const OrderForm = {
                 <div>What size of cake?</div>
                 <select name="sheetcakesize" id="SheetCakeSize" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
-                    <option value="6" data-price="25">6x12x2</option>
-                    <option value="8" data-price="35">12x24x2</option>
-                    <option value="10" data-price="40">24x48x4</option>
-                    <option value="2tier" data-price="65">2-12x24x2</option>
-                    
+                    <option value="quarter" data-price="30">quarter sheet</option>
+                    <option value="half" data-price="40">half sheet</option>
                 </select>
             </label>
 
