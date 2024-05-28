@@ -1393,7 +1393,8 @@ body{
 .faqs{
     padding-bottom: 6rem;
 }
-.fags .icon-wrapper > img{
+
+.faqs .icon-wrapper > img{
     width: 100%;
 }
 .faqs > header > h2{
@@ -1402,7 +1403,7 @@ body{
     color: var(--fc-rare);
     margin-bottom: 2rem;
 }
-.faqs > header > div{
+.faqs > header .introduction{
     position: relative;
     isolation: isolate;
     max-width: 800px;
@@ -1417,7 +1418,8 @@ body{
     transition: opacity 800ms ease-in-out calc(var(--i) * 100ms);
 }
 
-.faqs > header > div .icons:nth-of-type(1){
+.faqs > header .introduction .icons:nth-of-type(1){
+    padding-inline: 2rem;
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
@@ -1431,15 +1433,15 @@ body{
 .faqs > header.show .icon-wrapper{
     animation: pulseIn 1s linear forwards calc(var(--i) * 500ms);
 }
-.faqs > header > div .icons:nth-of-type(1) .icon-wrapper:nth-of-type(1) > img{
+.faqs > header .introduction .icons:nth-of-type(1) .icon-wrapper:nth-of-type(1) > img{
     /* max-width: 64px; */
     transform: rotate(-45deg);
 }
-.faqs > header > div .icons:nth-of-type(1) .icon-wrapper:nth-of-type(2) > img{
+.faqs > header .introduction .icons:nth-of-type(1) .icon-wrapper:nth-of-type(2) > img{
     /* max-width: 64px; */
     transform: rotate(45deg);
 }
-.faqs > header > div > p{
+.faqs > header .introduction > p{
     position: relative;
     margin: 0 auto;
     max-width: 500px;
@@ -1452,7 +1454,7 @@ body{
     opacity: 0;
     transition: opacity 800ms ease-in-out;
 }
-.faqs > header > div > p::before{
+.faqs > header .introduction > p::before{
     content: "";
     position: absolute;
     top: 50%; left: 50%;
@@ -1464,13 +1466,13 @@ body{
     box-shadow: 5px 5px 50px black;
     z-index: -1;
 }
-.faqs > header.show > div > p{
+.faqs > header.show .introduction > p{
     opacity: 1;
 }
-.faqs > header > div > p > span{
+.faqs > header .introduction > p > span{
     color: var(--site-color-accent1);
 }
-.faqs > header > div .icons:nth-of-type(2){
+.faqs > header .introduction .icons:nth-of-type(2){
     display: grid;
     grid-template-columns: repeat(5,auto);
     grid-template-rows: auto;
@@ -1484,7 +1486,7 @@ body{
 .faqs > article > header{
     margin-bottom: 4rem;
 }
-.faqs > article > header > h2{
+.faqs > article > header .question{
     font-size: 2rem;
     padding: 1em;
     background-color: hsl(0 0% 0% / 0.3);
@@ -1545,12 +1547,14 @@ body{
     display: grid;
     grid-template-columns: repeat(4,auto);
     grid-template-rows: repeat(2,auto);
+    align-items: center;
     gap: 2rem;
 }
 .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6){
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: repeat(2,auto);
+    align-items: center;
     gap: 2rem;
 }
 .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) > h3{
@@ -1563,15 +1567,27 @@ body{
     grid-row: 1;
     padding-bottom: 0rem;
 }
-.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) > div > p,
-.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) > div > p{
+.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) .details{
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) .details{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) .details > div > p,
+.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) .details > div > p{
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1em;
     color: var(--site-color-accent2);
 }
-.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) > div > p > .price,
-.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) > div > p > .price{
+.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) .details > div > p > .price,
+.faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) .details > div > p > .price{
     font-size: 1.5rem;
     padding: 0rem 10px;
     color: var(--site-color-accent1);
@@ -1616,6 +1632,9 @@ body{
     font-size: 1.5rem;
     font-weight: 900;
     text-transform: uppercase;
+}
+.faqs .answer .option .icon-wrapper{
+    margin-bottom: 1rem;
 }
 .faqs .answer .option > p:not(:last-of-type){
     max-width: 300px;
@@ -1676,7 +1695,13 @@ body{
     .faqs{
         padding-bottom: 0rem;
     }
-  
+    .faqs .icon-wrapper{
+        width: 64px;
+    }
+    .faqs > header .introduction > p::before{
+        width: 120%;
+        height: 140%;
+    }
     .faqs > article:nth-of-type(2) .answer{
         padding: 0rem 0rem;
 
@@ -1710,9 +1735,18 @@ body{
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(3),
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(4){
         display: grid;
-        grid-template-columns: repeat(2,1fr);
-        grid-template-rows: auto;
-        align-items: center;
+        grid-template-columns: repeat(2,auto);
+        grid-template-rows: auto auto;
+        column-gap: 1rem;
+        row-gap: 2rem;
+    }
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(1) .icon-wrapper,
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(2) .icon-wrapper,
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(3) .icon-wrapper,
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(4) .icon-wrapper{
+        grid-column: 1/3;
+        grid-row: 1;
+        margin: 0 auto;
     }
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5){
         grid-column: 1;
@@ -1758,7 +1792,59 @@ body{
         grid-row: 1;
     }
 }
+@media only screen and (max-width: 632px){
+    .faqs > header .introduction{
+        padding: 2rem 0rem;
+    }
+    .faqs > header .introduction > p{
+        padding-inline: 2rem;
+    }
+    .faqs > header .introduction > p::before{
+        width: 100%;
+        height: 200%;
+    }
 
+    .faqs > header .introduction .icons:nth-of-type(2){
+        display: grid;
+        grid-template-columns: repeat(3,auto);
+        grid-template-rows: repeat(2,auto);
+        justify-content: center;
+    }
+    .faqs > header .introduction .icons:nth-of-type(2) .icon-wrapper:nth-of-type(5){
+        grid-column: 3;
+        grid-row: 2;
+    }
+}
+@media only screen and (max-width: 400px){
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5){
+       
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3,auto);
+        align-items: center;
+        gap: 2rem;
+        border: 1px solid blue;
+    }
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6){
+       
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3,auto);
+        align-items: center;
+        gap: 2rem;
+        border: 1px solid green;
+    }
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) > h3{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) > h3{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) .icon-wrapper,
+    .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6) .icon-wrapper{
+        margin: 0 auto;
+    }
+}
 @keyframes pulseIn {
     0%{
         transform: scale(0);
