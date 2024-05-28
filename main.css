@@ -1393,7 +1393,9 @@ body{
 .faqs{
     padding-bottom: 6rem;
 }
-
+.faqs .icon-wrapper{
+    max-width: 128px;
+}
 .faqs .icon-wrapper > img{
     width: 100%;
 }
@@ -1822,7 +1824,6 @@ body{
         grid-template-rows: repeat(3,auto);
         align-items: center;
         gap: 2rem;
-        border: 1px solid blue;
     }
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(6){
        
@@ -1830,7 +1831,6 @@ body{
         grid-template-rows: repeat(3,auto);
         align-items: center;
         gap: 2rem;
-        border: 1px solid green;
     }
     .faqs > article:nth-of-type(3) .answer > .option:nth-of-type(5) > h3{
         grid-column: 1;
