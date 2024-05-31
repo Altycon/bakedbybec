@@ -150,7 +150,15 @@ select:focus-visible{
 .icon-png{
     filter: invert(100%);
 }
-
+.pink-text{
+    color: var(--site-color-accent1);
+}
+.blue-text{
+    color: var(--site-color-accent2);
+}
+.yellow-text{
+    color: yellow;
+}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -1047,7 +1055,7 @@ body{
 .customer-review-item{
     padding: 2rem;
     border-radius: 10px;
-    margin-bottom: 6rem;
+    /* margin-bottom: 4rem; */
     /* outline: 1px solid var(--fc-primary); */
 
     display: grid;
@@ -1055,8 +1063,8 @@ body{
     grid-template-rows: auto;
     gap: 4rem;
 }
-.customer-reviews .customer-review-item:nth-of-type(3){
-    display: block;
+.customer-reviews .customer-review-item:nth-of-type(1){
+    margin-bottom: 6rem;
 }
 
 .customer-reviews .customer-review-item:nth-of-type(1) .customer-review-item-content{
@@ -1067,10 +1075,10 @@ body{
     grid-column: 2;
     grid-row: 1;
 }
-.customer-reviews .customer-review-item:nth-of-type(3) .customer-review-item-content{
+/* .customer-reviews .customer-review-item:nth-of-type(3) .customer-review-item-content{
     max-width: 800px;
     margin: 0 auto;
-}
+} */
 .customer-review-item-content{
     grid-column: 1;
     grid-row: 1;
@@ -1264,7 +1272,6 @@ body{
     .customer-review-item{
         padding: 0rem;
         border-radius: 10px;
-        margin-bottom: 6rem;
         /* outline: 1px solid yellow; */
 
         display: block;
@@ -1370,9 +1377,11 @@ body{
         font-size: 1rem;
         line-height: 1.5em;
     }
+    
     .customer-review-images{
         grid-template-columns: 1fr;
         grid-template-rows: repeat(3,auto);
+        gap: .5rem;
        
     }
     .customer-review-images > div:nth-child(1){
@@ -1386,6 +1395,9 @@ body{
     .customer-review-images > div:nth-child(3){
         grid-column: 1;
         grid-row: 3;
+    }
+    .customer-review-img-wrapper{
+        height: 150px;
     }
 }
 
@@ -1413,22 +1425,31 @@ body{
     padding: 2rem; 
     
 
-    display:grid;
-    place-content: center;
-
     opacity: 1;
     transition: opacity 800ms ease-in-out calc(var(--i) * 100ms);
 }
-
+.faqs > header .introduction::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 90%;
+    height: 80%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    background-image: var(--bg-gradient-glass);
+    box-shadow: 5px 5px 50px black;
+    z-index: -1;
+}
 .faqs > header .introduction .icons:nth-of-type(1){
     padding-inline: 2rem;
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
-    justify-content: space-between;
+    justify-content: flex-end;
     
 }
 .faqs > header .icon-wrapper{
+    margin: 0 auto;
     transform-origin: center;
     transform: scale(0);
 }
@@ -1436,45 +1457,27 @@ body{
     animation: pulseIn 1s linear forwards calc(var(--i) * 300ms);
 }
 .faqs > header .introduction .icons:nth-of-type(1) .icon-wrapper:nth-of-type(1) > img{
-    /* max-width: 64px; */
-    transform: rotate(-45deg);
+    max-width: 64px;
+    transform: rotate(45deg);
 }
 .faqs > header .introduction .icons:nth-of-type(1) .icon-wrapper:nth-of-type(2) > img{
-    /* max-width: 64px; */
-    transform: rotate(45deg);
+    max-width: 64px;
+    transform: rotate(-45deg);
 }
 .faqs > header .introduction > p{
     position: relative;
     margin: 0 auto;
-    max-width: 500px;
-    padding-block: 2rem;
+    padding: 1em;
+    max-width: 550px;
     font-size: 1.2rem;
     line-height: 1.4em;
     text-align: center;
     text-wrap: pretty;
+}
 
-    opacity: 0;
-    transition: opacity 500ms ease-in-out;
-}
-.faqs > header .introduction > p::before{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 160%;
-    height: 160%;
-    transform: translate(-50%,-50%);
-    border-radius: 10px;
-    background-image: var(--bg-gradient-glass);
-    box-shadow: 5px 5px 50px black;
-    z-index: -1;
-}
-.faqs > header.show .introduction > p{
-    opacity: 1;
-}
-.faqs > header .introduction > p > span{
-    color: var(--site-color-accent1);
-}
 .faqs > header .introduction .icons:nth-of-type(2){
+    margin-top: 1rem;
+
     display: grid;
     grid-template-columns: repeat(5,auto);
     grid-template-rows: auto;
@@ -1503,6 +1506,7 @@ body{
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
     align-items: center;
+    gap: 2rem;
 }
 
 .faqs .gluten-free .answer::before{
@@ -1518,7 +1522,14 @@ body{
 .faqs .gluten-free .answer > p{
     font-size: 1.2rem;
     line-height: 1.4em;
+    text-wrap: pretty;
 }
+.faqs .gluten-free .answer > p > a{
+    color: var(--fc-primary);
+    font-weight: 700;
+    border-bottom: 1px solid var(--fc-primary);
+}
+
 .faqs .order-retrieval .answer{
     padding: 0 2rem;
 
@@ -1526,6 +1537,9 @@ body{
     grid-template-columns: auto auto auto;
     grid-template-rows: auto;
     gap: 2rem;
+}
+.faqs .order-retrieval .pink-text.price{
+    font-size: 1.5rem;
 }
 .faqs .order-retrieval .answer .shipping .icon-wrapper,
 .faqs .order-retrieval .answer .pickup .icon-wrapper,
@@ -1591,20 +1605,13 @@ body{
     grid-template-rows: auto;
     gap: 1rem;
 }
-.faqs .product-pricing .answer .layer-cakes .details > div > p,
-.faqs .product-pricing .answer .sheet-cakes .details > div > p{
+.faqs .product-pricing .answer .layer-cakes .details > div > h4,
+.faqs .product-pricing .answer .sheet-cakes .details > div > h4{
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1em;
-    color: var(--site-color-accent2);
 }
-.faqs .product-pricing .answer .layer-cakes .details > div > p > .price,
-.faqs .product-pricing .answer .sheet-cakes .details > div > p > .price{
-    font-size: 1.5rem;
-    padding: 0rem 10px;
-    color: var(--site-color-accent1);
-    font-weight: 700;
-}
+
 
 .faqs .answer .option{
     position: relative;
@@ -1636,6 +1643,7 @@ body{
     font-size: 1.5rem;
     font-weight: 900;
     text-transform: uppercase;
+    color: var(--site-color-accent2);
 }
 .faqs .answer .option .icon-wrapper{
     margin-bottom: 1rem;
@@ -1647,54 +1655,12 @@ body{
     line-height: 1.5em;
     margin: 0 auto 1rem auto;
 }
-.faqs .answer .option > p > a{
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1.5rem;
-    color: var(--fc-primary);
-    white-space: nowrap;
-    padding: 0rem .5rem;
-}
-.faqs .answer .option > p > span{
-    font-weight: 700;
-    color: var(--site-color-accent2);
-}
-.faqs .answer .option > p .price{
+
+.faqs .price{
     font-size: 1.5rem;
     padding: 0rem 10px;
-    color: var(--site-color-accent1);
 }
-.faqs .answer .option .contact-page-link{
-    --option-link-style-size: 40px;
-    position: relative;
-    isolation: isolate;
-    text-shadow: 2px 2px 3px black;
-}
-.faqs .answer .option .contact-page-link::before{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: var(--option-link-style-size);
-    height: var(--option-link-style-size);
-    border-radius: 50%;
-    background: var(--site-gradient);
-    z-index: -1;
 
-    transform: translate(-50%,-50%);
-}
-.faqs .answer .option .contact-page-link::after{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: calc(var(--option-link-style-size) * .8);
-    height: calc(var(--option-link-style-size) * .8);
-    border-radius: 50%;
-    background-color: var(--bc-primary);
-    z-index: -1;
-
-    transform: translate(-50%,-50%);
-}
 @media only screen and (max-width: 1000px){
     .faqs{
         padding-bottom: 0rem;
@@ -1702,10 +1668,7 @@ body{
     .faqs .icon-wrapper{
         width: 64px;
     }
-    .faqs > header .introduction > p::before{
-        width: 120%;
-        height: 140%;
-    }
+   
     .faqs .order-retrieval .answer{
         padding: 0rem 0rem;
 
@@ -1781,10 +1744,7 @@ body{
     .faqs > header .introduction > p{
         padding-inline: 2rem;
     }
-    .faqs > header .introduction > p::before{
-        width: 100%;
-        height: 200%;
-    }
+    
 
     .faqs > header .introduction .icons:nth-of-type(2){
         display: grid;
@@ -1795,6 +1755,37 @@ body{
     .faqs > header .introduction .icons:nth-of-type(2) .icon-wrapper:nth-of-type(5){
         grid-column: 3;
         grid-row: 2;
+    }
+
+    .faqs .gluten-free .answer{
+        /* position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem; */
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2,auto);
+        /* align-items: center; */
+        gap: 2rem;
+    }
+    .faqs .gluten-free .answer > p{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .faqs .gluten-free .answer .icons{
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: center;
+    }
+}
+@media only screen and (max-width: 500px){
+    .faqs > header .introduction::before{
+    
+      
+        width: 100%;
+        height: 80%;
+       
     }
 }
 @media only screen and (max-width: 400px){
@@ -1844,45 +1835,60 @@ body{
     width: 100vw;
     aspect-ratio: 16/9;
     margin-bottom: 4rem;
-  
+    
+    /* background-color: hsl(0 0% 0% / 0.2); */
     background-image: var(--img-home-thankyou);
     background-repeat: no-repeat;
     background-size: 90%;
     background-position: center;
+    background-blend-mode: overlay;
+
+    display: grid;
+    place-content: center;
 
     opacity: 1;
     transition: opacity 1s ease-in; 
 }
-/* .home-thanks.show{
-    opacity: 1;
-} */
-/* .home-thanks::before{
+.home-thanks .outro{
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 2rem;
+}
+.home-thanks .outro::before{
     content: "";
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(transparent 10%,var(--bc-primary));
+    border-radius: 10px;
+    background-color: hsl(0 0% 0% / 0.3);
+    filter: blur(5px);
     z-index: -1;
 }
-.home-thanks::after{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 25vw;
-    height: 25vw;
-    background-image: var(--bgi11);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
-    filter: drop-shadow(5px 5px 10px black);
-    
-    transform-origin: center;
-    transform: translate(-50%, -50%) scale(.8);
-    transition: transform 1s ease;
+.home-thanks .outro > *{
+    margin-bottom: 1em;
+    text-shadow: 2px 2px 3px black;
 }
-.home-thanks.show::after{
-    transform: translate(-50%, -50%) scale(1);
-} */
+.home-thanks .outro > h3{
+    font-size: 2.5rem;
+}
+.home-thanks .outro > p{
+    font-size: 1.5rem;
+    line-height: 1.4em;
+}
 
+.home-thanks .outro > p:nth-of-type(2){
+    font-weight: 700;
+}
+@media only screen and (max-width: 600px){
+  
+    .home-thanks .outro > h3{
+        font-size: 2rem;
+    }
+    .home-thanks .outro > p{
+        font-size: 1rem;
+    }
+}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -3966,9 +3972,10 @@ label[for=CakepopFrosting] > div{
     position: fixed;
     top: 0; left: 0;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     isolation: isolate;
     z-index: 100;
+    overflow: scroll;
 
     display: none;
 }
@@ -4017,14 +4024,15 @@ label[for=CakepopFrosting] > div{
     text-align: left;
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem;
-     overflow-x: auto;
+    
+    
 }
 .notes .content > ul > li{
     color: var(--fc-primary);
     font-size: 1rem;
     line-height: 1.2em;
-    padding: .5rem;
+    margin-top: .5em;
+    margin-bottom: 1rem;
 }
 .notes .content > p{
     font-size: 1rem;
