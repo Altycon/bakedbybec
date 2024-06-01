@@ -41,7 +41,7 @@
     --site-color-accent2-dark: hsl(220 100% 20%);
 
     /* --site-link-color: hsl(0 0% 0%); */
-    --site-link-color: hsl(260 50% 15%);
+    --site-link-color: hsl(260 50% 20%);
     --site-input-color: hsl(0 0% 15%);
 
     --site-gradient: linear-gradient(90deg, var(--site-color-accent1), var(--site-color-accent2));
@@ -1120,7 +1120,7 @@ body{
     max-width: 500px;
     text-align: center;
     color: var(--fc-primary);
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.4em;
     margin-left: auto;
     margin-right: auto;
@@ -1403,6 +1403,9 @@ body{
 
 /* === FAQS === */
 .faqs{
+    --faq-intersection-timing: 300ms;
+    --faq-intersection-delay: 500ms;
+    --faq-intersection-delay-double: 1000ms;
     padding-bottom: 6rem;
 }
 .faqs .icon-wrapper{
@@ -1417,72 +1420,6 @@ body{
     color: var(--fc-rare);
     margin-bottom: 2rem;
 }
-.faqs > header .introduction{
-    position: relative;
-    isolation: isolate;
-    max-width: 800px;
-    margin: 0 auto 4rem auto;
-    padding: 2rem; 
-    
-
-    opacity: 1;
-    transition: opacity 800ms ease-in-out calc(var(--i) * 100ms);
-}
-.faqs > header .introduction::before{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 90%;
-    height: 80%;
-    transform: translate(-50%,-50%);
-    border-radius: 10px;
-    background-image: var(--bg-gradient-glass);
-    box-shadow: 5px 5px 50px black;
-    z-index: -1;
-}
-.faqs > header .introduction .icons:nth-of-type(1){
-    padding-inline: 2rem;
-    display: grid;
-    grid-template-columns: repeat(2,auto);
-    grid-template-rows: auto;
-    justify-content: flex-end;
-    
-}
-.faqs > header .icon-wrapper{
-    margin: 0 auto;
-    transform-origin: center;
-    transform: scale(0);
-}
-.faqs > header.show .icon-wrapper{
-    animation: pulseIn 1s linear forwards calc(var(--i) * 300ms);
-}
-.faqs > header .introduction .icons:nth-of-type(1) .icon-wrapper:nth-of-type(1) > img{
-    max-width: 64px;
-    transform: rotate(45deg);
-}
-.faqs > header .introduction .icons:nth-of-type(1) .icon-wrapper:nth-of-type(2) > img{
-    max-width: 64px;
-    transform: rotate(-45deg);
-}
-.faqs > header .introduction > p{
-    position: relative;
-    margin: 0 auto;
-    padding: 1em;
-    max-width: 550px;
-    font-size: 1.2rem;
-    line-height: 1.4em;
-    text-align: center;
-    text-wrap: pretty;
-}
-
-.faqs > header .introduction .icons:nth-of-type(2){
-    margin-top: 1rem;
-
-    display: grid;
-    grid-template-columns: repeat(5,auto);
-    grid-template-rows: auto;
-    gap: 2rem;
-}
 
 .faqs > article{
     text-align: center;
@@ -1495,11 +1432,26 @@ body{
     font-size: 2rem;
     padding: 1em;
     background-color: hsl(0 0% 0% / 0.3);
+
+    opacity: 0;
+    translate: 50px;
+
+    transition: translate 300ms ease-in,
+    opacity 300ms ease-in;
+}
+.faqs > article.show > header .question{
+    translate: 0px;
+    opacity: 1;
+}
+.faqs .gluten-free > header{
+    margin-bottom: 10rem;
 }
 .faqs .gluten-free .answer{
     position: relative;
     max-width: 800px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10rem;
     padding: 2rem;
 
     display: grid;
@@ -1507,8 +1459,13 @@ body{
     grid-template-rows: auto;
     align-items: center;
     gap: 2rem;
-}
 
+    opacity: 0;
+    transition: opacity 800ms ease-in 1000ms;
+}
+.faqs .gluten-free.show .answer{
+    opacity: 1;
+}
 .faqs .gluten-free .answer::before{
     content: "";
     position: absolute;
@@ -1519,17 +1476,29 @@ body{
     background-image: var(--bg-gradient-glass);
     z-index: -1;
 }
+
 .faqs .gluten-free .answer > p{
     font-size: 1.2rem;
     line-height: 1.4em;
     text-wrap: pretty;
+
+    translate: -50px;
+    transition: translate 500ms ease-in 1000ms;
 }
-.faqs .gluten-free .answer > p > a{
-    color: var(--fc-primary);
-    font-weight: 700;
-    border-bottom: 1px solid var(--fc-primary);
+.faqs .gluten-free.show .answer > p{
+    translate: 0px;
+}
+.faqs .gluten-free .answer .icon-wrapper{
+    scale: 0;
+    opacity: 0;
+    transition: scale 1000ms ease-in 1000ms,
+    opacity 1000ms ease-in 1000ms;
 }
 
+.faqs .gluten-free.show .answer .icon-wrapper{
+    opacity: 1;
+    scale: 1;
+}
 .faqs .order-retrieval .answer{
     padding: 0 2rem;
 
@@ -1537,6 +1506,16 @@ body{
     grid-template-columns: auto auto auto;
     grid-template-rows: auto;
     gap: 2rem;
+}
+.faqs .order-retrieval .answer .option{
+    opacity: 0;
+    translate: 0px -50px;
+    transition: opacity 500ms ease-in calc(var(--i) * 500ms),
+    translate 500ms ease-in calc(var(--i) * 500ms);
+}
+.faqs .order-retrieval.show .answer .option{
+    opacity: 1;
+    translate: 0px 0px;
 }
 .faqs .order-retrieval .pink-text.price{
     font-size: 1.5rem;
@@ -1554,7 +1533,17 @@ body{
     grid-template-rows: repeat(2,auto);
     gap: 2rem;
 }
+.faqs .product-pricing .answer .option{
+    opacity: 0;
+    translate: 0px -50px;
 
+    transition: opacity 500ms ease-in calc(var(--i) * 500ms),
+    translate 500ms ease-in calc(var(--i) * 500ms);
+}
+.faqs .product-pricing.show .answer .option{
+    opacity: 1;
+    translate: 0px 0px;
+}
 .faqs .product-pricing .answer .sugar-cookies .icon-wrapper,
 .faqs .product-pricing .answer .drop-cookies .icon-wrapper,
 .faqs .product-pricing .answer .cupcakes .icon-wrapper,
@@ -1571,6 +1560,8 @@ body{
     grid-template-rows: repeat(2,auto);
     align-items: center;
     gap: 2rem;
+
+    translate: -50px 0px;
 }
 
 .faqs .product-pricing .answer .sheet-cakes{
@@ -1582,6 +1573,8 @@ body{
     grid-template-rows: repeat(2,auto);
     align-items: center;
     gap: 2rem;
+
+    translate: 50px 0px;
 }
 .faqs .product-pricing .answer .layer-cakes > h3{
     grid-column: 1/5;
@@ -1613,6 +1606,82 @@ body{
 }
 
 
+.faqs .ingredients .icon-wrapper{
+    margin: 0 auto;
+    transform-origin: center;
+
+    opacity: 0;
+    translate: 0px -50px;
+    transition: translate 800ms ease-in calc(var(--i) * 500ms),
+    opacity 800ms ease-in calc(var(--i) * 500ms);
+}
+.faqs .ingredients.show .icon-wrapper{
+    opacity: 1;
+    translate: 0px 0px;
+}
+.faqs .ingredients .answer{
+    position: relative;
+    isolation: isolate;
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
+    padding: 2rem; 
+    
+
+    opacity: 0;
+    transition: opacity 800ms ease 1000ms;
+}
+.faqs .ingredients.show .answer{
+    opacity: 1;
+}
+.faqs .ingredients .answer::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    background-image: var(--bg-gradient-glass);
+    box-shadow: 5px 5px 50px black;
+    z-index: -1;
+}
+
+.faqs .ingredients .answer .bakery-icons{
+    display: grid;
+    grid-template-columns: repeat(5,auto);
+    grid-template-rows: auto;
+    gap: 2rem;
+}
+.faqs .ingredients .answer > p{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+   
+    max-width: 550px;
+    font-size: 1.2rem;
+    line-height: 1.4em;
+    text-align: center;
+    text-wrap: pretty;
+}
+.faqs .ingredients .answer .nut-icons{
+    padding-inline: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+    justify-content: flex-end;
+}
+
+.faqs .ingredients .answer > *{
+    margin-bottom: 2rem;
+}
+.faqs .ingredients .answer .nut-icons .icon-wrapper:nth-of-type(1) > img{
+    max-width: 64px;
+    transform: rotate(45deg);
+}
+.faqs .ingredients .answer .nut-icons .icon-wrapper:nth-of-type(2) > img{
+    max-width: 64px;
+    transform: rotate(-45deg);
+}
 .faqs .answer .option{
     position: relative;
     isolation: isolate;
@@ -1728,6 +1797,12 @@ body{
     }
 }
 @media only screen and (max-width: 700px){
+    .faqs .gluten-free > header{
+        margin-bottom: 4rem;
+    }
+    .faqs .gluten-free .answer{
+        margin-bottom: 4rem;
+    }
     .faqs .gluten-free .answer .option{
         width: 100%;
         max-width: 500px;
@@ -1738,56 +1813,42 @@ body{
     }
 }
 @media only screen and (max-width: 632px){
-    .faqs > header .introduction{
+    .faqs > .ingredients .answer{
         padding: 2rem 0rem;
     }
-    .faqs > header .introduction > p{
+    .faqs > .ingredients .answer > p{
         padding-inline: 2rem;
     }
     
 
-    .faqs > header .introduction .icons:nth-of-type(2){
+    .faqs > .ingredients .answer .bakery-icons{
         display: grid;
         grid-template-columns: repeat(3,auto);
         grid-template-rows: repeat(2,auto);
         justify-content: center;
     }
-    .faqs > header .introduction .icons:nth-of-type(2) .icon-wrapper:nth-of-type(5){
+    .faqs > .ingredients .answer .bakery-icons .icon-wrapper:nth-of-type(5){
         grid-column: 3;
         grid-row: 2;
     }
 
     .faqs .gluten-free .answer{
-        /* position: relative;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem; */
-    
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: repeat(2,auto);
-        /* align-items: center; */
         gap: 2rem;
     }
     .faqs .gluten-free .answer > p{
         grid-column: 1;
         grid-row: 2;
     }
-    .faqs .gluten-free .answer .icons{
+    .faqs .gluten-free .answer .icon-wrapper{
         grid-column: 1;
         grid-row: 1;
         justify-self: center;
     }
 }
-@media only screen and (max-width: 500px){
-    .faqs > header .introduction::before{
-    
-      
-        width: 100%;
-        height: 80%;
-       
-    }
-}
+
 @media only screen and (max-width: 400px){
     .faqs .product-pricing .answer .layer-cakes{
        
@@ -1816,17 +1877,7 @@ body{
         margin: 0 auto;
     }
 }
-@keyframes pulseIn {
-    0%{
-        transform: scale(0);
-    }
-    60%{
-        transform: scale(1.2);
-    }
-    100%{
-        transform: scale(1);
-    }
-}
+
 /* === HOME THANKS === */
 
 .home-thanks{
@@ -1839,7 +1890,7 @@ body{
     /* background-color: hsl(0 0% 0% / 0.2); */
     background-image: var(--img-home-thankyou);
     background-repeat: no-repeat;
-    background-size: 90%;
+    background-size: 100%;
     background-position: center;
     background-blend-mode: overlay;
 
@@ -1883,7 +1934,7 @@ body{
 @media only screen and (max-width: 600px){
   
     .home-thanks .outro > h3{
-        font-size: 2rem;
+        font-size: 1.2rem;
     }
     .home-thanks .outro > p{
         font-size: 1rem;
