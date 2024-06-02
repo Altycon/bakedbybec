@@ -80,7 +80,7 @@
     inset -2px -2px 3px black,
     inset 2px 2px 3px hsl(220 100% 50% / 0.3);
 
-   
+    --something: black;
 }
 
 /*
