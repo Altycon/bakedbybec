@@ -1444,7 +1444,7 @@ body{
         height: 150px;
     }
 }
-@media only screen and (max-width: 360px){
+@media only screen and (max-width: 300px){
     .customer-review-title{
         font-size: 1.2rem;
         margin-bottom: 1.4em;
@@ -4776,7 +4776,7 @@ label[for=CakepopFrosting] > div{
 
 
     .home-header{
-        margin-bottom: 33vh;
+        margin-bottom: 6rem;
     }
     .home-navigation-primary-logo-subtext{
         position: absolute;
