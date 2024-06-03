@@ -137,6 +137,25 @@ select:focus-visible{
 .link{
     text-decoration: none;
 }
+.external-link{
+    position: relative;
+    text-decoration: none;
+}
+.external-link::after{
+    content: "\2197";
+    position: absolute;
+    top: 0; right: 0;
+    width: 8px;
+    height: 8px;
+    font-size: .6rem;
+    color: var(--bc-primary);
+    text-shadow: none;
+    /* outline: 1px solid var(--site-color-accent2); */
+    background-color: var(--fc-primary);
+    
+    display: grid;
+    place-content: center;
+}
 .site-box-link{
     font-size: 1rem;
     color: var(--fc-primary);
@@ -145,6 +164,7 @@ select:focus-visible{
     text-transform: lowercase;
     background-color:var(--site-link-color);
 }
+
 .btn{
     cursor: pointer;
 }
@@ -1336,6 +1356,7 @@ body{
     background-color:var(--site-link-color);
     text-transform: lowercase;
 }
+
 .customer-review-item-links > a::before{
     content: "";
     position: absolute;
@@ -1348,6 +1369,10 @@ body{
 }
 .customer-review-item-links > a:hover::before{
     opacity: 1;
+}
+
+.customer-review-item-links > a > img{
+    width: 16px;
 }
 
 @media only screen and (max-width: 1000px){
