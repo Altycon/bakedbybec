@@ -1010,6 +1010,21 @@ body{
     /* z-index: -1; */
     rotate: -10deg;
 }
+.in-house-bakery-sign > button::after{
+    content: "i";
+    position: absolute;
+    top: 0; right: 0;
+    width: 8px;
+    height: 8px;
+    font-size: .5rem;
+    font-weight: 500;
+    color: var(--bc-primary);
+    background-color: var(--fc-primary);
+    border-radius: 50%;
+
+    display: grid;
+    place-content: center;
+}
 .in-house-bakery-sign > .information{
 
     position: absolute;
@@ -2875,6 +2890,7 @@ body{
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: repeat(3,auto);
+    justify-content: center;
     column-gap: 2rem;
     row-gap: 4rem;
 }
@@ -2941,6 +2957,7 @@ body{
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: repeat(2,auto);
+    justify-content: center;
     column-gap: 2rem;
     row-gap: 4rem;
 }
