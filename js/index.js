@@ -21,6 +21,12 @@ function handleNotes(){
     });
 };
 
+function openInHouseBakerySign(event){
+
+    if(event) event.preventDefault();
+
+    document.querySelector('.in-house-bakery-sign .information').classList.toggle('open');
+};
 
 function siteOpeningTransition(){
 
@@ -67,10 +73,11 @@ function initializeSite(){
     pageNavigation();
 
     handleDesktopHomeHoverLinksAnimation();
+
+    document.querySelector('.in-house-bakery-sign > button').addEventListener('click', openInHouseBakerySign);
+
     let threshold = 0.5;
-    if(innerWidth < 800){
-        threshold = 0.1;
-    }
+    if(innerWidth < 800) threshold = 0.1;
     
     createIntersectionObserver('.intersection',threshold);
 
