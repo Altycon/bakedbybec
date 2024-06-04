@@ -39,7 +39,7 @@ function siteOpeningTransition(){
 
 function handleDesktopHomeHoverLinksAnimation(){
 
-    const navigationCircle = document.querySelector('.home-navigation-primary-circle');
+    const logoRing = document.querySelector('.home-navigation-primary-ring');
    
     const circleNavigationLinks = document.querySelectorAll('.js-circle-link');
 
@@ -47,17 +47,17 @@ function handleDesktopHomeHoverLinksAnimation(){
 
         navLink.addEventListener('mouseenter', (enterEvent)=>{
 
-            navigationCircle.style.animation = `none`;
+            logoRing.style.animation = `none`;
 
             enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
     
-                navigationCircle.classList.remove(`${navLink.dataset.position}-hovered`);
+                logoRing.classList.remove(`${navLink.dataset.position}-hovered`);
     
                 leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
             })
 
-            navigationCircle.classList.add(`${navLink.dataset.position}-hovered`);
-            navigationCircle.style.animation = `slideCircleBackgroundLeft 1s linear forwards`;
+            logoRing.classList.add(`${navLink.dataset.position}-hovered`);
+            logoRing.style.animation = `slideCircleBackgroundLeft 1s linear forwards`;
             
         });
     })
