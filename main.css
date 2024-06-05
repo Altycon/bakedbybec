@@ -1093,55 +1093,91 @@ body{
     perspective: 500px;
 }
 
-.home-navigation-heros > div{
+.home-navigation-heros .navigation-hero{
     position: relative;
     isolation: isolate;
-    text-align: center;
-    background-color: var(--site-link-color);
+    /* border: 1px solid yellow; */
+   
     padding: 1rem;
 
+    
     opacity: 0;
     transition: opacity 500ms ease 1.5s;
 }
-.home-navigation-heros > div:nth-child(1){
+
+
+.home-navigation-heros .navigation-hero:nth-child(1){
     transform-origin: left;
     transform: rotateY(10deg);
     
 }
-.home-navigation-heros > div:nth-child(2){
+.home-navigation-heros .navigation-hero:nth-child(2){
     transform-origin: center;
     transform: translateZ(-100px);
 }
-.home-navigation-heros > div:nth-child(3){
+.home-navigation-heros .navigation-hero:nth-child(3){
     transform-origin: right;
     transform: rotateY(-10deg);
 }
-.home-navigation-primary.reveal .home-navigation-heros > div{
+.home-navigation-primary.reveal .home-navigation-heros .navigation-hero{
     opacity: 1;
 }
-.home-navigation-heros > div::before{
+
+.home-navigation-heros .navigation-hero > a{
+    position: relative;
+    isolation: isolate;
+    height: 66px;
+
+    display: block;
+    align-content: center;
+    text-align: center;
+
+}
+.home-navigation-heros .navigation-hero > a::before{
     content: "";
     position: absolute;
     inset: 0;
     background: var(--site-gradient);
+    border-radius: inherit;
     z-index: -1;
     opacity: 0;
-    transition: opacity 200ms ease-in-out;
+    transition: opacity 200ms ease;
 }
-.home-navigation-heros > div:hover::before{
+.home-navigation-heros .navigation-hero > a:hover::before{
     opacity: 1;
 }
-.home-navigation-heros > div > a{
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px black;
-    color: var(--fc-primary);
-
-    display: inline-block;
+.home-navigation-heros .navigation-hero > a > div:nth-of-type(1){
+    text-shadow: inherit;
 }
+.home-navigation-heros .navigation-hero > a .icon-wrapper{
+    position: absolute;
+    z-index: -1;
+    max-width: 100px;
+    opacity: 0.5;
 
+    translate: 0px 0px;
+    scale: 1;
 
+    transition: opacity 300ms ease, translate 300ms ease, scale 300ms ease;
+}
+.home-navigation-heros .navigation-hero > a:hover .icon-wrapper{
+    opacity: 1;
+    scale: 1.1;
+    translate: 0px -20px;
+}
+.home-navigation-heros .navigation-hero:nth-child(1) > a .icon-wrapper{
+    top: -33px; left: 5%;
+}
+.home-navigation-heros .navigation-hero:nth-child(2) > a .icon-wrapper{
+    top: -33px; left: 5%;
+}
+.home-navigation-heros .navigation-hero:nth-child(3) > a .icon-wrapper{
+    top: -33px; right: 5%;
+}
+.home-navigation-heros .navigation-hero > a .icon-wrapper > img{
+    width: 100%;
+    
+}
 
 
 /*
