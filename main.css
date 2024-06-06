@@ -142,6 +142,8 @@ select:focus-visible{
 .external-link{
     position: relative;
     text-decoration: none;
+
+    background-image: linear-gradient(45deg,transparent 80%, var(--site-color-accent2));
 }
 .external-link::after{
     content: "\2197";
@@ -279,8 +281,10 @@ body{
 =========================================|
 */
 .page-header{
-    position: relative;
+    position: sticky;
+    top: 0;
     padding: 1rem;
+    z-index: 1;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -429,7 +433,7 @@ body{
     text-align: center;
     font-size: .75rem;
     font-weight: 500;
-    padding: 3px 10px;
+    padding: 10px;
     text-shadow: 2px 2px 3px black;
     white-space: nowrap;
     color: var(--fc-primary);
@@ -1576,6 +1580,7 @@ body{
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: inherit;
     background: var(--site-gradient);
     z-index: -1;
 
@@ -2356,8 +2361,11 @@ body{
     display: grid;
     place-content: center;
 
+    opacity: 0;
+    transition: opacity 500ms ease-in; 
+}
+.home-thanks.show{
     opacity: 1;
-    transition: opacity 1s ease-in; 
 }
 .home-thanks .outro{
     position: relative;
