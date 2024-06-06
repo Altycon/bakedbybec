@@ -1702,20 +1702,6 @@ body{
 
         transform: translateY(0px);
     }
-
-    .customer-review-item-links{
-        
-        /* display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-        gap: 10px; */
-        /* justify-content: center; */
-        /* border: 1px solid green; */
-        
-    }
-    .customer-review-item-links > a{
-        /* justify-self:  center; */
-    }
 }
 @media only screen and (max-width: 500px){
     .customer-review-title{
@@ -1725,19 +1711,8 @@ body{
 
     .customer-review-item-links{
         padding-inline: 1rem;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto;
     }
-    .customer-review-item-links > a:nth-of-type(1){
-        grid-column: 1;
-        grid-row: 1;
-
-        padding-inline: 1em;
-    }
-    .customer-review-item-links > a:nth-of-type(2){
-        grid-column: 2;
-        grid-row: 1;
-    }
+   
 }
 @media only screen and (max-width: 600px){
     .customer-review-description{
@@ -1839,7 +1814,7 @@ body{
     gap: 2rem;
 
     opacity: 0;
-    transition: opacity 800ms ease-in 500ms;
+    transition: opacity 300ms ease-in 300ms;
 }
 .faqs .gluten-free.show .answer{
     opacity: 1;
@@ -1871,7 +1846,7 @@ body{
     text-wrap: pretty;
 
     translate: -50px;
-    transition: translate 500ms ease-in 1000ms;
+    transition: translate 300ms ease-in 500ms;
 }
 .faqs .gluten-free.show .answer > p{
     translate: 0px;
@@ -1879,8 +1854,8 @@ body{
 .faqs .gluten-free .answer .icon-wrapper{
     scale: 0;
     opacity: 0;
-    transition: scale 1000ms ease-in 1000ms,
-    opacity 1000ms ease-in 1000ms;
+    transition: scale 1000ms ease-in 500ms,
+    opacity 1000ms ease-in 500ms;
 }
 
 .faqs .gluten-free.show .answer .icon-wrapper{
@@ -1898,8 +1873,8 @@ body{
 .faqs .order-retrieval .answer .option{
     opacity: 0;
     translate: 0px -50px;
-    transition: opacity 500ms ease-in calc(var(--i) * 500ms),
-    translate 500ms ease-in calc(var(--i) * 500ms);
+    transition: opacity 500ms ease-in calc(var(--i) * 300ms),
+    translate 500ms ease-in calc(var(--i) * 300ms);
 }
 .faqs .order-retrieval.show .answer .option{
     opacity: 1;
@@ -1925,8 +1900,8 @@ body{
     opacity: 0;
     translate: 0px -50px;
 
-    transition: opacity 500ms ease-in calc(var(--i) * 500ms),
-    translate 500ms ease-in calc(var(--i) * 500ms);
+    transition: opacity 500ms ease-in calc(var(--i) * 300ms),
+    translate 500ms ease-in calc(var(--i) *300ms);
 }
 .faqs .product-pricing.show .answer .option{
     opacity: 1;
@@ -1999,8 +1974,8 @@ body{
 
     opacity: 0;
     translate: 0px -50px;
-    transition: translate 800ms ease-in calc(var(--i) * 500ms),
-    opacity 800ms ease-in calc(var(--i) * 500ms);
+    transition: translate 800ms ease-in calc(var(--i) * 300ms),
+    opacity 800ms ease-in calc(var(--i) * 300ms);
 }
 .faqs .ingredients.show .icon-wrapper{
     opacity: 1;
@@ -2015,7 +1990,7 @@ body{
     
 
     opacity: 0;
-    transition: opacity 800ms ease 1000ms;
+    transition: opacity 300ms ease 500ms;
 }
 .faqs .ingredients.show .answer{
     opacity: 1;
@@ -2089,8 +2064,8 @@ body{
     display:grid;
     place-content: center;
 
-    opacity: 1;
-    transition: opacity 800ms ease-in-out calc(var(--i) * 100ms);
+    /* opacity: 1;
+    transition: opacity 500ms ease-in-out calc(var(--i) * 100ms); */
 }
 .faqs .answer .option::before{
     content: "";
