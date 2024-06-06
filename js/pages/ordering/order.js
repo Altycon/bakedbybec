@@ -1,4 +1,5 @@
 import { pageNavigation } from "../../navigation.js";
+import { openInHouseBakerySign } from "../../utilities.js";
 
 
 
@@ -806,6 +807,7 @@ function initializeOrderingPage(){
     }
 
     pageNavigation();
+    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
 
     OrderForm.initialize();
     OrderForm.listen();

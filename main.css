@@ -208,6 +208,13 @@ body{
     overflow-x: hidden;
     /* scroll-behavior: smooth; */
 }
+.website-title{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: flex-start;
+    align-items: center;
+}
 .website-title > a > img{
     width: 150px;
     /* filter: invert(100%); */
@@ -255,7 +262,17 @@ body{
 .page-navigation-primary-open-btn .bar:nth-child(3){
     transform: translateX(-50%) translateY(300%);
 }
-
+@media only screen and (max-width: 500px){
+    .website-title > img{
+        width: 100px;
+    }
+    .website-title > a > img{
+        width: 100px;
+    }
+    .page-navigation-social-icon{
+        width: 20px;
+    }
+}
 /*
 =========================================|
         PAGES HEADER
@@ -316,6 +333,7 @@ body{
     grid-row: 1;
     justify-self: flex-end;
 }
+
 /*+++++++++++++++++++++++++++++++*/
 .page-navigation-social-list{
     list-style: none;
@@ -337,12 +355,184 @@ body{
     width: 30px;
     /* margin-top: 5px; */
 }
+
+
 /*+++++++++++++++++++++++++++++++*/
 .page-header .page-navigation-primary-open-btn{
     grid-column: 3;
     grid-row: 1;
 }
 
+
+/*+++++++++++++++++++++++++++++++*/
+.in-house-bakery-btn{
+    border: none;
+    background: none;
+
+    position: relative;
+    margin-left: 1.4em;
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--fc-primary);
+    border-radius: 50%;
+    text-shadow: 2px 2px 3px black;
+
+    background-color: var(--site-btn-color);
+    box-shadow: 2px 2px 10px black,
+    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
+
+    transition: background-color 100ms ease;
+}
+.in-house-bakery-btn:hover{
+    background-color: var(--site-btn-hover-color);
+}
+.in-house-bakery{
+    position: absolute;
+    top: 100%; left: 0;
+    width: 100%;
+    max-width: 500px;
+    z-index: 1;
+
+    display: none;
+}
+.in-house-bakery.open{
+    display: block;
+}
+.in-house-bakery-sign{
+    padding: 1rem;
+    text-align: center;
+    background-color: hsl(0 0% 0% / 0.8);
+    background-image: var(--bg-gradient-glass);
+
+    opacity: 0;
+    transform-origin: top;
+    translate: 0px -20px;
+    transition: opacity 300ms ease-in, translate 300ms ease-in;
+}
+.in-house-bakery.show .in-house-bakery-sign{
+    opacity: 1;
+    translate: 0px 0px;
+}
+.in-house-bakery-sign > p{
+    max-width: 360px;
+    font-size: .8rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+    text-shadow: 2px 2px 3px black;
+    text-wrap: pretty;
+}
+.in-house-bakery-sign > a{
+    display: inline-block;
+    text-align: center;
+    font-size: .75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    text-shadow: 2px 2px 3px black;
+    white-space: nowrap;
+    color: var(--fc-primary);
+    background-color: var(--site-link-color);
+}
+.in-house-bakery-sign > *{
+    opacity: 0;
+    transition: opacity 300ms ease-in 300ms;
+}
+.in-house-bakery.show .in-house-bakery-sign > *{
+    opacity: 1;
+}
+
+
+
+@media only screen and (max-width: 800px){
+    /*
+    =========================================|
+            PAGE HEADER
+    =========================================|
+    */
+    .page-header{
+        grid-template-columns: 1fr 1fr auto;
+    }
+    /*+++++++++++++++++++++++++++++++*/
+    .page-navigation-primary{
+        grid-column: 1/4;
+        grid-row: 2;
+        align-content: unset;
+         
+        position: absolute;
+        top: 100%; left: -1rem;
+        width: 100vw;
+        height: calc(100vh - 72px);
+        z-index: 2;
+
+        display: none;
+    }
+    .page-navigation-primary.open{
+        display: grid;
+    }
+    /*+++++++++++++++++++++++++++++++*/
+    .page-navigation-primary-list{
+        padding-top: 2rem;
+        background-color: hsl(0 0% 0% / 0.8);
+
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6,auto);
+        gap: 0rem;
+        align-content: flex-start;
+
+        opacity: 0;
+        transition: opacity 100ms ease-in-out;
+    }
+    .page-navigation-primary.show .page-navigation-primary-list{
+        opacity: 1;
+    }
+    .page-navigation-primary-list > li:last-of-type{
+        display: block; /* unhiding the last link element for mobile */
+    }
+    .page-navigation-primary-item{
+        --trans-delay: calc(var(--i) * 100ms);
+        height: fit-content;
+        text-align: right;
+
+        opacity: 0;
+        transform: translateX(-80px);
+        transition: transform 400ms ease var(--trans-delay),
+        opacity 400ms ease var(--trans-delay);
+    }
+    .page-navigation-primary.show .page-navigation-primary-item{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+    .page-navigation-primary-link{
+        padding-block: 1rem;
+        padding-inline: 2em;
+    }
+    /*+++++++++++++++++++++++++++++++*/
+    .page-navigation-social{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    /*+++++++++++++++++++++++++++++++*/
+    .page-navigation-primary-open-btn{
+        display: block;
+    }
+    .page-navigation-primary-open-btn.active{
+        box-shadow: var(--site-btn-bxs-acc1);
+    }
+    .page-navigation-primary-open-btn.active .bar:nth-child(1){
+        transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    }
+    .page-navigation-primary-open-btn.active .bar:nth-child(2){
+        border-radius: 50%;
+        background-color: var(--site-color-accent1);
+        opacity: .5;
+        transform: translateX(50%) translateY(-50%) rotate(90deg) scaleX(2);
+    }
+    .page-navigation-primary-open-btn.active .bar:nth-child(3){
+        transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    }
+}
 /*
 =========================================|
         SITE PAGE FOOTER
@@ -399,28 +589,7 @@ body{
     grid-template-rows: auto;
     justify-items: center;
 }
-.footer-logo .logo-ring{
-    grid-column: 1;
-    grid-row: 1;
-    
 
-    position: relative;
-    width: var(--footer-logo-size);
-    height: var(--footer-logo-size);
-    background: var(--site-gradient);
-    border-radius: 50%;
-    z-index: -1;
-}
-.footer-logo .logo-ring::before{
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 85%;
-    height: 85%;
-    transform: translate(-50%, -50%);
-    background-color: var(--bc-primary);
-    border-radius: inherit;
-}
 .footer-logo > a{
     grid-column: 1;
     grid-row: 1;
@@ -448,7 +617,87 @@ body{
     text-decoration: none;
     color: var(--fc-primary);
 }
+@media only screen and (max-width: 800px){
+    /*
+    =========================================|
+            SITE PAGE FOOTER
+    =========================================|
+    */
+ 
+    .footer-navigation{
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .footer-navigation > ul:first-of-type{
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: center;
+    }
+    .footer-navigation > ul:last-of-type{
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: center;
+    }
+    .footer-navigation > ul{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3,auto);
+        justify-content: space-evenly;
+        align-items: center;
+        gap: .5em;
+    }
+    .footer-navigation > ul > li{
+        justify-self: center;
+    }
+    .footer-logo{
+        grid-column: 2;
+        grid-row: 1;
 
+    }
+
+}
+@media only screen and (max-width: 500px){
+    .footer-navigation{
+        
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .footer-navigation > ul:first-of-type{
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: revert;
+    }
+    .footer-navigation > ul:last-of-type{
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: revert;
+    }
+    .footer-navigation > ul{
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: auto;
+        justify-content: center;
+        align-items: center;
+        gap: .5em;
+    }
+    .footer-logo{
+        grid-column: 1;
+        grid-row: 3;
+
+    }
+}
+@media only screen and (max-width: 400px){
+    .footer-navigation > ul:first-of-type > li > a,
+    .footer-navigation > ul:last-of-type > li > a{
+        font-size: .8rem;
+    }
+   
+    .footer-created-by > *{
+        font-size: .8rem;
+    }
+}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -496,7 +745,6 @@ body{
     background: var(--bc-primary);
     border-radius: 50%;
 }
-
 
 
 /*
@@ -648,6 +896,9 @@ body{
     background: hsl(0 0% 100% / 0.5);
     filter: blur(5px);
     transform: translateX(-50%) translateY(-50%);
+}
+@media only screen and (max-width: 800px){
+
 }
 /*
 =========================================|
@@ -957,125 +1208,34 @@ body{
 .home-navigation-contact-item > a > span:nth-child(7){
     transform: translateY(calc(var(--circle-size) * .02)) translateX(calc(var(--circle-size) * .015)) rotate(16deg);
 }
+@media only screen and (max-width: 1000px){
 
-
-/* IN HOUSE BAKERY SIGN AND INFO */
-.in-house-bakery-sign{
-    grid-column: 1/3;
-    grid-row: 1;
-    align-self: flex-end;
-
-    position: relative;
-    opacity: 0;
-    transition: opacity 500ms ease-in 2.5s;
-}
-.home-navigation-primary.reveal .in-house-bakery-sign{
-    opacity: 1;
-}
-
-
-.in-house-bakery-sign > button{
-    position: relative;
-    border: none;
-    background: none;
-    font-size: .8rem;
-    color: var(--fc-primary);
-    padding: 5px 10px;
-    margin-left: 1.4em;
-    white-space: nowrap;
-    cursor: pointer;
-  
-    border-radius: 5px;
-    text-shadow: 2px 2px 3px black;
-    background-color: var(--site-btn-color);
-    box-shadow: 2px 2px 10px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
-
-    transition: background-color 100ms ease;
-}
-.in-house-bakery-sign > button:hover{
-    background-color: var(--site-btn-hover-color);
-}
-.in-house-bakery-sign > button::after{
-    content: "i";
-    position: absolute;
-    top: 8%; right: 1.5%;
-    width: 6px;
-    height: 6px;
-    font-size: .4rem;
-    font-weight: 500;
-    color: var(--bc-primary);
-    background-color: var(--fc-primary);
-    border-radius: 50%;
-
-    display: grid;
-    place-content: center;
-}
-.in-house-bakery-sign > button:hover:after{
-    animation: smallPulse 1s linear infinite;
-}
-@keyframes smallPulse {
-    0%{
-        scale: 1;
+    .home-navigation-primary{
+        --circle-size: 40vw;
     }
-    50%{
-        scale: 1.5;
+
+}
+@media only screen and (max-width: 800px){
+    .home-navigation-primary{
+        padding-top: 4em;
+
     }
-    100%{
-        scale: 1;
+    .home-navigation-primary-list{
+        display: none;
+       
     }
 }
-.in-house-bakery-sign > .information{
+@media only screen and (max-width: 500px){
+    .home-navigation-primary-logo-subtext{
+        position: absolute;
+        top: 80%; left: 50%;
+        font-size: .8rem;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+}
 
-    position: absolute;
-    top: 100%; left: 0%;
-    width: fit-content;
-    padding: 1rem;
-    text-align: left;
-    background: var(--bg-gradient-glass);
-    z-index: 1;
 
-    display: grid;
-    grid-template-columns: repeat(2,auto);
-    grid-template-rows: auto;
-    gap: 1rem;
-
-    opacity: 0;
-    transform-origin: top;
-
-    transition: opacity 300ms ease-in;
-}
-.in-house-bakery-sign > .information.open{
-    opacity: 1;
-}
-.in-house-bakery-sign > .information > p{
-    max-width: 360px;
-    text-align: center;
-    font-size: .8rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: .5em;
-    text-shadow: 2px 2px 3px black;
-    text-wrap: pretty;
-}
-.in-house-bakery-sign > .information > a{
-    display: inline-block;
-    text-align: center;
-    font-size: .75rem;
-    font-weight: 500;
-    padding: 3px 10px;
-    text-shadow: 2px 2px 3px black;
-    white-space: nowrap;
-    color: var(--fc-primary);
-    background-color: var(--site-link-color);
-}
-.in-house-bakery-sign > .information > *{
-    opacity: 0;
-    transition: opacity 300ms ease-in 300ms;
-}
-.in-house-bakery-sign > .information.open > *{
-    opacity: 1;
-}
 /*+++++++++++++++++++++++++++++++*/
 .home-navigation-heros{
     grid-column: 1/4;
@@ -1096,11 +1256,8 @@ body{
 .home-navigation-heros .navigation-hero{
     position: relative;
     isolation: isolate;
-    /* border: 1px solid yellow; */
-   
     padding: 1rem;
 
-    
     opacity: 0;
     transition: opacity 500ms ease 1.5s;
 }
@@ -1119,6 +1276,9 @@ body{
     transform-origin: right;
     transform: rotateY(-10deg);
 }
+.home-navigation-heros .navigation-hero:nth-child(4){
+    display: none;
+}
 .home-navigation-primary.reveal .home-navigation-heros .navigation-hero{
     opacity: 1;
 }
@@ -1132,6 +1292,10 @@ body{
     align-content: center;
     text-align: center;
 
+}
+.home-navigation-heros .navigation-hero:nth-child(4) > a{
+    max-width: 500px;
+    margin: 0 auto;
 }
 .home-navigation-heros .navigation-hero > a::before{
     content: "";
@@ -1147,7 +1311,7 @@ body{
     opacity: 1;
 }
 .home-navigation-heros .navigation-hero > a > div:nth-of-type(1){
-    text-shadow: inherit;
+    
 }
 .home-navigation-heros .navigation-hero > a .icon-wrapper{
     position: absolute;
@@ -1174,11 +1338,32 @@ body{
 .home-navigation-heros .navigation-hero:nth-child(3) > a .icon-wrapper{
     top: -33px; right: 5%;
 }
+.home-navigation-heros .navigation-hero:nth-child(4) > a .icon-wrapper{
+    top: 0; right: 0;
+}
 .home-navigation-heros .navigation-hero > a .icon-wrapper > img{
     width: 100%;
     
 }
+@media only screen and (max-width: 800px){
+    .home-navigation-heros{
+        padding-bottom: 0rem;
+    }
+    .home-navigation-heros .navigation-hero:nth-child(1),
+    .home-navigation-heros .navigation-hero:nth-child(2),
+    .home-navigation-heros .navigation-hero:nth-child(3){
 
+        display: none;
+    }
+    .home-navigation-heros .navigation-hero:nth-child(4){
+        grid-column: 1/4;
+        grid-row: 1;
+        display: block;
+    }
+    .home-navigation-heros .navigation-hero:nth-child(4){
+
+    }
+}
 
 /*
     =========================================|
@@ -2811,7 +2996,26 @@ body{
         justify-self: center;
     }
 }
+@media only screen and (max-width: 400px){
+    .contact-main > header .form-links{
+        
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 1.5rem;
+    }
+    .contact-main .cookie-form-link,
+    .contact-main .cake-form-link{
+       
+        padding: 8px 10px;
+        font-size: 1rem;
+    
+    }
 
+    .contact-main .cookie-form-link{
+        margin-right: 0rem;
+    }
+}
 
 /*
 ===================================================|
@@ -3337,8 +3541,42 @@ body{
     opacity: 1;
     transform: translateX(0px);
 }
+@media only screen and (max-width: 800px){
+    .gallery-content > section > ul{
+        padding: 2rem;
+    
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 2rem;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .navigation-gallery-list{
+        list-style: none;
+    
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: auto auto;
+    }
+    .navigation-gallery-item{
+        padding: .5rem;
+    }
 
-
+    .navigation-gallery-item > a{
+        font-size: .8rem;
+    }
+    .gallery-content > section > header > h2{
+        color: var(--fc-rare);
+        font-size: 1rem;
+    }
+    .gallery-content > section > ul{
+        padding: 2rem;
+    
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6,auto);
+        gap: 2rem;
+    }
+}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -4201,360 +4439,6 @@ label[for=CakepopFrosting] > div{
     background-color: var(--site-color-accent2);
     border-radius: 5px;
 }
-
-
-/*
---------------------------------
-
-    |    FOOTER
-
---------------------------------
-*/
-
-
-
-/*
---------------------------------
-
-    |    IMAGE VIEWER
-
---------------------------------
-*/
-.image-viewer{
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    isolation: isolate;
-    z-index: 1;
-
-    display: none;
-    place-content: center;
-}
-.image-viewer.open{
-    display: grid;
-}
-.image-viewer .overlay{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; 
-    height: 100%;
-    background-color: hsl(0 0% 0% / 0.9);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 100ms ease-in-out;
-}
-.image-viewer.show .overlay{
-    opacity: 1;
-}
-.image-viewer figure{
-    /* width: 100%; */
-    max-width: 100vw;
-    /* height: 100%; */
-    /* aspect-ratio: 4/3; */
-    /* overflow: hidden; */
-    box-shadow: 5px 5px 10px black;
-    opacity: 0;
-
-    transition: opacity 300ms ease-in;
-}
-.image-viewer.show figure{
-    opacity: 1;
-}
-.image-viewer figure img{
-    width: 100%;
-    height: 100%;
-}
-/*
---------------------------------
-
-    |    NOTES MODAL
-
---------------------------------
-*/
-.notes-open-btn{
-    position: fixed;
-    top: 12lvb; left: 2lvb;
-    border: none;
-    background: none;
-    font-size: 1rem;
-    color: var(--fc-primary);
-    padding: 5px 10px;
-    z-index: 1;
-    cursor: pointer;
-  
-    border-radius: 5px;
-    text-shadow: 2px 2px 3px black;
-    background-color: var(--site-color-accent2);
-    box-shadow: 2px 2px 10px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
-}
-.notes{
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    min-height: 100vh;
-    isolation: isolate;
-    z-index: 100;
-    overflow: scroll;
-
-    display: none;
-}
-.notes.open{
-    display: block;
-}
-
-.notes .overlay{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: hsl(0 0% 0% / 0.9);
-    opacity: 0;
-    z-index: -1;
-
-    transition: opacity 100ms ease-in-out;
-}
-.notes.show .overlay{
-    opacity: 1;
-}
-
-.notes .content{
-    position: relative;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(-50vw);
-
-    transition: transform 500ms ease-in-out,
-    opacity 300ms ease-in-out;
-}
-.notes .content > h2{
-    margin-bottom: 1.5em;
-}
-.heart-entity{
-    position: absolute;
-    bottom: 10%; left: 10%;
-    font-size: 2rem;
-
-    animation: heartPulse 1s linear infinite;
-}
-.notes .content > ul{
-    list-style-position: inside;
-    text-align: left;
-    max-width: 800px;
-    margin: 0 auto;
-    
-    
-}
-.notes .content > ul > li{
-    color: var(--fc-primary);
-    font-size: 1rem;
-    line-height: 1.2em;
-    margin-top: .5em;
-    margin-bottom: 1rem;
-}
-.notes .content > p{
-    font-size: 1rem;
-    line-height: 1.2em;
-    font-weight: 700;
-}
-.notes-close-btn{
-    margin-top: 2rem;
-    border: none;
-    background: none;
-    color: var(--fc-primary);
-    font-size: 1rem;
-    padding: 1rem 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    outline: 1px solid var(--fc-primary);
-}
-.notes.show .content{
-    opacity: 1;
-    transform: translateY(0);
-}
-/*
---------------------------------
-
-    |    CONFIRMATION MODAL
-
---------------------------------
-*/
-
-.confirmation{
-    --confirmation-animation-timing: 200ms;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    isolation: isolate;
-
-    display: none;
-    place-content: center;
-}
-.confirmation.open{
-    display: grid;
-}
-
-.confirmation .overlay{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: hsl(0 0% 0% / 0.9);
-    opacity: 0;
-    z-index: -1;
-
-    transition: opacity 100ms ease-in-out 100ms;
-}
-.confirmation.show .overlay{
-    opacity: 1;
-}
-
-.confirmation .content{
-    background-color: cornflowerblue;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    opacity: 0;
-
-    transition: opacity 100ms ease-in-out 200ms;
-}
-.confirmation .content .title{
-    color: var(--fc-primary);
-    margin-bottom: .6rem;
-}
-.confirmation .content .message{
-    max-width: 300px;
-    margin-bottom: 1em;
-    color: var(--fc-primary);
-}
-.confirmation .content .controls > button{
-    border: none;
-    background: none;
-    color: var(--bc-primary);
-    background-color: var(--fc-primary);
-
-    padding: 5px 10px;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
-}
-.confirmation .content .controls > button:hover{
-    color: var(--fc-primary);
-    background-color: var(--bc-primary);
-    box-shadow: 2px 2px 10px black,
-    inset -2px -2px 3px hsl(0 0% 0% / 0.5);
-}
-.confirmation.show .content{
-    opacity: 1;
-}
-/*
---------------------------------
-
-    |    NOTIFICATION MODAL
-
---------------------------------
-*/
-.notification{
-    position: fixed;
-    bottom: 0; right: 0;
-    width: 100vw;
-    max-width: 500px;
-    max-height: 100px;
-    padding: .5em;
-    border-radius: 4px;
-    overflow: hidden;
-    isolation: isolate;
-
-    display: none;
-}
-.notification.open{
-    display: block;
-}
-
-
-.notification .content{
-    padding: .5em;
-    background-color:  hsl(0 0% 10%);
-    opacity: 0;
-    transform: translate(100px);
-
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto;
-
-    transition: transform 200ms ease-in-out,
-    opacity 200ms ease-in-out 100ms;
-}
-.notification.show .content{
-    opacity: 1;
-    transform: translate(0px);
-    transition: transform 200ms ease-in-out 200ms,
-    opacity 200ms ease-in-out 200ms;
-}
-.notification .content .message{
-    width: 100%;
-    color: var(--fc-primary);
-    text-align: center;
-}
-.notification .content .close-btn{
-    border: none;
-    background:  none;
-    background-color:  hsl(0 0% 10%);
-    box-shadow: 0px 0px 2px hsl(0 0% 0%);
-    border-radius: 4px;
-    padding: 3px 10px;
-    font-size: 1rem;
-    color: red;
-}
-
-
-/*
-===================================================|
----------------------------------------------------|
-
-            ANIMATIONS
-
----------------------------------------------------|
-===================================================|
-*/
-@keyframes heartPulse {
-    0%{
-        transform: scale(1);
-    }
-    50%{
-        transform: scale(1.5);
-    }
-    100%{
-        transform: scale(1);
-    }
-}
-/*
-===================================================|
----------------------------------------------------|
-
-            DEVICE RESPONSE
-
----------------------------------------------------|
-===================================================|
-*/
-
-
-
-@media only screen and (max-width: 1000px){
-
-    .home-navigation-primary{
-        --circle-size: 40vw;
-    }
-
-}
-
 @media only screen and (max-width: 840px){
     .order-form{
         grid-column: 1;
@@ -4623,268 +4507,7 @@ label[for=CakepopFrosting] > div{
         grid-template-columns: 1fr;
     }
 }
-@media only screen and (max-width: 800px) {
-
-    /*
-    =========================================|
-            PAGE HEADER
-    =========================================|
-    */
-    .page-header{
-        grid-template-columns: 1fr 1fr auto;
-    }
-    /*+++++++++++++++++++++++++++++++*/
-    .page-navigation-primary{
-        grid-column: 1/4;
-        grid-row: 2;
-        align-content: unset;
-         
-        position: absolute;
-        top: 100%; left: -1rem;
-        width: 100vw;
-        height: calc(100vh - 72px);
-        z-index: 1;
-
-        display: none;
-    }
-    .page-navigation-primary.open{
-        display: grid;
-    }
-    /*+++++++++++++++++++++++++++++++*/
-    .page-navigation-primary-list{
-        padding-top: 2rem;
-        background-color: hsl(0 0% 0% / 0.8);
-
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(6,auto);
-        gap: 0rem;
-        align-content: flex-start;
-
-        opacity: 0;
-        transition: opacity 100ms ease-in-out;
-    }
-    .page-navigation-primary.show .page-navigation-primary-list{
-        opacity: 1;
-    }
-    .page-navigation-primary-list > li:last-of-type{
-        display: block; /* unhiding the last link element for mobile */
-    }
-    .page-navigation-primary-item{
-        --trans-delay: calc(var(--i) * 100ms);
-        height: fit-content;
-        text-align: right;
-
-        opacity: 0;
-        transform: translateX(-80px);
-        transition: transform 400ms ease var(--trans-delay),
-        opacity 400ms ease var(--trans-delay);
-    }
-    .page-navigation-primary.show .page-navigation-primary-item{
-        transform: translateX(0px);
-        opacity: 1;
-    }
-    .page-navigation-primary-link{
-        padding-block: 1rem;
-        padding-inline: 2em;
-    }
-    /*+++++++++++++++++++++++++++++++*/
-    .page-navigation-social{
-        grid-column: 2;
-        grid-row: 1;
-    }
-    /*+++++++++++++++++++++++++++++++*/
-    .page-navigation-primary-open-btn{
-        display: block;
-    }
-    .page-navigation-primary-open-btn.active{
-        box-shadow: var(--site-btn-bxs-acc1);
-    }
-    .page-navigation-primary-open-btn.active .bar:nth-child(1){
-        transform: translateX(-50%) translateY(-50%) rotate(45deg);
-    }
-    .page-navigation-primary-open-btn.active .bar:nth-child(2){
-        border-radius: 50%;
-        background-color: var(--site-color-accent1);
-        opacity: .5;
-        transform: translateX(50%) translateY(-50%) rotate(90deg) scaleX(2);
-    }
-    .page-navigation-primary-open-btn.active .bar:nth-child(3){
-        transform: translateX(-50%) translateY(-50%) rotate(-45deg);
-    }
-
-    /*
-    --------------------------------
-
-        |    HOME PAGE
-
-    --------------------------------
-    */
-    .home-background{
-        /* display: none; */
-    }
-    .page-background.home{
-        /* display: none; */
-    }
-    /*
-    =========================================|
-            HOME HEADER -->> mobile
-    =========================================|
-    */
-   
-    .home-navigation-primary{
-        padding-top: 4em;
-
-    }
-    .home-navigation-primary-list{
-        display: none;
-       
-    }
-    
-    .in-house-bakery-sign{
-        grid-column: 1/3;
-        grid-row: 2;
-    
-        margin-top: 2rem;
-    }
-    .in-house-bakery-sign .information{
-        position: unset;
-        top: unset; left: unset;
-
-        width: 100%;
-        display: block;
-        text-align: center;
-    }
-   
-    .home-navigation-heros{
-        grid-column: 1/3;
-        grid-row: 2;
-
-        display: none;
-    }
-    .home-header-quick-links{
-        grid-column: 1/3;
-        grid-row: 3;
-        display: none;
-
-        padding: 4rem 1rem 4rem 1rem;
-    }
-
-   
-    
-    /*
-    =========================================|
-            SITE PAGE FOOTER
-    =========================================|
-    */
- 
-    .footer-navigation{
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: auto;
-        align-items: center;
-        justify-content: space-evenly;
-    }
-    .footer-navigation > ul:first-of-type{
-        grid-column: 1;
-        grid-row: 1;
-        justify-self: center;
-    }
-    .footer-navigation > ul:last-of-type{
-        grid-column: 3;
-        grid-row: 1;
-        justify-self: center;
-    }
-    .footer-navigation > ul{
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3,auto);
-        justify-content: space-evenly;
-        align-items: center;
-        gap: .5em;
-    }
-    .footer-navigation > ul > li{
-        justify-self: center;
-    }
-    .footer-logo{
-        grid-column: 2;
-        grid-row: 1;
-
-    }
-
-    
-
-
-
-     /*
-    --------------------------------
-
-        |    GALLERY PAGE
-
-    --------------------------------
-    */
-    .gallery-content > section > ul{
-        padding: 2rem;
-    
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 2rem;
-    }
- 
-}
-
-@media only screen and (max-width: 700px){
-   
-
-   
-
-    .notes .content > p{
-        color: var(--fc-primary);
-        font-size: 1rem;
-        line-height: 1.2em;
-    }
-
-
- 
-}
-
-@media only screen and (max-width: 600px) {
-
-  
-  
-
-
-     /*
-    --------------------------------
-
-        |    GALLERY PAGE
-
-    --------------------------------
-    */
-    .navigation-gallery-list{
-        list-style: none;
-    
-        display: grid;
-        grid-template-columns: repeat(3,1fr);
-        grid-template-rows: auto auto;
-    }
-    .navigation-gallery-item{
-        padding: .5rem;
-    }
-
-    .navigation-gallery-item > a{
-        font-size: .8rem;
-    }
-    .gallery-content > section > header > h2{
-        color: var(--fc-rare);
-        font-size: 1rem;
-    }
-    .gallery-content > section > ul{
-        padding: 2rem;
-    
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(6,auto);
-        gap: 2rem;
-    }
-   
-
+@media only screen and (max-width: 600px){
     .order-main{
         padding: 0rem 0rem;
     }
@@ -4911,80 +4534,7 @@ label[for=CakepopFrosting] > div{
         border-radius: 0px;
     }
 }
-
-
 @media only screen and (max-width: 500px){
-    .website-title > img{
-        width: 100px;
-    }
-    .website-title > a > img{
-        width: 100px;
-    }
-    .page-navigation-social-icon{
-        width: 20px;
-    }
-
-
-    /* .home-header{
-        margin-bottom: 6rem;
-    } */
-    .home-navigation-primary-logo-subtext{
-        position: absolute;
-        top: 80%; left: 50%;
-        font-size: .8rem;
-        white-space: nowrap;
-        font-weight: 700;
-    }
-
-    .in-house-bakery-sign{
-        padding: .5rem;
-    }
-    .in-house-bakery-sign > p{
-        font-size: .8rem;
-    }
-
-     /*
-    =========================================|
-            SITE PAGE FOOTER
-    =========================================|
-    */
-    .footer-navigation{
-        
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        align-items: center;
-        justify-content: space-evenly;
-    }
-    .footer-navigation > ul:first-of-type{
-        grid-column: 1;
-        grid-row: 1;
-        justify-self: revert;
-    }
-    .footer-navigation > ul:last-of-type{
-        grid-column: 1;
-        grid-row: 2;
-        justify-self: revert;
-    }
-    .footer-navigation > ul{
-        grid-template-columns: repeat(3,1fr);
-        grid-template-rows: auto;
-        justify-content: center;
-        align-items: center;
-        gap: .5em;
-    }
-    .footer-logo{
-        grid-column: 1;
-        grid-row: 3;
-
-    }
-
-     /*
-    --------------------------------
-
-        |    ORDERING PAGE/FORM/INVOICE
-
-    --------------------------------
-    */
     .order-form > header{
         justify-content: unset;
         align-items: center;  
@@ -5236,49 +4786,347 @@ label[for=CakepopFrosting] > div{
         gap: 1rem;
         
     }
-    
-
-
 }
 
-@media only screen and (max-width: 400px){
-   
-     /*
-    =========================================|
-            SITE PAGE FOOTER
-    =========================================|
-    */
-    .footer-navigation > ul:first-of-type > li > a,
-    .footer-navigation > ul:last-of-type > li > a{
-        font-size: .8rem;
-    }
-   
-    .footer-created-by > *{
-        font-size: .8rem;
-    }
 
+/*
+--------------------------------
 
+    |    IMAGE VIEWER
 
+--------------------------------
+*/
+.image-viewer{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    isolation: isolate;
+    z-index: 1;
 
+    display: none;
+    place-content: center;
+}
+.image-viewer.open{
+    display: grid;
+}
+.image-viewer .overlay{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: hsl(0 0% 0% / 0.9);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 100ms ease-in-out;
+}
+.image-viewer.show .overlay{
+    opacity: 1;
+}
+.image-viewer figure{
+    /* width: 100%; */
+    max-width: 100vw;
+    /* height: 100%; */
+    /* aspect-ratio: 4/3; */
+    /* overflow: hidden; */
+    box-shadow: 5px 5px 10px black;
+    opacity: 0;
 
-    .contact-main > header .form-links{
-        
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1.5rem;
-    }
-    .contact-main .cookie-form-link,
-    .contact-main .cake-form-link{
-       
-        padding: 8px 10px;
+    transition: opacity 300ms ease-in;
+}
+.image-viewer.show figure{
+    opacity: 1;
+}
+.image-viewer figure img{
+    width: 100%;
+    height: 100%;
+}
+/*
+--------------------------------
+
+    |    NOTES MODAL
+
+--------------------------------
+*/
+.notes-open-btn{
+    position: fixed;
+    bottom: 0; left: 2lvb;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    color: var(--fc-primary);
+    padding: 5px 10px;
+    z-index: 1;
+    cursor: pointer;
+  
+    border-radius: 5px;
+    text-shadow: 2px 2px 3px black;
+    background-color: var(--site-color-accent2);
+    box-shadow: 2px 2px 10px black,
+    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
+}
+.notes{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    min-height: 100vh;
+    isolation: isolate;
+    z-index: 100;
+    overflow: scroll;
+
+    display: none;
+}
+.notes.open{
+    display: block;
+}
+
+.notes .overlay{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0 0% 0% / 0.9);
+    opacity: 0;
+    z-index: -1;
+
+    transition: opacity 100ms ease-in-out;
+}
+.notes.show .overlay{
+    opacity: 1;
+}
+
+.notes .content{
+    position: relative;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-50vw);
+
+    transition: transform 500ms ease-in-out,
+    opacity 300ms ease-in-out;
+}
+.notes .content > h2{
+    margin-bottom: 1.5em;
+}
+.heart-entity{
+    position: absolute;
+    bottom: 10%; left: 10%;
+    font-size: 2rem;
+
+    animation: heartPulse 1s linear infinite;
+}
+.notes .content > ul{
+    list-style-position: inside;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    
+}
+.notes .content > ul > li{
+    color: var(--fc-primary);
+    font-size: 1rem;
+    line-height: 1.2em;
+    margin-top: .5em;
+    margin-bottom: 1rem;
+}
+.notes .content > p{
+    font-size: 1rem;
+    line-height: 1.2em;
+    font-weight: 700;
+}
+.notes-close-btn{
+    margin-top: 2rem;
+    border: none;
+    background: none;
+    color: var(--fc-primary);
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    outline: 1px solid var(--fc-primary);
+}
+.notes.show .content{
+    opacity: 1;
+    transform: translateY(0);
+}
+@media only screen and (max-width: 700px){
+    .notes .content > p{
+        color: var(--fc-primary);
         font-size: 1rem;
-    
+        line-height: 1.2em;
     }
-
-    .contact-main .cookie-form-link{
-        margin-right: 0rem;
-    }
-
 }
+/*
+--------------------------------
+
+    |    CONFIRMATION MODAL
+
+--------------------------------
+*/
+
+.confirmation{
+    --confirmation-animation-timing: 200ms;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    isolation: isolate;
+
+    display: none;
+    place-content: center;
+}
+.confirmation.open{
+    display: grid;
+}
+
+.confirmation .overlay{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0 0% 0% / 0.9);
+    opacity: 0;
+    z-index: -1;
+
+    transition: opacity 100ms ease-in-out 100ms;
+}
+.confirmation.show .overlay{
+    opacity: 1;
+}
+
+.confirmation .content{
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    opacity: 0;
+
+    transition: opacity 100ms ease-in-out 200ms;
+}
+.confirmation .content .title{
+    color: var(--fc-primary);
+    margin-bottom: .6rem;
+}
+.confirmation .content .message{
+    max-width: 300px;
+    margin-bottom: 1em;
+    color: var(--fc-primary);
+}
+.confirmation .content .controls > button{
+    border: none;
+    background: none;
+    color: var(--bc-primary);
+    background-color: var(--fc-primary);
+
+    padding: 5px 10px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px black,
+    inset 2px 2px 3px hsl(0 0% 100% / 0.6);
+}
+.confirmation .content .controls > button:hover{
+    color: var(--fc-primary);
+    background-color: var(--bc-primary);
+    box-shadow: 2px 2px 10px black,
+    inset -2px -2px 3px hsl(0 0% 0% / 0.5);
+}
+.confirmation.show .content{
+    opacity: 1;
+}
+/*
+--------------------------------
+
+    |    NOTIFICATION MODAL
+
+--------------------------------
+*/
+.notification{
+    position: fixed;
+    bottom: 0; right: 0;
+    width: 100vw;
+    max-width: 500px;
+    max-height: 100px;
+    padding: .5em;
+    border-radius: 4px;
+    overflow: hidden;
+    isolation: isolate;
+
+    display: none;
+}
+.notification.open{
+    display: block;
+}
+
+
+.notification .content{
+    padding: .5em;
+    background-color:  hsl(0 0% 10%);
+    opacity: 0;
+    transform: translate(100px);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+
+    transition: transform 200ms ease-in-out,
+    opacity 200ms ease-in-out 100ms;
+}
+.notification.show .content{
+    opacity: 1;
+    transform: translate(0px);
+    transition: transform 200ms ease-in-out 200ms,
+    opacity 200ms ease-in-out 200ms;
+}
+.notification .content .message{
+    width: 100%;
+    color: var(--fc-primary);
+    text-align: center;
+}
+.notification .content .close-btn{
+    border: none;
+    background:  none;
+    background-color:  hsl(0 0% 10%);
+    box-shadow: 0px 0px 2px hsl(0 0% 0%);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 1rem;
+    color: red;
+}
+
+
+/*
+===================================================|
+---------------------------------------------------|
+
+            ANIMATIONS
+
+---------------------------------------------------|
+===================================================|
+*/
+@keyframes heartPulse {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+/*
+===================================================|
+---------------------------------------------------|
+
+            DEVICE RESPONSE
+
+---------------------------------------------------|
+===================================================|
+*/
+
+
 

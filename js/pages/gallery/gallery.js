@@ -1,6 +1,7 @@
 
 import { AImageViewer } from "../../image_viewer.js";
 import { pageNavigation } from "../../navigation.js";
+import { openInHouseBakerySign } from "../../utilities.js";
 
 const galleryTabs = document.querySelectorAll('.navigation-gallery-item');
 
@@ -103,7 +104,7 @@ function initializeGallery(){
     }
 
     pageNavigation();
-    
+    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
 
     listenToGallery();
 

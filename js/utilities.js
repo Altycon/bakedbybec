@@ -9,3 +9,20 @@ export function fixCanvas(canvas,dpi){
     return canvas;
 };
 
+export function openInHouseBakerySign(event){
+
+    if(event) event.preventDefault();
+
+    const inHouseBakery = document.querySelector('.in-house-bakery');
+    if(!inHouseBakery.classList.contains('open')){
+        inHouseBakery.classList.add('open');
+        setTimeout( ()=>{
+            inHouseBakery.classList.add('show');
+        },100)
+    }else{
+        inHouseBakery.classList.remove('show');
+        setTimeout( ()=>{
+            inHouseBakery.classList.remove('open');
+        },500)
+    } 
+};
