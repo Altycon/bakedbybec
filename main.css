@@ -143,7 +143,7 @@ select:focus-visible{
     position: relative;
     text-decoration: none;
 
-    background-image: linear-gradient(45deg,transparent 80%, var(--site-color-accent2));
+    background-image: linear-gradient(45deg,transparent 80%, hsl(220 100% 50% / 0.5));
 }
 .external-link::after{
     content: "\2197";
@@ -225,6 +225,13 @@ body{
     width: 150px;
     /* filter: invert(100%); */
 }
+.page-title{
+    text-align: left;
+    padding-left: 1rem;
+    color: var(--fc-primary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
 
 /*+++++++++++++++++++++++++++++++*/
 .page-navigation-primary-open-btn{
@@ -282,7 +289,9 @@ body{
 */
 .page-header{
     position: relative;
-    padding: 1rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     z-index: 1;
 
     display: grid;
@@ -1320,8 +1329,8 @@ body{
     position: absolute;
     z-index: -1;
     max-width: 100px;
-    opacity: 0.5;
 
+    opacity: 0.5;
     translate: 0px 0px;
     scale: 1;
 
@@ -1334,19 +1343,23 @@ body{
 }
 .home-navigation-heros .navigation-hero:nth-child(1) > a .icon-wrapper{
     top: -33px; left: 5%;
+    filter: drop-shadow(-3px 3px 5px black);
 }
 .home-navigation-heros .navigation-hero:nth-child(2) > a .icon-wrapper{
     top: -33px; left: 5%;
+    filter: drop-shadow(0px 3px 5px black);
 }
 .home-navigation-heros .navigation-hero:nth-child(3) > a .icon-wrapper{
     top: -33px; right: 5%;
+    filter: drop-shadow(3px 3px 5px black);
 }
 .home-navigation-heros .navigation-hero:nth-child(4) > a .icon-wrapper{
+    opacity: 1;
     top: 0; right: 0;
+    filter: drop-shadow(3px 3px 5px black);
 }
 .home-navigation-heros .navigation-hero > a .icon-wrapper > img{
-    width: 100%;
-    
+    width: 100%; 
 }
 @media only screen and (max-width: 800px){
     .home-navigation-heros{
@@ -1760,9 +1773,7 @@ body{
 
 /* === FAQS === */
 .faqs{
-    --faq-intersection-timing: 300ms;
-    --faq-intersection-delay: 500ms;
-    --faq-intersection-delay-double: 1000ms;
+    
     padding-bottom: 6rem;
 }
 .faqs .icon-wrapper{
@@ -2418,18 +2429,9 @@ body{
 .product-main{
     
 }
-.product-main > header{
-    padding-block: 1rem;
-}
-.product-main > header > h1{
-    text-align: left;
-    padding-left: 1rem;
-    color: var(--fc-rare);
-}
-.products-list{
-    list-style: none;
 
-   
+.products-list{
+    list-style: none; 
 }
 .products-item{
     position: relative;
@@ -2438,24 +2440,18 @@ body{
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 4rem;
-   
-    /* text-align: center; */
     border-radius: 10px;
-    /* isolation: isolate; */
-
-
-    /* border: 1px solid green; */
 }
 
 .products-item::before{
     content: "";
     position: absolute;
     top: 0%; left: 0%;
-    inset: 0;
+    inset: 2rem;
     
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
+    background-position: left;
+    
     opacity: 0;
     z-index: -1;
    
@@ -2464,10 +2460,11 @@ body{
 }
 .products-list .products-item:nth-of-type(1)::before{
     background-image: var(--img-product-sc);
+    background-size: 60%;
 }
 .products-list .products-item:nth-of-type(3)::before{
     background-image: var(--img-product-lc);
-    background-size: contain;
+    background-size: 30%;
 }
 .products-item.show::before{
     opacity: 1
@@ -2717,16 +2714,7 @@ body{
     }
 }
 @media only screen and (max-width: 500px){
-    .product-main > header{
-        padding-block: 0rem;
-        padding-bottom: 1rem;
-    }
-    .product-main > header > h1{
-        text-align: left;
-        padding-left: 1em;
-        color: var(--fc-rare);
-        font-size: 1rem;
-    }
+    
     .products-list{
         list-style: none;
         overflow-y: hidden;
@@ -2749,7 +2737,7 @@ body{
         scroll-snap-align: center;
        
         border-radius: 10px;
-        background-image: var(--bg-gradient-glass-reverse);
+        background-image: var(--bg-gradient-glass);
     }
     .products-item::before{
         display: none;
@@ -2856,14 +2844,6 @@ body{
 .contact-main{
     padding-bottom: 4rem;
 }
-.contact-main > header{
-
-}
-.contact-main > header > h1{
-    text-align: left;
-    padding-left: 1rem;
-    color: var(--fc-rare);
-}
 
 .contact-main .contact-form{
     position: relative;
@@ -2966,12 +2946,7 @@ body{
     background-color: hsl(0 0% 10%);
 }
 @media only screen and (max-width: 700px){
-    .contact-main > header > h1{
-        text-align: left;
-        padding-left: 1rem;
-        color: var(--fc-rare);
-        font-size: 1rem;
-    }
+   
     .contact-main .contact-form{
 
         grid-template-columns: 1fr;
@@ -3347,33 +3322,32 @@ body{
 ===================================================|
 */
 .gallery-main{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+   
 }
 
 
 .gallery-header{
-    grid-column: 1;
-    grid-row: 1;
+   
 }
-
-
 .navigation-gallery{
     
 }
 .navigation-gallery-list{
     list-style: none;
+    padding-inline: .5rem;
 
     display: grid;
     grid-template-columns: repeat(6,1fr);
     grid-template-rows: auto;
-    gap: 2px;
+    gap: .5rem;
 }
 .navigation-gallery-item{
     padding: 1rem;
     text-align: center;
     background-color:var(--site-link-color);
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px black,
+    inset 2px 2px 5px hsl(0 0% 100% / 0.2);
 }   
 .navigation-gallery-item > a{
     text-decoration: none;
@@ -3382,6 +3356,7 @@ body{
     text-shadow: 1px 1px 3px black;
     font-weight: 700;
     text-transform: lowercase;
+    white-space: nowrap;
 }
 .navigation-gallery-item.active{
     background: var(--site-gradient);
@@ -3393,9 +3368,6 @@ body{
 
 
 .gallery-content{
-    grid-column: 1;
-    grid-row: 2;
-
     min-height: 100vh; /*I added this to try and stop jerking motion when loading page*/
 
     display: grid;
@@ -3406,16 +3378,14 @@ body{
 .gallery-content > section{
     grid-column: 1;
     grid-row: 1;
-
-    /* background-color: var(--bc-primary); */
-
 }
 .gallery-content > section > header{
-    padding: 1rem;
     
 }
 .gallery-content > section > header > h2{
     color: var(--fc-rare);
+    font-size: 1rem;
+    padding: .5em;
 }
 .gallery-content > section > ul{
     list-style: none;
@@ -3562,8 +3532,8 @@ body{
         grid-template-rows: auto auto auto;
         gap: 2rem;
     }
-}
-@media only screen and (max-width: 600px) {
+
+
     .navigation-gallery-list{
         list-style: none;
     
@@ -3746,13 +3716,7 @@ body{
    
 
 }
-.order-main > header{
-    padding: 1rem;
-}
-.order-main > header > h1{
-    padding-left: 2rem;
-    color: var(--fc-rare);
-}
+
 
 /*
 =========================================|
@@ -3762,7 +3726,7 @@ body{
 .order-form{
     position: relative;
     width: 100%;
-    padding-inline: 2rem;
+    padding: 2rem;
     margin-bottom: 4rem;
     isolation: isolate;
     
@@ -3795,6 +3759,8 @@ label[for=OrderFormItem]{
 }
 label[for=OrderFormItem] > div{
     white-space: nowrap;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .order-submit-btn{
@@ -4459,7 +4425,6 @@ label[for=CakepopFrosting] > div{
     
         position: relative;
         width: 100%;
-        padding: 2rem;
         isolation: isolate;
         
         display: grid;
@@ -4470,11 +4435,6 @@ label[for=CakepopFrosting] > div{
     .order-form > header{
         grid-column: 1;
         grid-row: 1;
-
-        font-size: .8rem;
-    }
-    .order-form > header > h2{
-        display: none;
     }
     .order-form-invoice-open-btn{
         grid-column: 3;
@@ -4521,29 +4481,17 @@ label[for=CakepopFrosting] > div{
     }
 }
 @media only screen and (max-width: 600px){
-    .order-main{
-        padding: 0rem 0rem;
-    }
-    .order-main > header{
-        padding: 0rem;
-    }
-    .order-main > header > h1{
-        padding-left: 1rem;
-        color: var(--fc-rare);
-        font-size: 1rem;
-    }
+   
     .order-form{
-        padding: 0rem;
+        padding: 2rem 0rem;
     }
     .order-form > header{
-        padding-inline: 1rem;
+        padding-inline: 2rem;
         justify-content: center;
         align-items: center;
-        
     }
     .order-form > div{
         outline: none;
-       
         border-radius: 0px;
     }
 }
