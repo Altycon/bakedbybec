@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Event | Baked By Bec</title>
+    <link rel="stylesheet" href="../main.css">
+    <script type="module" src="../js/pages/book_event/book_event.js"></script>
+</head>
+<body>
+    <div class="page-background"></div>
+    <header class="page-header">
+
+        <h1 class="website-title">
+            <a href="/" class="link">
+                <img src="/img/logo/bbb_logo_solid_white_300x50.png" alt="Baked By Bec Text Logo">
+            </a>
+            <button type="button" title="Iowa residential bakery legislation" class="btn in-house-bakery-btn js-in-house-bakery-btn">i</button>
+        </h1>
+
+        <nav class="page-navigation-primary">
+            <!-- This is the navigation menu to open -->
+            <ul class="page-navigation-primary-list">
+                <li class="page-navigation-primary-item" style="--i:2;">
+                    <a href="/pages/product.html" class="link page-navigation-primary-link active">product</a>
+                </li>
+                <li class="page-navigation-primary-item" style="--i:1.5;">
+                    <a href="/pages/gallery.html" class="link page-navigation-primary-link">creations</a>
+                </li>
+                <li class="page-navigation-primary-item" style="--i:1;">
+                    <a href="/pages/meet.html" class="link page-navigation-primary-link">meet</a>
+                </li>
+                <li class="page-navigation-primary-item" style="--i:1;">
+                    <a href="/pages/contact.html" class="link page-navigation-primary-link">contact</a>
+                </li>
+                <li class="page-navigation-primary-item" style="--i:1.5;">
+                    <a href="/pages/order.html" class="link page-navigation-primary-link">order</a>
+                </li>
+                <li class="page-navigation-primary-item" style="--i:1.3;">
+                    <a href="/pages/book_class.html" class="link page-navigation-primary-link">book class</a>
+                </li>      
+            </ul>
+        </nav>
+
+        <nav class="page-navigation-social">
+            <ul class="page-navigation-social-list">
+                <li class="page-navigation-social-item">
+                    <a href="" class="link page-navigation-social-link">
+                        <img src="/img/icon/bbb_icon_facebook_64x64.png" alt="Facebook icon" class="page-navigation-social-icon">
+                    </a>
+                </li>
+                <li class="page-navigation-social-item">
+                    <a href="" class="link page-navigation-social-link">
+                        <img src="/img/icon/bbb_icon_instagram_64x64.png" alt="Instagram icon" class="page-navigation-social-icon">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="btn page-navigation-primary-open-btn">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <div class="in-house-bakery">
+            <div class="in-house-bakery-sign">
+                <p>All products are produced at a residential property that is exempt from state licensing and inspection.</p>
+                <a href="https://www.legis.iowa.gov/legislation/BillBook?ga=89&ba=HF%202431" target="_blank" class="external-link site-box-link">Iowa Legislation<br>Reference</a>
+            </div>
+        </div>
+
+    </header>
+
+    <main class="book-event-main">
+
+        <header>
+            
+            <h1>
+                <div>book</div>
+                <div>event</div>
+            </h1>
+            
+        </header>
+
+        <section>
+
+            <p>In the workshop, you'll learn the basics <span>(yes, it's beginner friendly!)</span> of decorating including: how to keep icing from dripping over the sides of your cookie, how to make different designs pop, icing consistency, and more.</p>
+            <p>All supplies are included! I provide the cookies, icing, practice sheets, recipe cards, and decorating tools; you bring yourself (and a friend!)  If you want to take your skills home, you can purchase an add-on kit to take with you after the class.</p>
+            <p>If you're interested in a class, send me your email below and I'll respond with more information.</p>
+
+            <form class="book-event-form">
+                
+                <label for="BookEventFormEmailInput">
+                    <div>Email</div>
+                    <input type="email" 
+                    name="email" 
+                    id="BookEventFormEmailInput" 
+                    autocomplete="off" required>
+                </label>
+                <button type="button" class="btn book-event-submit-btn">request event</button>
+            </form>
+
+        </section>
+
+
+        <!-- <form class="book-event-form">
+            <label for="BookEventFormNameInput">
+                <div>Name</div>
+                <input type="text" 
+                name="name" 
+                id="BookEventFormNameInput" 
+                autocomplete="off" required>
+            </label>
+
+            <label for="BookEventFormEmailInput">
+                <div>Email</div>
+                <input type="email" 
+                name="email" 
+                id="BookEventFormEmailInput" 
+                autocomplete="off" required>
+            </label>
+
+            <label for="BookEventFormPhoneNumberInput">
+                <div>Phone Number</div>
+                <input type="tel" 
+                name="phonenumber" 
+                id="BookEventFormPhoneNumberInput" 
+                autocomplete="off" required>
+            </label>
+
+            <label for="BookEventFormVenueInput">
+                <div>Where would you like to hold the class?</div>
+                <input type="text" 
+                name="venue" 
+                id="BookEventFormVenueInput" 
+                autocomplete="off" required>
+            </label>
+
+            <label for="BookEventFormThemeInput">
+                <div>What theme would you like?</div>
+                <input type="text" 
+                name="venue" 
+                id="BookEventFormThemeInput" 
+                autocomplete="off" required>
+            </label>
+
+            <label for="BookEventFormNumberOfPeopleInput">
+                <div>Estimated number of people?</div>
+                <input type="number" 
+                name="numberofpeople" 
+                id="BookEventFormNumberOfPeopleInput" 
+                autocomplete="off" required>
+            </label>
+
+            <label for="BookEventFormAddonInput">
+                <div>How many add-on kits would you like?</div>
+                <input type="number" 
+                name="addon" 
+                id="BookEventFormAddonInput" 
+                autocomplete="off" required>
+            </label>
+
+            <button type="button" class="btn book-event-submit-btn">Book Event</button>
+        </form> -->
+     
+    </main>
+
+    <footer class="footer-primary">
+        <nav class="footer-navigation">
+            <ul>
+                <li><a href="/pages/product.html" class="link">product</a></li>
+                <li><a href="/pages/creations.html" class="link">creations</a></li>
+                <li><a href="/pages/meet.html" class="link">meet</a></li>
+            </ul>
+            <ul>
+                <li><a href="/pages/order.html" class="link">order</a></li>
+                <li><a href="/pages/contact.html" class="link">contact</a></li>
+                <li><a href="/pages/book_class.html" class="link">book class</a></li>
+            </ul>
+            <div class="footer-logo">
+                <a href="/"><img src="/img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
+            </div>
+        </nav>
+        <p class="footer-copyright">&copy;&nbsp;2024</p>
+        <div class="footer-created-by">
+            <p>Created by Clayton McDaniel</p>
+            <a href="https://github.com/Altycon">https://github.com/Altycon</a>
+        </div>
+    </footer>
+
+    <div class="image-viewer">
+        <div class="overlay"></div>
+        <figure>
+            <img src="" alt="">
+            <figcaption></figcaption>
+        </figure>
+    </div>
+    
+</body>
+</html>
