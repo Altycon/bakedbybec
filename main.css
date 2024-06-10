@@ -295,6 +295,7 @@ body{
     padding-top: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: .5rem;
     z-index: 1;
     background-color: var(--bc-primary);
 
@@ -3778,7 +3779,9 @@ body{
     line-height: 1.4em;
     text-wrap: pretty;
 }
-
+.book-class-main .class-summary .summary-details .summary-text-wrapper > p:nth-child(1){
+    margin-bottom: 1em;
+}
 /* OPTIONS */
 .book-class-main .class-options{
     position: relative;
