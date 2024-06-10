@@ -290,11 +290,13 @@ body{
 =========================================|
 */
 .page-header{
-    position: relative;
+    position: sticky;
+    top: 0;
     padding-top: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
     z-index: 1;
+    background-color: var(--bc-primary);
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
