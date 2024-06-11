@@ -114,7 +114,12 @@
                     </li>
                 </ul>
                 <div class="summary-text-wrapper">
-                    <p>I will travel to your venue of choice, and bring all decorating materials necessary for you and your guests.  After 30 minutes of prep time before your class, each cookie station will be ready to go! Classes are scheduled between 1.5-2 hours in length, giving plenty of time for decorating, questions, and conversation.</p>
+                    <p>I will travel to your venue of choice, and bring all decorating materials necessary for you and your guests.  After 30 minutes of prep time before your class, each cookie station will be ready to go! Classes are scheduled between 1.5-2 hours in length giving plenty of time for decorating, questions, and conversation.</p>
+                    <div>
+                        <img src="/bakedbybec/img/icon/site/bbb_icon_creations_128x128.png" alt="">
+                        <img src="/bakedbybec/img/icon/site/bbb_icon_class_128x128.png" alt="">
+                        <img src="/bakedbybec/img/icon/product/bbb_icon_sugarcookies_128x128.png" alt="">
+                    </div>
                     <p>Tables and chairs will need to be provided by either you or your venue.  I would strongly suggest seating only 4-6 people at each table.</p>
                 </div>
             </article>
@@ -126,12 +131,18 @@
                     <li style="--i:1;">
                         <h3 class="blue-text">Kids</h3>
                         <h4><span class="pink-text price">$25</span>/child</h4>
+                        <div>
+                            <img src="/bakedbybec/img/icon/site/bbb_icon_children_128x128.png" alt="">
+                        </div>
                         <p>Kids with a flair for creating or baking? Let them explore and find new skills with a cookie decorating class.  Perfect for birthday parties, kids are sure to have a blast learning something new!</p>
                     </li>
                     <li style="--i:2;">
                         <h3 class="blue-text">Adults</h3>
                         <h4><span class="pink-text price">$35</span>/person</h4>
-                        <p>Girls night out? Date night? Work party?  Join me and explore your creative side with cookie decorating.  No theme is off-limits!  Classes range from beginner to advanced, so all levels are welcome!</p>
+                        <div>
+                            <img src="/bakedbybec/img/icon/site/bbb_icon_adults_128x128.png" alt="">
+                        </div>
+                        <p>Girls night out? Date night? Work party? Join me and explore your creative side with cookie decorating.  No theme is off-limits!  Classes range from beginner to advanced, so all levels are welcome!</p>
                     </li>
                     <li style="--i:3;">
                         <h3>Decorating Duos</h3>
@@ -139,6 +150,9 @@
                             <div><span class="pink-text price">$35</span>/adult & 1 child</div>
                             <div><span class="pink-text price">$10</span>/additional child</div>
                         </h4>
+                        <div>
+                            <img src="/bakedbybec/img/icon/site/bbb_icon_duo_128x128.png" alt="">
+                        </div>
                         <p>Enjoy some unique bonding time with your child and create your very own matching sets of cookies.  Instruction is focused on the basics of decorating and just having fun!</p>
                     </li>
                 </ul>
@@ -166,91 +180,59 @@
                     <li class="pink-text">Texture</li>
                     <li class="pink-text">Flooding</li>
                 </ul>
-                <p><span class="pink-text">*</span> please select the <strong>"interest in advanced class"</strong> option <br>in the form below.</p>
+                <p><span class="pink-text">*</span> please select the <strong>"interested in advanced class"</strong> option <br>in the form below.</p>
             </article>
         </section>
         
         <section class="class-request">
             <h2>request</h2>
             <article>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure quos eius hic beatae pariatur. Earum ipsam odit, repellendus itaque amet blanditiis culpa neque magnam, eaque nisi ipsa sed nobis repudiandae tempora architecto! Amet est ex fugiat corporis aliquid? Neque a obcaecati modi dignissimos placeat fugiat expedita dicta at asperiores consequatur.</p>
+                <p>If you're interested in a class, please fill out the form on this page. Details about class will be sent in my resonse and all other information and particulars (date,time,venue,etc) will be discussed through email.</p>
             </article>
         </section>
 
         <form class="book-class-form">
             
-            <label for="BookClassFormEmailInput">
-                <div>Email</div>
-                <input type="email" 
-                name="email" 
-                id="BookClassFormEmailInput" 
-                autocomplete="off" required>
-            </label>
-            <button type="button" class="btn book-class-submit-btn">request event</button>
+            <div class="inputs-wrapper">
+                <label for="BookClassFormNameInput">
+                    <div>Name</div>
+                    <input type="text" 
+                    name="name" 
+                    id="BookClassFormNameInput" 
+                    autocomplete="off" required>
+                </label>
+                <label for="BookClassFormEmailInput">
+                    <div>Email</div>
+                    <input type="email" 
+                    name="email" 
+                    id="BookClassFormEmailInput" 
+                    autocomplete="off" required>
+                </label>
+                <label for="BookClassFormClassSelect">
+                    <div>How many would you like?</div>
+                    <select name="class" id="BookClassFormClassSelect" autocomplete="off" required>
+                        <option value=""selected disabled>-- select</option>
+                        <option value="kids">kids</option>
+                        <option value="adults">adults</option>
+                        <option value="duos">decorating duo</option>
+                    </select>
+                </label>
+                <label for="BookClassFormAdvancedInquiryCheckbox">
+                    <div>Interested in advaced class</div>
+                    <input type="checkbox" 
+                    name="advancedinquiry" 
+                    id="BookClassFormAdvancedInquiryCheckbox" 
+                    autocomplete="off" required>
+                </label>
+            </div>
+
+            <div class="information">
+                <p>* It can take up to 24 hours for a response.</p>
+                <p>** Any messages after 6pm will be handled the following business day.</p>
+            </div>
+            
+            <button type="button" class="btn book-class-submit-btn">request class</button>
         </form>
-
-        
-
-
-        <!-- <form class="book-class-form">
-            <label for="BookClassFormNameInput">
-                <div>Name</div>
-                <input type="text" 
-                name="name" 
-                id="BookClassFormNameInput" 
-                autocomplete="off" required>
-            </label>
-
-            <label for="BookClassFormEmailInput">
-                <div>Email</div>
-                <input type="email" 
-                name="email" 
-                id="BookClassFormEmailInput" 
-                autocomplete="off" required>
-            </label>
-
-            <label for="BookClassFormPhoneNumberInput">
-                <div>Phone Number</div>
-                <input type="tel" 
-                name="phonenumber" 
-                id="BookClassFormPhoneNumberInput" 
-                autocomplete="off" required>
-            </label>
-
-            <label for="BookClassFormVenueInput">
-                <div>Where would you like to hold the class?</div>
-                <input type="text" 
-                name="venue" 
-                id="BookClassFormVenueInput" 
-                autocomplete="off" required>
-            </label>
-
-            <label for="BookClassFormThemeInput">
-                <div>What theme would you like?</div>
-                <input type="text" 
-                name="venue" 
-                id="BookClassFormThemeInput" 
-                autocomplete="off" required>
-            </label>
-
-            <label for="BookClassFormNumberOfPeopleInput">
-                <div>Estimated number of people?</div>
-                <input type="number" 
-                name="numberofpeople" 
-                id="BookClassFormNumberOfPeopleInput" 
-                autocomplete="off" required>
-            </label>
-
-            <label for="BookClassFormAddonInput">
-                <div>How many add-on kits would you like?</div>
-                <input type="number" 
-                name="addon" 
-                id="BookClassFormAddonInput" 
-                autocomplete="off" required>
-            </label>
-
-            <button type="button" class="btn book-class-submit-btn">Book Event</button>
-        </form> -->
         <div class="book-class-background"></div>
     </main>
 
