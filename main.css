@@ -3727,6 +3727,8 @@ body{
 }
 
 .book-class-main .class-summary .summary-details{
+    padding-inline: 2rem;
+
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
@@ -3749,7 +3751,6 @@ body{
     position: relative;
     padding-inline: 2rem;
     padding-block: .5rem;
-    margin-bottom: .5rem;
     text-align: center;
     background-image: var(--bg-gradient-glass);
     border-radius: 10px;
@@ -3767,14 +3768,14 @@ body{
 }
 .book-class-main .class-summary .summary-details .summary-list > li > h3{
     margin-bottom: .5em;
+    white-space: nowrap;
 }
 .book-class-main .class-summary .summary-details .summary-list > li > p{
     font-weight: 700;
+    white-space: nowrap;
 }
-.book-class-main .class-summary .summary-details .summary-list > li > p{
 
-}
-.book-class-main .class-summary .summary-details .summary-text-wrapper > *{
+.book-class-main .class-summary .summary-details .summary-text-wrapper > p{
     max-width: 600px;
     text-align: center;
     font-size: 1.2rem;
@@ -4018,6 +4019,7 @@ body{
     line-height: 1.4em;
     text-align: center;
     margin: 0 auto;
+    padding-inline: 2rem;
 }
 /* BOOK CLASS FORM */
 .book-class-form{
@@ -4119,9 +4121,129 @@ label[for=BookClassFormAdvancedInquiryCheckbox] > input{
         font-size: 1.8rem;
     }
 
-   
+    
+    .book-class-main .class-summary .summary-details .summary-list{
+        grid-template-columns: repeat(2,auto);
+        grid-template-rows: repeat(3,90px);
+    }
+
+    .book-class-main .class-options .option-details .options-list{
+        grid-template-columns: repeat(2,auto);
+        grid-template-rows: repeat(2,auto);
+        gap: 2rem;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(1){
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(2){
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3){
+        grid-column: 1/3;
+        grid-row: 2;
+
+        display: grid;
+        grid-template-columns: repeat(3,auto);
+        grid-template-rows: repeat(2,auto);
+        column-gap: 2rem;
+        row-gap: 0;
+    }
+
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > h3{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > h4{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > div{
+        grid-column: 2;
+        grid-row: 1/3;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > p{
+        grid-column: 3;
+        grid-row: 1/3;
+    }
+}
+@media only screen and (max-width: 900px){
+    .book-class-main .class-summary .summary-details{
+        grid-template-columns: auto;
+        grid-template-rows: repeat(2,auto);
+        justify-content: center;
+        gap: 2rem;
+    }
+    .book-class-main .class-summary .summary-details .summary-list{
+        grid-template-columns: repeat(3,auto);
+        grid-template-rows: repeat(2,90px);
+    } 
+}
+@media only screen and (max-width: 800px){
+    .book-class-main .class-options{
+        position: relative;
+    
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4,auto);
+    }
+    .book-class-main .class-options > h2{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .book-class-main .class-options .option-details{
+        grid-column: 1;
+        grid-row: 2;
+    
+        margin-bottom: 6rem;
+    }
+    .book-class-main .class-options .process-details{
+        grid-column: 1;
+        grid-row: 3;
+    }
+    .book-class-main .class-options .additional-information{
+        grid-column: 1;
+        grid-row: 4;
+    }
+
+
+    .book-class-main .class-options .option-details .options-list{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3,auto);
+        gap: 2rem;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(2){
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3){
+        grid-column: 1;
+        grid-row: 3;
+
+        display: block;
+        
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > h3{
+        grid-column: unset;
+        grid-row: unset;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > h4{
+        grid-column: unset;
+        grid-row: unset;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > div{
+        grid-column: unset;
+        grid-row: unset;
+    }
+    .book-class-main .class-options .option-details .options-list > li:nth-child(3) > p{
+        grid-column: unset;
+        grid-row:unset;
+    }
 }
 @media only screen and (max-width: 600px){
+
+    /* BOOK CLASS HEADER */
     .book-class-main > header > h1{
         padding-inline: 2rem;
         padding-block: 6rem;
@@ -4136,17 +4258,57 @@ label[for=BookClassFormAdvancedInquiryCheckbox] > input{
     .book-class-main > header > h1 > div:nth-of-type(2){
         font-size: 3rem;
     }
+    .book-class-main > header > p:nth-of-type(1),
+    .book-class-main > header > p:nth-of-type(2){
+        font-size: 1rem;
+    }
+    .book-class-main > header > p:nth-of-type(3){
+        font-size: 1.4rem;
+    }
+    .book-class-main > header > p:nth-of-type(4){
+        font-size: 1.4rem;
+    }
 
-    .book-class-form{
-        padding: 2rem;
-
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-        align-items: center;
+    .book-class-main .class-summary .summary-details .summary-list{
+        grid-template-rows: repeat(2,75px);
+    }
+    .book-class-main .class-summary .summary-details .summary-list > li{
+        padding-inline: 1rem;
+        padding-block: .5rem;
+    }
+    .book-class-main .class-summary .summary-details .summary-list > li > h3{
+        margin-bottom: .25em;
+    }
+    .book-class-main .class-summary .summary-details .summary-list > li > p{
+        font-size: 1rem;
+    }
+    
+    .book-class-main .class-summary .summary-details .summary-text-wrapper > p{
+        font-size: 1rem;
+        line-height: 1.5em;
     }
 }
+@media only screen and (max-width: 460px){
+    .book-class-main .class-summary .summary-details .summary-list{
+        grid-template-rows: repeat(2,50px);
+        row-gap: .25rem;
+    }
+    .book-class-main .class-summary .summary-details .summary-list > li > h3{
+        margin-bottom: .25em;
+        font-size: .8rem;
+    }
+    .book-class-main .class-summary .summary-details .summary-list > li > p{
+        font-size: .8rem;
+    }
 
+    .book-class-main .class-summary .summary-details .summary-text-wrapper > div > img:nth-of-type(1),
+    .book-class-main .class-summary .summary-details .summary-text-wrapper > div > img:nth-of-type(3){
+        width: 75px;
+    }
+    .book-class-main .class-summary .summary-details .summary-text-wrapper > div > img:nth-of-type(2){
+        width: 100px;
+    }
+}
 /*
 ===================================================|
 ---------------------------------------------------|
