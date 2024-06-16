@@ -8,7 +8,7 @@ function initializeBookClassPage(){
     pageNavigation();
     document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
 
-    createIntersectionObserver('.intersection',0.9);
+    createIntersectionObserver('.intersection',0.5);
     
 };
 
