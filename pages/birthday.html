@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        *,::before,::after{margin: 0;padding: 0;box-sizing: border-box;}
+        html{
+            color: white;
+        }
+        body{
+            background-color: black;
+        }
+        .canvas{
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        .autotype-text-output{
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: limegreen;
+
+            opacity: 1;
+            transition: opacity 300ms ease;
+        }
+        .autotype-text-output.hide{
+            opacity: 0;
+        }
+        /* .autotype-text-output.reveal{
+            opacity: 1;
+        } */
+        .birthday-text-wrapper{
+            position: relative;
+
+            opacity: 0;
+            transition: opacity 300ms ease;
+        }
+        .birthday-text-wrapper.reveal{
+            opacity: 1;
+        }
+        .fake{
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        .fake.reveal{
+            opacity: 1;
+        }
+        .fake > p{
+            text-align: center;
+            font-size: 8rem;
+            line-height: 1.4em;
+            text-align: center;
+            font-weight: 700;
+        }
+        .birthday-text{
+            text-align: center;
+            font-size: 8rem;
+            line-height: 1.4em;
+            text-align: center;
+            font-weight: 700;
+        }
+        .additional-text-wrapper{
+            opacity: 0;
+            transition: opacity 300ms ease;
+        }
+        .additional-text-wrapper > p{
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.4em;
+            font-weight: 700;
+        }
+        .additional-text-wrapper.reveal{
+            opacity: 1;
+        }
+        .end-text-wrapper{
+            opacity: 0;
+            transition: opacity 300ms ease;
+        }
+        .end-text-wrapper.reveal{
+            opacity: 1;
+        }
+        .end-text-wrapper > p{
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 1.4em;
+            font-weight: 700;
+        }
+        .end-text-wrapper > a{
+            display: inline-block;
+            text-decoration: none;
+            color: limegreen;
+            background-color: purple;
+            font-size: 1.2rem;
+            font-weight: 700;
+            white-space: none;
+            padding: 10px 15px;
+            border-radius: 13px;
+            outline: 1px solid yellow;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <canvas class="canvas"></canvas>
+        <p class="autotype-text-output js-autotype-text-output"></p>
+        <div class="fake">
+            <p class="fake-text">Merry</p>
+            <p class="fake-text">Christmas!</p>
+        </div>
+        <div class="birthday-text-wrapper">
+            <p class="birthday-text">Happy</p>
+            <p class="birthday-text">Birthday!</p>
+        </div>
+        <div class="additional-text-wrapper">
+            <p>You're amazing.</p>
+            <p>I love you.</p>
+        </div>
+        <div class="end-text-wrapper">
+            <p>That's all lol</p>
+            <a href="/bakedbybec/">This will take you back to home page</a>
+        </div>
+    </main>
+    <script>
+        let animation_interval;
+        let birthdayFireworks;
+        let birthdayFireworksCanvas;
+        let birthdayFireworksContext;
+
+        const TWOPI = Math.PI*2;
+        const random = (min,max,bool)=> bool? Math.floor(Math.random()*(max-min)+min):Math.random()*(max-min)+min;
+        function scale(number,inMin,inMax,outMin,outMax){
+            return (number - inMin)*(outMax-outMin)/(inMax-inMin)+outMin;
+        };
+        class Vector{
+            constructor(x,y,z){
+                this.x = x || 0;
+                this.y = y || 0;
+                this.z = z || 0;
+            }
+            add(vector){
+                this.x += vector.x || 0;
+                this.y += vector.y || 0;
+                this.z += vector.z || 0;
+                return this;
+            }
+            subract(vector){
+                this.x -= vector.x || 0;
+                this.y -= vector.y || 0;
+                this.z -= vector.z || 0;
+                return this;
+            }
+            multiply(scaler){
+                this.x *= scaler;
+                this.y *= scaler;
+                this.z *= scaler;
+            }
+            divide(scaler){
+                this.x /= scaler;
+                this.y /= scaler;
+                this.z /= scaler;
+            }
+            getMagnitude(){
+                return Math.sqrt(this.x ** 2 + this.y ** 2);
+            }
+            setMagnitude(n){
+                return this.normalize().multiply(n);
+            }
+            normalize(){
+                const length = this.getMagnitude();
+                if(length !==0) this.multiply(1/length);
+                return this;
+            }
+            crossProduct(vector){
+                const x = this.y * vector.z - this.z * vector.y;
+                const y = this.z * vector.x - this.x * vector.z;
+                const z = this.x * vector.y - this.y * vector.x;
+                return new Vector(x,y,z);
+            }
+        }
+        const CVectors = {
+            getDistance: (vector1, vector2)=>{
+                return Math.hypot(vector2.x - vector1.x, vector2.y - vector1.y);
+            },
+            add: (vector1,vector2)=>{
+                return new Vector(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z)
+            },
+            subtract: (vector1,vector2)=>{
+                return new Vector(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
+            },
+            divide: (vector,scaler)=>{
+                return new Vector(vector.x / scaler, vector.y / scaler, vector.z / scaler);
+            },
+            DotProduct: (vector1, vector2)=>{
+                return ((vector1.x * vector2.x)+(vector1.y * vector2.y))
+            },
+            CrossProduct: (vector1, vector2)=> {
+                const x = vector1.y * vector2.z - vector1.z * vector2.y;
+                const y = vector1.z * vector2.x - vector1.x * vector2.z;
+                const z = vector1.x * vector2.y - vector1.y * vector2.x;
+                return new Vector(x,y,z);
+            },
+            AngleBetweenRadians: (vector1, vector2)=>{
+                return Math.atan2(vector2.y - vector1.y, vector2.x - vector1.x)
+            },
+            ToDegrees: (radian)=>{
+                return radian * 180/Math.PI;
+            },
+            MidPoint(vector1,vector2){
+                const vector = new Vector((vector1.x + vector2.x), (vector1.y + vector2.y));
+                vector.multiply(0.5)
+                return vector;
+                //return new Vector((vector1.x + vector2.x)*0.5, (vector1.y + vector2.y)*0.5);
+            },
+            findPoint(vector1,vector2,distance){
+                const vector = new Vector((vector1.x + vector2.x), (vector1.y + vector2.y));
+                vector.multiply(distance)
+                return vector;
+            },
+            lerp: (min,max,t)=>{
+                return (min + (max -min) * t);
+            }
+        }
+        class Particle{
+            constructor(x,y,z,mass){
+                this.position = new Vector(x,y,z);
+                this.speed = 0;
+                this.mass = mass;
+                this.velocity = new Vector(0,0,0);
+                this.acceleration = new Vector(0,0,0);
+                this.radius = Math.sqrt(this.mass);
+                this.maxRadius = this.radius;
+                this.area = Math.PI * Math.pow(this.radius, 2);
+                this.hue = undefined;
+                this.saturation = undefined;
+                this.lightness = undefined;
+                this.opacity = undefined;
+                this.startArc = 0;
+                this.endArc = Math.PI*2;
+                this.angle = 0;
+                this.theta = 0;
+                this.hasBoundary = true;
+                this.collapsed = false;
+                this.setColor();
+            }
+            setOpacity(num){
+                this.opacity = num;
+            }
+            setColor(h,s,l,o){
+                this.hue = h || 0;
+                this.saturation = s || 100;
+                this.lightness = l || 100;
+                this.opacity = o || 1;
+            }
+            randomVelocityInit(){
+                this.speed = random(0,1);
+                this.velocity.x = random(-this.speed,this.speed);
+                this.velocity.y = random(-this.speed,this.speed);
+                this.velocity.z = random(-this.speed,this.speed);
+            }
+            pulse(speed){
+                if(speed) this.theta = speed;
+                this.radius = scale(Math.sin(this.angle), -1, 1, 1,this.maxRadius);
+                this.angle += this.theta;
+            }
+            applyForce(forceVector){
+                const force = CVectors.divide(forceVector, this.mass);
+                this.acceleration.add(force);
+                
+            }
+            move(canvas){
+                if(!this.collapsed){
+                    if(this.hasBoundary){
+                        if(this.position.x - this.radius < -canvas.width/2 || this.position.x + this.radius > canvas.width/2){
+                            this.velocity.x = this.velocity.x * -1;
+                        }
+                        if(this.position.y - this.radius < -canvas.height/2 || this.position.y + this.radius > canvas.height/2){
+                            this.velocity.y = this.velocity.y * -1;
+                        }
+                    }
+                    this.velocity.add(this.acceleration);
+                    this.position.add(this.velocity);
+                    this.acceleration.multiply(0)
+                    if(this.opacity <= 0) this.collapsed = true;
+                }
+            }
+            render(ctx){
+                if(this.collapsed) return;
+                //this.radius = scale(this.position.z,-1000,1000,1,this.maxRadius);
+                ctx.beginPath();
+                ctx.fillStyle = `hsl(${this.hue} ${this.saturation}% ${this.lightness}% / ${this.opacity})`;
+                ctx.arc(this.position.x, this.position.y, this.radius, this.startArc, this.endArc);
+                ctx.fill();
+                //ctx.stroke();
+            }
+        }
+        class Firework{
+            constructor(x,y,z,mass,color){
+                this.body = new Particle(x,y,z,mass);
+                this.speed = 30 * window.devicePixelRatio;
+                this.body.color = color || 'white';
+                this.opacity = 1;
+                this.body.velocity.y = -this.speed;
+                this.body.hasBoundary = false;
+                this.startArc = 0;
+                this.endArc = Math.PI*2;
+                this.gravity = new Vector(0,.2);
+                this.wind = new Vector(0.01,0);
+                
+                this.exploded = false;
+                this.particles = [];
+                // if(Math.random() > 0.5) this.createRandomExplosion(30);
+                // else this.createCircleExplosion(30);
+                
+            }
+            drag(){
+                // Direction of Drag
+                const drag = new Vector(this.body.velocity.x,this.body.velocity.y);
+                drag.normalize();
+                drag.multiply(-1);
+
+                const Cd = 0.03;
+                const speed = this.body.velocity.getMagnitude();
+                drag.setMagnitude( Cd * (speed * speed) );
+                return drag;
+            }
+            createRandomExplosion(num){
+                for(let i = 0; i < num; i++){
+                    const x = 0;
+                    const y = 0;
+                    const z = random(-100,100);
+                    const mass = 4;
+                    const particle = new Particle(x,y,z,mass);
+                    particle.randomVelocityInit();
+                    //particle.velocity.setMagnitude(2) // makes circle explosion
+                    particle.velocity.multiply(4); // random explosion
+                    particle.setColor(random(0,360),100,50);
+                    particle.hasBoundary = false;
+                    this.particles.push(particle)
+                }	
+            }
+            createCircleExplosion(num){
+                for(let i = 0; i < num; i++){
+                    const x = 0;
+                    const y = 0;
+                    const z = random(-100,100);
+                    const mass = 4;
+                    const particle = new Particle(x,y,z,mass);
+                    particle.randomVelocityInit();
+                    particle.velocity.setMagnitude(2) // makes circle explosion
+                    //particle.velocity.multiply(4); // random explosion
+                    particle.setColor(random(0,360),100,50);
+                    particle.hasBoundary = false;
+                    this.particles.push(particle)
+                }	
+            }
+            explode(canvas){
+                for(let i = 0; i < this.particles.length; i++){
+                    this.particles[i].setOpacity(this.opacity)
+                    this.particles[i].move(canvas)
+                }
+                this.opacity -= 0.01;	
+            }
+            renderParticles(ctx){
+                for(let i = 0; i < this.particles.length; i++){
+                    ctx.save();
+                    ctx.translate(this.body.position.x, this.body.position.y);
+                    this.particles[i].render(ctx);
+                    ctx.restore();
+                }	
+            }
+            applyForces(){
+                    this.body.applyForce(this.gravity);
+                    this.body.applyForce(this.drag());
+                    //this.body.applyForce(this.wind);
+            }
+            update(canvas){
+                //update/movement
+                
+                this.applyForces();
+                this.body.move(canvas);
+                if(this.body.velocity.y >= 0){
+                    this.exploded = true;
+                    this.explode(canvas);
+                }
+            }
+            render(ctx){
+                if(!this.exploded) this.body.render(ctx);
+                else this.renderParticles(ctx);
+            }
+            removeParticles(){
+                this.particles = this.particles.filter( particle => particle.collapsed === false);
+            }
+            Start(ctx){
+                this.update(ctx.canvas);
+                this.render(ctx);
+                this.removeParticles();
+            }
+        }
+
+        class Fireworks{
+            constructor(ctx,amount,rate){
+                this.context = ctx;
+                this.dpi = window.devicePixelRatio;
+                this.amount = amount;
+                this.rate = rate || 1;
+                this.collection = [];
+                this.totalFireworks = 0;
+                this.counter = 0;
+            }
+            createFirework(){
+                const x = random(-this.context.canvas.width/2, this.context.canvas.width/2);
+                const y = this.context.canvas.height/2;
+                const z = random(-100,100);
+                const mass = random(2,6);
+                const fw = new Firework(x,y,z,mass);
+                fw.body.setColor(180);
+                if(Math.random() > 0.5) fw.createCircleExplosion(30);
+                fw.createRandomExplosion(30);
+                this.collection.push(fw);
+            }
+            addFireworks(){
+                if(this.totalFireworks >= this.amount * this.rate) return;
+                if(this.counter % this.rate === 0) this.createFirework();
+            }
+            renderFireworks(ctx){
+                for(let i = 0; i < this.collection.length; i ++){
+                    if(this.collection.length === 0) return;
+                    this.collection[i].Start(ctx);
+                }
+            }
+            removeFireworks(){
+                this.collection = this.collection.filter( firework => firework.particles.length > 0);
+            }
+            getFireworksTotal(){
+                return this.collection.length;
+            }
+            Start(ctx){
+                this.addFireworks();
+                this.totalFireworks++;
+                this.counter++;
+                this.renderFireworks(ctx);
+                this.removeFireworks();
+            }
+        }
+
+
+        
+        function revealFakeText(){
+            document.querySelector('.fake').classList.add('reveal');
+
+            setTimeout( ()=>{
+                document.querySelector('.fake').style.display = 'none';
+                document.querySelector('.js-autotype-text-output').textContent = '';
+                document.querySelector('.js-autotype-text-output').classList.remove('hide');
+
+                const outputText = [
+                    [...`wait...               `],
+                    [...`...my bad     `],
+                    [...`I love you and...        `]
+                ];
+                animateText(outputText,()=>{
+                    hideAutoTextOutput();
+                    revealBirthdayText();
+                    animateFireworks(birthdayFireworksContext);
+                })
+            },800)
+        };
+        function revealBirthdayText(){
+            document.querySelector('.birthday-text-wrapper').classList.add('reveal');
+        };
+        function revealAdditionText(){
+            document.querySelector('.additional-text-wrapper').classList.add('reveal');
+
+            setTimeout(()=>{
+                revealEndText();
+            },4000);
+        };
+        function revealEndText(){
+            document.querySelector('.end-text-wrapper').classList.add('reveal');
+        };
+        function revealAutoTextOutput(){
+            document.querySelector('.js-autotype-text-output').classList.remove('hide');
+        };
+        function hideAutoTextOutput(){
+            document.querySelector('.js-autotype-text-output').classList.add('hide');
+        };
+
+        function animateFireworks(ctx){
+            ctx.translate(ctx.canvas.width*0.5,ctx.canvas.height*0.5);
+            function loop(){
+                ctx.clearRect(-ctx.canvas.width*0.5,-ctx.canvas.height*0.5,ctx.canvas.width,ctx.canvas.height);
+                
+                birthdayFireworks.Start(ctx);
+
+                if(birthdayFireworks.getFireworksTotal() <= 0){
+
+                    cancelAnimationFrame(animation_interval);
+                    revealAdditionText();
+                }else{
+                    animation_interval = requestAnimationFrame(loop);
+                } 
+            }
+            requestAnimationFrame(loop);
+        };
+        
+        const textOutputElement = document.querySelector('.js-autotype-text-output');
+
+        function animateText(outputText,callback){
+            const fps = 10;
+            const interval = 1000/fps;
+
+            let now = Date.now();
+            let then, delta;
+            let num = 0, start_array = 0;
+            let text = [];
+
+            function animate(now){
+               if(!then){ then = now };
+                delta = now - then;
+                if(delta > interval){
+                    then = now - (delta % interval);
+                    
+                    text.push(outputText[start_array][num])
+                    textOutputElement.innerText = text.join('')
+                    num++;
+
+                    if(num == outputText[start_array].length){
+                        start_array++;
+                        num = 0;
+                        text = [];
+                    }
+                }
+                if(start_array == outputText.length){
+                    cancelAnimationFrame(animation_interval);
+                    callback();
+                }else{
+                    animation_interval = requestAnimationFrame(animate);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        };
+
+        function fixCanvas(canvas,dpi){
+            const sw = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
+            const sh = +getComputedStyle(canvas).getPropertyValue('height').slice(0,-2);
+            canvas.setAttribute('width', sw*dpi);
+            canvas.setAttribute('height', sh*dpi);
+        };
+
+        function initialize(){
+
+            const outputText = [
+                [...`...                       `],
+                [...'Hello, my love.           '],
+                [...`Isn't this cool? HaHaHa                `],
+                [...`I just wanted to tell you that I love you and...        `]
+            ];
+
+            setTimeout(()=>{
+                animateText(outputText,()=>{
+                    hideAutoTextOutput();
+                    revealFakeText();
+                })
+            },3000);
+
+            birthdayFireworksCanvas = document.querySelector('.canvas');
+            fixCanvas(birthdayFireworksCanvas,devicePixelRatio);
+            birthdayFireworksContext = birthdayFireworksCanvas.getContext('2d');
+
+            birthdayFireworks = new Fireworks(birthdayFireworksContext,100,1);
+
+        };
+        initialize();
+    </script>
+</body>
+</html>
