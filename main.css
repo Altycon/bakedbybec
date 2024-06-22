@@ -454,7 +454,7 @@ body{
             PAGE HEADER
     =========================================|
     */
-    .page-header .page-header{
+    .page-header{
         grid-template-columns: 1fr 1fr auto;
     }
     /*+++++++++++++++++++++++++++++++*/
@@ -517,7 +517,7 @@ body{
         grid-row: 1;
     }
     /*+++++++++++++++++++++++++++++++*/
-    .page-navigation-primary-open-btn{
+    .page-header .page-navigation-primary-open-btn{
         display: block;
     }
     .page-header .page-navigation-primary-open-btn.active{
@@ -1906,6 +1906,9 @@ body{
     opacity: 1;
     translate: 0px 0px;
 }
+.faqs .order-retrieval .answer .option > p{
+    text-align: center;
+}
 .faqs .order-retrieval .pink-text.price{
     font-size: 1.5rem;
 }
@@ -2088,8 +2091,7 @@ body{
     
     box-shadow: 5px 5px 50px black;
 
-    display:grid;
-    place-content: center;
+    
 }
 .faqs .answer .option::before{
     content: "";
@@ -2123,6 +2125,9 @@ body{
 .faqs .answer .option .icon-wrapper{
     margin-bottom: 1rem;
 }
+/* .faqs .answer .option > p{
+    text-align: center;
+} */
 .faqs .answer .option > p:not(:last-of-type){
     max-width: 300px;
     text-align: center;
@@ -2139,9 +2144,6 @@ body{
     .faqs{
         padding-bottom: 0rem;
     }
-    /* .faqs .icon-wrapper{
-        width: 64px;
-    } */
    
     .faqs .order-retrieval .answer{
         padding: 0rem 0rem;
@@ -2172,23 +2174,8 @@ body{
         max-width: 500px;
     }
     
-    .faqs .product-pricing .answer .sugar-cookies,
-    .faqs .product-pricing .answer .drop-cookies,
-    .faqs .product-pricing .answer .cupcakes,
-    .faqs .product-pricing .answer .cakepops{
-        display: grid;
-        grid-template-columns: repeat(2,auto);
-        grid-template-rows: auto auto;
-        column-gap: 1rem;
-        row-gap: 2rem;
-    }
-    .faqs .product-pricing .answer .sugar-cookies .icon-wrapper,
-    .faqs .product-pricing .answer .drop-cookies .icon-wrapper,
-    .faqs .product-pricing .answer .cupcakes .icon-wrapper,
-    .faqs .product-pricing .answer .cakepops .icon-wrapper{
-        grid-column: 1/3;
-        grid-row: 1;
-    }
+    
+   
     .faqs .product-pricing .answer .layer-cakes{
         grid-column: 1;
         grid-row: 5;
@@ -2267,6 +2254,113 @@ body{
     }
 }
 @media only screen and (max-width: 500px){
+    .faqs > article{
+        margin-bottom: 4rem;
+    }
+    .faqs > article > header{
+        margin-bottom: 2.5rem;
+    }
+    .faqs .answer .option{
+        padding-inline: 1rem;
+        padding-bottom: 0rem;
+        padding-top: 1rem;
+    }
+    .faqs .answer .option > h3{
+        padding-bottom: 1rem;
+        white-space: nowrap;
+        font-size: 1.2rem;
+    }
+    .faqs .order-retrieval .answer .shipping .icon-wrapper > img,
+    .faqs .order-retrieval .answer .pickup .icon-wrapper > img,
+    .faqs .order-retrieval .answer .delivery .icon-wrapper > img{
+        max-width: 64px;
+    }
+
+    .faqs .order-retrieval .answer .shipping,
+    .faqs .order-retrieval .answer .pickup,
+    .faqs .order-retrieval .answer .delivery{
+        padding-bottom: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(4,auto);
+    }
+    .faqs .order-retrieval .answer .shipping .icon-wrapper,
+    .faqs .order-retrieval .answer .pickup .icon-wrapper,
+    .faqs .order-retrieval .answer .delivery .icon-wrapper{
+        grid-column: 1;
+        grid-row: 1/3;
+    }
+    .faqs .order-retrieval .answer .shipping > h3,
+    .faqs .order-retrieval .answer .pickup > h3,
+    .faqs .order-retrieval .answer .delivery > h3{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .faqs .order-retrieval .answer .shipping > p:nth-of-type(1),
+    .faqs .order-retrieval .answer .pickup > p:nth-of-type(1),
+    .faqs .order-retrieval .answer .delivery > p:nth-of-type(1){
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .faqs .order-retrieval .answer .shipping > p:nth-of-type(2),
+    .faqs .order-retrieval .answer .pickup > p:nth-of-type(2),
+    .faqs .order-retrieval .answer .delivery > p:nth-of-type(2){
+        grid-column: 1/3;
+        grid-row: 3;
+    }
+    .faqs .order-retrieval .answer .shipping > p:nth-of-type(3),
+    .faqs .order-retrieval .answer .pickup > p:nth-of-type(3),
+    .faqs .order-retrieval .answer .delivery > p:nth-of-type(3){
+        grid-column: 1/3;
+        grid-row: 4;
+    }
+
+    .faqs .product-pricing .answer{
+        gap: 1.4rem
+    }
+    .faqs .product-pricing .answer .sugar-cookies,
+    .faqs .product-pricing .answer .drop-cookies,
+    .faqs .product-pricing .answer .cupcakes,
+    .faqs .product-pricing .answer .cakepops{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,auto);
+    }
+
+    .faqs .product-pricing .answer .sugar-cookies .icon-wrapper,
+    .faqs .product-pricing .answer .drop-cookies .icon-wrapper,
+    .faqs .product-pricing .answer .cupcakes .icon-wrapper,
+    .faqs .product-pricing .answer .cakepops .icon-wrapper{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .faqs .product-pricing .answer .sugar-cookies .icon-wrapper > img,
+    .faqs .product-pricing .answer .drop-cookies .icon-wrapper > img,
+    .faqs .product-pricing .answer .cupcakes .icon-wrapper > img,
+    .faqs .product-pricing .answer .cakepops .icon-wrapper > img,
+    .faqs .product-pricing .answer .layer-cakes .icon-wrapper > img,
+    .faqs .product-pricing .answer .sheet-cakes .icon-wrapper > img{
+        max-width: 64px;
+    }
+    .faqs .product-pricing .answer .sugar-cookies > h3,
+    .faqs .product-pricing .answer .drop-cookies > h3,
+    .faqs .product-pricing .answer .cupcakes > h3,
+    .faqs .product-pricing .answer .cakepops > h3{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .faqs .product-pricing .answer .sugar-cookies > p,
+    .faqs .product-pricing .answer .drop-cookies > p,
+    .faqs .product-pricing .answer .cupcakes > p,
+    .faqs .product-pricing .answer .cakepops > p{
+        grid-column: 1/3;
+        grid-row: 2;
+    }
+    .faqs .product-pricing .answer .layer-cakes,
+    .faqs .product-pricing .answer .sheet-cakes{
+        padding-bottom: 1rem;
+    }
+    /**************************************/
     .faqs .product-pricing .answer .option{
         display: grid;
         grid-template-columns: repeat(2,auto);
@@ -2301,53 +2395,31 @@ body{
     .faqs .product-pricing .answer .layer-cakes,
     .faqs .product-pricing .answer .sheet-cakes{
        
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3,auto);
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,auto);
         align-items: center;
         gap: 1rem;
     }
     .faqs .product-pricing .answer .layer-cakes > h3,
     .faqs .product-pricing .answer .sheet-cakes > h3{
-        grid-column: 1;
+        grid-column: 2;
         grid-row: 1;
     }
     .faqs .product-pricing .answer .layer-cakes .icon-wrapper,
     .faqs .product-pricing .answer .sheet-cakes .icon-wrapper{
         grid-column: 1;
-        grid-row: 2;
+        grid-row: 1;
         margin: 0 auto;
     }
     .faqs .product-pricing .answer .layer-cakes > .details,
     .faqs .product-pricing .answer .sheet-cakes  > .details{
-        grid-column: 1;
+        grid-column: 1/3;
         grid-row: 3;
     }
 
     
 }
 @media only screen and (max-width: 330px){
-    .faqs .product-pricing .answer .option{
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3,auto);
-        column-gap: 0rem;
-        gap: 1rem;
-    }
-    .faqs .product-pricing .answer .option > h3{
-        padding-bottom: 0rem;
-    }
-    .faqs .product-pricing .answer .option .icon-wrapper{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .faqs .product-pricing .answer .option > h3{
-        grid-column: 1;
-        grid-row: 2;
-    }
-    .faqs .product-pricing .answer .option > p{
-        grid-column: 1;
-        grid-row: 3;
-    }
 
     .faqs .product-pricing .answer .layer-cakes .details > div > h4,
     .faqs .product-pricing .answer .sheet-cakes .details > div > h4{
