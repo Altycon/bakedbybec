@@ -312,12 +312,10 @@ const OrderForm = {
         li.setAttribute('data-item-id','lck');
 
         li.innerHTML += `<header>
-                <h3>Layer Cake</h3>
-                <button type="button" class="btn remove-order-btn" value="layer-cake">remove&nbsp;&#10007;</button>
+            <h3>Layer Cake</h3>
+            <button type="button" class="btn remove-order-btn" value="layer-cake">remove&nbsp;&#10007;</button>
             </header>
-
             
-
             <label for="LayerCakeQuantity">
                 <div>How many would you like?</div>
                 <select name="layercakequantity" id="LayerCakeQuantity" autocomplete="off" required>
@@ -393,9 +391,6 @@ const OrderForm = {
                 <h3>sheet cake</h3>
                 <button type="button" class="btn remove-order-btn" value="sheet-cake">remove&nbsp;&#10007;</button>
             </header>
-
-            
-
             <label for="SheetCakeQuantity">
                 <div>How many would you like?</div>
                 <select name="sheetcakequantity" id="SheetCakeQuantity" autocomplete="off" required>
