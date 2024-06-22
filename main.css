@@ -101,6 +101,7 @@ input,
 textarea,
 select{
     /* background-color: var(--site-input-color); */
+    
     background-color: transparent;
     
     color: var(--fc-primary);
@@ -119,7 +120,8 @@ textarea{
     /* background-color: hsl(0 0% 50% / 0.1); */
 }
 select{
-    background-color: hsl(0 0% 50% / 0.1);
+    background-color: hsl(0 0% 13%);
+   
 }
 input:focus-visible,
 textarea:focus-visible,
@@ -5264,11 +5266,11 @@ label[for=OrderFormZipCode]{
     grid-row: 1;
 
     padding: 1rem;
-    background-color: hsl(0 0% 0%);
-    border-top-right-radius: 10px;
+    /* background-color: hsl(0 0% 0%); */
+    /* border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 5px 5px 10px black;
+    border-bottom-right-radius: 10px; */
+    /* box-shadow: 5px 5px 10px black; */
     
     opacity: 0;
     transition: opacity 500ms ease-in;
@@ -5288,6 +5290,7 @@ label[for=OrderFormZipCode]{
 .order-form .remove-order-btn{
     grid-column: 2;
     grid-row: 1;
+    justify-self: flex-end;
 
     border: none;
     background: none;
@@ -5685,9 +5688,6 @@ label[for=CakepopFrosting] > div{
         justify-self: center;
     }
     
-    .order-invoice-items-list:has(li:nth-child(3)){
-        grid-template-columns: 1fr;
-    }
 }
 @media only screen and (max-width: 600px){
    
@@ -5883,18 +5883,21 @@ label[for=CakepopFrosting] > div{
         text-align: center;
     }
 
-    .order-form .layer-cake-information{
+    .order-form .layer-cake-information,
+    .order-form .sheet-cake-information{
 
         grid-template-columns: 1fr;
         grid-template-rows: repeat(8,auto);
     }
- 
-    .order-form .layer-cake-information > header{
+    
+    .order-form .layer-cake-information > header,
+    .order-form .sheet-cake-information > header{
         grid-column: 1;
         grid-row: 1;
     }
     
-    label[for=CakeQuantity]{
+    label[for=LayerCakeQuantity],
+    label[for=SheetCakeQuantity]{
         grid-column: 1;
         grid-row: 2;
         
@@ -5903,7 +5906,8 @@ label[for=CakepopFrosting] > div{
         gap: 1rem;
         align-items: center;
     }
-    label[for=CakeDateNeeded]{
+    label[for=LayerCakeDateNeeded],
+    label[for=SheetCakeDateNeeded]{
         grid-column: 1;
         grid-row: 3;
     
@@ -5914,11 +5918,13 @@ label[for=CakepopFrosting] > div{
         gap: 1rem;
     }
     
-    label[for=CakeSize]{
+    label[for=LayerCakeSize],
+    label[for=SheetCakeSize]{
         grid-column: 1;
         grid-row: 4;
     }
-    label[for=CakeFlavor]{
+    label[for=LayerCakeFlavor],
+    label[for=SheetCakeFlavor]{
         grid-column: 1;
         grid-row: 5;
 
@@ -5927,7 +5933,8 @@ label[for=CakepopFrosting] > div{
         grid-template-rows: auto auto;
         align-items: center;
     }
-    label[for=CakeFrosting]{
+    label[for=LayerCakeFrosting],
+    label[for=SheetCakeFrosting]{
         grid-column: 1;
         grid-row: 6;
 
@@ -5936,12 +5943,14 @@ label[for=CakepopFrosting] > div{
         grid-template-rows: auto auto;
         align-items: center;
     }
-    label[for=CakeTheme]{
+    label[for=LayerCakeTheme],
+    label[for=SheetCakeTheme]{
         grid-column: 1;
         grid-row: 7;
         
     }
-    label[for=CakePersonalization]{
+    label[for=LayerCakePersonalization],
+    label[for=SheetCakePersonalization]{
         grid-column: 1;
         grid-row: 8;
     }
