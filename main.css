@@ -22,13 +22,20 @@
 ---------------------------------------------------|
 ===================================================|
 */
+/* @font-face {
+    font-family: "FreeSerif";
+    src: url('/font/FreeSerif-YO4a.otf') format('opentype'),
+    url("/font/FreeSerif-4aeK.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+} */
 :root{
 
     --site-header-height: 100px;
 
     /* FONT */
     /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-    --ff-primary: Arial, Helvetica, sans-serif;
+    --ff-primary: system-ui;
     --ff-secondary: sans-serif;
     /* font-family:Arial, Helvetica, sans-serif; */
     /* COLOR */
