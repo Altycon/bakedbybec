@@ -1,5 +1,5 @@
 import { pageNavigation } from "../../navigation.js";
-import { openInHouseBakerySign } from "../../utilities.js";
+import { openInHouseBakerySign, capitalize } from "../../utilities.js";
 
 
 
@@ -177,7 +177,13 @@ const OrderForm = {
                     <option value="strawberry">strawberry</option>
                     <option value="lemon">lemon</option>
                 </select>
-            </label>`;
+            </label>
+            <div class="inspiration-upload-wrapper">
+                <div class="inspiration-upload-btn-wrapper">
+                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
+                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
+                </div>
+            </div>`;
         
         return li;
     },
@@ -185,7 +191,7 @@ const OrderForm = {
 
         const li = document.createElement('li');
         li.classList.add('order-item','cupcake-information');
-        li.setAttribute('data-order-item','cupcakes');
+        li.setAttribute('data-order-item','cup-cakes');
         li.setAttribute('data-item-id','cc');
 
         li.innerHTML += `<header>
@@ -236,7 +242,8 @@ const OrderForm = {
 
             <label for="CupcakeTheme">
                 <div>Theme/Occasion</div>
-                <input name="cupcaketheme" 
+                <input type="text" 
+                name="cupcaketheme" 
                 id="CupcakeTheme" 
                 list="ItemThemes"
                 cols="30" 
@@ -247,7 +254,13 @@ const OrderForm = {
             <label for="CupcakePersonalization">
                 <div>Personalization</div>
                 <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-            </label>`;
+            </label>
+            <div class="inspiration-upload-wrapper">
+                <div class="inspiration-upload-btn-wrapper">
+                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
+                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
+                </div>
+            </div>`;
 
         return li;
     },
@@ -301,7 +314,13 @@ const OrderForm = {
                     <option value="white chocolate chips">white chocolate chips</option>
                     <option value="peanut butter chips">peanut butter chips</option>
                 </select>
-            </label>`;
+            </label>
+            <div class="inspiration-upload-wrapper">
+                <div class="inspiration-upload-btn-wrapper">
+                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
+                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
+                </div>
+            </div>`;
 
         return li;
     },
@@ -367,7 +386,8 @@ const OrderForm = {
 
             <label for="LayerCakeTheme">
                 <div>Theme/Occasion</div>
-                <input name="layercaketheme" 
+                <input type="text"
+                name="layercaketheme" 
                 id="LayerCakeTheme"
                 list="ItemThemes" 
                 cols="30" rows="1"  
@@ -377,7 +397,13 @@ const OrderForm = {
             <label for="LayerCakePersonalization">
                 <div>Personalization</div>
                 <textarea name="layercakepersonalization" id="LayerCakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-            </label>`;
+            </label>
+            <div class="inspiration-upload-wrapper">
+                <div class="inspiration-upload-btn-wrapper">
+                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
+                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
+                </div>
+            </div>`;
 
         return li;
     },
@@ -439,7 +465,8 @@ const OrderForm = {
 
             <label for="SheetCakeTheme">
                 <div>Theme/Occasion</div>
-                <input name="sheetcaketheme" 
+                <input type="text"
+                name="sheetcaketheme" 
                 id="SheetCakeTheme"
                 list="ItemThemes" 
                 cols="30" rows="1"  
@@ -449,7 +476,13 @@ const OrderForm = {
             <label for="SheetCakePersonalization">
                 <div>Personalization</div>
                 <textarea name="sheetcakepersonalization" id="SheetCakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-            </label>`;
+            </label>
+            <div class="inspiration-upload-wrapper">
+                <div class="inspiration-upload-btn-wrapper">
+                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
+                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
+                </div>
+            </div>`;
 
         return li;
     },
@@ -489,7 +522,8 @@ const OrderForm = {
 
             <label for="SugarCookiesTheme">
                 <div>Theme/Occasion</div>
-                <input name="sugarcookiestheme" 
+                <input type="text"
+                    name="sugarcookiestheme" 
                     id="SugarCookiesTheme"
                     list="ItemThemes" 
                     cols="30" rows="1"  
@@ -502,8 +536,13 @@ const OrderForm = {
                     id="SugarCookiesPersonalization" 
                     cols="30" rows="2"  
                     autocomplete="off" required></textarea>
-            </label>`;
-
+            </label>
+            <div class="inspiration-upload-wrapper">
+                <div class="inspiration-upload-btn-wrapper">
+                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
+                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
+                </div>
+            </div>`;
         return li;
     },
     addressFormComponent(type){
@@ -530,6 +569,70 @@ const OrderForm = {
 
         return div;
     },
+    inspirationalImageContentComponent(orderItemString){
+        if(!orderItemString){
+            console.warn('order item string name required');
+            return;
+        }
+        const parts = orderItemString.split('-');
+        const idString = parts.length > 1 ? capitalize(parts[0]) + capitalize(parts[1]):capitalize(parts[0]);
+        const nameString = parts.length > 1 ? `${parts[0]}${parts[1]}`:parts[0];
+
+
+        const component = document.createElement('div');
+        component.classList.add('inspiration-upload-content');
+
+        const disclaimer = document.createElement('p');
+        disclaimer.innerHTML = `Pictures will be <span class="pink-text">used for inspiration only</span><br>and will not be recreated 100%.`;
+
+        const label = document.createElement('label');
+        label.setAttribute('for', `${idString}ImageUploadInput`);
+        label.classList.add('file-upload-element');
+
+        const browseButton = document.createElement('button');
+        browseButton.setAttribute('type', 'button');
+        browseButton.classList.add('btn','browse-file-btn');
+        browseButton.textContent = 'browse...';
+        
+
+        const filenameOutput = document.createElement('div');
+        filenameOutput.classList.add('filename-output');
+
+        const fileUploadInput = document.createElement('input');
+        fileUploadInput.setAttribute('type', 'file');
+        fileUploadInput.setAttribute('id', `${idString}ImageUploadInput`);
+        fileUploadInput.setAttribute('name', `${nameString}image`);
+        fileUploadInput.classList.add('file-upload-input');
+
+        const inspirationImageWrapper = document.createElement('div');
+        inspirationImageWrapper.classList.add('inspiration-img-wrapper');
+
+        const inspirationalImageOutput = document.createElement('img');
+        inspirationalImageOutput.classList.add('inspiration-img-output');
+        inspirationImageWrapper.appendChild(inspirationalImageOutput);
+
+        browseButton.addEventListener('click', (event)=>{
+            event.preventDefault();
+            fileUploadInput.addEventListener('input', (inputEvent)=>{
+                const file = inputEvent.target.files[0];
+                filenameOutput.textContent = file.name;
+
+                const fileReader = new FileReader();
+                fileReader.onload = function(){
+                    inspirationalImageOutput.src = fileReader.result;
+                };
+                fileReader.readAsDataURL(file);
+            });
+            fileUploadInput.click();
+        })
+
+        label.append(browseButton,filenameOutput,fileUploadInput);
+
+        component.append(disclaimer,label,inspirationImageWrapper);
+
+
+        return component;
+    },
     deliveryEstimatorComponent(){
         const div = document.createElement('div');
         div.classList.add('delivery-estimator');
@@ -555,7 +658,7 @@ const OrderForm = {
 
             case 'drop-cookies': return OrderForm.dropCookieComponent();
             
-            case 'cupcakes': return OrderForm.cupcakeComponent();
+            case 'cup-cakes': return OrderForm.cupcakeComponent();
 
             case 'cake-pops': return OrderForm.cakepopComponent();
 
@@ -695,6 +798,35 @@ const OrderForm = {
       
         itemSelection.querySelector(`option[value="${itemValue}"]`).setAttribute('disabled', 'true');
     },
+    addInspriationUploadContent(event){
+        event.preventDefault();
+        const orderItem = event.currentTarget.closest('li');
+        const uploadContentWrapper = orderItem.querySelector('.inspiration-upload-wrapper');
+        //const inspirationUploadContent = orderItem.querySelector('.inspiration-upload-content');
+
+        const component = OrderForm.inspirationalImageContentComponent(orderItem.dataset.orderItem);
+        uploadContentWrapper.appendChild(new DocumentFragment().appendChild(component))
+        setTimeout(() => {
+            component.classList.add('show');
+        }, 100);
+       
+        event.currentTarget.style.opacity = '0';
+        orderItem.querySelector('.remove-inspiration-btn').style.opacity = '1';
+    },
+    removeInspirationUploadContent(event){
+        event.preventDefault();
+        const orderItem = event.currentTarget.closest('li');
+        const uploadContentWrapper = orderItem.querySelector('.inspiration-upload-wrapper');
+        const inspirationUploadContent = orderItem.querySelector('.inspiration-upload-content');
+
+        // orderItem.querySelector('.filename-output').textContent = "";
+        // orderItem.querySelector('.inspiration-img-output').src = "";
+       
+        // inspirationUploadContent.classList.remove('show');
+        uploadContentWrapper.removeChild(inspirationUploadContent)
+        event.currentTarget.style.opacity = '0';
+        orderItem.querySelector('.add-inspiration-btn').style.opacity = '1';
+    },
     activateOrderItem(orderItem){
 
         orderItem.classList.add('open');
@@ -703,7 +835,9 @@ const OrderForm = {
 
         orderItem.querySelector('.remove-order-btn').addEventListener('click', OrderForm.removeItemFromOrder)
 
-       
+        orderItem.querySelector('.add-inspiration-btn').addEventListener('click', OrderForm.addInspriationUploadContent);
+
+        orderItem.querySelector('.remove-inspiration-btn').addEventListener('click', OrderForm.removeInspirationUploadContent);
     },
     listenToOrderItem(orderItemElement){
 

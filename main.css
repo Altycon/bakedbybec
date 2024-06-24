@@ -104,7 +104,11 @@
 ===================================================|
 */
 *,::before,::after{margin: 0;padding: 0;box-sizing: border-box;}
-input,
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=tel],
+input[type=date],
 textarea,
 select{
     /* background-color: var(--site-input-color); */
@@ -120,7 +124,12 @@ select{
     width: 100%;
     line-height: 1.2em;
 }
-input,textarea{
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=tel],
+input[type=date],
+textarea{
     border-bottom: 1px solid var(--site-input-color);
 }
 textarea{
@@ -4956,7 +4965,6 @@ label[for=BookClassFormAdvancedInquiryCheckbox] > div{
 ---------------------------------------------------|
 ===================================================|
 */
-
 /*
 =========================================|
         ORDER FORM
@@ -5252,6 +5260,7 @@ label[for=OrderFormZipCode]{
    text-align: center;
    background-color: hsl(0 0% 10%);
    border-top-right-radius: 10px;
+   border-top-left-radius: 10px;
    border-right: 1px solid hsl(0 0% 10%);
    padding: 5px;
    opacity: 0;
@@ -5279,13 +5288,6 @@ label[for=OrderFormZipCode]{
 .order-form .item-information .order-item{
     grid-column: 1;
     grid-row: 1;
-
-    padding: 1rem;
-    /* background-color: hsl(0 0% 0%); */
-    /* border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px; */
-    /* box-shadow: 5px 5px 10px black; */
     
     opacity: 0;
     transition: opacity 500ms ease-in;
@@ -5314,14 +5316,110 @@ label[for=OrderFormZipCode]{
     font-size: 1rem;
     font-weight: 700;
 }
+.order-form .item-information .order-item .inspiration-upload-wrapper{
+    
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-btn-wrapper{
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .add-inspiration-btn{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    
+    border: none;
+    padding: 5px 10px;
+    color: var(--fc-primary);
+    font-weight: 500;
+    background-color: transparent;
+    opacity: 1;
+    transition: opacity 300ms ease;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .remove-inspiration-btn{
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: var(--fc-primary);
+    font-weight: 500;
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(2,auto);
+    justify-content: space-between;
+    gap: 1rem;
 
+    opacity: 0;
 
+    transition: opacity 300ms ease;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content.show{
+    opacity: 1;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content > p{
+    grid-column: 1/3;
+    grid-row: 1;
+
+    font-size: .8rem;
+    line-height: 1.4em;
+    margin-bottom: .5rem;
+    text-align: center;
+    font-weight: 700;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content > label{
+    grid-column: 1;
+    grid-row: 2;
+    
+}
+.file-upload-element{
+    
+}
+.file-upload-element > input{
+   display: none;
+}
+.file-upload-element .browse-file-btn{
+    border: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+    color: var(--fc-primary);
+    font-weight: 700;
+    background-color: var(--site-color-accent2);
+    box-shadow: 2px 2px 5px black, inset 2px 2px 3px hsl(0 0% 100% / 0.3);
+}
+.file-upload-element .filename-output{
+    padding: .5rem;
+    font-size: .8rem;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content .inspiration-img-wrapper{
+    grid-column: 2;
+    grid-row: 2;
+
+    max-width: 100px;
+    /* aspect-ratio: 16/9; */
+    overflow: hidden;
+}
+.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content .inspiration-img-wrapper > img{
+    width: 100%;
+    object-fit: contain;
+    padding: 5px;
+}
 /* SURGAR COOKIE ORDER */
 /***************************/
 .order-form .sugar-cookie-information{
     display: none;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: repeat(6,auto);
     gap: .8em;
 }
 .order-form .sugar-cookie-information.open{
@@ -5359,6 +5457,10 @@ label[for=SugarCookiesPersonalization]{
     grid-column: 1;
     grid-row: 5;
 }
+.order-form .sugar-cookie-information .inspiration-upload-wrapper{
+    grid-column: 1;
+    grid-row: 6;
+}
 label[for=SugarCookiesTheme] > div,
 label[for=SugarCookiesPersonalization] > div{
     padding-bottom: .5em;
@@ -5371,7 +5473,7 @@ label[for=SugarCookiesPersonalization] > div{
 
     display: none;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: repeat(6,auto);
     gap: .8em;
 }
 .order-form .drop-cookie-information.open{
@@ -5409,6 +5511,10 @@ label[for=DropCookieAddon]{
     grid-column: 1;
     grid-row: 5;
 }
+.order-form .drop-cookie-information .inspiration-upload-wrapper{
+    grid-column: 1;
+    grid-row: 6;
+}
 label[for=DropCookieFlavor] > div,
 label[for=DropCookieAddon] > div{
     padding-bottom: .5em;
@@ -5422,7 +5528,7 @@ label[for=DropCookieAddon] > div{
 
     display: none;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(7,auto);
+    grid-template-rows: repeat(8,auto);
     gap: .8em;
 }
 .order-form .layer-cake-information.open,
@@ -5479,10 +5585,16 @@ label[for=SheetCakeTheme]{
     grid-row: 6;
     
 }
+
 label[for=LayerCakePersonalization],
 label[for=SheetCakePersonalization]{
     grid-column: 1/3;
     grid-row: 7;
+}
+.order-form .layer-cake-information .inspiration-upload-wrapper,
+.order-form .sheet-cake-information .inspiration-upload-wrapper{
+    grid-column: 1/3;
+    grid-row: 8;
 }
 label[for=LayerCakeSize] > div,
 label[for=LayerCakeFlavor] > div,
@@ -5506,7 +5618,7 @@ label[for=SheetCakePersonalization] > div{
 
     display:none;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(6,auto);
+    grid-template-rows: repeat(7,auto);
     gap: .8em;
 }
 .order-form .cupcake-information.open{
@@ -5555,6 +5667,10 @@ label[for=CupcakePersonalization]{
     grid-column: 1/3;
     grid-row: 6;
 }
+.order-form .cupcake-information .inspiration-upload-wrapper{
+    grid-column: 1/3;
+    grid-row: 7;
+}
 label[for=CupcakeFlavor] > div,
 label[for=CupcakeFrosting] > div,
 label[for=CupcakeTheme] > div,
@@ -5568,7 +5684,7 @@ label[for=CupcakePersonalization] > div{
 
     display:none;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: repeat(5);
     gap: .8em;
 }
 .order-form .cakepop-information.open{
@@ -5612,6 +5728,12 @@ label[for=CakepopFlavor] > div,
 label[for=CakepopFrosting] > div{
     padding-bottom: .5em;
 }
+.order-form .cakepop-information .inspiration-upload-wrapper{
+    grid-column: 1/3;
+    grid-row: 5;
+}
+
+
 
 .order-form-read-before{
      padding: 1rem;
@@ -5717,6 +5839,15 @@ label[for=CakepopFrosting] > div{
     .order-form > div{
         outline: none;
         border-radius: 0px;
+    }
+    .order-form .item-information-tabs{
+        padding-inline: .5rem;
+    }
+    .order-form .item-information-tabs > div{
+        border-top-left-radius: 10px;
+    }
+    .order-form .item-information .order-item{
+        padding-inline: 1rem;
     }
 }
 @media only screen and (max-width: 500px){
