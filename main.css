@@ -72,7 +72,7 @@
     --bgi6: url('/bakedbybec/img/bbb-cookies-landscapes.jpg');
     --bgi7: url('/bakedbybec/img/bbb-cookie-space1.jpg');
     --bgi8: url('/bakedbybec/img/bbb-class-first-setup.jpg');
-    --bgi9: url('/bakedbybec/img/bbb-working1.jpg');
+    --bgi9: url('/bakedbybec/bakedbybecimg/bbb-working1.jpg');
     --bgi10: url('/bakedbybec/img/bbb-cookie-minecraft-all2.jpeg');
     --bgi11: url('/bakedbybec/img/bbb-cookie-minecraft-thankyou-edited.png');
     --bgi12: url('/bakedbybec/img/bbb_cookie-college-product-item-bg-edited.png');
@@ -5871,7 +5871,9 @@ label[for=CakepopFrosting] > div{
         line-height: 1.2em;
         font-weight: 700;
      }
-  
+    .order-form .order-item-list .order-item{
+        padding-inline: 0;
+    }
     label[for=SugarCookiesQuantity]{
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -5903,7 +5905,7 @@ label[for=CakepopFrosting] > div{
     .order-form .cupcake-information{
 
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(7,auto);
+        grid-template-rows: repeat(8,auto);
         
     }
    
@@ -5959,10 +5961,14 @@ label[for=CakepopFrosting] > div{
         grid-column: 1;
         grid-row: 7;
     }
+    .order-form .cupcake-information .inspiration-upload-wrapper{
+        grid-column: 1;
+        grid-row: 8;
+    }
     .order-form .cakepop-information{
 
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(5,auto);
+        grid-template-rows: repeat(6,auto);
     }
 
     .order-form .cakepop-information > header{
@@ -6008,7 +6014,10 @@ label[for=CakepopFrosting] > div{
         grid-template-rows: auto auto;
         align-items: center;
     }
-
+    .order-form .cakepop-information .inspiration-upload-wrapper{
+        grid-column: 1;
+        grid-row: 6;
+    }
     .order-form .retrival-information{
     
         display: grid;
@@ -6033,7 +6042,7 @@ label[for=CakepopFrosting] > div{
     .order-form .sheet-cake-information{
 
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(8,auto);
+        grid-template-rows: repeat(9,auto);
     }
     
     .order-form .layer-cake-information > header,
@@ -6100,7 +6109,11 @@ label[for=CakepopFrosting] > div{
         grid-column: 1;
         grid-row: 8;
     }
-    
+    .order-form .layer-cake-information .inspiration-upload-wrapper,
+    .order-form .sheet-cake-information .inspiration-upload-wrapper{
+        grid-column: 1;
+        grid-row: 9;
+    }
     .order-form .retrival-information .retrieval-times{
         grid-column: 1;
         grid-row: 3;
