@@ -578,7 +578,6 @@ const OrderForm = {
         const idString = parts.length > 1 ? capitalize(parts[0]) + capitalize(parts[1]):capitalize(parts[0]);
         const nameString = parts.length > 1 ? `${parts[0]}${parts[1]}`:parts[0];
 
-
         const component = document.createElement('div');
         component.classList.add('inspiration-upload-content');
 
@@ -597,6 +596,7 @@ const OrderForm = {
 
         const filenameOutput = document.createElement('div');
         filenameOutput.classList.add('filename-output');
+        filenameOutput.textContent = 'no file selected';
 
         const fileUploadInput = document.createElement('input');
         fileUploadInput.setAttribute('type', 'file');
@@ -802,7 +802,6 @@ const OrderForm = {
         event.preventDefault();
         const orderItem = event.currentTarget.closest('li');
         const uploadContentWrapper = orderItem.querySelector('.inspiration-upload-wrapper');
-        //const inspirationUploadContent = orderItem.querySelector('.inspiration-upload-content');
 
         const component = OrderForm.inspirationalImageContentComponent(orderItem.dataset.orderItem);
         uploadContentWrapper.appendChild(new DocumentFragment().appendChild(component))
@@ -819,10 +818,6 @@ const OrderForm = {
         const uploadContentWrapper = orderItem.querySelector('.inspiration-upload-wrapper');
         const inspirationUploadContent = orderItem.querySelector('.inspiration-upload-content');
 
-        // orderItem.querySelector('.filename-output').textContent = "";
-        // orderItem.querySelector('.inspiration-img-output').src = "";
-       
-        // inspirationUploadContent.classList.remove('show');
         uploadContentWrapper.removeChild(inspirationUploadContent)
         event.currentTarget.style.opacity = '0';
         orderItem.querySelector('.add-inspiration-btn').style.opacity = '1';
@@ -913,6 +908,21 @@ const OrderForm = {
         OrderForm.submitButton.addEventListener('click', OrderForm.submitOrder);
 
     },
+    autoSelectOrderItem(valueToSelect){
+
+        for (let i = 0; i < OrderForm.itemSelectElement.options.length; i++) {
+            if (OrderForm.itemSelectElement.options[i].value === valueToSelect) {
+                OrderForm.itemSelectElement.selectedIndex = i;
+              break;
+            }
+        }
+
+        const inputEvent = new Event('input', {
+            bubbles: true,
+            cancelable: true
+        });
+        OrderForm.itemSelectElement.dispatchEvent(inputEvent);
+    },
     initialize(){
         OrderForm.form = document.querySelector('.order-form');
         OrderForm.itemSelectElement = document.querySelector('#OrderFormItem');
@@ -929,11 +939,7 @@ function initializeOrderingPage(){
 
     let externalItemValue = undefined;
 
-    if(window.location.hash && window.location.hash !== ""){
-
-        externalItemValue = window.location.hash.split('#')[1];
-
-    }
+    
 
     pageNavigation();
     document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
@@ -941,7 +947,14 @@ function initializeOrderingPage(){
     OrderForm.initialize();
     OrderForm.listen();
 
-    
+    if(window.location.search){
+        const urlparams = new URLSearchParams(window.location.search);
+        const param = urlparams.get('initialItem');
+        OrderForm.autoSelectOrderItem(param);
+
+        console.log(param)
+        
+    }
 
 };
 initializeOrderingPage();
