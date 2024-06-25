@@ -144,6 +144,13 @@ textarea:focus-visible,
 select:focus-visible{
     outline: 1px solid var(--site-color-accent2);
 }
+@media (prefers-color-scheme: dark) {
+    input[type="date"] {
+      background-color: #000;
+      color: var(--fc-primary);
+    }
+    /* Additional styles for the calendar */
+  }
 /*
 ===================================================|
 ---------------------------------------------------|
