@@ -2877,6 +2877,7 @@ body{
         inset: 0;
         background-repeat: no-repeat;
         background-position: center;
+        border-radius: inherit;
         
         opacity: 0;
         transition: opacity 800ms ease-in;
@@ -2886,15 +2887,19 @@ body{
         background-size: cover;
     }
     .products-list .products-item:nth-of-type(2)::before{
-        background-image: var(--bgi);
         background-size: cover;
     }
     .products-list .products-item:nth-of-type(3)::before{
-        background-image: var(--img-product-lc);
+        background-size: cover;
+    }
+    .products-list .products-item:nth-of-type(5)::before{
+        background-size: cover;
+    }
+    .products-list .products-item:nth-of-type(6)::before{
         background-size: cover;
     }
     .products-item.show::before{
-        opacity: 0.2;
+        opacity: 0.5;
     }
     .products-item > header{
         padding-top: 2rem;
