@@ -78,7 +78,10 @@
     --bgi12: url('/bakedbybec/img/bbb_cookie-college-product-item-bg-edited.png');
 
     --img-product-sc: url('/bakedbybec/img/product/bbb-product-sc-landscape.png');
-    --img-product-lc: url('/bakedbybec/img/product/bbb-product-lc-square.png');
+    --img-product-lc: url('/bakedbybec/img/product/bbb_product_layercake.png');
+    --img-product-cc: url('/bakedbybec/img/product/bbb_product_cupcake_1000x750.png');
+    --img-product-dc: url('/bakedbybec/img/product/bbb_product_drop_cookies.png');
+    --img-product-cp: url('/bakedbybec/img/product/bbb_product_cake_pops.png');
     --img-home-thankyou: url('/bakedbybec/img/bbb-dough-pin-xlarge.jpeg');
     --img-class-setup: url('/bakedbybec/img/site/bbb_class_setup_1440x1080.jpg');
 
@@ -2571,13 +2574,26 @@ body{
     
     transition: opacity 800ms ease-in;
 }
+/* PRODUCT IMAGES */
 .products-list .products-item:nth-of-type(1)::before{
     background-image: var(--img-product-sc);
-    background-size: 100%;
+    background-size: 50%;
+}
+.products-list .products-item:nth-of-type(2)::before{
+    background-image: var(--img-product-dc);
+    background-size: 50%;
 }
 .products-list .products-item:nth-of-type(3)::before{
     background-image: var(--img-product-lc);
-    background-size: contain;
+    background-size: 40%;
+}
+.products-list .products-item:nth-of-type(5)::before{
+    background-image: var(--img-product-cc);
+    background-size: 50%;
+}
+.products-list .products-item:nth-of-type(6)::before{
+    background-image: var(--img-product-cp);
+    background-size: 40%;
 }
 .products-item.show::before{
     opacity: 1
@@ -2633,11 +2649,11 @@ body{
 .products-item > header > .product-item-blurb{
     grid-column: 1/3;
     grid-row: 2;
-    justify-self: center;
+    justify-self: flex-end;
     
     max-width: 500px;
     padding: 1em;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.4em;
     text-align: center;
     text-shadow: 2px 2px 3px black;
