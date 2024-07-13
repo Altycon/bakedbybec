@@ -12,7 +12,14 @@
 ---------------------------------------------------|
 ===================================================|
 */
-
+/* @font-face {
+    font-family: "Dyuthi";
+    src: url('/font/Dyuthi.ttf') format('truetype'),
+    url("/font/dyuthi-webfont.woff") format('woff'),
+    url("/font/dyuthi-webfont.woff2") format('woff2');
+    font-weight: normal;
+    font-style: oblique;
+} */
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -22,20 +29,14 @@
 ---------------------------------------------------|
 ===================================================|
 */
-/* @font-face {
-    font-family: "FreeSerif";
-    src: url('/font/FreeSerif-YO4a.otf') format('opentype'),
-    url("/font/FreeSerif-4aeK.ttf") format('truetype');
-    font-weight: normal;
-    font-style: normal;
-} */
+
 :root{
 
     --site-header-height: 100px;
 
     /* FONT */
     /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-    --ff-primary: system-ui;
+    --ff-primary: system-ui, sans-serif;
     --ff-secondary: sans-serif;
     /* font-family:Arial, Helvetica, sans-serif; */
     /* COLOR */
@@ -64,27 +65,15 @@
     --home-background-color-black: hsl(0 0% 5% / 0.2);
     --home-background-color-bright:hsl(300 30% 10%);
 
-    --bgi1: url('/bakedbybec/img/cookies_coastguard.jpg');
-    --bgi2: url('/bakedbybec/img/bbb-drop-cookie-lemon.jpg');
-    --bgi3: url('/bakedbybec/img/bbb-cake-nightmareXmans.jpg');
-    --bgi4: url('/bakedbybec/img/bbb-cupcakes-landscape.jpg');
-    --bgi5: url('/bakedbybec/img/bbb-cakepops-pink.jpg');
-    --bgi6: url('/bakedbybec/img/bbb-cookies-landscapes.jpg');
-    --bgi7: url('/bakedbybec/img/bbb-cookie-space1.jpg');
-    --bgi8: url('/bakedbybec/img/bbb-class-first-setup.jpg');
-    --bgi9: url('/bakedbybec/img/bbb-working1.jpg');
-    --bgi10: url('/bakedbybec/img/bbb-cookie-minecraft-all2.jpeg');
-    --bgi11: url('/bakedbybec/img/bbb-cookie-minecraft-thankyou-edited.png');
-    --bgi12: url('/bakedbybec/img/bbb_cookie-college-product-item-bg-edited.png');
-
     --img-product-sc: url('/bakedbybec/img/product/bbb_product_sugar_cookies.png');
     --img-product-lc: url('/bakedbybec/img/product/bbb_product_layer_cake.png');
     --img-product-stc: url('/bakedbybec/img/product/bbb_product_sheet_cake.png');
     --img-product-cc: url('/bakedbybec/img/product/bbb_product_cupcake_1000x750.png');
     --img-product-dc: url('/bakedbybec/img/product/bbb_product_drop_cookies.png');
     --img-product-cp: url('/bakedbybec/img/product/bbb_product_cake_pops.png');
-    --img-home-thankyou: url('/bakedbybec/img/bbb-dough-pin-xlarge.jpeg');
-    --img-class-setup: url('/bakedbybec/img/site/bbb_class_setup_1440x1080.jpg');
+    --img-home-thankyou: url('/bakedbybec/img/site/home/bbb_rolling-pin-dough-ball_full_large.jpeg');
+    --img-class-setup: url('/bakedbybec/img/site/class/bbb_class_setup_1440x1080.jpg');
+    --img-meet-baker-header: url('/bakedbybec/img/site/meet/bbb_rebecca-woring-designing_full_large.jpg');
 
     /* --nav-primary-size: 30vw; */
 
@@ -97,6 +86,20 @@
 
     --something: black;
 }
+html{
+    font-family: var(--ff-primary);
+    color: var(--fc-primary);
+    
+}
+
+
+body{
+    min-height: 100vh;
+    background-color: var(--bc-primary);
+    isolation: isolate;
+    overflow-x: hidden;
+}
+
 
 /*
 ===================================================|
@@ -143,6 +146,7 @@ select{
     background-color: hsl(0 0% 13%);
    
 }
+
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible{
@@ -164,6 +168,7 @@ select:focus-visible{
 ---------------------------------------------------|
 ===================================================|
 */
+
 .no-select{
     user-select: none;
 }
@@ -227,19 +232,6 @@ select:focus-visible{
 ---------------------------------------------------|
 ===================================================|
 */
-
-html{
-    font-family: var(--ff-primary);
-    color: var(--fc-primary);
-    
-}
-body{
-    min-height: 100vh;
-    background-color: var(--bc-primary);
-    isolation: isolate;
-    overflow-x: hidden;
-    /* scroll-behavior: smooth; */
-}
 
 .page-title{
     text-align: left;
@@ -2477,10 +2469,10 @@ body{
     aspect-ratio: 16/9;
     margin-bottom: 4rem;
     
-    /* background-color: hsl(0 0% 0% / 0.2); */
+    background-color: hsl(0 0% 0% / 0.2);
     background-image: var(--img-home-thankyou);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
 
@@ -3179,7 +3171,7 @@ body{
     max-height: 800px;
 
     background-color: hsl(0 0% 0% / 0.5);
-    background-image: var(--bgi9);
+    background-image: var(--img-meet-baker-header);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -3290,7 +3282,7 @@ body{
     aspect-ratio: 16/9;
 }
 .meet-main > section:nth-of-type(2) .meet-img-group .img-wrapper > img{
-   
+    width: 100%;
     object-fit: cover;
 }
 .meet-main > section:nth-of-type(3){
@@ -3353,6 +3345,9 @@ body{
     aspect-ratio: 16/9;
     margin: 0 auto;
     border-radius: 50%;
+}
+.meet-main .meet-thank-you .meet-img-wrapper > img{
+    width: 100%;
 }
 .meet-main .meet-thank-you .meet-img-wrapper:nth-of-type(1){
     grid-column: 1;
@@ -3537,13 +3532,13 @@ body{
     z-index: 1;
 }
 .gallery-content > section > ul > li > figure::before{
-    content: "IMAGE N/A";
+    content: "...images coming soon...";
     position: absolute;
     top: 0; left: 0;
     inset: 0;
     color: var(--fc-primary);
     text-align: center;
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 700;
     z-index: -1;
     display: grid;
@@ -6202,11 +6197,16 @@ label[for=CakepopFrosting] > div{
     opacity: 1;
 }
 .image-viewer figure{
-    max-width: 100vw;
+    max-width: 67vw;
+    max-height: 80vh;
     box-shadow: 5px 5px 10px black;
     opacity: 0;
 
     transition: opacity 300ms ease-in;
+}
+.image-viewer figure figcaption{
+    padding: 8px;
+    text-align: center;
 }
 .image-viewer.show figure{
     opacity: 1;
@@ -6214,6 +6214,13 @@ label[for=CakepopFrosting] > div{
 .image-viewer figure img{
     width: 100%;
     height: 100%;
+    object-fit: contain;
+}
+@media only screen and (max-width: 600px){
+    .image-viewer figure{
+        max-width: 90vw;
+        max-height: 80vh;  
+    }
 }
 /*
 --------------------------------

@@ -43,18 +43,18 @@ export const AImageViewer = {
     },
     open(event){
 
-        const imgWidth = event.target.width;
-        const imgHeight = event.target.height;
+        // const imgWidth = event.target.width;
+        // const imgHeight = event.target.height;
 
-        if(imgWidth > imgHeight){
+        // if(imgWidth > imgHeight){
 
-            AImageViewer.figureElement.style.width = '500px';
+        //     AImageViewer.figureElement.style.width = '600px';
 
-        }else{
+        // }else{
 
-            AImageViewer.figureElement.style.width = '500px';
-            AImageViewer.figureElement.style.height = '100%';
-        }
+        //     AImageViewer.figureElement.style.width = '450px';
+        //     AImageViewer.figureElement.style.height = '100%';
+        // }
 
 
         AImageViewer.imageViewer.addEventListener('click', AImageViewer.close);
@@ -63,7 +63,20 @@ export const AImageViewer = {
 
         AImageViewer.imageElement.onerror = AImageViewer.imageError;
 
-        AImageViewer.imageElement.src = event.target.src;
+        // add image to image viewer
+        
+        if(event.target.dataset.fullImageUrl){
+
+            const imageUrl = new URL(event.target.src);
+            const newImageUrl = imageUrl.origin + event.target.dataset.fullImageUrl;
+
+            AImageViewer.imageElement.src = newImageUrl;
+            
+        }else{
+
+            AImageViewer.imageElement.src = event.target.src;
+
+        }
 
         AImageViewer.imageCaption.textContent = event.target.getAttribute('alt');
 
