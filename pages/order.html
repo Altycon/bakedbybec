@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order | Baked By Bec</title>
+    <meta name="referrer" content="no-referrer">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Clayton McDaniel, Rebecca Loren">
+
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="nofollow">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
     <link rel="stylesheet" href="../main.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/bakedbybec/img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/bakedbybec/img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/bakedbybec/img/fav/favicon-16x16.png">
+
+    <link rel="manifest" href="/manifest.json">
+
     <script type="module" src="../js/pages/ordering/order.js"></script>
 </head>
 <body>
@@ -78,12 +99,29 @@
             <h1 class="page-title">order</h1>
         </header>
 
-       <form class="order-form" action="./order_success.html">
+        <section class="before-you-order js-before-you-order">
             <header>
-                <label for="OrderFormItem">
-                    <div>What would you like?</div>
-                    <select name="quantity" id="OrderFormItem" autocomplete="off" required>
-                        <option value=""selected disabled>-- select</option>
+                <h2>before you order</h2>
+                <p>please consider the following</p>
+            </header>
+            <div>
+                <p><strong class="pink-text">Cakes</strong> are <span class="underline">only eligible</span> for <strong>pickup/delivery.</strong></p>
+                <p><strong class="pink-text">Delivery</strong> is <span class="underline">only available</span> within a <strong>30 mile radius</strong> of West Point, Iowa.</p>
+                <p>Due to federal regulations, <strong class="pink-text">shipping</strong> is <span class="underline">only available</span> in <strong>Iowa</strong>, United States.</p>
+                <p><strong class="pink-text">Pickup available</strong> on site (West Point, IA).</p>
+                <!-- <p>The pickup address will be given on the invoice once your order is placed and received.</p> -->
+                <p>Orders need to be placed <strong class="pink-text">minimum of two weeks before</strong> for your event.</p>
+                <!-- <p>This allows me enough time to make your cookies as delicious and beautiful as possible.</p> -->
+            </div>
+            
+            <button type="button" class="btn open-order-form-btn js-open-order-form-btn">Let's order something!</button>
+        </section>
+
+        <section class="ordering-area js-ordering-area">
+            <header>
+                <label for="OrderFormItem" class="form-label"><span>What would you like?</span>
+                    <select name="quantity" id="OrderFormItem" class="form-select" autocomplete="off" required>
+                        <option value=""selected disabled>-- select --</option>
                         <option value="sugar-cookies">sugar cookies</option>
                         <option value="drop-cookies">drop cookies</option>
                         <option value="layer-cake">layer cake</option>
@@ -92,101 +130,240 @@
                         <option value="cake-pops">cake pops</option>
                     </select>
                 </label>
-
+                <img src="/bakedbybec/img/icon/site/bbb_icon_meet_128x128.png" width="100" alt="">
             </header>
-
-            <div class="item-information">
-
-                
-                <header class="item-information-tabs">
-                   
+            <form id="OrderForm" class="order-form js-order-form">
+                <header>
+                    <h2>order form</h2>
                 </header>
-
-                <ul class="order-item-list">
-
-                    <!-- order items injected here -->
-
-                </ul>
-
-                <datalist id="ItemThemes">
-                    <option value="birthday">birthday</option>
-                    <option value="graduation">graduation</option>
-                    <option value="wedding">wedding</option>
-                    <option value="bachelorette"></option>
-                    <option value="retirement"></option>
-                    <option value="school"></option>
-                  </datalist>
-                
-            </div>
-            <div class="retrival-information">
-
-                <label for="OrderFormRetrival">
-                    <div>Pickup/Shipping/Delivery</div>
-                    <select name="" id="OrderFormRetrival" autocomplete="off" required>
-                        <option value=""selected disabled>-- select</option>
-                        <option value="pickup">Pickup&nbsp;&nbsp;(West Point, Iowa)</option>
-                        <option value="shipping">Shipping&nbsp;&nbsp;($15 via USPS)</option>
-                        <option value="delivery">Delivery&nbsp;&nbsp;($0.65/mile roundtrip)</option>
-                    </select>
-                </label>
-
-                <label for="OrderFormPaymentType">
-                    <div>Payment</div>
-                    <select name="paymenttype" id="OrderFormPaymentType" autocomplete="off" required>
-                        <option value=""selected disabled>-- select</option>
-                        <option value="venmo">Venmo</option>
-                        <option value="cash">Cash</option>
-                        <option value="card">Card</option>
-                    </select>
-                </label>
-
-                <div class="retrieval-times">
-                    <div><span>Delivery Time:</span>
-                        <p>Mon-Fri <strong>4:30</strong>pm-<strong>6</strong>pm</p>
-                        <p>Sat <strong>9</strong>am-<strong>11</strong>am</p>
+                <div class="order-items">
+                    <ul class="order-item-tab-list js-order-item-tab-list">
+                       <!-- order item tabs injected here -->
+                        <p class="order-item-tab-intro js-order-item-tab-intro open show">Multiple desserts can be selected</p>
+                    </ul>
+                    <ul class="order-item-list js-order-item-list">
+                        <!-- order items injected here -->
+                         <div class="order-item-intro js-order-item-intro open show">
+                            <ul>
+                                <li>select your item</li>
+                                <li>provide the item information</li>
+                                <li>select your retrieval type</li>
+                                <li>select your payment</li>
+                                <li>provide your contact information</li>
+                                <li>make sure everything looks good</li>
+                                <li>place your order!</li>
+                            </ul>
+                         </div>
+                    </ul>
+                    <datalist id="ItemThemes">
+                        <option value="birthday"></option>
+                        <option value="graduation"></option>
+                        <option value="wedding"></option>
+                        <option value="bachelorette"></option>
+                        <option value="retirement"></option>
+                        <option value="school"></option>
+                    </datalist>
+                </div>
+                <div class="retrieval-information">
+                    <div class="retrieval-prices">
+                        <div class="retrieval-information-pickup js-retrieval-information-pickup">
+                            <h4>pickup</h4>
+                            <div class="img-wrapper">
+                                <img src="/bakedbybec/img/icon/retrieval/bbb_icon-pickup_128x128.png" alt="">
+                            </div>
+                            <p><strong class="price pink-text">Free</strong></p>
+                            <p>On site<br>(West Point, IA)</p>
+                        </div>
+                        
+                        <div class="retrieval-information-delivery js-retrieval-information-delivery">
+                            <h4>delivery</h4>
+                            <div class="img-wrapper">
+                                <img src="/bakedbybec/img/icon/retrieval/bbb_icon_delivery_128x128.png" alt="">
+                            </div>
+                            <p><strong class="price pink-text">$0.65</strong> /mile roundtrip</p>
+                            <p>30 mile radius<br>of West Point, Iowa</p>
+                        </div>
+                        <div class="retrieval-information-shipping js-retrieval-information-shipping">
+                            <h4>shipping</h4>
+                            <div class="img-wrapper">
+                                <img src="/bakedbybec/img/icon/retrieval/bbb_icon_shipping_128x128.png" alt="">
+                            </div>
+                            <p><strong class="price pink-text">$15</strong> via USPS</p>
+                            <p>Cakes <strong>not eligible</strong></p>
+                            <p><strong class="attention-text">Only available in Iowa</strong></p>
+                        </div>
                     </div>
-                    <div><span>Pickup Times:</span>
-                        <p>Mon-Fri <strong>4:30</strong>pm-<strong>6</strong>pm</p>
-                        <p>Sat <strong>9</strong>am-<strong>11</strong>am</p>
+                    <label for="OrderFormRetrieval" class="form-label">
+                        <div>retrieval type</div>
+                        <select name="" id="OrderFormRetrieval" class="form-select" data-input="retrieval" autocomplete="off" required>
+                            <option value=""selected disabled>-- select --</option>
+                            <option value="pickup" data-price="free">Pickup</option>
+                            <option value="shipping" data-price="15">Shipping</option>
+                            <option value="delivery" data-price="0.65 /mile">Delivery</option>
+                        </select>
+                    </label>
+                    <div class="retrieval-times">
+                        <h4>pickup/delivery times</h4>
+                        <p>monday - friday: <strong>4:30pm - 6:00pm</strong></p>
+                        <p>saturday: <strong>9:00am - 11:00am</strong></p>
+                    </div>
+                </div> 
+                <div class="payment-information">
+                    <div class="payment-details">
+                        <p>After I recieve your order, I will email you an invoice with details and the payment process.</p>
+                        <ul class="payment-details-list">
+                            <li class="payment-details-item">
+                                <div></div>
+                                <p>Order payments will be processed with the "<strong>Square"</strong> payment service.</p>
+                            </li>
+                            <li class="payment-details-item">
+                                <p>All major cards are accepted.</p>
+                                <div></div>
+                            </li>
+                            <li class="payment-details-item">
+                                <div></div>
+                                <p>Shipping orders must be paid upon reciept of invoice.</p>
+                            </li>
+                            <li class="payment-details-item">
+                                <p>Cash is accepted for all pickup and delivery orders.</p>
+                                <div></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <label for="OrderFormPaymentType" class="form-label">
+                        <div>payment type</div>
+                        <select name="payment" id="OrderFormPaymentType" class="form-select" data-input="payment" autocomplete="off" required>
+                            <option value=""selected disabled>-- select --</option>
+                            <option value="cash">cash</option>
+                            <option value="card">card</option>
+                            <option value="paypal">paypal</option>
+                            <option value="venmo">venmo</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="personal-information js-personal-information">
+                    <div class="basic-information">
+                        <label for="OrderFormName" class="form-label"><span>name</span>
+                            <input type="text" 
+                                name="name" 
+                                id="OrderFormName" 
+                                class="form-text-input js-personal-info" 
+                                data-input="name"
+                                autocomplete="off" required>
+                        </label>
+        
+                        <label for="OrderFormEmail" class="form-label"><span>email</span>
+                            <input type="email" 
+                                name="email" 
+                                id="OrderFormEmail" 
+                                class="form-text-input js-personal-info"
+                                data-input="email" 
+                                placeholder="youremail@host.com"  
+                                autocomplete="off" required>
+                        </label>
+            
+                        <label for="OrderFormPhoneNumber" class="form-label"><span>phone number</span>
+                            <input type="tel" 
+                                name="phone-number" 
+                                id="OrderFormPhoneNumber" 
+                                class="form-text-input js-personal-info" 
+                                placeholder="555-555-5555"
+                                data-input="phone-number" 
+                                autocomplete="off" required>
+                        </label>
+                    </div>
+                    
+                   <!-- address information injected here -->
+                    
+                </div>
+                <div class="order-invoice">
+                    <h3>order information</h3>
+                    <ul class="product-list js-order-invoice-item-list">
+                        <!-- invoice items injected here  -->
+                    </ul>
+                    <div class="information">
+                        <div class="personal">
+                            <p><span data-output="order-date">07/19/2025</span></p>
+                            <p><span data-output="name">name</span></p>
+                            <div class="address">
+                                <p><span data-output="street">address</span></p>
+                                <p><span data-output="city">city</span>, <span data-output="state">state</span> <span data-output="zip-code">zip code</span></p>
+                            </div>
+                            <p><span data-output="email">email</span></p>
+                            <p><span data-output="phone-number">phone number</span></p> 
+                        </div>
+                        <div class="extras">
+                            <p>retrieval type: <span data-output="retrieval">none</span></p>
+                            <p>retrieval price($): <span data-output="retrieval-price">none</span></p>
+                            <p>retrieval distance: <span data-output="retrieval-distance">00.00<span> miles</span></span></p>
+                            <p>payment: <span data-output="payment">none</span></p>
+                        </div>
+                        <div class="totals">
+                            <p>sub-total($): <span data-output="invoice-sub-total">00.00</span></p>
+                            <p>retrieval($): <span data-output="retrieval-cost">00.00</span></p>
+                            <p>tax($): <span>00.00</span></p>
+                            <p>total($): <span data-output="invoice-total">00.00</span></p>
+                        </div>
+                        
+                        
                     </div>
                 </div>
-                
-            </div>
-            <div class="order-information">
+                <div class="before-order-submission">
+                    <p>Reciept for the order will be <strong class="pink-text">sent via email</strong>.</p>
+                    <p>Invoice, additional information, and payment process will be sent once I <strong class="pink-text">recieve your order</strong> information.</p>
+                    <p>Orders placed after 6pm(CST) will be handled before 6pm the following business day.</p>
+                    <p>I look forward to adding something sweet to your next event.</p>
+                    <p>Thank you for ordering with <strong class="pink-text">Baked by Bec</strong>!</p>
+                    <label for="OrderFormAgreementCheckbox"><span>I have entered the information above correctly and am ready to order!</span>
+                        <input type="checkbox" id="OrderFormAgreementCheckbox" autocomplete="off" required>
+                    </label>
+                </div>
+                <div class="order-form-controls">
+                    <button type="button" class="btn order-form-submit-btn js-order-form-submit-btn">place order</button>
+                </div> 
+           </form>
+        </section>
+       
 
-            <div>
-                <p>Orders need to be placed<br> <span>minimum of two weeks before</span> <br>for your event.</p>
-                <p>This allows me enough time to make your cookies as delicious and beautiful as possible.</p>
-                <p><span>Invoices will be sent via email.</span></p>
-                <p>I look forward to adding something sweet to your next event.  Thank you for booking with<br><span>Baked by Bec</span>!</p>
-            </div>
-
-        </div>
-
-            <div class="personal-information">
-
-                <label for="OrderFormName">
-                    <div>Name</div>
-                    <input type="text" name="name" id="OrderFormName" autocomplete="off" required>
-                </label>
-
-                <label for="OrderFormEmail">
-                    <div>Email</div>
-                    <input type="email" name="email" id="OrderFormEmail" autocomplete="off" required>
-                </label>
-    
-                <label for="OrderFormPhoneNumber">
-                    <div>Phone Number</div>
-                    <input type="tel" name="phonenumber" id="OrderFormPhoneNumber" autocomplete="off" required>
-                </label>
-
-                <!-- address information injected here if needed -->
-
-            </div>
-
-            <button type="button" class="btn order-submit-btn">place order</button>
-
-       </form>
+       <div class="order-progress-bar js-order-progress-bar">
+            <ul class="order-progress-list">
+                <li class="order-progress-item" data-progress-state="0">
+                    <p>select<br>item</p>
+                    <div class="bar"></div>
+                    <div class="bulb">1</div>
+                </li>
+                <li class="order-progress-item" data-progress-state="1">
+                    <p>item<br>info</p>
+                    <div class="bar"></div>
+                    <div class="bulb">2</div>
+                </li>
+                <li class="order-progress-item" data-progress-state="2">
+                    <p>select<br>retrieval</p>
+                    <div class="bar"></div>
+                    <div class="bulb">3</div> 
+                </li>
+                <li class="order-progress-item" data-progress-state="3">
+                    <p>select<br>payment</p>
+                    <div class="bar"></div>
+                    <div class="bulb">4</div>
+                </li>
+                <li class="order-progress-item" data-progress-state="4">
+                    <p>contact<br>info</p>
+                    <div class="bar"></div>
+                    <div class="bulb">5</div>
+                </li>
+                <li class="order-progress-item" data-progress-state="5">
+                    <p>looks<br>good!</p>
+                    <div class="bar"></div>
+                    <div class="bulb">6</div>
+                </li>
+                <li class="order-progress-item" data-progress-state="6">
+                    <p>place<br>order</p>
+                    <div class="bar"></div>
+                    <div class="bulb">7</div>
+                </li>
+            </ul>
+       </div>
 
        
 
@@ -210,7 +387,7 @@
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
         <div class="footer-created-by">
-            <p>Created by Clayton McDaniel</p>
+            <p>created by <strong>Clayton McDaniel</strong> and <strong>Rebecca Loren</strong></p>
             <a href="https://github.com/Altycon">https://github.com/Altycon</a>
         </div>
     </footer>

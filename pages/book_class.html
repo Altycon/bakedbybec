@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Event | Baked By Bec</title>
+
+    <meta name="referrer" content="origin">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Clayton McDaniel, Rebecca Loren">
+    
+    <meta name="robots" content="index">
+    <meta name="robots" content="follow">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
     <link rel="stylesheet" href="../main.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/bakedbybec/img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/bakedbybec/img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/bakedbybec/img/fav/favicon-16x16.png">
+
+    <link rel="manifest" href="/manifest.json">
+
     <script type="module" src="../js/pages/book_class/book_class.js"></script>
 </head>
 <body>
@@ -117,8 +139,8 @@
                     </li>
                 </ul>
                 <div class="summary-text-wrapper">
-                    <p>I will travel to your venue of choice, and bring all decorating materials necessary for you and your guests.  After 30 minutes of prep time before your class, each cookie station will be ready to go! Classes are scheduled between 1.5-2 hours in length giving plenty of time for decorating, questions, and conversation.</p>
-                    <p>Tables and chairs will need to be provided by either you or your venue.  I would strongly suggest seating only 4-6 people at each table.</p>
+                    <p>I will travel to your venue of choice, and bring all decorating materials necessary for you and your guests. After 30 minutes of prep time before your class, each cookie station will be ready to go! Classes are scheduled between 1.5-2 hours in length giving plenty of time for decorating, questions, and conversation.</p>
+                    <p>Tables and chairs will need to be provided by either you or your venue. <strong class="pink-text">Minimum of 6 people</strong> in attendance per class.</p>
                 </div>
             </article>
         </section>
@@ -170,7 +192,7 @@
                         <li>recipe</li>
                         <li>instructions</li>
                     </ul>
-                    <p>Take the joy of the class home with you by purchasing one of our Cooking Crafting Kits! Available to all class participants, these kits are perfect for beginner bakers and anyone with a sweet tooth. My Crafting kits make it easy to bring the magic of cookie decorating into your kitchen and create sweet memories with family and friends!</p>
+                    <p>Take the joy of the class home with you by purchasing one of our Cooking Crafting Kits! Available to all class participants, these kits are perfect for bakers of all levels. My Crafting kits make it easy to bring the magic of cookie decorating into your kitchen and create sweet memories with family and friends!</p>
                 </div>
             </article>
             <article class="process-details">
@@ -214,30 +236,32 @@
         <form class="book-class-form">
             
             <div class="inputs-wrapper">
-                <label for="BookClassFormNameInput">
+                <label for="BookClassFormNameInput" class="form-label">
                     <div>Name</div>
                     <input type="text" 
                     name="name" 
-                    id="BookClassFormNameInput" 
+                    id="BookClassFormNameInput"
+                    class="form-text-input" 
                     autocomplete="off" required>
                 </label>
-                <label for="BookClassFormEmailInput">
+                <label for="BookClassFormEmailInput" class="form-label">
                     <div>Email</div>
                     <input type="email" 
                     name="email" 
                     id="BookClassFormEmailInput" 
+                    class="form-text-input"
                     autocomplete="off" required>
                 </label>
-                <label for="BookClassFormClassSelect">
+                <label for="BookClassFormClassSelect" class="form-label">
                     <div>class</div>
-                    <select name="class" id="BookClassFormClassSelect" autocomplete="off" required>
+                    <select name="class" id="BookClassFormClassSelect" class="form-select" autocomplete="off" required>
                         <option value=""selected disabled>-- select</option>
                         <option value="kids">kids</option>
                         <option value="adults">adults</option>
                         <option value="duos">decorating duo</option>
                     </select>
                 </label>
-                <label for="BookClassFormAdvancedInquiryCheckbox">
+                <label for="BookClassFormAdvancedInquiryCheckbox" class="form-label">
                     <div>Interested in<br>advanced class</div>
                     <input type="checkbox" 
                     name="advancedinquiry" 
@@ -274,7 +298,7 @@
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
         <div class="footer-created-by">
-            <p>Created by Clayton McDaniel</p>
+            <p>created by <strong>Clayton McDaniel</strong> and <strong>Rebecca Loren</strong></p>
             <a href="https://github.com/Altycon">https://github.com/Altycon</a>
         </div>
     </footer>

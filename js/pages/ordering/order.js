@@ -1,937 +1,356 @@
 import { pageNavigation } from "../../navigation.js";
-import { openInHouseBakerySign, capitalize } from "../../utilities.js";
+import { 
+    appendElementToParentWithFragment,
+    capitalize, 
+    ItemListChangeEvent, 
+    openInHouseBakerySign, 
+    transitionElementClose, 
+    transitionElementOpen,
+} from "../../utilities.js";
+import { OrderProgress } from "./order_progress.js";
+import { OrderItemData } from "./order_data.js";
+import { OrderComponent } from "./order_components.js";
 
 
-
-const OrderForm = {
+const Order = {
     form: undefined,
+    itemSelectField: undefined,
+    retrievalSelectField: undefined,
+    paymentSelectField: undefined,
+    agreementCheckboxField: undefined,
     submitButton: undefined,
-    itemSelectElement: undefined,
-    retrivalTypeSelect: undefined,
-    addressInformationDisplay: undefined,
-
-    handleRetrievalSelect(event){
-
-        const addressElement = document.querySelector('.address-information');
-
-        const personalInformationElement = OrderForm.form.querySelector('.personal-information');
-
-        const deliveryEstimatorElement = OrderForm.form.querySelector('.delivery-estimator');
-
-        if(event.target.value === 'shipping'){
-
-            if(!addressElement){
-
-                const addressComponent = OrderForm.addressFormComponent(event.target.value);
-
-                personalInformationElement.appendChild(new DocumentFragment().appendChild(addressComponent));
-
-                setTimeout( ()=> {
-
-                    addressComponent.classList.add('show');
-    
-                },100);
-            }
-
-            if(deliveryEstimatorElement){
-
-                personalInformationElement.removeChild(deliveryEstimatorElement);
-
-            }
-
-            document.querySelector(`[data-output="shipping"]`).textContent = `15.00`;
+    selectFields: undefined,
+    itemTabList: undefined,
+    itemList: undefined,
+    invoiceItemList: undefined,
 
 
-        }else if(event.target.value === 'delivery'){
-
-            if(!addressElement){
-
-                const addressComponent = OrderForm.addressFormComponent(event.target.value);
-
-                personalInformationElement.appendChild(new DocumentFragment().appendChild(addressComponent));
-
-                setTimeout( ()=> {
-
-                    addressComponent.classList.add('show');
-    
-                },100)
-            }
-
-            if(!deliveryEstimatorElement){
-
-                const deliveryEsitmatorComponent = OrderForm.deliveryEstimatorComponent();
-
-                personalInformationElement.appendChild(new DocumentFragment().appendChild(deliveryEsitmatorComponent));
-
-                setTimeout( ()=> {
-
-                    deliveryEsitmatorComponent.classList.add('show');
-    
-                },100)
-
-            }
-
-        }else if(event.target.value === 'pickup'){
-
-            if(addressElement){
-
-                addressElement.classList.remove('show');
-
-                setTimeout( ()=>{
-
-                    personalInformationElement.removeChild(addressElement);
-
-                },500)
-
-            }
-
-            if(deliveryEstimatorElement){
-
-                personalInformationElement.removeChild(deliveryEstimatorElement);
-            }
+    // intros
+    removeItemTabIntro(){
+        const tabIntro = document.querySelector('.js-order-item-tab-intro');
+        if(Order.itemTabList.contains(tabIntro)){
+            Order.itemTabList.removeChild(tabIntro);
         }
     },
-    zeroPadLeftToString(num){
-
-        if(+num > 9) return `${num}`;
-
-        return `0${num}`;
+    removeItemIntro(){
+        const itemIntro = document.querySelector('.js-order-item-intro');
+        if(Order.itemList.contains(itemIntro)){
+            Order.itemList.removeChild(itemIntro);
+        }
     },
-    limitDateSelection(dateElement,numberOfDaysToLimit){
 
+    // tabs
+    deactivateItemTabs(){
+        document.querySelectorAll('.js-order-item-tab').forEach( tab => {
+            if(tab && tab.classList.contains('active')){
+                tab.classList.remove('active');
+            }
+        })
+    },
+    addItemTab(itemId,makeActive=true){
+        Order.deactivateItemTabs();
+
+        const tabComponent = OrderComponent.orderItemTabComponent(itemId);
+        appendElementToParentWithFragment(
+            Order.itemTabList,
+            tabComponent
+        )
+        tabComponent.addEventListener('click', Order.tabToItem);
+        setTimeout( ()=> {
+            tabComponent.classList.add('show');
+        },100);
+        if(makeActive){
+            setTimeout( ()=> {
+                tabComponent.classList.add('active');
+            },200);
+        }
+    },
+
+    // handlers
+    getNumberOfActiveItems(){
+        const orderItemsList = [...document.querySelectorAll('.js-order-item')];
+        return {
+            total: orderItemsList.length,
+            items: orderItemsList
+        }
+    
+    },
+    markRetrievalInfoUnavailable(retrievalType){
+        const informaitonElement = document.querySelector(`.js-retrieval-information-${retrievalType}`);
+        if(!informaitonElement.classList.contains('unavailable')){
+            informaitonElement.classList.add('unavailable');
+        }
+    },
+    disableRetrievalSelection(retrievalOption){
+        const option = Order.retrievalSelectField.querySelector(`option[value="${retrievalOption}"]`);
+        if(!option) console.warn('item retrieval option to be disabled, not found');
+        option.setAttribute('disabled', 'true');
+    },
+    enableItemSelection(itemId){
+        document.querySelector(`#OrderFormItem option[value="${itemId}"]`).removeAttribute('disabled');
+    },
+    disableItemSelection(itemId){
+        const option = Order.itemSelectField.querySelector(`option[value="${itemId}"]`);
+        if(!option) console.warn('item option to be disabled, not found')
+        option.setAttribute('disabled', 'true');
+
+        if('layer-cake' === itemId || 'sheet-cake' === itemId){
+            Order.disableRetrievalSelection('shipping');
+            Order.markRetrievalInfoUnavailable('shipping');
+        }
+
+    },
+    connectDataInputsToDataOutputs(){
+        const inputs = document.querySelectorAll('[data-input]');
+        inputs.forEach( input => {
+            if(!input.classList.contains('connected')){
+                input.addEventListener('input', (inputEvent)=>{
+                    document.querySelector(`[data-output="${input.dataset.input}"]`).textContent = inputEvent.target.value;
+                });
+                input.classList.add('connected');
+            }
+        })
+    },
+    
+    // invoice
+    addItemToInvoice(itemId){
+        const [ first, last ] = itemId.split('-');
+        const objecId = `${first}${capitalize(last)}`;
+
+        const invoiceItemComponent = OrderComponent.orderInvoiceItemComponent(
+            itemId,
+            OrderItemData.invoiceFields[objecId]
+        );
+        appendElementToParentWithFragment(
+            Order.invoiceItemList,
+            invoiceItemComponent
+        );
+    },
+    setInvoiceDate(){
         const today = new Date();
-        const now = today.getTime();
-        const milliseconds = 86400000;
-        const minumumDateTime = now + (numberOfDaysToLimit * milliseconds);
-        const minDate = new Date(minumumDateTime);
-        const yearSring = OrderForm.zeroPadLeftToString(minDate.getFullYear());
-        const monthString = OrderForm.zeroPadLeftToString(minDate.getMonth() + 1);
-        const dayString = OrderForm.zeroPadLeftToString(minDate.getDate());
-        const dateString = `${yearSring}-${monthString}-${dayString}`;
-
-        dateElement.setAttribute('min', dateString);
+        const dateOutput = document.querySelector('[data-output="order-date"]');
+        dateOutput.textContent = today.toDateString();
     },
-    capatilizeWord(word){
-        
-        return word[0].toUpperCase() + word.substring(1);
 
-    },
-    initialWords(words){
-        let initials = '';
-
-        for(let i = 0; i < words.length; i++){
-
-            initials += words[i][0]; 
-        }
-
-        return initials;
-    },
-    cakepopComponent(){
-        
-        const li = document.createElement('li');
-        li.classList.add('order-item','cakepop-information');
-        li.setAttribute('data-order-item','cake-pops');
-        li.setAttribute('data-item-id','cp');
-
-        li.innerHTML += `<header>
-                <h3>Cake Pops</h3>
-                <button type="button" class="btn remove-order-btn" value="cake-pops">remove&nbsp;&#10007;</button>
-            </header>
-
-            <label for="CakepopQuantity">
-                <div>How many would you like?</div>
-                <select name="cakepopquantity" id="CakepopQuantity" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="1" data-price="18">1 dozen</option>
-                    <option value="2" data-price="36">2 dozen</option>
-                    <option value="3" data-price="54">3 dozen</option>
-                    <option value="4" data-price="72">4 dozen</option>
-                    <option value="5" data-price="90">5 dozen</option>
-                    <option value="6" data-price="108">6 dozen</option>
-                </select>
-            </label>
-
-            <label for="CakepopDateNeeded">
-                <div>Date needed</div>
-                <input type="date" name="cakepopdateneeded" id="CakepopDateNeeded" autocomplete="off" required>
-            </label>
-
-            <label for="CakepopFlavor">
-                <div>Flavor</div>
-                <select name="cakepopflavor" id="CakepopFlavor" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="redvelvet">red velvet</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="CakepopFrosting">
-                <div>Frosting</div>
-                <select name="cakepopfrosting" id="CakepopFrosting" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-            <div class="inspiration-upload-wrapper">
-                <div class="inspiration-upload-btn-wrapper">
-                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
-                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
-                </div>
-            </div>`;
-        
-        return li;
-    },
-    cupcakeComponent(){
-
-        const li = document.createElement('li');
-        li.classList.add('order-item','cupcake-information');
-        li.setAttribute('data-order-item','cup-cakes');
-        li.setAttribute('data-item-id','cc');
-
-        li.innerHTML += `<header>
-                <h3>Cupcakes</h3>
-                <button type="button" class="btn remove-order-btn" value="cupcakes">remove&nbsp;&#10007;</button>
-            </header>
-
-            <label for="CupcakeQuantity">
-                <div>How many would you like?</div>
-                <select name="cupcakequantity" id="CupcakeQuantity" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="1" data-price="20">1 dozen</option>
-                    <option value="2" data-price="40">2 dozen</option>
-                    <option value="3" data-price="60">3 dozen</option>
-                    <option value="4" data-price="80">4 dozen</option>
-                    <option value="5" data-price="100">5 dozen</option>
-                    <option value="6" data-price="120">6 dozen</option>
-                </select>
-            </label>
-
-            <label for="CupcakeDateNeeded">
-                <div>Date needed</div>
-                <input type="date" name="cupcakedateneeded" id="CupcakeDateNeeded" autocomplete="off" required>
-            </label>
-
-            <label for="CupcakeFlavor">
-                <div>Flavor</div>
-                <select name="cupcakeflavor" id="CupcakeFlavor" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="redvelvet">red velvet</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="CupcakeFrosting">
-                <div>Frosting</div>
-                <select name="cupcakefrosting" id="CupcakeFrosting" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="CupcakeTheme">
-                <div>Theme/Occasion</div>
-                <input type="text" 
-                name="cupcaketheme" 
-                id="CupcakeTheme" 
-                list="ItemThemes"
-                cols="30" 
-                rows="1"  
-                autocomplete="off" required/>
-            </label>
-
-            <label for="CupcakePersonalization">
-                <div>Personalization</div>
-                <textarea name="cupcakepersonalization" id="CupcakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-            </label>
-            <div class="inspiration-upload-wrapper">
-                <div class="inspiration-upload-btn-wrapper">
-                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
-                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
-                </div>
-            </div>`;
-
-        return li;
-    },
-    dropCookieComponent(){
-
-        const li = document.createElement('li');
-        li.classList.add('order-item','drop-cookie-information');
-        li.setAttribute('data-order-item','drop-cookies');
-        li.setAttribute('data-item-id','dc');
-
-        li.innerHTML += `<header>
-            <h3>Drop Cookies</h3>
-            <button type="button" class="btn remove-order-btn" value="drop-cookies">remove&nbsp;&#10007;</button>
-            </header>
-
-            <label for="DropCookieQuantity">
-                <div>How many would you like?</div>
-                <select name="dropcookiequantity" id="DropCookieQuantity" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="1" data-price="25">1 dozen</option>
-                    <option value="2" data-price="50">2 dozen</option>
-                    <option value="3" data-price="75">3 dozen</option>
-                    <option value="4" data-price="100">4 dozen</option>
-                    <option value="5" data-price="125">5 dozen</option>
-                    <option value="6" data-price="150">6 dozen</option>
-                </select>
-            </label>
-
-            <label for="DropCookieDateNeeded">
-                <div>Date needed</div>
-                <input type="date" name="dropcookiedateneeded" id="DropCookieDateNeeded" autocomplete="off" required>
-            </label>
-
-            <label for="DropCookieFlavor">
-                <div>Flavor</div>
-                <select name="dropcookieflavor" id="DropCookieFlavor" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="lemon">lemon</option>
-                    <option value="raspberry">raspberry</option>
-                    <option value="strawberry">strawberry</option>
-                </select>
-            </label>
-
-            <label for="DropCookieAddon">
-                <div>Add-on</div>
-                <select name="dropcookieaddon" id="DropCookieAddon" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="chocolate chips">chocolate chips</option>
-                    <option value="white chocolate chips">white chocolate chips</option>
-                    <option value="peanut butter chips">peanut butter chips</option>
-                </select>
-            </label>
-            <div class="inspiration-upload-wrapper">
-                <div class="inspiration-upload-btn-wrapper">
-                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
-                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
-                </div>
-            </div>`;
-
-        return li;
-    },
-    layerCakeComponent(){
-        const li = document.createElement('li');
-        li.classList.add('order-item','layer-cake-information');
-        li.setAttribute('data-order-item','layer-cake');
-        li.setAttribute('data-item-id','lck');
-
-        li.innerHTML += `<header>
-            <h3>Layer Cake</h3>
-            <button type="button" class="btn remove-order-btn" value="layer-cake">remove&nbsp;&#10007;</button>
-            </header>
-            
-            <label for="LayerCakeQuantity">
-                <div>How many would you like?</div>
-                <select name="layercakequantity" id="LayerCakeQuantity" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-            </label>
-
-            <label for="LayerCakeDateNeeded">
-                <div>Date needed</div>
-                <input type="date" name="layercakedateneeded" id="LayerCakeDateNeeded" autocomplete="off" required>
-            </label>
-
-            <label for="LayerCakeSize">
-                <div>What size of cake?</div>
-                <select name="layercakesize" id="LayerCakeSize" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="6inch" data-price="25">Smash Cake (serves ~12)</option>
-                    <option value="8inch" data-price="35">8" (serves ~20)</option>
-                    <option value="10inch" data-price="40">10" (serves ~28)</option>
-                    <option value="2tier" data-price="65">2 tier (serves ~48)</option>
-                    
-                </select>
-            </label>
-
-            <label for="LayerCakeFlavor">
-                <div>Flavor</div>
-                <select name="layercakeflavor" id="LayerCakeFlavor" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="redvelvet">red velvet</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="LayerCakeFrosting">
-                <div>Frosting</div>
-                <select name="layercakefrosting" id="LayerCakeFrosting" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="LayerCakeTheme">
-                <div>Theme/Occasion</div>
-                <input type="text"
-                name="layercaketheme" 
-                id="LayerCakeTheme"
-                list="ItemThemes" 
-                cols="30" rows="1"  
-                autocomplete="off" required/>
-            </label>
-
-            <label for="LayerCakePersonalization">
-                <div>Personalization</div>
-                <textarea name="layercakepersonalization" id="LayerCakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-            </label>
-            <div class="inspiration-upload-wrapper">
-                <div class="inspiration-upload-btn-wrapper">
-                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
-                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
-                </div>
-            </div>`;
-
-        return li;
-    },
-    sheetCakeComponent(){
-        const li = document.createElement('li');
-        li.classList.add('order-item','sheet-cake-information');
-        li.setAttribute('data-order-item','sheet-cake');
-        li.setAttribute('data-item-id','sck');
-
-        li.innerHTML += `<header>
-                <h3>sheet cake</h3>
-                <button type="button" class="btn remove-order-btn" value="sheet-cake">remove&nbsp;&#10007;</button>
-            </header>
-            <label for="SheetCakeQuantity">
-                <div>How many would you like?</div>
-                <select name="sheetcakequantity" id="SheetCakeQuantity" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-            </label>
-
-            <label for="SheetCakeDateNeeded">
-                <div>Date needed</div>
-                <input type="date" name="cakedateneeded" id="SheetCakeDateNeeded" autocomplete="off" required>
-            </label>
-
-            <label for="SheetCakeSize">
-                <div>What size of cake?</div>
-                <select name="sheetcakesize" id="SheetCakeSize" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="quarter" data-price="30">quarter sheet</option>
-                    <option value="half" data-price="40">half sheet</option>
-                </select>
-            </label>
-
-            <label for="SheetCakeFlavor">
-                <div>Flavor</div>
-                <select name="sheetcakeflavor" id="SheetCakeFlavor" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="redvelvet">red velvet</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="SheetCakeFrosting">
-                <div>Frosting</div>
-                <select name="sheetcakefrosting" id="SheetCakeFrosting" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="vanilla">vanilla</option>
-                    <option value="chocolate">chocolate</option>
-                    <option value="strawberry">strawberry</option>
-                    <option value="lemon">lemon</option>
-                </select>
-            </label>
-
-            <label for="SheetCakeTheme">
-                <div>Theme/Occasion</div>
-                <input type="text"
-                name="sheetcaketheme" 
-                id="SheetCakeTheme"
-                list="ItemThemes" 
-                cols="30" rows="1"  
-                autocomplete="off" required/>
-            </label>
-
-            <label for="SheetCakePersonalization">
-                <div>Personalization</div>
-                <textarea name="sheetcakepersonalization" id="SheetCakePersonalization" cols="30" rows="2" autocomplete="off" required></textarea>
-            </label>
-            <div class="inspiration-upload-wrapper">
-                <div class="inspiration-upload-btn-wrapper">
-                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
-                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
-                </div>
-            </div>`;
-
-        return li;
-    },
-    sugarCookieComponent(){
-
-        const li = document.createElement('li');
-        li.classList.add('order-item','sugar-cookie-information');
-        li.setAttribute('data-order-item','sugar-cookies');
-        li.setAttribute('data-item-id','sc');
-
-        li.innerHTML += `<header>
-            <h3>Sugar Cookies</h3>
-            <button type="button" class="btn remove-order-btn" value="sugar-cookies">remove&nbsp;&#10007;</button>
-            </header>
-
-            <label for="SugarCookiesQuantity">
-                <div>How many would you like?</div>
-                <select name="sugarcookiesquantity" id="SugarCookiesQuantity" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="1" data-price="30">1 dozen</option>
-                    <option value="2" data-price="60">2 dozen</option>
-                    <option value="3" data-price="90">3 dozen</option>
-                    <option value="4" data-price="120">4 dozen</option>
-                    <option value="5" data-price="150">5 dozen</option>
-                    <option value="6" data-price="180">6 dozen</option>
-                </select>
-            </label>
-
-            <label for="SugarCookiesDateNeeded">
-                <div>When are they needed?</div>
-                <input type="date"
-                    name="sugarcookiesdate" 
-                    id="SugarCookiesDateNeeded" 
-                    min=""  
-                    autocomplete="off" required>
-            </label>
-
-            <label for="SugarCookiesTheme">
-                <div>Theme/Occasion</div>
-                <input type="text"
-                    name="sugarcookiestheme" 
-                    id="SugarCookiesTheme"
-                    list="ItemThemes" 
-                    cols="30" rows="1"  
-                    autocomplete="off" required/>
-            </label>
-
-            <label for="SugarCookiesPersonalization">
-                <div>Personalization</div>
-                <textarea name="sugarcookiespersonalization"
-                    id="SugarCookiesPersonalization" 
-                    cols="30" rows="2"  
-                    autocomplete="off" required></textarea>
-            </label>
-            <div class="inspiration-upload-wrapper">
-                <div class="inspiration-upload-btn-wrapper">
-                    <button class="btn add-inspiration-btn">&plus;&nbsp;inspiration<img src="/bakedbybec/img/icon/site/image_icon_64px.png" width="16"/></button>
-                    <button class="btn remove-inspiration-btn">remove&nbsp;&#10007;</button>
-                </div>
-            </div>`;
-        return li;
-    },
-    addressFormComponent(type){
-
-        const div = document.createElement('div');
-        div.classList.add('address-information');
-
-        div.innerHTML += `<label for="OrderFormStreet">
-            <div>Street</div>
-                <input type="text" name="street" id="OrderFormStreet" autocomplete="off" required>
-            </label>
-            <label for="OrderFormCity">
-                <div>City</div>
-                <input type="text" name="city" id="OrderFormCity" autocomplete="off" required>
-            </label>
-            <label for="OrderFormState">
-                <div>State</div>
-                <input type="text" name="state" id="OrderFormState" autocomplete="off" required>
-            </label>
-            <label for="OrderFormZipCode">
-                <div>Zip</div>
-                <input type="text" name="zipcode" id="OrderFormZipCode" autocomplete="off" required>
-            </label>`;
-
-        return div;
-    },
-    inspirationalImageContentComponent(orderItemString){
-        if(!orderItemString){
-            console.warn('order item string name required');
-            return;
-        }
-        const parts = orderItemString.split('-');
-        const idString = parts.length > 1 ? capitalize(parts[0]) + capitalize(parts[1]):capitalize(parts[0]);
-        const nameString = parts.length > 1 ? `${parts[0]}${parts[1]}`:parts[0];
-
-        const component = document.createElement('div');
-        component.classList.add('inspiration-upload-content');
-
-        const disclaimer = document.createElement('p');
-        disclaimer.innerHTML = `Pictures will be <span class="pink-text">used for inspiration only</span><br>and will not be recreated 100%.`;
-
-        const label = document.createElement('label');
-        label.setAttribute('for', `${idString}ImageUploadInput`);
-        label.classList.add('file-upload-element');
-
-        const browseButton = document.createElement('button');
-        browseButton.setAttribute('type', 'button');
-        browseButton.classList.add('btn','browse-file-btn');
-        browseButton.textContent = 'browse...';
-        
-
-        const filenameOutput = document.createElement('div');
-        filenameOutput.classList.add('filename-output');
-        filenameOutput.textContent = 'no file selected';
-
-        const fileUploadInput = document.createElement('input');
-        fileUploadInput.setAttribute('type', 'file');
-        fileUploadInput.setAttribute('id', `${idString}ImageUploadInput`);
-        fileUploadInput.setAttribute('name', `${nameString}image`);
-        fileUploadInput.classList.add('file-upload-input');
-
-        const inspirationImageWrapper = document.createElement('div');
-        inspirationImageWrapper.classList.add('inspiration-img-wrapper');
-
-        const inspirationalImageOutput = document.createElement('img');
-        inspirationalImageOutput.classList.add('inspiration-img-output');
-        inspirationImageWrapper.appendChild(inspirationalImageOutput);
-
-        browseButton.addEventListener('click', (event)=>{
-            event.preventDefault();
-            fileUploadInput.addEventListener('input', (inputEvent)=>{
-                const file = inputEvent.target.files[0];
-                filenameOutput.textContent = file.name;
-
-                const fileReader = new FileReader();
-                fileReader.onload = function(){
-                    inspirationalImageOutput.src = fileReader.result;
-                };
-                fileReader.readAsDataURL(file);
-            });
-            fileUploadInput.click();
-        })
-
-        label.append(browseButton,filenameOutput,fileUploadInput);
-
-        component.append(disclaimer,label,inspirationImageWrapper);
-
-
-        return component;
-    },
-    deliveryEstimatorComponent(){
-        const div = document.createElement('div');
-        div.classList.add('delivery-estimator');
-
-        div.innerHTML += `<p>Estimate delivery price based on above address information</p>
-        <div>
-            <button type="button" class="btn">Calculate</button>
-            <p>Approx. miles:&nbsp;<span class="delivery-estimator-miles">0</span></p>
-            <p>Approx. price:&nbsp;$<span class="delivery-estimator-price">0</span></p>
-        </div>`;
-
-        return div;
-    },
-    createOrderItem(itemType){
-
-        switch(itemType){
-
-            case 'sugar-cookies': return OrderForm.sugarCookieComponent();
-
-            case 'layer-cake': return OrderForm.layerCakeComponent();
-
-            case 'sheet-cake': return OrderForm.sheetCakeComponent();
-
-            case 'drop-cookies': return OrderForm.dropCookieComponent();
-            
-            case 'cup-cakes': return OrderForm.cupcakeComponent();
-
-            case 'cake-pops': return OrderForm.cakepopComponent();
-
-        }
-     
-
-    },
-    handleItemTabSwitch({target}){
-
-        if(target.classList.contains('show')){
-
-            const itemTabs = document.querySelector('.item-information-tabs');
-
-           [...itemTabs.children].forEach( tab => {
-                if(tab.classList.contains('active')){
-                    tab.classList.remove('active');
-                }
-            });
-
-            target.classList.add('active');
-
-            [...OrderForm.form.querySelectorAll('.order-item')].forEach( orderItem => {
-                if(orderItem.classList.contains('open')){
-                    orderItem.classList.remove('open');
-                }
-            });
-
-            document.querySelector(`[data-item-id="${target.dataset.connectionId}"]`).classList.add('open');
-
-        }
-    },
-    removeItemTab(itemId){
-        
-        const itemTabs = document.querySelector('.item-information-tabs');
-
-        [...itemTabs.children].forEach( (tab,index) => {
-         
-            if(tab && tab.dataset.connectionId === itemId){
-                itemTabs.removeChild(tab);
-
-                if(itemTabs.children[index - 1]){
-                    itemTabs.children[index - 1].classList.add('active');
-
-                    const connectionId = itemTabs.children[index - 1].dataset.connectionId;
-
-                    document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
-
-                }else if(itemTabs.children[index]){
-
-                    itemTabs.children[index].classList.add('active');
-
-                    const connectionId = itemTabs.children[index].dataset.connectionId;
-
-                    document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
-
-                }else if(itemTabs.children[index + 1]){
-
-                    itemTabs.children[index + 1].classList.add('active');
-
-                    const connectionId = itemTabs.children[index + 1].dataset.connectionId;
-
-                    document.querySelector(`[data-item-id="${connectionId}"]`).classList.add('open');
-                }
+    // items
+    hideOrderItems(){
+        document.querySelectorAll('.js-order-item').forEach( orderItem =>{
+            if(orderItem.classList.contains('active')){
+                transitionElementClose(orderItem,(element)=>{
+                    element.classList.remove('active');
+                });
             }
         })
     },
-    createItemTab(connectionId,itemType){
-        const div = document.createElement('div');
-        div.classList.add('item-tab');
-        div.setAttribute('data-connection-id', connectionId);
+    addItemToOrder(itemId){
+        const [ first, last ] = itemId.split('-');
+        const objecId = `${first}${capitalize(last)}`;
 
-        const parts = itemType.split('-');
-        if(parts.length > 1){
+        const itemComponent = OrderComponent.orderItemComponent(OrderItemData[objecId]);
+        appendElementToParentWithFragment(
+            Order.itemList,
+            itemComponent
+        )
+        transitionElementOpen(itemComponent,(element)=>{
+            element.classList.add('active');
+        });
+    },
+    tabToItem(clickEvent){
+        clickEvent.preventDefault();
+        const tab = clickEvent.target;
+        if(!tab.classList.contains('active')){
+           
+            Order.deactivateItemTabs();
+            Order.hideOrderItems();
+    
+            if(!tab.dataset.tabId){
+                console.warn('item id not set on tab');
+                return;
+            }
+            const orderItem = document.querySelector(`[data-item-id="${tab.dataset.tabId}"]`);
+            if(!orderItem){
+                console.warn('order item element not found when tabbing');
+                return;
+            }
 
-            //div.textContent = parts[0] + ' ' + parts[1];
-            div.innerHTML = `${parts[0]}<br>${parts[1]}`;
+            transitionElementOpen(orderItem, (element)=> {
+                element.classList.add('active')
+            });
+
+            setTimeout(()=>{
+                tab.classList.add('active');
+            },100);
+        }
+    },
+    chooseItem(changeEvent){
+        const itemId = changeEvent.target.value;
+        
+        Order.removeItemIntro();
+        Order.hideOrderItems();
+    
+        const { total, items } = Order.getNumberOfActiveItems();
+    
+        if(total && total === 1){
+            Order.removeItemTabIntro();
+            Order.addItemTab(items[0].dataset.itemId,false)
+            Order.addItemTab(itemId);
+        }
+        if(total && total > 1){
+            Order.addItemTab(itemId);
+        }
+
+        Order.addItemToOrder(itemId);
+
+        Order.disableItemSelection(itemId);
+
+        Order.addItemToInvoice(itemId);
+
+        OrderProgress.listenToAreaInputs('.js-item-info',2);
+        OrderProgress.inspectAreaInputProgress('.js-item-info',2);
+        OrderProgress.setState(1);
+        
+    },
+
+    // retrieval
+    selectOrderRetrievalType(inputEvent){
+        const retrievalType = inputEvent.target.value;
+        const personalInformationElement = document.querySelector('.js-order-form .js-personal-information');
+    
+        const possibleAddressElement = document.querySelector('.js-order-form .js-address-information') ||
+            document.querySelector('.js-order-form .js-pickup-distance-information');
+        if(possibleAddressElement){
+            personalInformationElement.removeChild(possibleAddressElement);
+        }
+        
+        if(retrievalType === 'delivery' || retrievalType === 'shipping'){
+
+            const addressComponent = OrderComponent.orderAddressComponent(retrievalType);
+            personalInformationElement.appendChild(new DocumentFragment().appendChild(addressComponent));
+
+            setTimeout(() => {
+                addressComponent.classList.add('show');
+            },100);
+            addressComponent.classList.add('open');
+
+            OrderProgress.listenToAreaInputs('.js-personal-info',5);
 
         }else{
 
-            div.textContent = itemType
+            personalInformationElement.appendChild(
+                new DocumentFragment().appendChild(OrderComponent.getPickupOrderAddressComponent())
+            );
         }
+
+        OrderProgress.setState(3);
         
-        return div;
-    },
-    addItemTab(connectionId,itemType){
-
-        const itemTabs = document.querySelector('.item-information-tabs');
-
-        [...itemTabs.children].forEach( tab => {
-
-            if(tab.classList.contains('active')){
-                tab.classList.remove('active');
-            }
-        });
-
-        const newTab = OrderForm.createItemTab(connectionId,itemType);
-        // newTab.classList.add('show');
-        newTab.classList.add('active');
-        newTab.addEventListener('click', OrderForm.handleItemTabSwitch);
-
-        const tabParent = document.querySelector('.item-information-tabs');
-        tabParent.appendChild(newTab);
-
-        setTimeout( ()=> {
-            newTab.classList.add('show');
-        },100)
-    },
-    enableItemSelection(itemSelection,itemValue){
-
-        itemSelection.querySelector(`option[value="${itemValue}"]`).removeAttribute('disabled');
-
-        OrderForm.itemSelectElement.value = "";
-    },
-    removeItemFromOrder(event){
-
-        event.preventDefault();
-
-        const orderItem = event.target.closest('li');
-
-        orderItem.classList.remove('open');
-
-        orderItem.classList.remove('active');
-
-        OrderForm.disableOrderItemInputs(orderItem);
-
-        orderItem.closest('ul').removeChild(orderItem);
-
-
-
-        OrderForm.removeItemTab(orderItem.dataset.itemId);
-
-        OrderForm.enableItemSelection(OrderForm.itemSelectElement,orderItem.dataset.orderItem);
-
-    },
+        OrderComponent.displayInputContentInOutputElement(inputEvent);
     
-    disableItemSelection(itemSelection,itemValue){
-      
-        itemSelection.querySelector(`option[value="${itemValue}"]`).setAttribute('disabled', 'true');
+        const option = document.querySelector(`#OrderFormRetrieval option[value="${inputEvent.target.value}"]`);
+        const retrievalPrice = option.dataset.price;
+        document.querySelector(`[data-output="retrieval-price"]`).textContent = retrievalPrice;
+    
     },
-    addInspriationUploadContent(event){
-        event.preventDefault();
-        const orderItem = event.currentTarget.closest('li');
-        const uploadContentWrapper = orderItem.querySelector('.inspiration-upload-wrapper');
-
-        const component = OrderForm.inspirationalImageContentComponent(orderItem.dataset.orderItem);
-        uploadContentWrapper.appendChild(new DocumentFragment().appendChild(component))
-        setTimeout(() => {
-            component.classList.add('show');
-        }, 100);
-       
-        event.currentTarget.style.opacity = '0';
-        orderItem.querySelector('.remove-inspiration-btn').style.opacity = '1';
+    // payment
+    selectPaymentType(inputEvent){
+        OrderProgress.setState(4);
     },
-    removeInspirationUploadContent(event){
-        event.preventDefault();
-        const orderItem = event.currentTarget.closest('li');
-        const uploadContentWrapper = orderItem.querySelector('.inspiration-upload-wrapper');
-        const inspirationUploadContent = orderItem.querySelector('.inspiration-upload-content');
-
-        uploadContentWrapper.removeChild(inspirationUploadContent)
-        event.currentTarget.style.opacity = '0';
-        orderItem.querySelector('.add-inspiration-btn').style.opacity = '1';
-    },
-    activateOrderItem(orderItem){
-
-        orderItem.classList.add('open');
-
-        orderItem.classList.add('active'); // active state
-
-        orderItem.querySelector('.remove-order-btn').addEventListener('click', OrderForm.removeItemFromOrder)
-
-        orderItem.querySelector('.add-inspiration-btn').addEventListener('click', OrderForm.addInspriationUploadContent);
-
-        orderItem.querySelector('.remove-inspiration-btn').addEventListener('click', OrderForm.removeInspirationUploadContent);
-    },
-    listenToOrderItem(orderItemElement){
-
-        orderItemElement.querySelectorAll('select').forEach( selectElement => {
-
-            
-        })
-    },
-    disableOrderItemInputs(orderItemElement){
-        orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
-
-            dataInput.setAttribute('disabled',true);
-        });
-    },
-    enableOrderItemInputs(orderItemElement){
-        orderItemElement.querySelectorAll('[data-input]').forEach( dataInput => {
-
-            dataInput.removeAttribute('disabled');
-        });
-    },
-    addItemToOrder(event){
-
-        if(event.target.value){ 
-
-            const orderItems = [...OrderForm.form.querySelectorAll('.order-item')];
-
-            if(orderItems && orderItems.length > 0){
-                orderItems.forEach( orderItem => {
-                    if(orderItem.classList.contains('open')){
-                        orderItem.classList.remove('open');
-                    }
-                });
+    // aggreement
+    selectOrderAgreementCheckbox(changeEvent){
+        const progressState = OrderProgress.inspectState(); //checkProgressBarState(3);
+        if(progressState.length === 0){
+            if(changeEvent.target.checked){
+                OrderProgress.setState(6);
+            }else{
+                OrderProgress.removeState(6);
             }
-            
-            const orderItem = OrderForm.createOrderItem(event.target.value);
-
-            document.querySelector('.order-item-list').appendChild(new DocumentFragment().appendChild(orderItem));
-
-            OrderForm.addItemTab(orderItem.dataset.itemId,event.target.value );
-
-            OrderForm.disableItemSelection(event.target,event.target.value)
-
-            OrderForm.activateOrderItem(orderItem);
-
-            OrderForm.enableOrderItemInputs(orderItem);
-
-            OrderForm.limitDateSelection(orderItem.querySelector('input[type="date"]'),14);
-
-            //OrderForm.listenToOrderItem(orderItem);
-
-            setTimeout( ()=>{
-                orderItem.classList.add('show');
-            },100)
         }
-        
-
-        
     },
-    
-    submitOrder(event){
 
-        event.preventDefault();
+    submitOrder(){
 
-        alert("order not sent")
-        
     },
     listen(){
-
-        OrderForm.itemSelectElement.addEventListener('input', OrderForm.addItemToOrder);
-        
-        OrderForm.retrivalTypeSelect.addEventListener('input', OrderForm.handleRetrievalSelect);
-
-        OrderForm.submitButton.addEventListener('click', OrderForm.submitOrder);
-
-    },
-    autoSelectOrderItem(valueToSelect){
-
-        for (let i = 0; i < OrderForm.itemSelectElement.options.length; i++) {
-            if (OrderForm.itemSelectElement.options[i].value === valueToSelect) {
-                OrderForm.itemSelectElement.selectedIndex = i;
-              break;
-            }
-        }
-
-        const inputEvent = new Event('input', {
-            bubbles: true,
-            cancelable: true
-        });
-        OrderForm.itemSelectElement.dispatchEvent(inputEvent);
+        Order.itemSelectField.addEventListener('change',Order.chooseItem);
+        Order.retrievalSelectField.addEventListener('change', Order.selectOrderRetrievalType);
+        Order.paymentSelectField.addEventListener('change', Order.selectPaymentType);
+        Order.agreementCheckboxField.addEventListener('change', Order.selectOrderAgreementCheckbox);
+        Order.itemList.addEventListener('order:itemChange', (event)=>{
+            console.log('itemlist event', event);
+        })
     },
     initialize(){
-        OrderForm.form = document.querySelector('.order-form');
-        OrderForm.itemSelectElement = document.querySelector('#OrderFormItem');
-        OrderForm.retrivalTypeSelect = document.querySelector('#OrderFormRetrival');
-        OrderForm.addressInformationDisplay = document.querySelector('.address-information');
+        try{
+            // order form
+            Order.form = document.querySelector('#OrderForm');
+            if(!Order.form) throw new Error('order form not found');
 
-        OrderForm.submitButton = document.querySelector('.order-submit-btn');
+            Order.itemSelectField = document.querySelector('#OrderFormItem');
+            if(!Order.itemSelectField) throw new Error('item select element not found');
 
-      
+            Order.retrievalSelectField = document.querySelector('#OrderFormRetrieval');
+            if(!Order.retrievalSelectField) throw new Error('order retrieval select element not found');
+
+            Order.paymentSelectField = document.querySelector('#OrderFormPaymentType');
+            if(!Order.paymentSelectField) throw new Error('order payment select element not found');
+
+            Order.agreementCheckboxField = document.querySelector('#OrderFormAgreementCheckbox');
+            if(! Order.agreementCheckboxField) throw new Error('order agreement checkbox not found');
+
+            Order.submitButton = document.querySelector('.js-order-form-submit-btn');
+            if(!Order.submitButton) throw new Error('order submit button not found');
+
+            Order.selectFields = document.querySelectorAll('.form-select');
+            if(!Order.selectFields) throw new Error('form select fields not found');
+
+            // order tabs
+            Order.itemTabList = document.querySelector('.js-order-item-tab-list');
+            if(!Order.itemTabList) throw new Error('order item list element not found');
+
+            // order items
+            Order.itemList = document.querySelector('.js-order-item-list');
+            if(!Order.itemList) throw new Error('order item list element not found');
+
+            // order invoice
+            Order.invoiceItemList = document.querySelector('.js-order-invoice-item-list');
+            if(!Order.invoiceItemList) throw new Error('invoice item list element not found');
+
+            Order.listen();
+
+        }catch(error){
+            console.warn(error);
+        }   
+    }
+};
+
+function openOrderForm(event){
+    event.preventDefault();
+
+    const beforeYouOrderElement = document.querySelector('.js-before-you-order');
+    const orderAreaElement = document.querySelector('.js-ordering-area');
+
+    if(!beforeYouOrderElement || !orderAreaElement){
+        console.warn('missing order area elements or error selecting elements')
+    }else{
+        
+        beforeYouOrderElement.classList.add('close');
+
+        Order.initialize();
+        Order.connectDataInputsToDataOutputs();
+
+        OrderProgress.initialize(document.querySelector('.js-order-progress-bar'));
+        Order.setInvoiceDate();
+        OrderProgress.display();
+
+        setTimeout( ()=> {
+            orderAreaElement.classList.add('show');
+            OrderProgress.setState(0);
+        },400)
+        setTimeout( ()=>{
+            beforeYouOrderElement.classList.add('hide');
+    
+            orderAreaElement.classList.add('open');
+            
+        },300);
     }
 };
 
@@ -939,22 +358,27 @@ function initializeOrderingPage(){
 
     let externalItemValue = undefined;
 
-    
+    if(window.location.hash && window.location.hash !== ""){
 
-    pageNavigation();
-    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
+        externalItemValue = window.location.hash.split('#')[1];
 
-    OrderForm.initialize();
-    OrderForm.listen();
-
-    if(window.location.search){
-        const urlparams = new URLSearchParams(window.location.search);
-        const param = urlparams.get('initialItem');
-        OrderForm.autoSelectOrderItem(param);
-
-        console.log(param)
-        
     }
 
+    pageNavigation();
+
+    const inhouseBakerySignButton = document.querySelector('.js-in-house-bakery-btn');
+    const openOrderFormButton = document.querySelector('.js-open-order-form-btn')
+
+    if(!inhouseBakerySignButton){
+
+    }else{
+        inhouseBakerySignButton.addEventListener('click', openInHouseBakerySign);
+    }
+    
+    if(!openOrderFormButton){
+        console.warn('MISSING ELEMENT: open order form button');
+    }else{
+        openOrderFormButton.addEventListener('click', openOrderForm);
+    }
 };
 initializeOrderingPage();

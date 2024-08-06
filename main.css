@@ -111,53 +111,88 @@ body{
 ===================================================|
 */
 *,::before,::after{margin: 0;padding: 0;box-sizing: border-box;}
-input[type=text],
-input[type=number],
-input[type=email],
-input[type=tel],
-input[type=date],
-textarea,
-select{
-    /* background-color: var(--site-input-color); */
-    
-    background-color: transparent;
-    
-    color: var(--fc-primary);
-    border: none;
-    
-    font-size: 1rem;
-    font-family: var(--ff-secondary);
-    padding: .4em;
+.attention-text{
+    color: yellow;
+}
+.img-wrapper > img{
     width: 100%;
-    line-height: 1.2em;
 }
-input[type=text],
-input[type=number],
-input[type=email],
-input[type=tel],
-input[type=date],
-textarea{
-    border-bottom: 1px solid var(--site-input-color);
+.custom-date-component{
+   text-align: center;
+    
 }
-textarea{
-    /* background-color: hsl(0 0% 50% / 0.1); */
+.custom-date-component > div{
+    margin-bottom: 12px;
 }
-select{
-    background-color: hsl(0 0% 13%);
+.custom-date-component > div .img-wrapper{
+   margin-left: 32px;
+}
+.custom-date-component > div .img-wrapper > img{
+    width: 16px;
+}
+.custom-date-component > input{
+   margin-bottom: 12px;
+}
+.custom-date-component > p{
    
 }
 
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible{
-    outline: 1px solid var(--site-color-accent2);
+
+
+.form-label{
+    font-weight: 700;
+}
+.form-text-input,
+.form-textarea{
+    font-size: 1rem;
+}
+.form-select,
+.form-date-input{
+    border: none;
+    color: var(--fc-primary);
+    background-color: hsl(0 0% 15%);
+    text-align: center;
+    padding: 8px 12px;
+}
+.form-text-input,
+.form-textarea{
+    border: none;
+    color: var(--fc-primary);
+    padding: 5px;
+    background-color: transparent;
+    border-bottom: 1px solid hsl(0 0% 15%);
+}
+.form-text-input:focus,
+.form-textarea:focus{
+    border-radius: 5px;
+    outline: 2px solid var(--site-color-accent2);
+}
+.form-date-input.selected,
+.form-select.selected{
+    background-color: transparent;
+}
+.form-text-input.selected,
+.form-textarea.selected{
+    border-bottom: 1px solid transparent;
+}
+.form-textarea{
+    font-family: var(--ff-primary);
+    resize: none;
+}
+.form-input-message{
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px;
+    text-wrap: pretty;
+}
+.form-date-input{
+    font-family: var(--ff-primary);
 }
 @media (prefers-color-scheme: dark) {
     input[type="date"] {
       background-color: #000;
       color: var(--fc-primary);
     }
-    /* Additional styles for the calendar */
   }
 /*
 ===================================================|
@@ -4992,369 +5027,650 @@ label[for=BookClassFormAdvancedInquiryCheckbox] > div{
 ---------------------------------------------------|
 ===================================================|
 */
+
+.underline{
+    text-decoration: underline;
+}
+.order-main{
+    min-height: 100vh;
+}
+.before-you-order{
+    margin-bottom: 32px;
+    text-align: center;
+
+    transform-origin: top;
+    scale: 1 1;
+    transition: scale 500ms ease 100ms;
+}
+.before-you-order.close{
+    scale: 1 0;
+}
+.before-you-order.hide{
+    display: none;
+}
+.before-you-order > *{
+    opacity: 1;
+    transition: opacity 300ms ease;
+}
+.before-you-order.close > *{
+    opacity: 0;
+}
+.before-you-order h2,
+.before-you-order p{
+    line-height: 1.4em;
+}
+.before-you-order > header > h2{
+    font-size: 3rem;
+}
+.before-you-order > header > p{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.before-you-order > div{
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+    background-color: hsl(0 0% 10%);
+    border-radius: 16px;
+    padding: 16px;
+}
+.before-you-order > div > p{
+    margin-bottom: 16px;
+    font-weight: 500;
+    line-height: 1.4em;
+    font-size: 1rem;
+    text-wrap: pretty;
+}
+
+.before-you-order .open-order-form-btn{
+    border: none;
+    padding: 10px 15px;
+    
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--fc-primary);
+    text-shadow: 2px 2px 3px black;
+
+    background-color: var(--site-btn-color);
+    box-shadow: 2px 2px 10px black,
+    inset 2px 2px 4px hsl(0 0% 100% / 0.3);
+}
 /*
 =========================================|
         ORDER FORM
 =========================================|
 */
-.order-form{
-    position: relative;
-    width: 100%;
-    padding: 2rem;
-    margin-bottom: 4rem;
-    isolation: isolate;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
-    gap: 1rem;
-}
-.order-form > header{
-    grid-column: 1/4;
-    grid-row: 1;
 
+
+.ordering-area{
+    display: none;
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.ordering-area.open{
+    display: block;
+}
+.ordering-area.show{
+    opacity: 1;
+}
+.ordering-area > header{
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: auto auto auto;
     grid-template-rows: auto;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 32px;
 }
 
 label[for=OrderFormItem]{
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 1;
-    background-color: hsl(0 0% 8%);
-    box-shadow: inset 2px 2px 4px hsl(0 0% 30% / 0.5), inset -2px -2px 3px black;
-    padding: .75rem;
-    border-radius: 10px;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
-}
-label[for=OrderFormItem] > select{
-    
-    font-weight: 700;
-}
-label[for=OrderFormItem] > div{
-    white-space: nowrap;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.order-submit-btn{
-    grid-column: 1/4;
-    grid-row: 4;
-    align-self: center;
-    justify-self: center;
-
-    min-width: 300px;
-    margin-top: 1rem;
-    border: none;
-    color: var(--fc-primary);
-    font-size: 1.5rem;
-    font-weight: 700;
-    padding: 5px 10px;
-    background-color: var(--site-color-accent2);
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
-}
-
-.order-form select,
-.order-form input[type=date]{
-    text-align: center;
-}
-
-.order-form textarea{
-    resize: none;
-}
-.order-form > div{
-    outline: 3px solid hsl(0 0% 10%);
    
-    border-radius: 10px;
-}
-.order-form > div > label > div{
-    font-size: 1rem;
-    padding-bottom: .5em;
-    font-weight: 700;
-}
-
-
-/* RETRIEVAL INFORMATION */
-/***************************/
-.order-form .retrival-information{
-    grid-column: 2;
-    grid-row: 2;
-
-    padding: 1rem;
+    max-width: 500px;
+    padding: 16px 64px;
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
 
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto;
-    gap: 1rem;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(2,auto);
+    justify-content: center;
     align-items: center;
+    gap: 12px;
 }
-label[for=OrderFormRetrival]{
-    grid-column: 1;
-    grid-row: 1;
-
-    text-align: center;
-}
-
-label[for=OrderFormPaymentType]{
-    grid-column: 2;
-    grid-row: 1;
-
-    text-align: center;
-}
-
-.order-form .retrival-information .retrieval-times{
-    grid-column: 1/3;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 1rem;
-    
-}
-.order-form .retrival-information .retrieval-times > div{
-    font-size: .7rem;
-    line-height: 1.5em;
-    text-align: center;
-}
-.order-form .retrival-information .retrieval-times > div span{
-    font-weight: 700;
-}
-
-
-
-/* ORDER INFORMATION */
-/***************************/
-.order-form .order-information{
-    grid-column: 2;
-    grid-row: 3;
-}
-.order-form .order-information > div{
-    padding: 1rem;
-    text-align: center;
-}
-.order-form .order-information > div > p{
-    font-size: 1rem;
-    line-height: 1.5em;
-    margin-bottom: 1em;
-    
-    text-shadow: 2px 2px 3px black;
-}
-.order-form .order-information > div > p:nth-child(2){
-    margin-bottom: 2rem;
-}
-.order-form .order-information > div > p > span{
-    font-size: 1.1em;
-    font-weight: 700;
-    color: var(--site-color-accent1);
-}
-
-
-/* ORDER PERSONAL INFORMATION */
-/***************************/
-.order-form .personal-information{
+.ordering-area > header > img{
     grid-column: 3;
-    grid-row: 2/4;
-    
-    padding: 1rem;
-}
-.order-form .personal-information > label > input{
-    margin-bottom: 1em;
-}
-
-
-/* ORDER ADDRESS INFORMATION */
-/***************************/
-.order-form .address-information{
-    grid-column: 1;
-    grid-row: 4;
-
-    margin-bottom: 1rem;
-
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1rem;
-
-    opacity: 0;
-    transition: opacity 300ms ease-in-out;
-}
-
-.order-form .address-information.show{
-    opacity: 1;
-}
-.order-form .address-information > label{
-   opacity: 0;
-   transition: opacity 200ms ease-in-out;
-}
-.order-form .address-information.show > label{
-   opacity: 1;
-}
-.order-form .address-information > label > div{
-    font-size: 1rem;
-    padding-bottom: .5em;
-}
-label[for=OrderFormStreet]{
-    grid-column: 1/4;
     grid-row: 1;
 }
-label[for=OrderFormStreet] > div{
-    text-align: left;
-}
-label[for=OrderFormCity]{
-    grid-column: 1;
-    grid-row: 2;
-}
-
-label[for=OrderFormState]{
-    grid-column: 2;
-    grid-row: 2;
-}
-label[for=OrderFormZipCode]{
-    grid-column: 3;
-    grid-row: 2;
-}
 
 
-/* ORDER DELIVERY ESTIMATOR */
-/***************************/
-.order-form .delivery-estimator{
-    grid-column: 1/4;
+/* === ORDER FORM */
 
-    opacity: 0;
-    transition: opacity 300ms ease-in-out;
+.order-form{
+    max-width: 700px;
+    margin: 0 auto 128px auto;
 }
-.order-form .delivery-estimator.show{
-    opacity: 1;
-}
-.order-form .delivery-estimator > p{
-    font-size: .8rem;
-    text-align: center;
-    margin-bottom: 1em;
+.order-form label > select,
+.order-form label > input,
+.order-form label > textarea,
+.order-form label .form-icon{
+    /* margin-left: 12px; */
+    cursor: pointer;
 }
 
-.order-form .delivery-estimator > div{
-    display: grid;
-    grid-template-columns: auto 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-}
-.order-form .delivery-estimator > div > button{
-    border: none;
-    color: var(--fc-primary);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 5px 10px;
-    background-color: var(--site-color-accent2);
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
-}
-.order-form .delivery-estimator > div > p{
-    font-size: .8rem;
-    text-align: center;
-}
-.order-form .delivery-estimator > div > p > span{
-    font-weight: 700;
+.order-form > header > h2{
+    color: var(--fc-rare);
+    font-size: 16px;
+    padding: 8px;
 }
 
 
-/* ORDER ITEMS  */
-/***************************/
-.order-form .item-information{
-    grid-column: 1;
-    grid-row: 2/4;
 
-    position: relative;
-    isolation: isolate;
+/* === ORDER ITEMS === */
+.order-items{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
 }
-.item-information-tabs{
-    grid-column: 1;
-    grid-row: 2;
+
+/* === ORDER ITEM TABS === */
+
+.order-item-tab-list{
+    list-style: none;
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
     
     display: grid;
     grid-template-columns: repeat(6,1fr);
     grid-template-rows: auto;
 }
+.order-item-tab-intro{
+    grid-column: 1/7;
+    grid-row: 1;
 
-.item-information-tabs > div{
-   font-size: .8rem;
-   line-height: 1.2em;
-   font-weight: 700;
-   text-align: center;
-   background-color: hsl(0 0% 10%);
-   border-top-right-radius: 10px;
-   border-top-left-radius: 10px;
-   border-right: 1px solid hsl(0 0% 10%);
-   padding: 5px;
-   opacity: 0;
+    position: relative;
+    padding: 14px;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 700;
+    /* color: var(--site-color-accent2); */
 
-   display: grid;
-   place-content: center;
+    display: none;
 
-   transition: opacity 300ms ease-in-out;
+    opacity: 0;
+    transition: opacity 300ms ease;
 }
-.item-information-tabs > div.active{
-    background: var(--site-gradient);
+.order-item-tab-intro.open{
+    display: block;
 }
-.item-information-tabs > div.show{
+.order-item-tab-intro.show{
     opacity: 1;
 }
-.order-item-list{
-    list-style: none;
-    padding: 1rem;
+.order-item-tab-intro::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100px;
+    height: 100%;
+    border-radius: 16px;
+    background-image: var(--img-sc-icon);
+    background-repeat: no-repeat;
+    background-size: 32px;
+    background-position: center;
+}
+.order-item-tab-intro::after{
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px;
+    height: 100%;
+    border-radius: 16px;
+    background-image: var(--img-sc-icon);
+    background-repeat: no-repeat;
+    background-size: 32px;
+    background-position: center;
+}
 
+.order-item-tab{
+    grid-row: 1;
+
+    position: relative;
+    text-align: center;
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    padding: 4px 16px;
+
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+    gap: 8px;
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.order-item-tab.show{
+    opacity: 1;
+}
+
+.order-item-tab::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: var(--site-gradient);
+    z-index: -1;
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.order-item-tab.active::before{
+    opacity: 1;
+}
+.order-item-tab > div{
+    font-size: .9rem;
+    font-weight: 500;
+    line-height: 1.2em;
+    pointer-events: none;
+
+    opacity: 0.5;
+    transition: opacity 300ms ease;
+}
+.order-item-tab.active > div{
+    opacity: 1;
+}
+.order-item-tab > img{
+    width: 32px;
+    display: inline-block;
+    pointer-events: none;
+    margin: 0 auto;
+
+    opacity: 0.5;
+    transition: opacity 300ms ease;
+}
+.order-item-tab.active > img{
+    opacity: 1;
+}
+
+
+/* === ORDER ITEM === */
+
+.order-item-list{
+    position: relative;
+    height: fit-content;
+    min-height: 380px;
+    list-style: none;
+    /* outline: 1px solid var(--fc-rare);
+    border-radius: 16px; */
+    
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
 }
 
-.order-form .item-information .order-item{
+
+.order-item-intro{
     grid-column: 1;
     grid-row: 1;
-    
+
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+    padding-block: 32px;
+
+    display: none;
+
     opacity: 0;
-    transition: opacity 500ms ease-in;
+    transition: opacity 300ms ease;
 }
-.order-form .item-information .order-item.show{
+.order-item-intro.open{
+    display: block;
+}
+.order-item-intro.show{
     opacity: 1;
 }
-.order-form .item-information .order-item > header{
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto;
-    padding-bottom: .5rem;
+.order-item-intro::before{
+    content:"";
+    position: absolute;
+    top: 20%; left: -40%;
+    width: 201px;
+    height: 201px;
+    border-radius: 50%;
+    background-color: var();
+    outline: 2px solid var(--fc-rare);
+    z-index: -1;
 }
-.order-form .item-information .order-item > label > div{
-    white-space: nowrap;
+.order-item-intro:after{
+    content:"";
+    position: absolute;
+    top: 5%; right: -10%;
+    width: 99px;
+    height: 99px;
+    border-radius: 50%;
+    outline: 2px solid var(--fc-rare);
+    z-index: -1;
 }
-.order-form .remove-order-btn{
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: flex-end;
-
-    border: none;
-    background: none;
-    background-color: transparent;
-    color: var(--fc-primary);
-    font-size: 1rem;
+.order-item-intro > ul{
+    list-style: inside;
+    list-style-type: disc;
+}
+.order-item-intro > ul > li{
+    text-align: left;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
     font-weight: 700;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper{
+
+
+
+
+
+.order-item{
+    grid-column: 1;
+    grid-row: 1;
+  
+    padding-inline: 32px;
+    padding-block: 16px;
+    pointer-events: none;
+
+    display: none;
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.order-item.open{
+    display: block;
+}
+.order-item.show{
+    opacity: 1;
+}
+.order-item.active{
+    pointer-events: all;
+}
+
+
+.order-item > header{
+    margin-bottom: 16px;
+
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 32px;
+}
+.order-item > header > img{
+    max-width: 64px;
+    /* filter: hue-rotate(190deg) sepia(100%) saturate(900%); */
+}
+.order-item > header > h3{
+    font-size: 2rem;
+}
+.remove-order-btn{
+    border: none;
+    background-color: transparent;
+    color: var(--fc-primary);
+    font-weight: 700;
+}
+
+.order-item > fieldset{
+    border: none;
+}
+.order-item-price-display,
+.order-item-prices-display{
+    align-self: center;
+    justify-self: center;
+}
+.order-item-price-display h4{
+    line-height: 1.4em;
+    margin-bottom: 8px;
+}
+.order-item-price-display > p{
+    font-size: .8rem;
+}
+.order-item-price-display > p > span{
+    font-weight: 700;
+    font-size: 1rem;
+}
+.order-item-prices-display{
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: repeat(3,auto);
+    justify-content: center;
+    align-items: center;
+    column-gap: 32px;
+    row-gap: 8px;
+}
+.order-item-prices-display > h4{
+    grid-column: 1/3;
+    grid-row: 1;
+
+    line-height: 1.4em;
+    margin-bottom: 8px;
+}
+.order-item-prices-display > div{
     
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-btn-wrapper{
+.order-item-prices-display > div:nth-of-type(1){
+    grid-column: 1;
+    grid-row: 2;
+}
+.order-item-prices-display > div:nth-of-type(2){
+    grid-column: 2;
+    grid-row: 2;
+}
+.order-item-prices-display > div:nth-of-type(3){
+    grid-column: 1;
+    grid-row: 3;
+}
+.order-item-prices-display > div:nth-of-type(4){
+    grid-column: 2;
+    grid-row: 3;
+}
+.order-item-prices-display > div > p{
+    font-size: .8rem;
+    line-height: 1.2rem;
+}
+.order-item-prices-display > div > p:nth-of-type(1){
+    font-weight: 700;
+}
+.order-item-prices-display > div > p:nth-of-type(2){
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* SUGAR COOKIES */
+.sugar-cookies-item{
+   
+}
+.sugar-cookies-item .form-group:nth-of-type(1){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+    justify-content: space-around;
+}
+.sugar-cookies-item .form-group:nth-of-type(1) > label > div{
+    margin-bottom: 12px;
+}
+
+.sugar-cookies-item .form-group:nth-of-type(2) > label{
+    margin-bottom: 16px;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    align-items: flex-end;
+    gap: 16px;
+}
+.sugar-cookies-item .form-group:nth-of-type(2) > label > span{
+    padding-bottom: 8px;
+}
+.sugar-cookies-item .form-group:nth-of-type(2) > label:nth-of-type(1){
+    margin-bottom: 16px;
+}
+
+
+/* DROP COOKIES */
+.drop-cookies-item{
+
+}
+
+.drop-cookies-item .form-group:nth-of-type(1){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.drop-cookies-item .form-group:nth-of-type(1) > label > div{
+    margin-bottom: 12px;
+}
+.drop-cookies-item .form-group:nth-of-type(2){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+}
+.drop-cookies-item .form-group:nth-of-type(2) > label > div{
+    margin-bottom: 12px;
+}
+
+/* LAYER CAKE and SHEET CAKE */
+.layer-cake-item{
+   
+}
+
+.layer-cake-item .form-group:nth-of-type(1),
+.sheet-cake-item .form-group:nth-of-type(1){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.layer-cake-item .form-group:nth-of-type(1) > label > div,
+.sheet-cake-item .form-group:nth-of-type(1) > label > div{
+    margin-bottom: 12px;
+}
+.layer-cake-item .form-group:nth-of-type(2),
+.sheet-cake-item .form-group:nth-of-type(2){
+    text-align: center;
+    margin-bottom: 48px;
+
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: auto;
+}
+.layer-cake-item .form-group:nth-of-type(2) > label > div,
+.sheet-cake-item .form-group:nth-of-type(2) > label > div{
+    margin-bottom: 12px;
+}
+.layer-cake-item .form-group:nth-of-type(3),
+.sheet-cake-item .form-group:nth-of-type(3){
+    margin-bottom: 16px;
+}
+.layer-cake-item .form-group:nth-of-type(3) > label,
+.sheet-cake-item .form-group:nth-of-type(3) > label{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    align-items: flex-end;
+    gap: 16px;
+}
+.layer-cake-item .form-group:nth-of-type(3) > label > span,
+.sheet-cake-item .form-group:nth-of-type(3) > label > span{
+    padding-bottom: 8px;
+}
+.layer-cake-item .form-group:nth-of-type(3) > label:nth-of-type(1),
+.sheet-cake-item .form-group:nth-of-type(3) > label:nth-of-type(1){
+    margin-bottom: 16px;
+}
+
+/* CUPCAKES */
+.cup-cakes-item{
+
+}
+
+.cup-cakes-item .form-group:nth-of-type(1){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.cup-cakes-item .form-group:nth-of-type(1) > label > div{
+    margin-bottom: 12px;
+}
+.cup-cakes-item .form-group:nth-of-type(2){
+    text-align: center;
+    margin-bottom: 48px;
+
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+}
+.cup-cakes-item .form-group:nth-of-type(2) > label > div{
+    margin-bottom: 12px;
+}
+.cup-cakes-item .form-group:nth-of-type(3){
+    margin-bottom: 16px;
+}
+.cup-cakes-item .form-group:nth-of-type(3) > label{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    align-items: flex-end;
+    gap: 16px;
+}
+.cup-cakes-item .form-group:nth-of-type(3) > label > span{
+    padding-bottom: 8px;
+}
+.cup-cakes-item .form-group:nth-of-type(3) > label:nth-of-type(1){
+    margin-bottom: 16px;
+}
+
+
+/* CAKEPOPS */
+.cake-pops-item{
+
+}
+
+.cake-pops-item .form-group:nth-of-type(1){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.cake-pops-item .form-group:nth-of-type(1) > label > div{
+    margin-bottom: 12px;
+}
+.cake-pops-item .form-group:nth-of-type(2){
+    text-align: center;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+}
+.cake-pops-item .form-group:nth-of-type(2) > label > div{
+    margin-bottom: 12px;
+}
+
+/* ORDER ITEM INSPIRATION IMAGE UPLOAD */
+.order-item .inspiration{
+    /* max-width: 500px; */
+}
+.order-item .inspiration-controls{
+    padding-block: 16px;
+}
+.order-item .inspiration-controls{
     margin-bottom: 1rem;
     display: grid;
     grid-template-columns: repeat(2,auto);
@@ -5362,7 +5678,7 @@ label[for=OrderFormZipCode]{
     justify-content: space-between;
     gap: 2rem;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .add-inspiration-btn{
+.order-item .add-inspiration-btn{
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
@@ -5375,21 +5691,29 @@ label[for=OrderFormZipCode]{
     color: var(--fc-primary);
     font-weight: 500;
     background-color: transparent;
-    opacity: 1;
+
+    opacity: 0;
     transition: opacity 300ms ease;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .remove-inspiration-btn{
+.order-item .add-inspiration-btn.show{
+    opacity: 1;
+}
+.order-item .remove-inspiration-btn{
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
     color: var(--fc-primary);
     font-weight: 500;
     background-color: transparent;
+
     opacity: 0;
     transition: opacity 300ms ease;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content{
-    display: grid;
+.order-item .remove-inspiration-btn.show{
+    opacity: 1;
+}
+.order-item .inspiration-content{
+    display: none;
     grid-template-columns: auto auto;
     grid-template-rows: repeat(2,auto);
     justify-content: space-between;
@@ -5399,10 +5723,13 @@ label[for=OrderFormZipCode]{
 
     transition: opacity 300ms ease;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content.show{
+.order-item .inspiration-content.open{
+    display: grid;
+}
+.order-item .inspiration-content.show{
     opacity: 1;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content > p{
+.order-item .inspiration-content > p{
     grid-column: 1/3;
     grid-row: 1;
 
@@ -5412,7 +5739,7 @@ label[for=OrderFormZipCode]{
     text-align: center;
     font-weight: 700;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content > label{
+.order-item .inspiration-content > label{
     grid-column: 1;
     grid-row: 2;
     
@@ -5436,730 +5763,743 @@ label[for=OrderFormZipCode]{
     padding: .5rem;
     font-size: .8rem;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content .inspiration-img-wrapper{
+.order-item .inspiration .inspiration-content .inspiration-img-wrapper{
     grid-column: 2;
     grid-row: 2;
 
-    max-width: 100px;
-    /* aspect-ratio: 16/9; */
+    position: relative;
+    max-width: 300px;
+    max-height: 150px;
     overflow: hidden;
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
 }
-.order-form .item-information .order-item .inspiration-upload-wrapper .inspiration-upload-content .inspiration-img-wrapper > img{
+.order-item .inspiration .inspiration-content .inspiration-img-wrapper::before{
+    content: "no image";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    align-content: center;
+    text-align: center;
+}
+.order-item .inspiration .inspiration-content .inspiration-img-wrapper > img[src=""]{
+   min-width: 300px;
+}
+.order-item .inspiration .inspiration-content .inspiration-img-wrapper > img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+
+
+
+
+
+/* RETRIEVAL INFORMATION */
+
+.order-form .retrieval-information{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    text-align: center;
+    padding: 32px;
+}
+label[for=OrderFormRetrieval]{
+    display: block;
+    margin-bottom: 32px;
+}
+label[for=OrderFormRetrieval] > div{
+    margin-bottom: 12px;
+}
+.order-form .retrieval-information .retrieval-prices{
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: auto;
+    justify-content: space-between;
+}
+.order-form .retrieval-information-shipping,
+.order-form .retrieval-information-pickup,
+.order-form .retrieval-information-delivery{
+    position: relative;
+}
+.order-form .retrieval-information .retrieval-prices > div::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid red;
+    translate: -50%;
+    opacity: 0.3;
+
+    display: none;
+}
+.order-form .retrieval-information .retrieval-prices > div::after{
+    content: "";
+    position: absolute;
+    top: 0; left: 50%;
+    width: 5px;
+    height: 100px;
+    background-color: red;
+    translate: -50%;
+    rotate: 45deg;
+    opacity: 0.3;
+
+    display: none;
+}
+.order-form .retrieval-information .retrieval-prices > div.unavailable::before,
+.order-form .retrieval-information .retrieval-prices > div.unavailable::after{
+    display: block;
+}
+.order-form .retrieval-information .retrieval-prices > div > h4{
+    line-height: 1.8em;
+    margin-bottom: 12px;
+}
+.order-form .retrieval-information .retrieval-prices > div > p{
+    font-size: .8rem;
+    line-height: 1.4em;
+    text-wrap: pretty;
+    margin-bottom: 8px;
+}
+.order-form .retrieval-information .retrieval-prices > div > p .price{
+    font-size: 1rem;
+}
+
+.order-form .retrieval-information .retrieval-prices .img-wrapper{
+    max-width: 42px;
+    margin: 0 auto 12px auto;
+}
+.order-form .retrieval-information .retrieval-times{
+    text-align: left;
+}
+.order-form .retrieval-information .retrieval-times > h4{
+    line-height: 1.4rem;
+    margin-bottom: 24px;
+    padding-left: 24px;
+}
+.order-form .retrieval-information .retrieval-times > p{
+    line-height: 1.4em;
+    margin-bottom: 8px;
+    font-size: .8rem;
+}
+.order-form .retrieval-information .retrieval-times > p:nth-of-type(1) > strong{
+    margin-left: 12px;
+}
+.order-form .retrieval-information .retrieval-times > p:nth-of-type(2) > strong{
+    margin-left: 48px;
+}
+
+
+
+/* PAYMENT INFORMATION */
+.order-form .payment-information{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    text-align: center;
+    padding: 32px;
+    font-weight: 700;
+}
+.order-form .payment-information .payment-details > p{
+    max-width: 360px;
+    text-wrap: pretty;
+    line-height: 1.4em;
+    margin: 0 auto 32px auto;
+}
+.order-form .payment-information .payment-details > ul{
+    list-style: none;
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: repeat(2,auto);
+    gap: 12px;
+}
+.order-form .payment-information .payment-details > ul > li{
+    
+    display: grid;
+    gap: 16px;
+    align-items: center;
+}
+
+.order-form .payment-information .payment-details > ul > li:nth-child(2n-1){
+    grid-template-columns: auto 1fr;
+}
+.order-form .payment-information .payment-details > ul > li:nth-child(2n){
+    grid-template-columns: 1fr auto;
+}
+.order-form .payment-information .payment-details > ul > li > p{
+    font-weight: 500;
+    font-size: .8rem;
+    line-height: 1.4em;
+}
+.order-form .payment-information .payment-details > ul > li > div{
+    background-color: hsl(0 0% 20% / 0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+}
+label[for=OrderFormPaymentType] > div{
+    margin-bottom: 12px;
+}
+
+
+
+/* PERSONAL INFORMATION */
+.order-form .personal-information{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    padding: 32px;
+}
+.order-form .personal-information .basic-information{
+    margin-bottom: 32px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3,auto);
+    row-gap: 16px;
+}
+.order-form .personal-information .basic-information > label{
+    margin-bottom: 16px;
+
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: auto;
+    justify-content: flex-end;
+}
+
+.order-form .personal-information .address-information{
+    position: relative;
+
+    display: none;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: repeat(5,auto);
+    column-gap: 32px;
+    row-gap: 16px;
+
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.order-form .personal-information .address-information.open{
+    display: grid;
+}
+.order-form .personal-information .address-information.show{
+    opacity: 1;
+}
+.order-form .personal-information .address-information .address-informent-message{
+    grid-column: 1/4;
+    grid-row: 1;
+}
+.order-form .personal-information .address-information > label:nth-of-type(1){
+    grid-column: 1/4;
+    grid-row: 2;
+}
+.order-form .personal-information .address-information > label:nth-of-type(2){
+    grid-column: 1/4;
+    grid-row: 3;
+}
+.order-form .personal-information .address-information > label:nth-of-type(3){
+    grid-column: 1;
+    grid-row: 4;
+}
+.order-form .personal-information .address-information > label:nth-of-type(4){
+    grid-column: 2;
+    grid-row: 4;
+}
+.order-form .personal-information .address-information .distance-information{
+    grid-column: 1/4;
+    grid-row: 5;
+}
+
+.order-form .personal-information .address-informent-message{
+    font-size: .8rem;
+    line-height: 1.4em;
+    padding-left: 20px;
+    padding-bottom: 16px;
+    font-weight: 700 ;
+}
+.order-form .personal-information .address-informent-message > span{
+    color: yellow;
+}
+
+.order-form .personal-information .address-information > label{
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+label[for=OrderFormStreet]{
+    grid-column: 1/3;
+    grid-row: 1;
+}
+label[for=OrderFormCity]{
+    grid-column: 1/3;
+    grid-row: 2;
+}
+label[for=OrderFormState]{
+    grid-column: 1;
+    grid-row: 3;
+}
+label[for=OrderFormZipCode]{
+    grid-column: 2;
+    grid-row: 3;
+}
+label[for=OrderFormZipCode] > input{
+    max-width: 100px;
+}
+
+.order-form .get-distance-btn,
+.order-form .check-distance-btn{
+    display: inline-block;
+    border: none;
+    background-color: var(--site-color-accent2);
+    color: var(--fc-primary);
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-weight: 700;
+    box-shadow: 3px 3px 10px black,
+    inset 2px 2px 4px hsl(0 0% 100% / 0.3);
+}
+.order-form .personal-information .distance-information{
+    margin-top: 32px;
+}
+.order-form .personal-information .distance-information > h3 > button{
+    margin-left: 12px;
+    outline: 1px solid yellow;
+}
+.order-form .personal-information .distance-information > div{
+    text-align: center;
+}
+.order-form .personal-information .distance-information > div > h3{
+    line-height: 1.4em;
+    margin-bottom: 12px;
+    text-align: left;
+}
+.order-form .personal-information .distance-information > div > p{
+    line-height: 1.4em;
+    margin-bottom: 8px;
+    font-size: .8rem;
+    text-align: right;
+}
+.order-form .personal-information .distance-information > div > p > span{
+    font-weight: 500;
+    font-size: 1rem;
+}
+.order-form .personal-information .distance-information > div > p:nth-of-type(2) > span{
+    margin-right: 4px;
+    margin-left: 4px;
+}
+.order-form .personal-information .distance-information > div > p .distance-output{
+    margin-left: 12px;
+    margin-right: 8px;
+}
+.order-form .personal-information .distance-information > div > p .dollar-sign{
+    margin-left: 32px;
+    margin-right: 8px;
+}
+.order-form .personal-information .pickup-distance-information > div{
+    text-align: center;
+}
+.order-form .personal-information .pickup-distance-information button{
+    display: inline-block;
+    border: none;
+    background-color: var(--site-color-accent2);
+    color: var(--fc-primary);
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 3px 3px 10px black,
+    inset 2px 2px 4px hsl(0 0% 100% / 0.3);
+}
+
+/* ORDER INVOICE */
+.order-invoice{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    padding-block: 32px;
+    padding-inline: 16px;
+   
+}
+.order-invoice > h3{
+    text-align: center;
+    margin-bottom: 24px;
+}
+.order-invoice .product-list{
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 24px;
+}
+.order-invoice .product-item{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+}
+.order-invoice .product-item h4,
+.order-invoice .product-item p{
+    font-size: .8rem;
+    line-height: 1.4em;
+}
+.order-invoice .product-item .row:nth-of-type(1){
+
+    display: grid;
+    grid-template-columns: repeat(6,auto);
+    grid-template-rows: auto;
+    
+}
+.order-invoice .product-item .row:nth-of-type(1) .column{
+    text-align: center;
+    padding-block: 8px;
+    padding-inline: 8px;
+    
+}
+.order-invoice .product-item .row:nth-of-type(1) .column:nth-child(1){
+    text-align: center;
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    background-color: hsl(0 0% 10%);
+}
+.order-invoice .product-item .row:nth-of-type(1) .column > p{
+    font-size: .8rem;
+}
+.order-invoice .product-item .row:nth-of-type(1) .column:nth-child(1) > p{
+    font-weight: 700;
+}
+.order-invoice .product-item .row:nth-of-type(2){
+    padding-block: 8px;
+    padding-inline: 8px;
+
+    display: grid;
+    grid-template-columns: auto 100px;
+    grid-template-rows: repeat(3,fit-content);
+    gap: 8px;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(1){
+    grid-column: 1;
+    grid-row: 1;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(2){
+    grid-column: 1;
+    grid-row: 2;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(3){
+    grid-column: 2;
+    grid-row: 1/3;
+    justify-self: flex-end;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(4){
+    grid-column: 1/3;
+    grid-row: 3;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(1),
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(2){
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+    justify-content: flex-start;
+    column-gap: 8px;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(2) > p{
+    line-height: 1.2em;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(3){
+    width: 75px;
+    max-height: 100px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(3) .img-wrapper > img{
     width: 100%;
     object-fit: contain;
-    padding: 5px;
+    border-radius: 10px;
+    outline: 2px solid var(--fc-rare);
 }
-/* SURGAR COOKIE ORDER */
-/***************************/
-.order-form .sugar-cookie-information{
-    display: none;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6,auto);
-    gap: .8em;
-}
-.order-form .sugar-cookie-information.open{
-    display: grid;
-}
-.order-form .sugar-cookie-information > header{
-    grid-column: 1;
-    grid-row: 1;
-}
-label[for=SugarCookiesQuantity]{
-    grid-column: 1;
-    grid-row: 2;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 1rem;
-    align-items: center;
-}
-label[for=SugarCookiesDateNeeded]{
-    grid-column: 1;
-    grid-row: 3;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
-}
-label[for=SugarCookiesTheme]{
-    grid-column: 1;
-    grid-row: 4;
-}
-label[for=SugarCookiesPersonalization]{
-    grid-column: 1;
-    grid-row: 5;
-}
-.order-form .sugar-cookie-information .inspiration-upload-wrapper{
-    grid-column: 1;
-    grid-row: 6;
-}
-label[for=SugarCookiesTheme] > div,
-label[for=SugarCookiesPersonalization] > div{
-    padding-bottom: .5em;
-}
-
-
-/* DROP COOKIE ORDER */
-/***************************/
-.order-form .drop-cookie-information{
-
-    display: none;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6,auto);
-    gap: .8em;
-}
-.order-form .drop-cookie-information.open{
-    display: grid;
-}
-.order-form .drop-cookie-information > header{
-    grid-column: 1;
-    grid-row: 1;
-}
-label[for=DropCookieQuantity]{
-    grid-column: 1;
-    grid-row: 2;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 1rem;
-    align-items: center;
-}
-label[for=DropCookieDateNeeded]{
-    grid-column: 1;
-    grid-row: 3;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
-}
-label[for=DropCookieFlavor]{
-    grid-column: 1;
-    grid-row: 4;
-}
-label[for=DropCookieAddon]{
-    grid-column: 1;
-    grid-row: 5;
-}
-.order-form .drop-cookie-information .inspiration-upload-wrapper{
-    grid-column: 1;
-    grid-row: 6;
-}
-label[for=DropCookieFlavor] > div,
-label[for=DropCookieAddon] > div{
-    padding-bottom: .5em;
-}
-
-
-/* LAYER AND SHEET CAKE ORDER */
-/***************************/
-.order-form .layer-cake-information,
-.order-form .sheet-cake-information{
-
-    display: none;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(8,auto);
-    gap: .8em;
-}
-.order-form .layer-cake-information.open,
-.order-form .sheet-cake-information.open{
-    display: grid;
-}
-.order-form .layer-cake-information > header,
-.order-form .sheet-cake-information > header{
-    grid-column: 1/3;
-    grid-row: 1;
-}
-
-label[for=LayerCakeQuantity],
-label[for=SheetCakeQuantity]{
-    grid-column: 1/3;
-    grid-row: 2;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 1rem;
-    align-items: center;
-}
-label[for=LayerCakeDateNeeded],
-label[for=SheetCakeDateNeeded]{
-    grid-column: 1/3;
-    grid-row: 3;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
-}
-
-label[for=LayerCakeSize],
-label[for=SheetCakeSize]{
-    grid-column: 1/3;
-    grid-row: 4;
-}
-label[for=LayerCakeFlavor],
-label[for=SheetCakeFlavor]{
-    grid-column: 1;
-    grid-row: 5;
-}
-label[for=LayerCakeFrosting],
-label[for=SheetCakeFrosting]{
-    grid-column: 2;
-    grid-row: 5;
-}
-label[for=LayerCakeTheme],
-label[for=SheetCakeTheme]{
-    grid-column: 1/3;
-    grid-row: 6;
-    
-}
-
-label[for=LayerCakePersonalization],
-label[for=SheetCakePersonalization]{
-    grid-column: 1/3;
-    grid-row: 7;
-}
-.order-form .layer-cake-information .inspiration-upload-wrapper,
-.order-form .sheet-cake-information .inspiration-upload-wrapper{
-    grid-column: 1/3;
-    grid-row: 8;
-}
-label[for=LayerCakeSize] > div,
-label[for=LayerCakeFlavor] > div,
-label[for=LayerCakeFrosting] > div,
-label[for=LayerCakeTheme] > div,
-label[for=LayerCakePersonalization] > div{
-    padding-bottom: .5em;
-}
-label[for=SheetCakeSize] > div,
-label[for=SheetCakeFlavor] > div,
-label[for=SheetCakeFrosting] > div,
-label[for=SheetCakeTheme] > div,
-label[for=SheetCakePersonalization] > div{
-    padding-bottom: .5em;
-}
-
-
-/* CUPCAKE ORDER */
-/***************************/
-.order-form .cupcake-information{
-
-    display:none;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(7,auto);
-    gap: .8em;
-}
-.order-form .cupcake-information.open{
-    display: grid;
-}
-.order-form .cupcake-information > header{
-    grid-column: 1/3;
-    grid-row: 1;
-}
-label[for=CupcakeQuantity]{
-    grid-column: 1/3;
-    grid-row: 2;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 1rem;
-    align-items: center;
-}
-label[for=CupcakeDateNeeded]{
-    grid-column: 1/3;
-    grid-row: 3;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
-}
-label[for=CupcakeFlavor]{
-    grid-column: 1;
-    grid-row: 4;
-}
-
-label[for=CupcakeFrosting]{
-    grid-column: 2;
-    grid-row: 4;
-}
-
-label[for=CupcakeTheme]{
-    grid-column: 1/3;
-    grid-row: 5;
-    
-}
-label[for=CupcakePersonalization]{
-    grid-column: 1/3;
-    grid-row: 6;
-}
-.order-form .cupcake-information .inspiration-upload-wrapper{
-    grid-column: 1/3;
-    grid-row: 7;
-}
-label[for=CupcakeFlavor] > div,
-label[for=CupcakeFrosting] > div,
-label[for=CupcakeTheme] > div,
-label[for=CupcakePersonalization] > div{
-    padding-bottom: .5em;
-}
-
-/* CAKE POP ORDER */
-/***************************/
-.order-form .cakepop-information{
-
-    display:none;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(5);
-    gap: .8em;
-}
-.order-form .cakepop-information.open{
-    display: grid;
-}
-.order-form .cakepop-information > header{
-    grid-column: 1/3;
-    grid-row: 1;
-}
-label[for=CakepopQuantity]{
-    grid-column: 1/3;
-    grid-row: 2;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 1rem;
-    align-items: center;
-}
-label[for=CakepopDateNeeded]{
-    grid-column: 1/3;
-    grid-row: 3;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 1rem;
-}
-
-label[for=CakepopFlavor]{
-    grid-column: 1;
-    grid-row: 4;
-}
-
-label[for=CakepopFrosting]{
-    grid-column: 2;
-    grid-row: 4;
-}
-label[for=CakepopFlavor] > div,
-label[for=CakepopFrosting] > div{
-    padding-bottom: .5em;
-}
-.order-form .cakepop-information .inspiration-upload-wrapper{
-    grid-column: 1/3;
-    grid-row: 5;
-}
-
-
-
-.order-form-read-before{
-     padding: 1rem;
-}
-.order-form-read-before > p{
-    border: 1px solid white;
-    padding: 1rem;
-    text-align: center;
-    margin-bottom: 1em;
-    font-size: 1.2rem;
-    line-height: 1.5em;
-}
-
-
-/***************************/
-.order-success-main{
-    padding: 2rem;
-    text-align: center;
-
-}
-.order-success-main > *{
-    margin-bottom: 2em;
-}
-.order-success-main a{
-    text-decoration: none;
-    margin-left: 1em;
-    font-size: 2em;
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(4) > p{
     font-weight: 700;
-    color: var(--fc-primary);
-    padding: 5px 10px;
-    background-color: var(--site-color-accent2);
-    border-radius: 5px;
-}
-@media only screen and (max-width: 840px){
-    .order-form{
-        grid-column: 1;
-        grid-row: 3;
+    text-align: right;
     
-        position: relative;
-        width: 100%;
-        isolation: isolate;
-        
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto auto;
-        gap: 1rem;
-    }
-    .order-form > header{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .order-form-invoice-open-btn{
-        grid-column: 3;
-        font-size: .8rem;
-    }
-    .order-form .item-information{
-        grid-column: 1;
-        grid-row: 2;
+}
+.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(4) > p > span{
+    font-weight: normal;
+}
+.order-invoice .information{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    padding-block: 8px;
+    padding-inline: 8px;
 
-        min-height: 400px;
-    }
-    
-    .order-form .retrival-information{
-        grid-column: 1;
-        grid-row: 3;
-        
-        padding: 1rem;
-    
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-template-rows: auto;
-        gap: 1rem;
-        align-items: center;
-    }
-    
-    .order-form .personal-information{
-        grid-column: 1;
-        grid-row: 4;
-        
-    }
-    .order-form .order-information{
-        grid-column: 1;
-        grid-row: 5;
-    }
-    .order-submit-btn{
-        grid-column: 1;
-        grid-row: 6;
-        align-self: center;
-        justify-self: center;
-    }
-    
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: repeat(2,auto);
 }
-@media only screen and (max-width: 600px){
+.order-invoice .information .personal{
+    grid-column: 1;
+    grid-row: 1;
+}
+.order-invoice .information .extras{
+    grid-column: 2;
+    grid-row: 1;
+}
+.order-invoice .information .totals{
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.order-invoice .information div p{
+    line-height: 1.6em;
+    font-size: .8rem;
+}
+.order-invoice .information div p{
+    font-weight: 700;
+}
+.order-invoice .information div p > span{
+    font-weight: normal;
+}
+.order-invoice .information .personal p{
+    text-transform: uppercase;
+}
+.order-invoice .information .personal > p:first-child{
+    margin-bottom: 12px;
+}
+.order-invoice .information .personal > p:first-child > span{
+    font-weight: 700;
+}
+.order-invoice .information .extras,
+.order-invoice .information .totals{
+    text-align: right;
+}
+.order-invoice .information .extras > p > span,
+.order-invoice .information .totals > p > span{
+    margin-left: 8px;
+}
+.order-invoice .information .extras > p:nth-of-type(3){
+    display: none;
+}
+.order-invoice .information .totals{
+    text-align: right;
+}
+
+
+
+
+/* BEFORE ORDER SUBMISSION  */
+.before-order-submission{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    text-align: center;
+    padding: 32px;
+}
+.before-order-submission > p{
+    max-width: 500px;
+    line-height: 1.4em;
+    margin: 0 auto;
+    margin-bottom: 12px;
+    text-wrap: pretty;
+}
+.before-order-submission > p:last-of-type{
+    margin-bottom: 32px;
+}
+.before-order-submission > label{
+    display: inline-block;
+    padding: 12px;
+    border-radius: 16px;
+    outline: 1px solid var(--site-color-accent2);
+}
+.before-order-submission > label > span{
+    font-size: .8rem;
+    font-weight: 700;
+    margin-right: 12px;
+}
+
+/* ORDER FORM CONTROLS */
+.order-form-controls{
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+    text-align: center;
+    padding: 32px;
+}
+.order-form-submit-btn{
+    border: none;
+    background-color: var(--site-color-accent2);
+    color: var(--fc-primary);
+    padding: 8px 32px;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 3px 3px 10px black,
+    inset 2px 2px 4px hsl(0 0% 100% / 0.3);
+}
+
+
+/* ORDER PROGRESS BAR */
+.order-progress-bar{
+    --progress-bar-timing: 500ms;
+    
+    position: fixed;
+    top: 100px; left: 0;
+    max-width: 380px;
+    width: 100vw;
+    padding-top: 8px;
+    padding-right: 20px;
+    padding-bottom: 24px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-color: var(--bc-primary);
+    box-shadow: 5px 5px 10px black;
+    outline: 1px solid var(--fc-rare);
+
+    display: none;
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.order-progress-bar.open{
+    display: block;
+}
+.order-progress-bar.show{
+    opacity: 1;
+}
+.order-progress-list{
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    grid-template-rows: auto;
+}
+.order-progress-item{
+    position: relative;
+  
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+}
+.order-progress-item > p{
+    grid-column: 1/4;
+    grid-row: 1;
+
+    padding-bottom: 8px;
+    font-size: .8rem;
+    font-weight: 700;
+    text-align: center;
+
+    scale: 0.5;
+    transition: scale var(--progress-bar-timing) ease;
+}
+.order-progress-item.active > p{
+    scale: 1;
+}
+.order-progress-item.completed > p{
+    scale: 0.5;
+}
+.order-progress-item .bar{
+    grid-column: 1/4;
+    grid-row: 2;
+    align-self: center;
+
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 50%;
+    background-color: var(--fc-primary);
+    box-shadow: inset 2px 2px 4px hsl(0 0% 100% / 0.5),
+    inset -2px -2px 3px hsl(0 0% 0% / 0.5),
+    5px 5px 10px black;
+}
+.order-progress-item .bar::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: green;
+    box-shadow: inherit;
+    transform-origin: left;
+    scale: 0 1;
+
+    transition: scale var(--progress-bar-timing) ease;
+}
+.order-progress-item.active .bar::before{
+    scale: 1 1;
+}
+/* .order-progress-list .order-progress-item:last-child .bar{
+    width: 80%;
+} */
+.order-progress-item .bulb{
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: flex-end;
+
+    position: relative;
+    width: 24px;
+    height: 24px;
+    align-content: center;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: inset 0px 1px 3px hsl(0 0% 100% / 0.5),
+    inset -2px -2px 3px hsl(0 0% 0% / 0.5);
+    z-index: 1;
+
+    
+    background-color: var(--bc-primary);
+    color: var(--fc-primary);
+    scale: 1;
+    outline: 3px solid var(--fc-primary);
+    transition: scale var(--progress-bar-timing) ease,
+    background-color var(--progress-bar-timing) ease,
+    color var(--progress-bar-timing) ease,
+    outline var(--progress-bar-timing) ease;
+}
+.order-progress-item.active .bulb{
+    scale: 1.2;
+    background-color: limegreen;
+    color: var(--fc-primary);
+    outline: 3px solid green;
+}
+.order-progress-item.completed .bulb{
+    scale: 1;
+    background-color: var(--bc-primary);
+    color: var(--fc-primary);
+    /* outline: 3px solid var(--fc-primary); */
+}
+/* .order-progress-item .bulb::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: -1;
+    background-color: green;
+    outline: 2px solid blue;
+
+    transform-origin: left;
+    scale: 0 0;
+
+    transition: scale var(--progress-bar-timing) ease;
+}
+.order-progress-item.active .bulb::before{
+    scale: 1 1;
    
-    .order-form{
-        padding: 2rem 0rem;
-    }
-    .order-form > header{
-        padding-inline: 2rem;
-        justify-content: center;
-        align-items: center;
-    }
-    .order-form > div{
-        outline: none;
-        border-radius: 0px;
-    }
-    .order-form .item-information-tabs{
-        padding-inline: .5rem;
-    }
-    .order-form .item-information-tabs > div{
-        border-top-left-radius: 10px;
-    }
-    .order-form .item-information .order-item{
-        padding-inline: 1rem;
-    }
-}
-@media only screen and (max-width: 500px){
-    .order-form > header{
-        justify-content: unset;
-        align-items: center;  
-    }
-    .order-form > div > label > div{
-        padding-bottom: .5em; 
+} */
+@media only screen and (max-width: 700px){
+    .before-you-order{
+        padding-inline: 32px;
     }
     label[for=OrderFormItem]{
-        text-align: center;
-
         display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-    }
-    .item-information-tabs > div{
-        font-size: .7em;
-        line-height: 1.2em;
-        font-weight: 700;
-     }
-    .order-form .order-item-list .order-item{
-        padding-inline: 0;
-    }
-    label[for=SugarCookiesQuantity]{
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-        align-items: center;
-    }
-    
-    label[for=SugarCookiesDateNeeded]{
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    label[for=DropCookieQuantity]{
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-        align-items: center;
-    }
-    label[for=DropCookieDateNeeded]{
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-        gap: 1rem;
-    }
-
-
-    .order-form .cupcake-information{
-
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(8,auto);
-        
-    }
-   
-    .order-form .cupcake-information > header{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    label[for=CupcakeQuantity]{
-        grid-column: 1;
-        grid-row: 2;
-        
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-        align-items: center;
-    }
-    label[for=CupcakeDateNeeded]{
-        grid-column: 1;
-        grid-row: 3;
-    
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-        gap: 1rem;
-    }
-    label[for=CupcakeFlavor]{
-        grid-column: 1;
-        grid-row: 4;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-    }
-    
-    label[for=CupcakeFrosting]{
-        grid-column: 1;
-        grid-row: 5;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-    }
-    
-    label[for=CupcakeTheme]{
-        grid-column: 1;
-        grid-row: 6;
-        
-    }
-    label[for=CupcakePersonalization]{
-        grid-column: 1;
-        grid-row: 7;
-    }
-    .order-form .cupcake-information .inspiration-upload-wrapper{
-        grid-column: 1;
-        grid-row: 8;
-    }
-    .order-form .cakepop-information{
-
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(6,auto);
-    }
-
-    .order-form .cakepop-information > header{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    label[for=CakepopQuantity]{
-        grid-column: 1;
-        grid-row: 2;
-        
-       
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-        align-items: center;
-    }
-    label[for=CakepopDateNeeded]{
-        grid-column: 1;
-        grid-row: 3;
-    
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    label[for=CakepopFlavor]{
-        grid-column: 1;
-        grid-row: 4;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-    }
-    
-    label[for=CakepopFrosting]{
-        grid-column: 1;
-        grid-row: 5;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-    }
-    .order-form .cakepop-information .inspiration-upload-wrapper{
-        grid-column: 1;
-        grid-row: 6;
-    }
-    .order-form .retrival-information{
-    
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-    }
-    label[for=OrderFormRetrival]{
-        grid-column: 1;
-        grid-row: 1;
-    
-        text-align: center;
-    }
-    
-    label[for=OrderFormPaymentType]{
-        grid-column: 1;
-        grid-row: 2;
-    
-        text-align: center;
-    }
-
-    .order-form .layer-cake-information,
-    .order-form .sheet-cake-information{
-
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(9,auto);
-    }
-    
-    .order-form .layer-cake-information > header,
-    .order-form .sheet-cake-information > header{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    
-    label[for=LayerCakeQuantity],
-    label[for=SheetCakeQuantity]{
-        grid-column: 1;
-        grid-row: 2;
-        
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-        align-items: center;
-    }
-    label[for=LayerCakeDateNeeded],
-    label[for=SheetCakeDateNeeded]{
-        grid-column: 1;
-        grid-row: 3;
-    
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    label[for=LayerCakeSize],
-    label[for=SheetCakeSize]{
-        grid-column: 1;
-        grid-row: 4;
-    }
-    label[for=LayerCakeFlavor],
-    label[for=SheetCakeFlavor]{
-        grid-column: 1;
-        grid-row: 5;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-    }
-    label[for=LayerCakeFrosting],
-    label[for=SheetCakeFrosting]{
-        grid-column: 1;
-        grid-row: 6;
-
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-items: center;
-    }
-    label[for=LayerCakeTheme],
-    label[for=SheetCakeTheme]{
-        grid-column: 1;
-        grid-row: 7;
-        
-    }
-    label[for=LayerCakePersonalization],
-    label[for=SheetCakePersonalization]{
-        grid-column: 1;
-        grid-row: 8;
-    }
-    .order-form .layer-cake-information .inspiration-upload-wrapper,
-    .order-form .sheet-cake-information .inspiration-upload-wrapper{
-        grid-column: 1;
-        grid-row: 9;
-    }
-    .order-form .retrival-information .retrieval-times{
-        grid-column: 1;
-        grid-row: 3;
-    
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-        gap: 1rem;
-        
+        place-content: center;
+        gap: 16px
     }
 }
+
 
 
 /*

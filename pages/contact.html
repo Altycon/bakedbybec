@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Baked By Bec</title>
+
+    <meta name="referrer" content="no-referrer">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Clayton McDaniel, Rebecca Loren">
+
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="nofollow">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
     <link rel="stylesheet" href="../main.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/bakedbybec/img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/bakedbybec/img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/bakedbybec/img/fav/favicon-16x16.png">
+
+    <link rel="manifest" href="/manifest.json">
+
     <script type="module" src="../js/pages/contact/contact.js"></script>
 </head>
 <body>
@@ -66,7 +88,7 @@
         <div class="in-house-bakery">
             <div class="in-house-bakery-sign">
                 <p>All products are produced at a residential property that is exempt from state licensing and inspection.</p>
-                <a href="https://www.legis.iowa.gov/legislation/BillBook?ga=89&ba=HF%202431" target="_blank" class="external-link site-box-link">Iowa Legislation<br>Reference</a>
+                <a href="https://www.legis.iowa.gov/legislation/BillBook?ga=89&ba=HF%202431" target="_blank" class="external-link site-box-link">Iowa Legislation Reference</a>
             </div>
         </div>
 
@@ -81,18 +103,28 @@
         <form class="contact-form">
 
             <div class="input-wrapper">
-                <label for="ContactNameInput">Name</label>
-                <input type="text" name="name" id="ContactNameInput"  autocomplete="off" required>
+                <label for="ContactNameInput" class="form-label">Name</label>
+                <input type="text" 
+                    name="name" 
+                    id="ContactNameInput"
+                    class="form-text-input"  
+                    autocomplete="off" 
+                    required>
             </div>
 
             <div class="input-wrapper">
-                <label for="ContactEmailInput">Email</label>
-                <input type="text" name="name" id="ContactEmailInput"  autocomplete="off" required>
+                <label for="ContactEmailInput" class="form-label">Email</label>
+                <input type="text" 
+                    name="name" 
+                    id="ContactEmailInput"
+                    class="form-text-input"
+                    autocomplete="off"
+                    required>
             </div>
 
             <div class="input-wrapper">
-                <label for="ContactTopicSelect">Topic</label>
-                <select name="" id="ContactTopicSelect" autocomplete="off" required>
+                <label for="ContactTopicSelect" class="form-label">Topic</label>
+                <select name="" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="cookies">cookies</option>
                     <option value="cakes">cakes</option>
@@ -103,8 +135,15 @@
             </div>
 
             <div class="textarea-wrapper">
-                <label for="ContactMessageTextarea">Message</label>
-                <textarea name="" id="ContactMessageTextarea" cols="30" rows="10"  autocomplete="off" required></textarea>
+                <label for="ContactMessageTextarea" class="form-label">Message</label>
+                <textarea name="" 
+                    id="ContactMessageTextarea"
+                    class="form-textarea" 
+                    cols="30" 
+                    rows="10"  
+                    autocomplete="off" 
+                    required>
+                </textarea>
             </div>
 
             <div class="information">
@@ -135,7 +174,7 @@
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
         <div class="footer-created-by">
-            <p>Created by Clayton McDaniel</p>
+            <p>created by <strong>Clayton McDaniel</strong> and <strong>Rebecca Loren</strong></p>
             <a href="https://github.com/Altycon">https://github.com/Altycon</a>
         </div>
     </footer>

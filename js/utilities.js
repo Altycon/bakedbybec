@@ -1,5 +1,32 @@
-
-
+function zeroPadLeftToString(num){
+    if(+num > 9) return `${num}`;
+    return `0${num}`;
+};
+export function transitionElementOpen(element,callback){
+    element.classList.add('open');
+    setTimeout( ()=>{
+        element.classList.add('show');
+        if(callback) callback(element);
+    },100);
+};
+export function transitionElementClose(element,callback){
+    element.classList.remove('open');
+    setTimeout( ()=>{
+        element.classList.remove('show');
+        if(callback) callback(element);
+    },100);
+};
+export function appendElementToParentWithFragment(parent,child){
+    if(!parent instanceof Node){
+        console.warn('parent element is not a html element');
+        return;
+    }
+    if(!child instanceof Node){
+        console.warn('child element is not a html element');
+        return;
+    }
+    parent.appendChild( new DocumentFragment().appendChild(child) );
+}
 export function fixCanvas(canvas,dpi){
 
     const styleWidth = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
@@ -29,4 +56,58 @@ export function openInHouseBakerySign(event){
 
 export function capitalize(word){
     return word.charAt(0).toUpperCase() + word.slice(1)
-}
+};
+
+export function limitDateInputSelection(dateElement,numberOfDaysToLimit){
+    const today = new Date();
+    const now = today.getTime();
+    const milliseconds = 86400000;
+    const minumumDateTime = now + (numberOfDaysToLimit * milliseconds);
+    const minDate = new Date(minumumDateTime);
+    const yearSring = zeroPadLeftToString(minDate.getFullYear());
+    const monthString = zeroPadLeftToString(minDate.getMonth() + 1);
+    const dayString = zeroPadLeftToString(minDate.getDate());
+    const dateString = `${yearSring}-${monthString}-${dayString}`;
+
+    dateElement.setAttribute('min', dateString);
+};
+
+export function clearParentElement(parentElement){
+    if(parentElement.lastChild){
+        while(parentElement.lastChild){
+            parentElement.removeChild(parentElement.lastChild);
+        }
+    }
+};
+export function createHtmlElement(tagName, attributes = {}, content){
+    const element = document.createElement(tagName);
+ 
+    for(const [key, value] of Object.entries(attributes)){
+        if(key === 'class'){
+            element.classList.add(...value.split(' '));
+        }else if(key in element){
+            element[key] = value;
+        }else{
+            element.setAttribute(key, value);
+        }
+    }
+    if(content){
+        if(Array.isArray(content)){
+            content.forEach(item => {
+                if(item instanceof Node){
+                    element.appendChild(item);
+                }else{
+                    element.appendChild(document.createTextNode(item));
+                }
+            });
+        }else if(content instanceof Node){
+            element.appendChild(content);
+        }else{
+            element.textContent = content;
+        }
+    }
+
+    return element;
+};
+
+export const ItemListChangeEvent = new CustomEvent('order:itemChange');
