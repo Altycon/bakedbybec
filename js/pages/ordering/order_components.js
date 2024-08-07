@@ -265,7 +265,7 @@ export const OrderComponent = {
         dateInput.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
         limitDateInputSelection(dateInput,14);
     
-        const calendarIconComponent = createHtmlElement('img',{ src: '/img/icon/site/bbb_icon_calendar_64x64.png'});
+        const calendarIconComponent = createHtmlElement('img',{ src: '/bakedbybec/img/icon/site/bbb_icon_calendar_64x64.png'});
         calendarIconComponent.addEventListener('click', ()=> dateInput.showPicker());
     
         return createHtmlElement('label',{ for: inputId, class: 'custom-date-component form-label'},[
