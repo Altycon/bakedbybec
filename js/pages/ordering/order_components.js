@@ -4,7 +4,8 @@ import {
     createHtmlElement, 
     limitDateInputSelection, 
     clearParentElement, 
-    transitionElementOpen
+    transitionElementOpen,
+    enableSelectFieldOption
 } from "../../utilities.js";
 import { listOfUsStates } from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
@@ -133,6 +134,8 @@ export const OrderComponent = {
         item.querySelector('.inspiration-content').remove();
         item.querySelector('.add-inspiration-btn').classList.add('show');
         event.target.classList.remove('show');
+
+        OrderProgress.removeState(2);
         OrderProgress.inspectAreaInputProgress('.js-item-info',2);
     },
     itemListHasCakes(itemId){
@@ -193,6 +196,7 @@ export const OrderComponent = {
         OrderComponent.handleItemTabActivation();
     
         if(!OrderComponent.itemListHasCakes(itemId)){
+            enableSelectFieldOption(`#OrderFormItem`,itemId);
             OrderComponent.markRetrievalTypeAvailable('shipping');
         }
         
@@ -203,6 +207,7 @@ export const OrderComponent = {
         if(orderItemList.children.length === 0){
             OrderComponent.addOrderItemIntro();
             OrderProgress.removeState(1);
+            OrderProgress.removeState(2);
         }else{
             OrderProgress.inspectAreaInputProgress('.js-item-info',2);
         }
@@ -233,7 +238,7 @@ export const OrderComponent = {
     },
     
     // tab component
-    orderItemTabComponent(itemId){
+    orderItemTabComponent(itemId,imageSourcePath){
         const [first,last] = itemId.split('-');
     
         return createHtmlElement('li', { class: 'btn order-item-tab js-order-item-tab', 'data-tab-id':itemId },[
@@ -242,7 +247,7 @@ export const OrderComponent = {
                     createHtmlElement('br',{}),
                     `${last}`
                 ]),
-                createHtmlElement('img',{ src: `/bakedbybec/img/icon/product/bbb_icon_${first + last}_128x128.png`})
+                createHtmlElement('img',{ src: imageSourcePath })
         ]);
     },
 
@@ -260,7 +265,7 @@ export const OrderComponent = {
         dateInput.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
         limitDateInputSelection(dateInput,14);
     
-        const calendarIconComponent = createHtmlElement('img',{ src: '/bakedbybec/img/icon/site/bbb_icon_calendar_64x64.png'});
+        const calendarIconComponent = createHtmlElement('img',{ src: '/img/icon/site/bbb_icon_calendar_64x64.png'});
         calendarIconComponent.addEventListener('click', ()=> dateInput.showPicker());
     
         return createHtmlElement('label',{ for: inputId, class: 'custom-date-component form-label'},[
@@ -341,7 +346,7 @@ export const OrderComponent = {
     },
 
     //item component
-    orderHeaderComponent(itemId){
+    orderHeaderComponent(itemId,imageSourcePath){
         const titleParts = itemId.split('-');
     
         const removeBtn = createHtmlElement('button', { 
@@ -353,7 +358,7 @@ export const OrderComponent = {
     
         return createHtmlElement('header', {},[
             createHtmlElement('img', {
-                src: `/bakedbybec/img/icon/product/bbb_icon_${titleParts[0]+titleParts[1]}_128x128.png`,
+                src: imageSourcePath,
                 class: 'order-item-img'
             }),
             createHtmlElement('h3',{}, `${capitalize(titleParts[0])} ${capitalize(titleParts[1])}`),
@@ -458,7 +463,7 @@ export const OrderComponent = {
     inspirationComponent(){
         const addBtn = createHtmlElement('button', { type: 'button', class: 'btn add-inspiration-btn show' },[
                 `add inspiration`,
-                createHtmlElement('img', { src: `/bakedbybec/img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
+                createHtmlElement('img', { src: `/img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
         const removeBtn = createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
@@ -513,7 +518,10 @@ export const OrderComponent = {
             class: `order-item js-order-item ${itemData.name}-item`,
             'data-item-id':`${itemData.name}`
         },[
-            OrderComponent.orderHeaderComponent(itemData.name),
+            OrderComponent.orderHeaderComponent(
+                itemData.name,
+                itemData.imageSourcePath
+            ),
             createHtmlElement('fieldset',{ class: 'form-group'},[
                 OrderComponent.orderItemPriceComponent(itemData.prices),
                 OrderComponent.dateNeededInputComponent(

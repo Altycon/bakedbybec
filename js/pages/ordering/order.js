@@ -2,6 +2,7 @@ import { pageNavigation } from "../../navigation.js";
 import { 
     appendElementToParentWithFragment,
     capitalize, 
+    disableSelectFieldOption, 
     ItemListChangeEvent, 
     openInHouseBakerySign, 
     transitionElementClose, 
@@ -24,7 +25,11 @@ const Order = {
     itemList: undefined,
     invoiceItemList: undefined,
 
-
+    // utils
+    createItemObjectId(itemId){
+        const [ first, last ] = itemId.split('-');
+        return `${first}${capitalize(last)}`; 
+    },
     // intros
     removeItemTabIntro(){
         const tabIntro = document.querySelector('.js-order-item-tab-intro');
@@ -48,9 +53,14 @@ const Order = {
         })
     },
     addItemTab(itemId,makeActive=true){
+        const objectId = Order.createItemObjectId(itemId);
+       
         Order.deactivateItemTabs();
 
-        const tabComponent = OrderComponent.orderItemTabComponent(itemId);
+        const tabComponent = OrderComponent.orderItemTabComponent(
+            itemId,
+            OrderItemData[objectId].imageSourcePath
+        );
         appendElementToParentWithFragment(
             Order.itemTabList,
             tabComponent
@@ -86,13 +96,8 @@ const Order = {
         if(!option) console.warn('item retrieval option to be disabled, not found');
         option.setAttribute('disabled', 'true');
     },
-    enableItemSelection(itemId){
-        document.querySelector(`#OrderFormItem option[value="${itemId}"]`).removeAttribute('disabled');
-    },
     disableItemSelection(itemId){
-        const option = Order.itemSelectField.querySelector(`option[value="${itemId}"]`);
-        if(!option) console.warn('item option to be disabled, not found')
-        option.setAttribute('disabled', 'true');
+        disableSelectFieldOption(Order.itemSelectField,itemId);
 
         if('layer-cake' === itemId || 'sheet-cake' === itemId){
             Order.disableRetrievalSelection('shipping');
@@ -113,13 +118,10 @@ const Order = {
     },
     
     // invoice
-    addItemToInvoice(itemId){
-        const [ first, last ] = itemId.split('-');
-        const objecId = `${first}${capitalize(last)}`;
-
+    addItemToInvoice(itemId,invoiceItemFields){
         const invoiceItemComponent = OrderComponent.orderInvoiceItemComponent(
             itemId,
-            OrderItemData.invoiceFields[objecId]
+            invoiceItemFields
         );
         appendElementToParentWithFragment(
             Order.invoiceItemList,
@@ -133,6 +135,16 @@ const Order = {
     },
 
     // items
+    activeSubmitButton(){
+        if(!Order.submitButton.classList.contains('active')){
+            Order.submitButton.classList.add('active');
+        }
+    },
+    deactiveSubmitButton(){
+        if(Order.submitButton.classList.contains('active')){
+            Order.submitButton.classList.remove('active');
+        }
+    },
     hideOrderItems(){
         document.querySelectorAll('.js-order-item').forEach( orderItem =>{
             if(orderItem.classList.contains('active')){
@@ -142,11 +154,9 @@ const Order = {
             }
         })
     },
-    addItemToOrder(itemId){
-        const [ first, last ] = itemId.split('-');
-        const objecId = `${first}${capitalize(last)}`;
+    addItemToOrder(itemData){
 
-        const itemComponent = OrderComponent.orderItemComponent(OrderItemData[objecId]);
+        const itemComponent = OrderComponent.orderItemComponent(itemData);
         appendElementToParentWithFragment(
             Order.itemList,
             itemComponent
@@ -184,6 +194,7 @@ const Order = {
     },
     chooseItem(changeEvent){
         const itemId = changeEvent.target.value;
+        const objecId = Order.createItemObjectId(itemId);
         
         Order.removeItemIntro();
         Order.hideOrderItems();
@@ -199,16 +210,18 @@ const Order = {
             Order.addItemTab(itemId);
         }
 
-        Order.addItemToOrder(itemId);
+        Order.addItemToOrder(OrderItemData[objecId]);
 
         Order.disableItemSelection(itemId);
 
-        Order.addItemToInvoice(itemId);
+        Order.addItemToInvoice(
+            itemId,
+            OrderItemData.invoiceFields[objecId]
+        );
 
         OrderProgress.listenToAreaInputs('.js-item-info',2);
         OrderProgress.inspectAreaInputProgress('.js-item-info',2);
         OrderProgress.setState(1);
-        
     },
 
     // retrieval
@@ -242,7 +255,7 @@ const Order = {
         }
 
         OrderProgress.setState(3);
-        
+
         OrderComponent.displayInputContentInOutputElement(inputEvent);
     
         const option = document.querySelector(`#OrderFormRetrieval option[value="${inputEvent.target.value}"]`);
@@ -256,18 +269,37 @@ const Order = {
     },
     // aggreement
     selectOrderAgreementCheckbox(changeEvent){
-        const progressState = OrderProgress.inspectState(); //checkProgressBarState(3);
-        if(progressState.length === 0){
-            if(changeEvent.target.checked){
-                OrderProgress.setState(6);
-            }else{
-                OrderProgress.removeState(6);
-            }
+        const progressState = OrderProgress.inspectState();
+        const isChecked = changeEvent.target.checked;
+        if(progressState.length > 0){
+            changeEvent.target.checked = false;
+            return;
+        }
+        if(isChecked){
+            Order.activeSubmitButton();
+            OrderProgress.setState(6);
+        }else{
+            Order.deactiveSubmitButton();
+            OrderProgress.removeState(6);
         }
     },
-
-    submitOrder(){
-
+    counter: 0,
+    submitOrder(clickEvent){
+        const list = [
+            'I disagree with your decision. try again',
+            'nope. not this time. try again',
+            'really? do you think something is going to happen? try again',
+            'fine. ill do nothing again. try again',
+            'how long you gonna try this? try again',
+            `you've realized that there may be more and want to continue? try again`
+        ]
+        if(clickEvent.target.classList.contains('active')){
+            alert(list[Order.counter]);
+            Order.counter++;
+            if(Order.counter >= list.length){
+                Order.counter = 0;
+            }
+        }
     },
     listen(){
         Order.itemSelectField.addEventListener('change',Order.chooseItem);
@@ -276,7 +308,8 @@ const Order = {
         Order.agreementCheckboxField.addEventListener('change', Order.selectOrderAgreementCheckbox);
         Order.itemList.addEventListener('order:itemChange', (event)=>{
             console.log('itemlist event', event);
-        })
+        });
+        Order.submitButton.addEventListener('click', Order.submitOrder);
     },
     initialize(){
         try{
@@ -344,6 +377,7 @@ function openOrderForm(event){
         setTimeout( ()=> {
             orderAreaElement.classList.add('show');
             OrderProgress.setState(0);
+            OrderProgress.listenToAreaInputs('.js-personal-info',5);
         },400)
         setTimeout( ()=>{
             beforeYouOrderElement.classList.add('hide');

@@ -36,7 +36,8 @@ export const OrderItemData ={
         quantityField: new OrderFieldData('quantity','quantity',[
             '1,1 dozen','2,2 dozen','3,3 dozen','4,4 dozen','5,5 dozen','6,6 dozen'
         ]),
-        fields: []
+        fields: [],
+        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_sugarcookies_128x128.png`
     },
     dropCookies:{
         title: 'Drop Cookies',
@@ -53,7 +54,8 @@ export const OrderItemData ={
             new OrderFieldData('chips','baking chips',[
                 'chocolate','white chocolate','peanut butter'
             ])
-        ]
+        ],
+        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_dropcookies_128x128.png`
     },
     layerCake:{
         title: 'Layer Cake',
@@ -76,7 +78,8 @@ export const OrderItemData ={
             new OrderFieldData('frosting','frosting',[
                 'vanilla','chocolate','lemon','strawberry'
             ])
-        ]
+        ],
+        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_layercake_128x128.png`
     },
     sheetCake:{
         title: 'Sheet Cake',
@@ -94,7 +97,8 @@ export const OrderItemData ={
             new OrderFieldData('frosting','frosting',[
                 'vanilla','chocolate','lemon','strawberry'
             ])
-        ]
+        ],
+        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_sheetcake_128x128.png`
     },
     cupCakes:{
         title: 'Cup Cakes',
@@ -111,7 +115,8 @@ export const OrderItemData ={
             new OrderFieldData('frosting','frosting',[
                 'vanilla','chocolate','lemon','strawberry'
             ])
-        ]
+        ],
+        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_cupcakes_128x128.png`
     },
     cakePops:{
         title: 'Cake Pops',
@@ -128,7 +133,8 @@ export const OrderItemData ={
             new OrderFieldData('frosting','frosting',[
                 'vanilla','chocolate','lemon','strawberry'
             ])
-        ]
+        ],
+        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_cakepops_128x128.png`
     },
 }
 

@@ -38,7 +38,9 @@ export const OrderProgress = {
     },
     inspectState(){
         const activeItems = this.elements.filter( item =>{
-            if(!item.classList.contains('active') && item.dataset.progressState !== '5' && item.dataset.progressState !== '6'){
+            if(!item.classList.contains('active') && 
+                item.dataset.progressState !== '5' && 
+                    item.dataset.progressState !== '6'){
                     return item;
             }
         });
