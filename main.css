@@ -6415,8 +6415,9 @@ label[for=OrderFormZipCode] > input{
 
 @media only screen and (max-width: 1430px){
     .order-progress-bar{
-        top: unset;
-        bottom: 0;
+        top: calc(100% - 95px);
+        /* top: unset;
+        bottom: 0; */
     }
 }
 @media only screen and (max-width: 700px){
@@ -6521,8 +6522,6 @@ label[for=OrderFormZipCode] > input{
 
     .order-progress-bar{
         max-width: 500px;
-        top: unset;
-        bottom: 0;
         border-top-left-radius: 16px;
     }
 }
