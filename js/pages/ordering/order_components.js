@@ -330,7 +330,7 @@ export const OrderComponent = {
         const textarea = createHtmlElement('textarea',{ 
             id:textareaId, 
             name:textareaName,
-            cols: '30',
+            // cols: '30',
             rows: '3',
             required:'true',
             autocomplete:'off',
@@ -463,7 +463,7 @@ export const OrderComponent = {
     inspirationComponent(){
         const addBtn = createHtmlElement('button', { type: 'button', class: 'btn add-inspiration-btn show' },[
                 `add inspiration`,
-                createHtmlElement('img', { src: `/img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
+                createHtmlElement('img', { src: `/bakedbybec/img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
         const removeBtn = createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
