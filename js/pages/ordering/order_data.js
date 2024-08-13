@@ -13,7 +13,10 @@ class OrderFieldData{
            
         });
     }
-  };
+};
+
+const cakeFlavors = ['vanilla','chocolate','lemon','red velvet','strawberry','carrot'];
+const cakeFrostings = ['vanilla','chocolate','lemon','strawberry','cream cheese'];
 
 export const OrderItemData ={
     invoiceFields:{
@@ -72,12 +75,8 @@ export const OrderItemData ={
             new OrderFieldData('size','size',[
                 '6 inch,6" smash','8 inch,8"','10 inch,10"','2 tier,2 tier'
             ]),
-            new OrderFieldData('flavor','flavor',[
-                'vanilla','chocolate','lemon','red velvet','strawberry'
-            ]),
-            new OrderFieldData('frosting','frosting',[
-                'vanilla','chocolate','lemon','strawberry'
-            ])
+            new OrderFieldData('flavor','flavor',cakeFlavors),
+            new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
         imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_layercake_128x128.png`
     },
@@ -91,12 +90,8 @@ export const OrderItemData ={
             new OrderFieldData('size','size',[
                 'quarter','half'
             ]),
-            new OrderFieldData('flavor','flavor',[
-                'vanilla','chocolate','lemon','red velvet','strawberry'
-            ]),
-            new OrderFieldData('frosting','frosting',[
-                'vanilla','chocolate','lemon','strawberry'
-            ])
+            new OrderFieldData('flavor','flavor',cakeFlavors),
+            new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
         imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_sheetcake_128x128.png`
     },
@@ -104,17 +99,16 @@ export const OrderItemData ={
         title: 'Cup Cakes',
         id: 'CupCakes',
         name: 'cup-cakes',
-        prices: [{price: 20, units: '/dozen'}],
+        prices: [{price: 25, title:'mini',units:'/dozen'},{price: 30,title:'standard',units:'/dozen'}],
         quantityField: new OrderFieldData('quantity','quantity',[
             '1,1 dozen','2,2 dozen','3,3 dozen','4,4 dozen','5,5 dozen','6,6 dozen'
         ]),
         fields: [
-            new OrderFieldData('flavor','flavor',[
-                'vanilla','chocolate','lemon','red velvet','strawberry'
+            new OrderFieldData('size','size',[
+                'mini','standard'
             ]),
-            new OrderFieldData('frosting','frosting',[
-                'vanilla','chocolate','lemon','strawberry'
-            ])
+            new OrderFieldData('flavor','flavor',cakeFlavors),
+            new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
         imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_cupcakes_128x128.png`
     },
@@ -127,12 +121,8 @@ export const OrderItemData ={
             '1,1 dozen','2,2 dozen','3,3 dozen','4,4 dozen','5,5 dozen','6,6 dozen'
         ]),
         fields: [
-            new OrderFieldData('flavor','flavor',[
-                'vanilla','chocolate','lemon','red velvet','strawberry'
-            ]),
-            new OrderFieldData('frosting','frosting',[
-                'vanilla','chocolate','lemon','strawberry'
-            ])
+            new OrderFieldData('flavor','flavor',cakeFlavors),
+            new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
         imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_cakepops_128x128.png`
     },

@@ -89,7 +89,6 @@
 html{
     font-family: var(--ff-primary);
     color: var(--fc-primary);
-    
 }
 
 
@@ -111,83 +110,7 @@ body{
 ===================================================|
 */
 *,::before,::after{margin: 0;padding: 0;box-sizing: border-box;}
-.attention-text{
-    color: yellow;
-}
-.img-wrapper > img{
-    width: 100%;
-}
-.custom-date-component{
-   text-align: center;
-    
-}
-.custom-date-component > div{
-    margin-bottom: 12px;
-}
-.custom-date-component > div .img-wrapper{
-   margin-left: 32px;
-}
-.custom-date-component > div .img-wrapper > img{
-    width: 16px;
-}
-.custom-date-component > input{
-   margin-bottom: 12px;
-}
-.custom-date-component > p{
-   
-}
 
-
-
-.form-label{
-    font-weight: 700;
-}
-.form-text-input,
-.form-textarea{
-    font-size: 1rem;
-}
-.form-select,
-.form-date-input{
-    border: none;
-    color: var(--fc-primary);
-    background-color: hsl(0 0% 15%);
-    text-align: center;
-    padding: 8px 12px;
-}
-.form-text-input,
-.form-textarea{
-    border: none;
-    color: var(--fc-primary);
-    padding: 5px;
-    background-color: transparent;
-    border-bottom: 1px solid hsl(0 0% 15%);
-}
-.form-text-input:focus,
-.form-textarea:focus{
-    border-radius: 5px;
-    outline: 2px solid var(--site-color-accent2);
-}
-.form-date-input.selected,
-.form-select.selected{
-    background-color: transparent;
-}
-.form-text-input.selected,
-.form-textarea.selected{
-    border-bottom: 1px solid transparent;
-}
-.form-textarea{
-    font-family: var(--ff-primary);
-    resize: none;
-}
-.form-input-message{
-    font-size: 12px;
-    font-weight: 500;
-    padding: 8px;
-    text-wrap: pretty;
-}
-.form-date-input{
-    font-family: var(--ff-primary);
-}
 @media (prefers-color-scheme: dark) {
     input[type="date"] {
       background-color: #000;
@@ -258,6 +181,94 @@ body{
 .yellow-text{
     color: yellow;
 }
+.attention-text{
+    color: yellow;
+}
+.img-wrapper > img{
+    width: 100%;
+}
+.custom-date-component{
+   text-align: center;
+    
+}
+.custom-date-component > div{
+    margin-bottom: 12px;
+}
+.custom-date-component > div .img-wrapper{
+   margin-left: 32px;
+}
+.custom-date-component > div .img-wrapper > img{
+    width: 16px;
+}
+.custom-date-component > input{
+   margin-bottom: 12px;
+}
+.custom-date-component > p{
+   
+}
+
+
+
+.form-label{
+    font-weight: 700;
+}
+.form-text-input,
+.form-textarea{
+    font-size: 1rem;
+}
+.form-select,
+.form-date-input{
+    border: none;
+    color: var(--fc-primary);
+    text-align: center;
+    font-weight: 700;
+    padding: 8px 12px;
+
+    /* background-color: hsl(0 0% 15%); */
+
+    background-color: var(--site-color-accent2);
+    border-radius: 16px;
+    box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
+    inset -1px -1px 2px black,
+    5px 5px 10px black;
+}
+.form-text-input,
+.form-textarea{
+    border: none;
+    color: var(--fc-primary);
+    padding-inline: 12px;
+    padding-block: 8px;
+    background-color: transparent;
+    /* border-bottom: 1px solid hsl(0 0% 15%); */
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
+}
+.form-text-input:focus,
+.form-textarea:focus{
+    border-radius: 5px;
+    outline: 2px solid var(--site-color-accent2);
+}
+/* .form-date-input.selected,
+.form-select.selected{
+    background-color: transparent;
+} */
+.form-text-input.selected,
+.form-textarea.selected{
+    border-bottom: 1px solid transparent;
+}
+.form-textarea{
+    font-family: var(--ff-primary);
+    resize: none;
+}
+.form-input-message{
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px;
+    text-wrap: pretty;
+}
+.form-date-input{
+    font-family: var(--ff-primary);
+}
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -300,7 +311,9 @@ body{
     align-items: center;
     gap: 1rem;
 }
-
+.page-header.terms{
+    position: static;
+}
 /*+++++++++++++++++++++++++++++++*/
 .page-header .website-title{
     grid-column: 1;
@@ -337,13 +350,13 @@ body{
     list-style: none;
 
     display: grid;
-    grid-template-columns: repeat(5,auto);
+    grid-template-columns: repeat(6,auto);
     grid-template-rows: auto;
     gap: 2em;
 }
-.page-header .page-navigation-primary-list > li:last-of-type{
+/* .page-header .page-navigation-primary-list > li:last-of-type{
     display: none;
-}
+} */
 .page-header .page-navigation-primary-item{
     text-align: center;
 }
@@ -505,7 +518,7 @@ body{
     opacity: 1;
 }
 
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 850px){
     /*
     =========================================|
             PAGE HEADER
@@ -611,6 +624,21 @@ body{
 */
 .footer-primary{
     padding: 1rem;
+}
+.footer-primary > p:first-child{
+    text-align: center;
+    padding-bottom: 24px;
+}
+.footer-primary > p:first-child > a{
+    color: var(--fc-primary);
+    font-weight: 500;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 16px;
+    background-color: var(--site-link-color);
+    box-shadow: inset 2px 2px 4px hsl(0 0% 100% / 0.3),
+    inset -1px -1px 3px black,
+    5px 5px 10px black;
 }
 .footer-navigation{
     
@@ -1102,10 +1130,10 @@ body{
     top: 75%; left: 50%;
     width: fit-content;
     height: fit-content;
-    font-size: calc(var(--circle-size) * 0.05);
     font-weight: 700;
     text-transform: lowercase;
     text-align: center;
+    text-shadow: 2px 2px 4px black;
     
     opacity: 0;
     transform: translateX(-50%);
@@ -1291,7 +1319,7 @@ body{
     .home-navigation-primary-logo-subtext{
         position: absolute;
         top: 80%; left: 50%;
-        font-size: .8rem;
+        /* font-size: .8rem; */
         white-space: nowrap;
         font-weight: 700;
     }
@@ -1602,12 +1630,21 @@ body{
     content: "";
     position: absolute;
     inset: 0;
-    background-color: hsl(0 0% 0% / 0.5);
+    
     z-index: 1;
     pointer-events: none;
 
     opacity: 1;
     transition: opacity 300ms;
+}
+.customer-review-images > div:nth-child(1)::before{
+    background-color: hsl(0 0% 0% / 0.6);
+}
+.customer-review-images > div:nth-child(2)::before{
+    background-color: hsl(0 0% 0% / 0.4);
+}
+.customer-review-images > div:nth-child(3)::before{
+    background-color: hsl(0 0% 0% / 0.2);
 }
 .customer-review-img{
     width: 100%;
@@ -1620,7 +1657,7 @@ body{
     transition: transform 300ms ease-in-out;
 }
 .customer-review-img-wrapper:hover::before{
-    opacity: 0.5;
+    opacity: 0.3;
 }
 .customer-review-img-wrapper:hover .customer-review-img{
     transform: scale(1.1);
@@ -1966,6 +2003,10 @@ body{
 .faqs .order-retrieval .answer .option > p{
     text-align: center;
 }
+/* .faqs .order-retrieval .answer .option:nth-child(1) > p:nth-last-of-type(1){
+    outline: 1px solid yellow;
+    margin: 0 auto;
+} */
 .faqs .order-retrieval .pink-text.price{
     font-size: 1.5rem;
 }
@@ -2182,12 +2223,11 @@ body{
 .faqs .answer .option .icon-wrapper{
     margin-bottom: 1rem;
 }
-/* .faqs .answer .option > p{
+.faqs .answer .option > p{
     text-align: center;
-} */
+}
 .faqs .answer .option > p:not(:last-of-type){
     max-width: 300px;
-    text-align: center;
     font-size: 1.2rem;
     line-height: 1.5em;
     margin: 0 auto 1rem auto;
@@ -2260,14 +2300,6 @@ body{
         margin: 0 auto;
         padding: 1rem; 
     }
-    
-    /* .faqs .answer .option::before{
-        display: none;
-    }
-    .faqs .answer .option::after{
-        display: none;
-    } */
-    
 }
 @media only screen and (max-width: 632px){
     .faqs > .ingredients .answer{
@@ -2308,6 +2340,38 @@ body{
 @media only screen and (max-width: 600px){
     .faqs > article > header .question{
         font-size: 1.5rem;
+    }
+
+
+    /* home faqs animation shut off */
+    .faqs > article > header .question{
+        translate: 0px;
+        opacity: 1;
+    }
+    .faqs .gluten-free .answer > p{
+        translate: 0px;
+    }
+    .faqs .gluten-free .answer{
+        opacity: 1;
+    }
+    .faqs .gluten-free .answer .icon-wrapper{
+        opacity: 1;
+        scale: 1;
+    }
+    .faqs .order-retrieval .answer .option{
+        opacity: 1;
+        translate: 0px 0px;
+    }
+    .faqs .product-pricing .answer .option{
+        opacity: 1;
+        translate: 0px 0px;
+    }
+    .faqs .ingredients .icon-wrapper{
+        opacity: 1;
+        translate: 0px 0px;
+    }
+    .faqs .ingredients .answer{
+        opacity: 1;
     }
 }
 @media only screen and (max-width: 500px){
@@ -2371,7 +2435,10 @@ body{
         grid-column: 1/3;
         grid-row: 4;
     }
-
+    .faqs .order-retrieval .answer .shipping > p:nth-of-type(4){
+        grid-column: 1/3;
+        grid-row: 5;
+    }
     .faqs .product-pricing .answer{
         gap: 1.4rem
     }
@@ -2552,7 +2619,9 @@ body{
     font-weight: 700;
 }
 @media only screen and (max-width: 600px){
-  
+    .home-thanks{
+        opacity: 1;
+    }
     .home-thanks .outro > h3{
         font-size: 1.2rem;
     }
@@ -4965,6 +5034,11 @@ label[for=BookClassFormAdvancedInquiryCheckbox] > div{
         grid-template-rows: repeat(3,auto);
     }
 }
+
+
+
+
+
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -5423,6 +5497,9 @@ label[for=OrderFormItem]{
     font-weight: 700;
 }
 .order-item-prices-display > div > p:nth-of-type(2){
+    font-size: .8rem;
+}
+.order-item-prices-display > div > p:nth-of-type(2) > span{
     font-weight: 700;
     font-size: 1.2rem;
 }
@@ -5451,7 +5528,8 @@ label[for=OrderFormItem]{
     align-items: center;
     gap: 16px;
 }
-.sugar-cookies-item .form-group:nth-of-type(2) > label > span{
+.sugar-cookies-item .form-group:nth-of-type(2) > label > div{
+    align-self: flex-start;
     padding-bottom: 8px;
 }
 .sugar-cookies-item .form-group:nth-of-type(2) > label:nth-of-type(1){
@@ -5532,8 +5610,9 @@ label[for=OrderFormItem]{
     align-items: flex-end;
     gap: 16px;
 }
-.layer-cake-item .form-group:nth-of-type(3) > label > span,
-.sheet-cake-item .form-group:nth-of-type(3) > label > span{
+.layer-cake-item .form-group:nth-of-type(3) > label > div,
+.sheet-cake-item .form-group:nth-of-type(3) > label > div{
+    align-self: flex-start;
     padding-bottom: 8px;
 }
 .layer-cake-item .form-group:nth-of-type(3) > label:nth-of-type(1),
@@ -5561,7 +5640,7 @@ label[for=OrderFormItem]{
     margin-bottom: 48px;
 
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    grid-template-columns: repeat(3,auto);
     grid-template-rows: auto;
 }
 .cup-cakes-item .form-group:nth-of-type(2) > label > div{
@@ -5577,7 +5656,8 @@ label[for=OrderFormItem]{
     align-items: flex-end;
     gap: 16px;
 }
-.cup-cakes-item .form-group:nth-of-type(3) > label > span{
+.cup-cakes-item .form-group:nth-of-type(3) > label > div{
+    align-self: flex-start;
     padding-bottom: 8px;
 }
 .cup-cakes-item .form-group:nth-of-type(3) > label:nth-of-type(1){
@@ -5662,6 +5742,8 @@ label[for=OrderFormItem]{
     opacity: 1;
 }
 .order-item .inspiration-content{
+    position: relative;
+
     display: none;
     grid-template-columns: auto auto;
     grid-template-rows: repeat(2,auto);
@@ -6285,6 +6367,13 @@ label[for=OrderFormZipCode] > input{
     opacity: 1;
 }
 
+
+
+
+/* maybe shut this off for mobile ?
+*  maybe move it? maybe hide it in a button?
+*/
+
 /* ORDER PROGRESS BAR */
 .order-progress-bar{
     --progress-bar-timing: 500ms;
@@ -6547,23 +6636,32 @@ label[for=OrderFormZipCode] > input{
 
 
     .layer-cake-item .form-group:nth-of-type(2),
-    .sheet-cake-item .form-group:nth-of-type(2){
+    .sheet-cake-item .form-group:nth-of-type(2),
+    .cup-cakes-item .form-group:nth-of-type(2){
         grid-template-columns: 1fr;
         grid-template-rows: repeat(3,auto);
         row-gap: 24px;
     }
     .layer-cake-item .form-group:nth-of-type(2) > label,
-    .sheet-cake-item .form-group:nth-of-type(2) > label{
+    .sheet-cake-item .form-group:nth-of-type(2) > label,
+    .cup-cakes-item .form-group:nth-of-type(2) > label{
         
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
     }
     .layer-cake-item .form-group:nth-of-type(2) > label > div,
-    .sheet-cake-item .form-group:nth-of-type(2) > label > div{
+    .sheet-cake-item .form-group:nth-of-type(2) > label > div,
+    .cup-cakes-item .form-group:nth-of-type(2) > label > div{
         text-align: left;
     }
-
+    .layer-cake-item .form-group:nth-of-type(2) > label > select,
+    .sheet-cake-item .form-group:nth-of-type(2) > label > select,
+    .cup-cakes-item .form-group:nth-of-type(2) > label > select{
+        /* width: 100%;
+        max-width: 200px;
+        margin: 0 auto; */
+    }
 
 
 
@@ -6682,8 +6780,113 @@ label[for=OrderFormZipCode] > input{
     }
 }
 
+/*
+===================================================|
+---------------------------------------------------|
+
+            TERMS OF USE PAGE
+
+---------------------------------------------------|
+===================================================|
+*/
+
+.terms-main{
+    max-width: 900px;
+    margin: 0 auto;
+    padding-inline: 32px;
+}
+.terms-main a{
+    color: var(--fc-primary);
+    text-decoration: none;
+    font-weight: 700;
+}
+.terms-main h2{
+    margin-bottom: 32px;
+}
+.terms-main h3{
+    margin-bottom: 24px;
+}
+.terms-main p{
+    margin-bottom: 16px;
+    line-height: 1.5em;
+}
+.terms-main > section{
+    margin-bottom: 48px;
+}
+.terms-main > section li{
+    margin-bottom: 12px;
+    line-height: 1.5em;
+}
+.terms-main ul{
+    list-style-position: inside;
+    margin-bottom: 16px;
+}
 
 
+.terms-main > header{
+    padding-top: 64px;
+    padding-bottom: 16px;
+    text-align: center;
+}
+.terms-main > header > h1{
+    margin-bottom: 32px;
+}
+.terms-table-of-contents{
+    margin-bottom: 64px;
+}
+.terms-table-of-contents > h2{
+    text-align: center;
+}
+.terms-table-of-contents > ul{
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-auto-rows: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.terms-table-of-contents > ul > li{
+    align-self: stretch;
+    justify-self: stretch;
+    align-content: center;
+
+    font-size: .8rem;
+    background-color: var(--site-link-color);
+    text-align: center;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
+    inset -1px -1px 2px black;
+}
+
+#AgreementToLegalTerms > div{
+    padding-top: 24px;
+    padding-bottom: 32px;
+    padding-inline: 32px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px){
+    .terms-main{
+        padding-inline: 16px;
+    }
+    .terms-table-of-contents > ul{
+        
+        grid-template-columns: repeat(3,1fr);
+        grid-auto-rows: auto;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+    .terms-table-of-contents > ul > li > a{
+        font-size: .6rem;
+        font-weight: 500;
+    }
+}
 /*
 --------------------------------
 

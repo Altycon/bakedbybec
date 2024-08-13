@@ -55,24 +55,24 @@
                 <li class="page-navigation-primary-item" style="--i:1;">
                     <a href="/bakedbybec/pages/contact.html" class="link page-navigation-primary-link">contact</a>
                 </li>
+                <li class="page-navigation-primary-item" style="--i:1.3;">
+                    <a href="/bakedbybec/pages/book_class.html" class="link page-navigation-primary-link">class</a>
+                </li> 
                 <li class="page-navigation-primary-item" style="--i:1.5;">
                     <a href="/bakedbybec/pages/order.html" class="link page-navigation-primary-link">order</a>
-                </li>
-                <li class="page-navigation-primary-item" style="--i:1.3;">
-                    <a href="/bakedbybec/pages/book_class.html" class="link page-navigation-primary-link">book class</a>
-                </li>      
+                </li>     
             </ul>
         </nav>
 
         <nav class="page-navigation-social">
             <ul class="page-navigation-social-list">
                 <li class="page-navigation-social-item">
-                    <a href="" class="link page-navigation-social-link">
+                    <a href="https://www.facebook.com/bakedbybec19/" target="_blank" class="link page-navigation-social-link">
                         <img src="/bakedbybec/img/icon/bbb_icon_facebook_64x64.png" alt="Facebook icon" class="page-navigation-social-icon">
                     </a>
                 </li>
                 <li class="page-navigation-social-item">
-                    <a href="" class="link page-navigation-social-link">
+                    <a href="https://www.instagram.com/baked.by.bec19/" target="_blank" class="link page-navigation-social-link">
                         <img src="/bakedbybec/img/icon/bbb_icon_instagram_64x64.png" alt="Instagram icon" class="page-navigation-social-icon">
                     </a>
                 </li>
@@ -101,29 +101,26 @@
         </header>
         
         <form class="contact-form">
-
-            <div class="input-wrapper">
-                <label for="ContactNameInput" class="form-label">Name</label>
+            <label for="ContactNameInput" class="form-label">
+                <div>Name</div>
                 <input type="text" 
                     name="name" 
                     id="ContactNameInput"
                     class="form-text-input"  
                     autocomplete="off" 
                     required>
-            </div>
-
-            <div class="input-wrapper">
-                <label for="ContactEmailInput" class="form-label">Email</label>
+            </label>
+            <label for="ContactEmailInput" class="form-label">
+                <div>Email</div>
                 <input type="text" 
                     name="name" 
                     id="ContactEmailInput"
                     class="form-text-input"
                     autocomplete="off"
                     required>
-            </div>
-
-            <div class="input-wrapper">
-                <label for="ContactTopicSelect" class="form-label">Topic</label>
+            </label>
+            <label for="ContactTopicSelect" class="form-label">
+                <div>Topic</div>
                 <select name="" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
                     <option value=""selected disabled>-- select</option>
                     <option value="cookies">cookies</option>
@@ -132,19 +129,21 @@
                     <option value="availability">availability</option>
                     <option value="other">other</option>
                 </select>
-            </div>
+            </label>
+            
 
-            <div class="textarea-wrapper">
-                <label for="ContactMessageTextarea" class="form-label">Message</label>
+            <label for="ContactMessageTextarea" class="form-label">
+                <div>Message</div>
                 <textarea name="" 
                     id="ContactMessageTextarea"
                     class="form-textarea" 
                     cols="30" 
-                    rows="10"  
+                    rows="3"  
                     autocomplete="off" 
                     required>
                 </textarea>
-            </div>
+            </label>
+                
 
             <div class="information">
                 <p>* It can take up to 24 hours for a response.</p>
@@ -156,6 +155,9 @@
     </main>
 
     <footer class="footer-primary">
+        <p>
+            <a href="/bakedbybec/pages/terms_of_use.html" class="link">terms of use</a>
+        </p>
         <nav class="footer-navigation">
             <ul>
                 <li><a href="/bakedbybec/pages/product.html" class="link">product</a></li>
@@ -165,7 +167,7 @@
             <ul>
                 <li><a href="/bakedbybec/pages/order.html" class="link">order</a></li>
                 <li><a href="/bakedbybec/pages/contact.html" class="link">contact</a></li>
-                <li><a href="/bakedbybec/pages/book_class.html" class="link">book class</a></li>
+                <li><a href="/bakedbybec/pages/book_class.html" class="link">class</a></li>
             </ul>
             <div class="footer-logo">
                 <div class="logo-ring"></div>
@@ -175,7 +177,7 @@
         <p class="footer-copyright">&copy;&nbsp;2024</p>
         <div class="footer-created-by">
             <p>created by <strong>Clayton McDaniel</strong> and <strong>Rebecca Loren</strong></p>
-            <a href="https://github.com/Altycon">https://github.com/Altycon</a>
+            <a href="https://github.com/Altycon" target="_blank">https://github.com/Altycon</a>
         </div>
     </footer>
     

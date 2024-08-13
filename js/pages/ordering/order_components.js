@@ -108,7 +108,7 @@ export const OrderComponent = {
     },
     addInspirationContent(event){
         event.preventDefault();
-        const item = event.target.closest('li');
+        const item = event.currentTarget.closest('li');
         const itemId = item.dataset.itemId;
         const inspirationContentComponent = OrderComponent.inspirationContentComponent(itemId);
         const inspirationElement = item.querySelector(`.inspiration`);
@@ -123,17 +123,17 @@ export const OrderComponent = {
         transitionElementOpen(inspirationContentComponent);
 
         item.querySelector(`.remove-inspiration-btn`).classList.add('show');
-        event.target.classList.remove('show');
+        event.currentTarget.classList.remove('show');
 
         OrderProgress.removeState(2);
         OrderProgress.listenToAreaInputs('.js-item-info',2);
     },
     removeInspirationContent(event){
         event.preventDefault();
-        const item = event.target.closest('li');
+        const item = event.currentTarget.closest('li');
         item.querySelector('.inspiration-content').remove();
         item.querySelector('.add-inspiration-btn').classList.add('show');
-        event.target.classList.remove('show');
+        event.currentTarget.classList.remove('show');
 
         OrderProgress.removeState(2);
         OrderProgress.inspectAreaInputProgress('.js-item-info',2);
@@ -298,7 +298,7 @@ export const OrderComponent = {
             }
             
         });
-        select.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
+        //select.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
         select.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
         
         return createHtmlElement('label',{ for:selectId, class:'form-label' },[
@@ -318,7 +318,7 @@ export const OrderComponent = {
         if(inputTitle === 'theme/occasion'){
             input.setAttribute('list','ItemThemes');
         }
-        input.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
+        //input.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
         input.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
     
         return createHtmlElement('label',{ for:inputId, class:`form-label` },[
@@ -336,7 +336,7 @@ export const OrderComponent = {
             autocomplete:'off',
             class:`form-textarea ${inputClassName}`,
         });
-        textarea.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
+        //textarea.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
         textarea.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
     
         return createHtmlElement('label',{ for:textareaId, class:`form-label` },[
@@ -378,11 +378,15 @@ export const OrderComponent = {
             ]);
         }else{
             const priceDisplays = prices.map( priceInfo => {
+                const priceDisplay = createHtmlElement('p',{},
+                    createHtmlElement('span',{ class:'pink-text' },`$${priceInfo.price}`)
+                );
+                if(priceInfo.units) priceDisplay.appendChild(
+                    document.createTextNode(priceInfo.units.toString())
+                )
                 return createHtmlElement('div',{},[
                     createHtmlElement('p',{},priceInfo.title),
-                    createHtmlElement('p',{},
-                        createHtmlElement('span',{ class:'pink-text' },priceInfo.price.toString())
-                    )
+                    priceDisplay
                 ])
             })
             return createHtmlElement('div',{ class: 'order-item-prices-display'},[
@@ -462,7 +466,7 @@ export const OrderComponent = {
     },
     inspirationComponent(){
         const addBtn = createHtmlElement('button', { type: 'button', class: 'btn add-inspiration-btn show' },[
-                `add inspiration`,
+                `+ inspiration`,
                 createHtmlElement('img', { src: `/bakedbybec/img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
