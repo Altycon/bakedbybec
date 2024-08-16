@@ -202,6 +202,7 @@ body{
 }
 .custom-date-component > input{
    margin-bottom: 12px;
+   background-color: var(--site-color-accent2);
 }
 .custom-date-component > p{
    
@@ -218,19 +219,25 @@ body{
 }
 .form-select,
 .form-date-input{
+    position: relative;
     border: none;
     color: var(--fc-primary);
     text-align: center;
     font-weight: 700;
     padding: 8px 12px;
-
-    /* background-color: hsl(0 0% 15%); */
-
     background-color: var(--site-color-accent2);
+    /* background-color: transparent; */
     border-radius: 16px;
     box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
     inset -1px -1px 2px black,
     5px 5px 10px black;
+}
+.form-select > option{
+    background-color: hsl(0 0% 20%);
+}
+.form-select:focus-visible,
+.form-date-input:focus-visible{
+    outline: 2px solid lime;
 }
 .form-text-input,
 .form-textarea{
@@ -243,19 +250,15 @@ body{
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
 }
-.form-text-input:focus,
-.form-textarea:focus{
-    border-radius: 5px;
+.form-text-input:focus-visible,
+.form-textarea:focus-visible{
     outline: 2px solid var(--site-color-accent2);
 }
-/* .form-date-input.selected,
-.form-select.selected{
-    background-color: transparent;
-} */
 .form-text-input.selected,
 .form-textarea.selected{
     border-bottom: 1px solid transparent;
 }
+
 .form-textarea{
     font-family: var(--ff-primary);
     resize: none;
