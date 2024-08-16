@@ -81,7 +81,5 @@ function initializeSite(){
     handleNotes();
 
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
-
-   
 }
 initializeSite();

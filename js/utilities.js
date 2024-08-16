@@ -2,18 +2,18 @@ function zeroPadLeftToString(num){
     if(+num > 9) return `${num}`;
     return `0${num}`;
 };
+
 export function capitalize(word){
     return word.charAt(0).toUpperCase() + word.slice(1)
 };
-
 export function fixCanvas(canvas,dpi){
-
     const styleWidth = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
     const styleHeight = +getComputedStyle(canvas).getPropertyValue('height').slice(0,-2);
     canvas.setAttribute('width', styleWidth * dpi);
     canvas.setAttribute('height', styleHeight * dpi);
     return canvas;
 };
+
 export function openInHouseBakerySign(event){
 
     if(event) event.preventDefault();
@@ -59,6 +59,7 @@ export function enableSelectFieldOption(select,optionValue){
         document.querySelector(`${select} option[value=${optionValue}]`).removeAttribute('disabled');
     }
 };
+
 export function transitionElementOpen(element,callback){
     element.classList.add('open');
     setTimeout( ()=>{
@@ -73,6 +74,7 @@ export function transitionElementClose(element,callback){
         if(callback) callback(element);
     },100);
 };
+
 export function appendElementToParentWithFragment(parent,child){
     if(!parent instanceof Node){
         console.warn('parent element is not a html element');

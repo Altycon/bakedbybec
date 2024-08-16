@@ -5429,8 +5429,12 @@ label[for=OrderFormItem]{
 .remove-order-btn{
     border: none;
     background-color: transparent;
+    outline: 2px solid hsl(0 100% 30%);
     color: var(--fc-primary);
     font-weight: 700;
+    font-size: .625rem;
+    border-radius: 10px;
+    padding: 2px 8px;
 }
 
 .order-item > fieldset{
@@ -6379,7 +6383,7 @@ label[for=OrderFormZipCode] > input{
     --progress-bar-timing: 500ms;
     
     position: fixed;
-    top: 100px; left: 0;
+    top: 60px; left: 0;
     max-width: 380px;
     width: 100vw;
     padding-top: 8px;
@@ -6502,11 +6506,12 @@ label[for=OrderFormZipCode] > input{
     outline: 3px solid green;
 }
 
-@media only screen and (max-width: 1430px){
+@media only screen and (max-width: 1160px){
     .order-progress-bar{
-        top: calc(100% - 95px);
-        /* top: unset;
-        bottom: 0; */
+        padding-bottom: 12px;
+    }
+    .order-progress-item > p{
+        display: none;
     }
 }
 @media only screen and (max-width: 700px){

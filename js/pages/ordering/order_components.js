@@ -353,7 +353,7 @@ export const OrderComponent = {
             type: 'button',
             value: itemId,
             class: `btn remove-order-btn`
-        },'remove item');
+        },'remove X');
         removeBtn.addEventListener('click', OrderComponent.removeComponentFromOrder);
     
         return createHtmlElement('header', {},[

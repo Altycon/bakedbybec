@@ -1,7 +1,6 @@
 
 
 export function pageNavigation(){
-
     document.querySelector('.page-navigation-primary-open-btn').addEventListener('click', (event)=>{
         const pageNavigationElement = document.querySelector('.page-navigation-primary');
         if(pageNavigationElement.classList.contains('open')){
