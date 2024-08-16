@@ -123,5 +123,3 @@ export function createHtmlElement(tagName, attributes = {}, content){
 
     return element;
 };
-
-export const ItemListChangeEvent = new CustomEvent('order:itemChange');

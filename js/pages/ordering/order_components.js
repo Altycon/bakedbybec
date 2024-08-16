@@ -258,6 +258,7 @@ export const OrderComponent = {
             id: inputId,
             name: inputName,
             class: 'form-date-input js-item-info',
+            placeholder: 'mm/dd/yyyy',
             required: 'true',
             autocomplete: 'off'
         });

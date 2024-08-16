@@ -3,7 +3,6 @@ import {
     appendElementToParentWithFragment,
     capitalize, 
     disableSelectFieldOption, 
-    ItemListChangeEvent, 
     openInHouseBakerySign, 
     transitionElementClose, 
     transitionElementOpen,
