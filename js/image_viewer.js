@@ -68,7 +68,7 @@ export const AImageViewer = {
         if(event.target.dataset.fullImageUrl){
 
             const imageUrl = new URL(event.target.src);
-            const newImageUrl = imageUrl.origin + event.target.dataset.fullImageUrl;
+            const newImageUrl = imageUrl.origin + '/' + event.target.dataset.fullImageUrl;
             console.log(newImageUrl)
 
             AImageViewer.imageElement.src = newImageUrl;
