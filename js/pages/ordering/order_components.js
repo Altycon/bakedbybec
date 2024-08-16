@@ -471,7 +471,7 @@ export const OrderComponent = {
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
         const removeBtn = createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
-            `remove`
+            `remove X`
         );
         removeBtn.addEventListener('click', OrderComponent.removeInspirationContent);
     

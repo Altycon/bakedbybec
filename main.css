@@ -5733,11 +5733,13 @@ label[for=OrderFormItem]{
 }
 .order-item .remove-inspiration-btn{
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    color: var(--fc-primary);
-    font-weight: 500;
     background-color: transparent;
+    outline: 2px solid hsl(0 100% 30%);
+    color: var(--fc-primary);
+    font-weight: 700;
+    font-size: .625rem;
+    border-radius: 10px;
+    padding: 2px 8px;
 
     opacity: 0;
     transition: opacity 300ms ease;
