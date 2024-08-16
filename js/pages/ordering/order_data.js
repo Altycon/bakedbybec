@@ -40,7 +40,7 @@ export const OrderItemData ={
             '1,1 dozen','2,2 dozen','3,3 dozen','4,4 dozen','5,5 dozen','6,6 dozen'
         ]),
         fields: [],
-        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_sugarcookies_128x128.png`
+        imageSourcePath: `img/icon/product/bbb_icon_sugarcookies_128x128.png`
     },
     dropCookies:{
         title: 'Drop Cookies',
@@ -58,7 +58,7 @@ export const OrderItemData ={
                 'chocolate','white chocolate','peanut butter'
             ])
         ],
-        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_dropcookies_128x128.png`
+        imageSourcePath: `img/icon/product/bbb_icon_dropcookies_128x128.png`
     },
     layerCake:{
         title: 'Layer Cake',
@@ -78,7 +78,7 @@ export const OrderItemData ={
             new OrderFieldData('flavor','flavor',cakeFlavors),
             new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
-        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_layercake_128x128.png`
+        imageSourcePath: `img/icon/product/bbb_icon_layercake_128x128.png`
     },
     sheetCake:{
         title: 'Sheet Cake',
@@ -93,7 +93,7 @@ export const OrderItemData ={
             new OrderFieldData('flavor','flavor',cakeFlavors),
             new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
-        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_sheetcake_128x128.png`
+        imageSourcePath: `img/icon/product/bbb_icon_sheetcake_128x128.png`
     },
     cupCakes:{
         title: 'Cup Cakes',
@@ -110,7 +110,7 @@ export const OrderItemData ={
             new OrderFieldData('flavor','flavor',cakeFlavors),
             new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
-        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_cupcakes_128x128.png`
+        imageSourcePath: `img/icon/product/bbb_icon_cupcakes_128x128.png`
     },
     cakePops:{
         title: 'Cake Pops',
@@ -124,7 +124,7 @@ export const OrderItemData ={
             new OrderFieldData('flavor','flavor',cakeFlavors),
             new OrderFieldData('frosting','frosting',cakeFrostings)
         ],
-        imageSourcePath: `/bakedbybec/img/icon/product/bbb_icon_cakepops_128x128.png`
+        imageSourcePath: `img/icon/product/bbb_icon_cakepops_128x128.png`
     },
 }
 
