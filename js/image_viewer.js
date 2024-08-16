@@ -8,6 +8,13 @@ export const AImageViewer = {
     imageCaption: document.querySelector('.image-viewer figure figcaption'),
     testing: false,
 
+    getDocumentBaseLocation(){
+        const base = document.querySelector('base');
+        if(base){
+           return base.getAttribute('href') || '/';
+        }
+        return '/';
+    },
     loadImage(event){
 
         // console.log('Image loaded successfully',event);
@@ -68,10 +75,12 @@ export const AImageViewer = {
         if(event.target.dataset.fullImageUrl){
 
             const imageUrl = new URL(event.target.src);
-            const newImageUrl = imageUrl.origin + '/' + event.target.dataset.fullImageUrl;
-            console.log(newImageUrl)
-
-            AImageViewer.imageElement.src = newImageUrl;
+            
+            const newImageUrl = imageUrl.origin + AImageViewer.getDocumentBaseLocation();
+            console.log(newImageUrl);
+            const newImagePath = newImageUrl + event.target.dataset.fullImageUrl;
+            console.log(newImagePath)
+            AImageViewer.imageElement.src = newImagePath;
             
         }else{
 
