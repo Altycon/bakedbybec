@@ -35,7 +35,7 @@
     <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec" class="link">
+            <a href="/bakedbybec/" class="link">
                 <img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked By Bec Text Logo">
             </a>
             <button type="button" title="Iowa residential bakery legislation" class="btn in-house-bakery-btn js-in-house-bakery-btn">i</button>
@@ -102,55 +102,56 @@
         </header>
         
         <form class="contact-form">
-            <label for="ContactNameInput" class="form-label">
-                <div>Name</div>
-                <input type="text" 
-                    name="name" 
-                    id="ContactNameInput"
-                    class="form-text-input"  
-                    autocomplete="off" 
-                    required>
-            </label>
-            <label for="ContactEmailInput" class="form-label">
-                <div>Email</div>
-                <input type="text" 
-                    name="name" 
-                    id="ContactEmailInput"
-                    class="form-text-input"
-                    autocomplete="off"
-                    required>
-            </label>
-            <label for="ContactTopicSelect" class="form-label">
-                <div>Topic</div>
-                <select name="" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
-                    <option value=""selected disabled>-- select</option>
-                    <option value="cookies">cookies</option>
-                    <option value="cakes">cakes</option>
-                    <option value="pricing">pricing</option>
-                    <option value="availability">availability</option>
-                    <option value="other">other</option>
-                </select>
-            </label>
-            
-
-            <label for="ContactMessageTextarea" class="form-label">
-                <div>Message</div>
-                <textarea name="" 
-                    id="ContactMessageTextarea"
-                    class="form-textarea" 
-                    cols="30" 
-                    rows="3"  
-                    autocomplete="off" 
-                    required>
-                </textarea>
-            </label>
+            <fieldset>
+                <label for="ContactNameInput" class="form-label">
+                    <div>name</div>
+                    <input type="text" 
+                        name="name" 
+                        id="ContactNameInput"
+                        class="form-text-input" 
+                        placeholder="full name"
+                        autocomplete="off" 
+                        required>
+                </label>
+                <label for="ContactEmailInput" class="form-label">
+                    <div>Email</div>
+                    <input type="text" 
+                        name="email" 
+                        id="ContactEmailInput"
+                        class="form-text-input"
+                        placeholder="email@host.com"
+                        autocomplete="off"
+                        required>
+                </label>
+                <div class="topic">
+                    <label for="ContactTopicSelect" class="form-label">
+                        <div>Topic</div>
+                        <select name="topic" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
+                            <option value=""selected disabled>-- select</option>
+                            <option value="cookies">cookies</option>
+                            <option value="cakes">cakes</option>
+                            <option value="pricing">pricing</option>
+                            <option value="availability">availability</option>
+                            <option value="other">other</option>
+                        </select>
+                    </label>
+                </div>
                 
-
+                <label for="ContactMessageTextarea" class="form-label">
+                    <div>Message</div>
+                    <textarea name="" 
+                        id="ContactMessageTextarea"
+                        class="form-textarea" 
+                        cols="30" 
+                        rows="3"  
+                        autocomplete="off" 
+                        required></textarea>
+                </label>
+            </fieldset>
             <div class="information">
                 <p>* It can take up to 24 hours for a response.</p>
                 <p>** Any messages after 6pm will be handled the following business day.</p>
             </div>
-            
             <button type="button" class="btn contact-form-submit-btn">Send</button>
         </form>
     </main>
@@ -172,7 +173,7 @@
             </ul>
             <div class="footer-logo">
                 <div class="logo-ring"></div>
-                <a href="/bakedbybec"><img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked by Bec text logo"></a>
+                <a href="/bakedbybec/"><img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked by Bec text logo"></a>
             </div>
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
