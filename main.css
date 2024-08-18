@@ -64,7 +64,8 @@
 
     --home-background-color-black: hsl(0 0% 5% / 0.2);
     --home-background-color-bright:hsl(300 30% 10%);
-
+    --img-icon-sugar-cookies: url('img/icon/product/bbb_icon_sugarcookies_32x32.png');
+    --img-icon-cupcakes: url('img/icon/product/bbb_icon_cupcakes_32x32.png');
     --img-product-sc: url('img/product/bbb_product_sugar_cookies.png');
     --img-product-lc: url('img/product/bbb_product_layer_cake.png');
     --img-product-stc: url('img/product/bbb_product_sheet_cake.png');
@@ -5220,7 +5221,7 @@ label[for=OrderFormItem]{
     width: 100px;
     height: 100%;
     border-radius: 16px;
-    background-image: var(--img-sc-icon);
+    background-image: var(--img-icon-sugar-cookies);
     background-repeat: no-repeat;
     background-size: 32px;
     background-position: center;
@@ -5232,7 +5233,7 @@ label[for=OrderFormItem]{
     width: 100px;
     height: 100%;
     border-radius: 16px;
-    background-image: var(--img-sc-icon);
+    background-image: var(--img-icon-cupcakes);
     background-repeat: no-repeat;
     background-size: 32px;
     background-position: center;
@@ -5382,13 +5383,15 @@ label[for=OrderFormItem]{
 
     display: none;
 
+    scale: 0.9;
     opacity: 0;
-    transition: opacity 300ms ease;
+    transition: scale 500ms ease, opacity 300ms ease;
 }
 .order-item.open{
     display: block;
 }
 .order-item.show{
+    scale: 1;
     opacity: 1;
 }
 .order-item.active{
