@@ -124,6 +124,7 @@ export const OrderComponent = {
         transitionElementOpen(inspirationContentComponent);
 
         item.querySelector(`.remove-inspiration-btn`).classList.add('show');
+        item.querySelector(`.inspiration-controls > h3`).classList.add('show');
         event.currentTarget.classList.remove('show');
 
         OrderProgress.removeState(2);
@@ -134,6 +135,7 @@ export const OrderComponent = {
         const item = event.currentTarget.closest('li');
         item.querySelector('.inspiration-content').remove();
         item.querySelector('.add-inspiration-btn').classList.add('show');
+        item.querySelector(`.inspiration-controls > h3`).classList.remove('show');
         event.currentTarget.classList.remove('show');
 
         const invoiceItemImageElement = document.querySelector(`img[data-output="${item.dataset.itemId}"]`);
@@ -333,7 +335,6 @@ export const OrderComponent = {
         if(inputTitle === 'theme/occasion'){
             input.setAttribute('list','ItemThemes');
         }
-        //input.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
         input.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
     
         return createHtmlElement('label',{ for:inputId, class:`form-label` },[
@@ -453,7 +454,7 @@ export const OrderComponent = {
                     imageOutput.src = fileReader.result;
                     imageOutput.parentElement.classList.add('show');
                     AImageViewer.addImage(imageOutput);
-                    
+
                     const output = document.querySelector(`img[data-output="${itemId}"]`);
                     if(output){
                         output.src = fileReader.result;
@@ -488,13 +489,14 @@ export const OrderComponent = {
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
         const removeBtn = createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
-            `remove image X`
+            `remove X`
         );
         removeBtn.addEventListener('click', OrderComponent.removeInspirationContent);
     
         return createHtmlElement('div',{ class: 'inspiration'},
             createHtmlElement('div',{ class: 'inspiration-controls' },[
                 addBtn,
+                createHtmlElement('h3',{},'inspiration image'),
                 removeBtn,
             ])
         );

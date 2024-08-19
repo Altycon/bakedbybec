@@ -248,8 +248,9 @@
                                 name="name" 
                                 id="OrderFormName" 
                                 class="form-text-input js-personal-info" 
-                                data-input="name",
-                                pattern="[a-z]{4,10}"
+                                data-input="name"
+                                placeholder="full name"
+                                pattern="^[A-Za-z\s'-]{1,40}$"
                                 autocomplete="off" required>
                         </label>
         
@@ -259,8 +260,10 @@
                                 id="OrderFormEmail" 
                                 class="form-text-input js-personal-info"
                                 data-input="email" 
-                                placeholder="youremail@host.com"  
-                                autocomplete="off" required>
+                                placeholder="youremail@host.com"
+                                pattern="^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$"  
+                                autocomplete="off" 
+                                required>
                         </label>
             
                         <label for="OrderFormPhoneNumber" class="form-label"><span>phone number</span>

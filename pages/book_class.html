@@ -243,7 +243,10 @@
                     name="name" 
                     id="BookClassFormNameInput"
                     class="form-text-input" 
-                    autocomplete="off" required>
+                    placeholder="full name"
+                    pattern="^[A-Za-z\s'-]{1,40}$"
+                    autocomplete="off"
+                    required>
                 </label>
                 <label for="BookClassFormEmailInput" class="form-label">
                     <div>Email</div>
@@ -251,7 +254,10 @@
                     name="email" 
                     id="BookClassFormEmailInput" 
                     class="form-text-input"
-                    autocomplete="off" required>
+                    placeholder="email@host.com"
+                    pattern="^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$"
+                    autocomplete="off"
+                    required>
                 </label>
                 <label for="BookClassFormClassSelect" class="form-label">
                     <div>class</div>

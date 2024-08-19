@@ -110,24 +110,27 @@
                         id="ContactNameInput"
                         class="form-text-input" 
                         placeholder="full name"
+                        pattern="^[A-Za-z\s'-]{1,40}"
                         autocomplete="off" 
                         required>
                 </label>
                 <label for="ContactEmailInput" class="form-label">
-                    <div>Email</div>
+                    <div>email</div>
                     <input type="text" 
                         name="email" 
                         id="ContactEmailInput"
                         class="form-text-input"
+                        title="ex: email@host.com"
                         placeholder="email@host.com"
+                        pattern="^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$"
                         autocomplete="off"
                         required>
                 </label>
                 <div class="topic">
                     <label for="ContactTopicSelect" class="form-label">
-                        <div>Topic</div>
+                        <div>topic</div>
                         <select name="topic" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
-                            <option value=""selected disabled>-- select</option>
+                            <option value=""selected disabled>-- select --</option>
                             <option value="cookies">cookies</option>
                             <option value="cakes">cakes</option>
                             <option value="pricing">pricing</option>
@@ -138,12 +141,13 @@
                 </div>
                 
                 <label for="ContactMessageTextarea" class="form-label">
-                    <div>Message</div>
+                    <div>message</div>
                     <textarea name="" 
                         id="ContactMessageTextarea"
                         class="form-textarea" 
                         cols="30" 
                         rows="3"  
+                        placeholder="details"
                         autocomplete="off" 
                         required></textarea>
                 </label>
