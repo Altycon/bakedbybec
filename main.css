@@ -54,6 +54,8 @@
     --site-btn-color: hsl(220 100% 50%);
     --site-btn-hover-color: hsl(220 100% 60%);
 
+    --text-shadow-primary: 1px 1px 1px black;
+
     --site-gradient: linear-gradient(90deg, var(--site-color-accent1), var(--site-color-accent2));
     --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
@@ -205,11 +207,6 @@ body{
    margin-bottom: 12px;
    background-color: var(--site-color-accent2);
 }
-.custom-date-component > p{
-   
-}
-
-
 
 .form-label{
     font-weight: 700;
@@ -225,7 +222,7 @@ body{
     color: var(--fc-primary);
     text-align: center;
     font-weight: 700;
-    text-shadow: 1px 1px 2px black;
+    text-shadow: var(--text-shadow-primary);
     padding: 8px 12px;
     background-color: var(--site-color-accent2);
     border-radius: 16px;
@@ -238,7 +235,7 @@ body{
 }
 .form-select:focus-visible,
 .form-date-input:focus-visible{
-    outline: 2px solid lime;
+    outline: 2px solid limegreen;
 }
 .form-text-input,
 .form-textarea{
@@ -247,7 +244,6 @@ body{
     padding-inline: 12px;
     padding-block: 8px;
     background-color: transparent;
-    /* border-bottom: 1px solid hsl(0 0% 15%); */
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
 }
@@ -5410,15 +5406,14 @@ label[for=OrderFormItem]{
 }
 .remove-order-btn{
     border: none;
-    background-color: transparent;
+    background-color: hsl(0 100% 10%);
     color: var(--fc-primary);
     font-weight: 700;
     font-size: .625rem;
     border-radius: 10px;
     padding: 4px 8px;
-    outline: 1px solid hsl(0 100% 30%);
-    box-shadow: inset 1px 1px 5px  hsl(0 100% 50%),
-    inset -1px -1px 5px hsl(0 100% 10%);
+    box-shadow: inset 1px 1px 5px  hsl(0 100% 30%),
+    inset -1px -1px 5px hsl(0 0% 0%);
 }
 
 .order-item > fieldset{
@@ -5690,10 +5685,19 @@ label[for=OrderFormItem]{
 .order-item .inspiration-controls{
     margin-bottom: 1rem;
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    grid-template-columns: repeat(3,auto);
     grid-template-rows: auto;
     justify-content: space-between;
     gap: 2rem;
+}
+.order-item .inspiration-controls > h3{
+    translate: 0 50%;
+    opacity: 0;
+    transition: translate 500ms ease, opacity 300ms ease;
+}
+.order-item .inspiration-controls > h3.show{
+    translate: 0 0;
+    opacity: 1;
 }
 .order-item .add-inspiration-btn{
     display: grid;
@@ -5704,10 +5708,15 @@ label[for=OrderFormItem]{
     gap: .5rem;
     
     border: none;
-    padding: 5px 10px;
     color: var(--fc-primary);
-    font-weight: 500;
-    background-color: transparent;
+    font-weight: 700;
+    text-shadow: var(--text-shadow-primary);
+    padding: 8px 16px 8px 12px;
+    background-color: var(--site-color-accent2);
+    border-radius: 16px;
+    box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
+    inset -1px -1px 2px black,
+    5px 5px 10px black;
 
     opacity: 0;
     transition: opacity 300ms ease;
@@ -5716,17 +5725,18 @@ label[for=OrderFormItem]{
     opacity: 1;
 }
 .order-item .remove-inspiration-btn{
+    align-self: center;
     border: none;
-    background-color: transparent;
-    outline: 2px solid hsl(0 100% 30%);
+    background-color: hsl(0 100% 10%);
     color: var(--fc-primary);
     font-weight: 700;
     font-size: .625rem;
-    border-radius: 10px;
+    line-height: 1em;
+    border-radius: 16px;
+    text-shadow: var(--text-shadow-primary);
     padding: 4px 8px;
-    outline: 1px solid hsl(0 100% 30%);
-    box-shadow: inset 1px 1px 5px  hsl(0 100% 50%),
-    inset -1px -1px 5px hsl(0 100% 10%);
+    box-shadow: inset 1px 1px 5px  hsl(0 100% 30%),
+    inset -1px -1px 5px hsl(0 0% 0%);
 
     opacity: 0;
     transition: opacity 300ms ease;
