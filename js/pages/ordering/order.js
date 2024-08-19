@@ -98,11 +98,10 @@ const Order = {
     disableItemSelection(itemId){
         disableSelectFieldOption(Order.itemSelectField,itemId);
 
-        if('layer-cake' === itemId || 'sheet-cake' === itemId){
+        if(itemId.includes('cake')){
             Order.disableRetrievalSelection('shipping');
             Order.markRetrievalInfoUnavailable('shipping');
         }
-
     },
     connectDataInputsToDataOutputs(){
         const inputs = document.querySelectorAll('[data-input]');
@@ -305,9 +304,9 @@ const Order = {
         Order.retrievalSelectField.addEventListener('change', Order.selectOrderRetrievalType);
         Order.paymentSelectField.addEventListener('change', Order.selectPaymentType);
         Order.agreementCheckboxField.addEventListener('change', Order.selectOrderAgreementCheckbox);
-        Order.itemList.addEventListener('order:itemChange', (event)=>{
-            console.log('itemlist event', event);
-        });
+        // Order.itemList.addEventListener('order:itemChange', (event)=>{
+        //     console.log('itemlist event', event);
+        // });
         Order.submitButton.addEventListener('click', Order.submitOrder);
     },
     initialize(){
@@ -366,6 +365,14 @@ function openOrderForm(event){
         
         beforeYouOrderElement.classList.add('close');
 
+        if(document.documentElement.scrollTop > 0){
+            window.scroll({
+                top: 0,
+                behavior: 'smooth'
+            })
+        }
+        
+
         Order.initialize();
         Order.connectDataInputsToDataOutputs();
 
@@ -373,17 +380,18 @@ function openOrderForm(event){
         Order.setInvoiceDate();
         OrderProgress.display();
 
+        
+        setTimeout( ()=>{
+            //beforeYouOrderElement.classList.add('hide');
+            beforeYouOrderElement.remove();
+            orderAreaElement.classList.add('open');
+            
+        },300);
         setTimeout( ()=> {
             orderAreaElement.classList.add('show');
             OrderProgress.setState(0);
             OrderProgress.listenToAreaInputs('.js-personal-info',5);
         },400)
-        setTimeout( ()=>{
-            beforeYouOrderElement.classList.add('hide');
-    
-            orderAreaElement.classList.add('open');
-            
-        },300);
     }
 };
 

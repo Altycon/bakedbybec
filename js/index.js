@@ -5,7 +5,6 @@ import { openInHouseBakerySign } from "./utilities.js";
 
 
 function handleNotes(){
-
     document.querySelector('.notes-open-btn').addEventListener('click', (event)=>{
         const notes = document.querySelector('.notes');
         notes.querySelector('.notes-close-btn').addEventListener('click', function close(){
@@ -22,33 +21,22 @@ function handleNotes(){
     });
 };
 
-
-
 function siteOpeningTransition(){
-
     document.querySelector('.home-navigation-primary').classList.add('reveal');
     document.querySelector('.home-background .floor > span').classList.add('reveal');
-    
 };
 
-
-
 function handleDesktopHomeHoverLinksAnimation(){
-
     const logoRing = document.querySelector('.home-navigation-primary-ring');
-   
     const circleNavigationLinks = document.querySelectorAll('.js-circle-link');
 
     circleNavigationLinks.forEach( navLink => {
 
         navLink.addEventListener('mouseenter', (enterEvent)=>{
-
             logoRing.style.animation = `none`;
 
             enterEvent.currentTarget.addEventListener('mouseleave', function mouseLeavesLink(leaveEvent){
-    
                 logoRing.classList.remove(`${navLink.dataset.position}-hovered`);
-    
                 leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
             })
 

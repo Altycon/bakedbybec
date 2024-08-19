@@ -98,13 +98,13 @@ export const OrderComponent = {
         });
     },
     markRetrievalTypeAvailable(retrievalType){
-        const informaitonElement = document.querySelector(`.js-retrieval-information-${retrievalType}`);
-        if(!informaitonElement){
+        const informationElement = document.querySelector(`.js-retrieval-information-${retrievalType}`);
+        if(!informationElement){
             console.warn(`information element type: ${retrievalType} does not exits`);
             return;
         }
-        if(!informaitonElement.classList.contains('unavailable')) return;
-        informaitonElement.classList.remove('unavailable');
+        if(!informationElement.classList.contains('unavailable')) return;
+        informationElement.classList.remove('unavailable');
     },
     addInspirationContent(event){
         event.preventDefault();
@@ -134,6 +134,13 @@ export const OrderComponent = {
         item.querySelector('.inspiration-content').remove();
         item.querySelector('.add-inspiration-btn').classList.add('show');
         event.currentTarget.classList.remove('show');
+
+        const invoiceItemImageElement = document.querySelector(`img[data-output="${item.dataset.itemId}"]`);
+        if(invoiceItemImageElement){
+            invoiceItemImageElement.src = "";
+        }else{
+            console.warn('invoice item image elemnent does not exist to be cleared');
+        }
 
         OrderProgress.removeState(2);
         OrderProgress.inspectAreaInputProgress('.js-item-info',2);
@@ -189,6 +196,10 @@ export const OrderComponent = {
             }
         }
     },
+    removeItemFromInvoice(itemId){
+        const invoiceItem = document.querySelector(`.order-invoice [data-item-connection-id="${itemId}"]`);
+        if(invoiceItem) invoiceItem.remove();
+    },
     removeComponentFromOrder(event){
         event.preventDefault();
         const itemId = event.currentTarget.value;
@@ -211,6 +222,8 @@ export const OrderComponent = {
         }else{
             OrderProgress.inspectAreaInputProgress('.js-item-info',2);
         }
+
+        OrderComponent.removeItemFromInvoice(itemId);
         
         const orderItemSelection = document.querySelector(`#OrderFormItem`);
         orderItemSelection.querySelector(`option[value="${itemId}"]`).removeAttribute('disabled');
@@ -438,7 +451,7 @@ export const OrderComponent = {
                 fileReader.onload = function(){
                     imageOutput.src = fileReader.result;
     
-                    const output = document.querySelector(`[data-output="${inputEvent.target.name}"]`);
+                    const output = document.querySelector(`img[data-output="${itemId}"]`);
                     if(output){
                         output.src = fileReader.result;
                     }
@@ -472,7 +485,7 @@ export const OrderComponent = {
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
         const removeBtn = createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
-            `remove X`
+            `x remove`
         );
         removeBtn.addEventListener('click', OrderComponent.removeInspirationContent);
     
@@ -510,7 +523,7 @@ export const OrderComponent = {
             'js-item-info'
         );
     
-        if(itemData.name === 'layer-cake' || itemData.name === 'sheet-cake'){
+        if(itemData.name === 'layer-cake' || itemData.name === 'sheet-cake' || itemData.name === 'cup-cakes'){
             const quantitySelect = quantityField.children[1];
             quantitySelect.addEventListener('change', OrderComponent.handleCakeItemPriceQuantityCalculation);
         }else{
@@ -646,6 +659,7 @@ export const OrderComponent = {
         ]);
     },
     orderAddressComponent(addressType){
+       
         const addressInformationComponent = createHtmlElement('div',{ class: 'address-information js-address-information'},[
             createHtmlElement('p',{class:'address-informent-message'},[
                 'please provide ',
@@ -654,7 +668,7 @@ export const OrderComponent = {
             ]),
             OrderComponent.orderTextInputComponent('street','OrderFormStreet','street','js-personal-info'),
             OrderComponent.orderTextInputComponent('city','OrderFormCity','city','js-personal-info'),
-            OrderComponent.orderSelectComponent('state','OrderFormState','state',(addressType === 'delivery' ? [listOfUsStates[14]]:listOfUsStates),'js-personal-info'),
+            OrderComponent.orderSelectComponent('state','OrderFormState','state',(addressType === 'pickup' ? listOfUsStates:[listOfUsStates[14]]),'js-personal-info'),
             OrderComponent.orderTextInputComponent('zip','OrderFormZipCode','zip-code','js-personal-info'),
         ]);
         if(addressType === 'delivery' || addressType === 'pickup'){
@@ -695,7 +709,7 @@ export const OrderComponent = {
                 createHtmlElement('div', { class: 'column'},[
                     createHtmlElement('h4',{},'image'),
                     createHtmlElement('div', { class: 'img-wrapper' },
-                        createHtmlElement('img',{ src: "", 'data-output':`${itemName}-image` },'none')
+                        createHtmlElement('img',{ src: "", 'data-output':`${itemName}` },'none')
                     )
                 ]),
                 createHtmlElement('div',{ class: 'column' },
