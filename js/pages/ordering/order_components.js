@@ -1,3 +1,4 @@
+import { AImageViewer } from "../../image_viewer.js";
 import { 
     appendElementToParentWithFragment,
     capitalize, 
@@ -450,7 +451,9 @@ export const OrderComponent = {
                 const fileReader = new FileReader();
                 fileReader.onload = function(){
                     imageOutput.src = fileReader.result;
-    
+                    imageOutput.parentElement.classList.add('show');
+                    AImageViewer.addImage(imageOutput);
+                    
                     const output = document.querySelector(`img[data-output="${itemId}"]`);
                     if(output){
                         output.src = fileReader.result;
@@ -485,7 +488,7 @@ export const OrderComponent = {
         ]);
         addBtn.addEventListener('click', OrderComponent.addInspirationContent);
         const removeBtn = createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
-            `x remove`
+            `remove image X`
         );
         removeBtn.addEventListener('click', OrderComponent.removeInspirationContent);
     

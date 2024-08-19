@@ -225,9 +225,9 @@ body{
     color: var(--fc-primary);
     text-align: center;
     font-weight: 700;
+    text-shadow: 1px 1px 2px black;
     padding: 8px 12px;
     background-color: var(--site-color-accent2);
-    /* background-color: transparent; */
     border-radius: 16px;
     box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
     inset -1px -1px 2px black,
@@ -1055,19 +1055,19 @@ body{
     background-image: radial-gradient(transparent 30%,hsl(280 100% 20%));
 
     opacity: 0;
-    scale: 0 0;
+    scale: 0;
     transition: opacity 500ms ease, scale 500ms ease;
 }
 .home-navigation-primary-ring.left-hovered::before{
-    scale: 1 1;
+    scale: 1;
     opacity: 1;
 }
 .home-navigation-primary-ring.center-hovered::before{
-    scale: 1 1;
+    scale: 1;
     opacity: 1;
 }
 .home-navigation-primary-ring.right-hovered::before{
-    scale: 1 1;
+    scale: 1;
     opacity: 1;
 }
 
@@ -3100,6 +3100,8 @@ body{
   
     padding: 2rem;
     margin: 0 auto;
+    outline: 1px solid var(--fc-rare);
+    border-radius: 16px;
 }
 .contact-form > fieldset{
     border: none;
@@ -3242,16 +3244,15 @@ body{
 
 /***************************/
 .meet-main > section{
-    padding-bottom: 6rem;
+    padding-bottom: 128px;
 }
 .meet-main > section > p{
-    padding: 1rem 2rem;
+   
     text-align: center;
     text-wrap: pretty;
     max-width: 800px;
     font-size: 1.2rem;
-    line-height: 2em;
-    z-index: 1;
+    line-height: 1.5em;
 }
 .meet-main > section > p > span{
     font-weight: 700;
@@ -3361,7 +3362,7 @@ body{
 .meet-main > section:nth-of-type(3) > p{
     grid-column: 1/3;
     grid-row: 2;
-    padding-block: 4rem;
+    /* padding-block: 2rem; */
     margin: 0 auto;
 }
 
@@ -3381,12 +3382,13 @@ body{
 }
 .meet-main .meet-thank-you .meet-img-wrapper{
     max-width: 500px;
-    aspect-ratio: 16/9;
+    /* aspect-ratio: 16/9; */
     margin: 0 auto;
-    border-radius: 50%;
+    border-radius: 16px;
 }
 .meet-main .meet-thank-you .meet-img-wrapper > img{
     width: 100%;
+    object-fit: cover;
 }
 .meet-main .meet-thank-you .meet-img-wrapper:nth-of-type(1){
     grid-column: 1;
@@ -4255,10 +4257,10 @@ body{
     isolation: isolate;
     padding: 2rem;
     max-width: 500px;
-    margin: 0 auto;
-    border-radius: 10px;
-
+    margin: 0 auto 32px auto;
+    border-radius: 16px;
     text-align: center;
+    outline: 1px solid var(--fc-rare);
 }
 .book-class-form > fieldset{
     border: none;
@@ -5064,18 +5066,20 @@ body{
     font-weight: 700;
     margin-bottom: 1rem;
 }
-.before-you-order > div{
+.before-you-order > ul{
+    list-style-position: inside;
     max-width: 600px;
     margin: 0 auto 1rem auto;
     background-color: hsl(0 0% 10%);
     border-radius: 16px;
     padding: 16px;
 }
-.before-you-order > div > p{
+.before-you-order > ul > li{
     margin-bottom: 16px;
     font-weight: 500;
     line-height: 1.4em;
     font-size: 1rem;
+    text-align: left;
     text-wrap: pretty;
 }
 
@@ -5087,7 +5091,7 @@ body{
     font-weight: 700;
     color: var(--fc-primary);
     text-shadow: 2px 2px 3px black;
-
+    border-radius: 16px;
     background-color: var(--site-btn-color);
     box-shadow: 2px 2px 10px black,
     inset 2px 2px 4px hsl(0 0% 100% / 0.3);
@@ -5407,12 +5411,14 @@ label[for=OrderFormItem]{
 .remove-order-btn{
     border: none;
     background-color: transparent;
-    outline: 2px solid hsl(0 100% 30%);
     color: var(--fc-primary);
     font-weight: 700;
     font-size: .625rem;
     border-radius: 10px;
-    padding: 2px 8px;
+    padding: 4px 8px;
+    outline: 1px solid hsl(0 100% 30%);
+    box-shadow: inset 1px 1px 5px  hsl(0 100% 50%),
+    inset -1px -1px 5px hsl(0 100% 10%);
 }
 
 .order-item > fieldset{
@@ -5717,7 +5723,10 @@ label[for=OrderFormItem]{
     font-weight: 700;
     font-size: .625rem;
     border-radius: 10px;
-    padding: 2px 8px;
+    padding: 4px 8px;
+    outline: 1px solid hsl(0 100% 30%);
+    box-shadow: inset 1px 1px 5px  hsl(0 100% 50%),
+    inset -1px -1px 5px hsl(0 100% 10%);
 
     opacity: 0;
     transition: opacity 300ms ease;
@@ -5734,14 +5743,15 @@ label[for=OrderFormItem]{
     justify-content: space-between;
     gap: 1rem;
 
+    scale: 0.9;
     opacity: 0;
-
-    transition: opacity 300ms ease;
+    transition: scale 500ms ease, opacity 300ms ease;
 }
 .order-item .inspiration-content.open{
     display: grid;
 }
 .order-item .inspiration-content.show{
+    scale: 1;
     opacity: 1;
 }
 .order-item .inspiration-content > p{
@@ -5767,10 +5777,11 @@ label[for=OrderFormItem]{
 }
 .file-upload-element .browse-file-btn{
     border: none;
-    padding: 5px 8px;
-    border-radius: 5px;
+    padding: 8px 12px;
+    border-radius: 16px;
     color: var(--fc-primary);
     font-weight: 700;
+    text-shadow: 1px 1px 2px black;
     background-color: var(--site-color-accent2);
     box-shadow: 2px 2px 5px black, inset 2px 2px 3px hsl(0 0% 100% / 0.3);
 }
@@ -5786,8 +5797,16 @@ label[for=OrderFormItem]{
     max-width: 300px;
     max-height: 150px;
     overflow: hidden;
-    outline: 1px solid var(--fc-rare);
+    outline: 3px solid var(--fc-rare);
     border-radius: 16px;
+    
+    scale: 0.9;
+    opacity: 0;
+    transition: scale 500ms ease, opacity 300ms ease;
+}
+.order-item .inspiration .inspiration-content .inspiration-img-wrapper.show{
+    scale: 1;
+    opacity: 1;
 }
 .order-item .inspiration .inspiration-content .inspiration-img-wrapper::before{
     content: "no image";
@@ -5795,17 +5814,23 @@ label[for=OrderFormItem]{
     inset: 0;
     z-index: -1;
     align-content: center;
+    font-size: .8rem;
     text-align: center;
 }
 .order-item .inspiration .inspiration-content .inspiration-img-wrapper > img[src=""]{
-   min-width: 300px;
+   min-width: 200px;
 }
 .order-item .inspiration .inspiration-content .inspiration-img-wrapper > img{
     width: 100%;
     height: 100%;
     object-fit: contain;
+    opacity: 0;
+    transition: opacity 300ms ease;
 }
-
+.order-item .inspiration .inspiration-content .inspiration-img-wrapper.show > img{
+    opacity: 1;
+    object-fit: contain;
+}
 
 
 
@@ -5995,14 +6020,15 @@ label[for=OrderFormPaymentType] > div{
     column-gap: 32px;
     row-gap: 16px;
 
-
+    scale: 0.9;
     opacity: 0;
-    transition: opacity 300ms ease;
+    transition: scale 500ms ease, opacity 300ms ease;
 }
 .order-form .personal-information .address-information.open{
     display: grid;
 }
 .order-form .personal-information .address-information.show{
+    scale: 1;
     opacity: 1;
 }
 .order-form .personal-information .address-information .address-informent-message{
@@ -6066,6 +6092,7 @@ label[for=OrderFormZipCode] > input{
     padding: 8px 12px;
     border-radius: 16px;
     font-weight: 700;
+    font-size: 1rem;
     box-shadow: 3px 3px 10px black,
     inset 2px 2px 4px hsl(0 0% 100% / 0.3);
 }
@@ -6089,6 +6116,8 @@ label[for=OrderFormZipCode] > input{
 }
 .order-form .personal-information .distance-information > div > a{
     margin-bottom: 16px;
+    text-shadow: 1px 1px 3px black;
+    font-size: .8rem;
 }
 .order-form .personal-information .distance-information > div > p > span{
     font-weight: 500;
@@ -6118,6 +6147,7 @@ label[for=OrderFormZipCode] > input{
     background-color: var(--site-color-accent2);
     color: var(--fc-primary);
     text-align: center;
+    text-shadow: 1px 1px 3px black;
     padding: 8px 12px;
     border-radius: 10px;
     font-weight: 700;
@@ -6237,8 +6267,8 @@ label[for=OrderFormZipCode] > input{
 .order-invoice .information{
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
-    padding-block: 8px;
-    padding-inline: 8px;
+    padding-block: 12px;
+    padding-inline: 16px;
 
     display: grid;
     grid-template-columns: repeat(2,auto);
@@ -6621,7 +6651,6 @@ label[for=OrderFormZipCode] > input{
         font-size: 1.5rem;
     }
     .before-you-order .open-order-form-btn{
-        border-radius: 16px;
         width: 100%;
     }
 

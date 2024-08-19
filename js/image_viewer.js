@@ -38,18 +38,8 @@ export const AImageViewer = {
         }
     },
     open(event){
-
-        // const imgWidth = event.target.width;
-        // const imgHeight = event.target.height;
-        // if(imgWidth > imgHeight){
-        //     AImageViewer.figureElement.style.width = '600px';
-        // }else{
-        //     AImageViewer.figureElement.style.width = '450px';
-        //     AImageViewer.figureElement.style.height = '100%';
-        // }
-
         AImageViewer.imageViewer.addEventListener('click', AImageViewer.close);
-        AImageViewer.imageElement.onload = AImageViewer.loadImage;
+        //AImageViewer.imageElement.onload = AImageViewer.loadImage;
         AImageViewer.imageElement.onerror = AImageViewer.imageError;
 
         if(event.target.dataset.fullImageUrl){
@@ -71,6 +61,10 @@ export const AImageViewer = {
         },100);
 
         if(AImageViewer.testing) console.log('image click test: ', AImageViewer.imageCaption.textContent);
+    },
+    addImage(image){
+        if(!image) return;
+        image.addEventListener('click', AImageViewer.open);
     },
     initialize(imageElements,test = false){
         imageElements.forEach( imageElement =>{

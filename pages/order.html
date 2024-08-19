@@ -105,15 +105,14 @@
                 <h2>before you order</h2>
                 <p>please consider the following</p>
             </header>
-            <div>
-                <p><strong class="pink-text">Cakes</strong> are <span class="underline">only eligible</span> for <strong>pickup/delivery.</strong></p>
-                <p><strong class="pink-text">Delivery</strong> is <span class="underline">only available</span> within a <strong>30 mile radius</strong> of West Point, Iowa.</p>
-                <p>Due to federal regulations, <strong class="pink-text">shipping</strong> is <span class="underline">only available</span> in <strong>Iowa</strong>, United States.</p>
-                <p><strong class="pink-text">Pickup available</strong> on site (West Point, IA).</p>
-                <!-- <p>The pickup address will be given on the invoice once your order is placed and received.</p> -->
-                <p>Orders need to be placed <strong class="pink-text">minimum of two weeks before</strong> for your event.</p>
-                <!-- <p>This allows me enough time to make your cookies as delicious and beautiful as possible.</p> -->
-            </div>
+            <ul>
+                <li><strong class="pink-text">All products</strong> are <span class="attention-text">produced</span> in a <strong>residential</strong> home</li>
+                <li><strong class="pink-text">Cakes</strong> are <span class="attention-text">only eligible</span> for <strong>pickup or delivery.</strong></li>
+                <li><strong class="pink-text">Delivery</strong> is <span class="attention-text">only available</span> within a <strong>30 mile radius</strong> of West Point, Iowa.</li>
+                <li><strong class="pink-text">Shipping</strong> is <span class="attention-text">only available</span> in <strong>Iowa</strong>, United States.</li>
+                <li><strong class="pink-text">Pickup</strong> is <span class="attention-text">available</span> on site (West Point, Iowa).</li>
+                <li><strong class="pink-text">Orders</strong> must be placed a <span class="attention-text">minimum of two weeks before</span> for your event.</li>
+            </ul>
             
             <button type="button" class="btn open-order-form-btn js-open-order-form-btn">Let's order something!</button>
         </section>
@@ -249,7 +248,8 @@
                                 name="name" 
                                 id="OrderFormName" 
                                 class="form-text-input js-personal-info" 
-                                data-input="name"
+                                data-input="name",
+                                pattern="[a-z]{4,10}"
                                 autocomplete="off" required>
                         </label>
         
