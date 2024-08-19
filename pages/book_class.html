@@ -35,7 +35,7 @@
     <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec" class="link">
+            <a href="/bakedbybec/" class="link">
                 <img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked By Bec Text Logo">
             </a>
             <button type="button" title="Iowa residential bakery legislation" class="btn in-house-bakery-btn js-in-house-bakery-btn">i</button>
@@ -221,7 +221,7 @@
                     <li class="pink-text">Texture</li>
                     <li class="pink-text">Flooding</li>
                 </ul>
-                <p><span class="pink-text">*</span> please select<br><strong>"interested in advanced class"</strong><br>in the form below.</p>
+                <p>* please select <strong>"interested in advanced class"</strong> in the form below.</p>
             </article>
         </section>
         
@@ -236,7 +236,7 @@
 
         <form class="book-class-form">
             
-            <div class="inputs-wrapper">
+            <fieldset>
                 <label for="BookClassFormNameInput" class="form-label">
                     <div>Name</div>
                     <input type="text" 
@@ -262,14 +262,16 @@
                         <option value="duos">decorating duo</option>
                     </select>
                 </label>
-                <label for="BookClassFormAdvancedInquiryCheckbox" class="form-label">
-                    <div>Interested in<br>advanced class</div>
-                    <input type="checkbox" 
-                    name="advancedinquiry" 
-                    id="BookClassFormAdvancedInquiryCheckbox" 
-                    autocomplete="off" required>
+                <label for="BookClassFormClassTypeSelect" class="form-label">
+                    <div>level</div>
+                    <select name="class-level" id="BookClassFormClassTypeSelect" class="form-select" autocomplete="off" required>
+                        <option value=""selected disabled>-- select</option>
+                        <option value="beginner">beginner</option>
+                        <option value="intermediate">intermediate</option>
+                        <option value="advanced">advanced</option>
+                    </select>
                 </label>
-            </div>
+            </fieldset>
 
             <div class="information">
                 <p>* It can take up to 24 hours for a response.</p>
@@ -297,7 +299,7 @@
                 <li><a href="pages/book_class.html" class="link">class</a></li>
             </ul>
             <div class="footer-logo">
-                <a href="/bakedbybec"><img src="img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
+                <a href="/bakedbybec/"><img src="img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
             </div>
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
