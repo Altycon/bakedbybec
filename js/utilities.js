@@ -1,4 +1,6 @@
-function zeroPadLeftToString(num){
+
+
+export function zeroPadLeftToString(num){
     if(+num > 9) return `${num}`;
     return `0${num}`;
 };

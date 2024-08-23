@@ -1,5 +1,10 @@
 
-
+export function isPageNavigationDisplayed(){
+    const pageNavigationElement = document.querySelector('.page-navigation-primary');
+    const displayValue = getComputedStyle(pageNavigationElement).getPropertyValue('display');
+    return (displayValue !== 'none');
+};
+    
 export function pageNavigation(){
     document.querySelector('.page-navigation-primary-open-btn').addEventListener('click', (event)=>{
         const pageNavigationElement = document.querySelector('.page-navigation-primary');

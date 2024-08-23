@@ -1,113 +1,151 @@
 
 import { AImageViewer } from "../../image_viewer.js";
-import { pageNavigation } from "../../navigation.js";
+import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { openInHouseBakerySign } from "../../utilities.js";
 
-const galleryTabs = document.querySelectorAll('.navigation-gallery-item');
+const Gallery = {
+    sectionLoader: undefined,
+    tabs: undefined,
+    images: undefined,
+    sections: undefined,
 
-const galleries = document.querySelectorAll('.gallery-content section');
+    // I need to remove the loader after it finishes, not just display: none;?
 
-
-function setGalleryLink(sectionId){
-
-    galleryTabs.forEach( tab => {
-
-        const linkSectionId = tab.querySelector('a').href.split('#');
-
-        window.localStorage.hash = linkSectionId;
-
-        if(linkSectionId[1] === sectionId){
-
-            tab.classList.add('active');
-
-        }else{
-
+    deactivateTabs(){
+        this.tabs.forEach( tab => {
             if(tab.classList.contains('active')){
-
                 tab.classList.remove('active');
             }
-        }
-    });
+        });
+    },
+    activateTab(sectionId){
+        this.tabs.forEach( tab => {
+            const linkSectionId = tab.querySelector('a').href.split('#')[1];
+            if(linkSectionId === sectionId){
+                tab.classList.add('active');
+            }else{
+                if(tab.classList.contains('active')){
+                    tab.classList.remove('active');
+                }
+            }
+        });
+    },
+    deactivateSections(){
+        this.sections.forEach( section => {
+            if(section.classList.contains('open')){
+                section.classList.remove('show');
+                section.classList.remove('open');
+            }
+        });
+    },
+    activateSection(sectionId){
+        const section = document.querySelector(`#${sectionId}`);
+        section.classList.add('open');
+        setTimeout( ()=> {
+            section.classList.add('show');
+        },100);
+    },
+    selectSection(clickEvent){
+        clickEvent.preventDefault();
+        const target = clickEvent.currentTarget
+        if(target.classList.contains('active')) return;
 
+        this.deactivateTabs();
+        this.deactivateSections();
 
-    const galleryToActive = document.querySelector(`#${sectionId}`);
+        const sectionId = target.querySelector('a').href.split('#')[1];
+        this.activateSection(sectionId);
 
-    galleryToActive.classList.add('open');
+        target.classList.add('active');
+    },
+    loadImages(sectionId,timeOutDuration = 10000){
+       
+        return new Promise( (resolve)=>{
+            const sectionImages = document.querySelectorAll(`#${sectionId} img.viewable`);
+            const totalImages = sectionImages.length;
+            let completedImages = 0;
+            function checkAllImagesLoaded(){
+                if(totalImages === completedImages){
+                    Gallery.sectionLoader.classList.remove('loading');
+                    resolve(sectionId)
+                }
+            }
+            sectionImages.forEach( img => {
+                if(img.complete){
+                    completedImages++;
+                }else{
+                    img.addEventListener('load', function loadImage(){
+                        completedImages++;
+                        checkAllImagesLoaded();
+                        img.removeEventListener('load',loadImage);
+                    })
+                }
+            });
+            checkAllImagesLoaded();
 
-    setTimeout( ()=> {
+            const imageTimeOut = setTimeout( ()=>{
+                reject(new Error('Image loading timeout. please try again'));
+            },timeOutDuration);
+            Promise.resolve().then( ()=> clearTimeout(imageTimeOut));
+        })
+    },
+    listen(){
+        this.tabs.forEach( tab => {
+            tab.addEventListener('click', (clickEvent)=>{
+                this.selectSection(clickEvent);
+            });
+        });
+    },
+    initialize(){
+    
+        this.sectionLoader = document.querySelector('.gallery-content .loader');
+        this.tabs = document.querySelectorAll('.navigation-gallery-item');
+        this.images = document.querySelectorAll('img.viewable');
+        this.sections = document.querySelectorAll('.gallery-content section');
 
-        galleryToActive.classList.add('show');
-
-    },100);
-}
-
-
-function activateGalleryTab(event){
-
-    event.preventDefault();
-
-    if(event.currentTarget.classList.contains('active')) return;
-
-    galleryTabs.forEach( tab => {
-
-        if(tab.classList.contains('active')){
-
-            tab.classList.remove('active');
-        }
-    });
-
-    galleries.forEach( gallery => {
-
-        if(gallery.classList.contains('open')){
-
-            gallery.classList.remove('show');
-
-            gallery.classList.remove('open');
-        }
-    });
-
-    event.currentTarget.classList.add('active');
-
-    const tabLink = event.currentTarget.querySelector('a');
-
-    const sectionId = tabLink.href.split('#')[1];
-
-    const galleryToActive = document.querySelector(`#${sectionId}`);
-
-    galleryToActive.classList.add('open');
-
-    setTimeout( ()=> {
-
-        galleryToActive.classList.add('show');
-
-    },100);
-}
-
-function listenToGallery(){
-
-    galleryTabs.forEach( tab => {
-
-        tab.addEventListener('click', activateGalleryTab);
-
-    })
-}
-
-function initializeGallery(){
-
-    if(window.location.hash && window.location.hash !== ""){
-
-        setGalleryLink(window.location.hash.split('#')[1]);
-
-    }else{
-
-        setGalleryLink('SugarCookies');
+        this.listen();
     }
-
-    pageNavigation();
-    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
-
-    listenToGallery();
-
-    AImageViewer.initialize(document.querySelectorAll('img.viewable'));
 };
-initializeGallery();
+function initializeGalleryPage(){
+
+    const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
+    if(inHouseBakeryButton){
+        inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+    }
+    
+    if(!isPageNavigationDisplayed()){
+        pageNavigation();
+        console.log('navigation not displayed')
+    }
+    
+    AImageViewer.initialize(document.querySelectorAll('img.viewable'));
+
+    Gallery.initialize();
+
+    // I should do this check in a separate function ??? Idk
+    if(window.location.hash && window.location.hash !== ""){
+        const galleryId = window.location.hash.split('#')[1];
+        Gallery.activateTab(galleryId);
+
+        Gallery.loadImages(galleryId)
+        .then( (sectionId)=> {
+            Gallery.activateSection(sectionId);
+        })
+        .catch( error => {
+            console.log('LoadingImageError: ',error.message);
+            alert('Reload page');
+        })
+    }else{
+        Gallery.activateTab('SugarCookies');
+        Gallery.loadImages('SugarCookies')
+        .then( (sectionId)=> {
+            Gallery.activateSection(sectionId);
+        })
+        .catch( error => {
+            console.log('LoadingImageError: ',error.message);
+            alert('Reload page')
+        })
+    }
+};
+initializeGalleryPage();
+
