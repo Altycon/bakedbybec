@@ -66,6 +66,19 @@ function connectInputToOutput(event){
         console.error(`output element for ${outputId} missing or not connected`)
     }
 };
+async function getCurrentLocation(){
+    try{
+        const position = await new Promise( (resolve,reject)=>{
+            navigator.geolocation.getCurrentPosition(resolve,reject);
+        });
+        if(!position.coords) throw new Error(`Browser's navigator gelocation object does not contain coordinates.`);
+        const { latitude, longitude } = position.coords;
+        return { latitude, longitude };
+    }catch(error){
+        throw new Error(error.message);
+    }
+   
+};
 const OrderInvoice = {
     content: undefined,
     dateOutput: undefined,
@@ -75,6 +88,8 @@ const OrderInvoice = {
     retrievalCostOutput: undefined,
     retrievalDistanceOutput: undefined,
     paymentTypeOutput: undefined,
+    subTotalOutput: undefined,
+    totalOutput: undefined,
     itemsList: undefined,
     imageList: undefined,
     hasImages: false,
@@ -108,6 +123,12 @@ const OrderInvoice = {
     },
     setPaymentType(type){
         this.paymentTypeOutput.textContent = type;
+    },
+    setSubTotal(price){
+        this.subTotalOutput.textContent = price;
+    },
+    setTotal(price){
+        this.totalOutput.textContent = price;
     },
     createImagesContent(imageColumn){
         const list = createHtmlElement('ul',{ class: 'images-list' });
@@ -254,6 +275,12 @@ const OrderInvoice = {
             this.paymentTypeOutput = document.querySelector('#InvoicePaymentTypeOutput');
             if(!this.paymentTypeOutput) throw new Error('missing element - invoice payment type output');
 
+            this.subTotalOutput = document.querySelector('#InvoiceSubTotalOutput');
+            if(!this.subTotalOutput) throw new Error('missing element - invoice subtotal output');
+
+            this.totalOutput = document.querySelector('#InvoiceTotalOutput');
+            if(!this.totalOutput) throw new Error('missing element - invoice total output');
+
         }catch(error){
             console.warn(error);
         }
@@ -306,8 +333,8 @@ const ProductComponent ={
         );
         OrderForm.removeItem(itemElement.id);
 
-        enableSelectFieldOption(OrderForm.itemSelectElement,itemElement.dataset.name);
-        OrderForm.itemSelectElement.value = "";
+        enableSelectFieldOption(OrderForm.itemSelect,itemElement.dataset.name);
+        OrderForm.itemSelect.value = "";
         OrderInvoice.subtractNumberOfItems();
 
         const activeTab = document.querySelector(`[data-tab-id="${itemElement.id}"].active`);
@@ -334,8 +361,10 @@ const ProductComponent ={
 
         if(OrderForm.hasCakes(itemElement.id)){
             disableSelectFieldOption('#OrderFormRetrieval','shipping');
+            OrderForm.setRetrievalInformationAvailability('shipping',false);
         }else{
             enableSelectFieldOption('#OrderFormRetrieval','shipping');
+            OrderForm.setRetrievalInformationAvailability('shipping',true);
         }
     },
     addInspiration(event){
@@ -806,17 +835,19 @@ const ProductComponent ={
 }
 export const OrderForm = {
     form: undefined,
-    itemSelectElement: undefined,
+    dateInput: undefined,
+    itemSelect: undefined,
     itemsInput: undefined,
-    retrievalSelectElement: undefined,
-    paymentSelectElement: undefined,
-    agreementCheckboxElement: undefined,
+    retrievalSelect: undefined,
+    paymentSelect: undefined,
+    agreementCheckbox: undefined,
     personalInformationElement: undefined,
+    retrievalPriceInformationItems: undefined,
+    totalInput: undefined,
+    subTotalInput: undefined,
     submitButton: undefined,
-    selectElements: undefined,
     tabList: undefined,
     itemList: undefined,
-    invoiceItemList: undefined,
     items: [],
     tabs: [],
 
@@ -849,6 +880,19 @@ export const OrderForm = {
         }
         return false;
     },
+    setRetrievalInformationAvailability(retrievalType,available=true){
+        
+        const retrievalPriceInfo = this.retrievalPriceInformationItems.find( priceItem => priceItem.dataset.retrievalId === retrievalType);
+        if(available){
+            if(retrievalPriceInfo.classList.contains('unavailable')){
+                retrievalPriceInfo.classList.remove('unavailable');
+            }
+        }else{
+            if(!retrievalPriceInfo.classList.contains('unavailable')){
+                retrievalPriceInfo.classList.add('unavailable');
+            }
+        }
+    },
     activeSubmitButton(){
         if(!Order.submitButton.classList.contains('active')){
             Order.submitButton.classList.add('active');
@@ -858,6 +902,35 @@ export const OrderForm = {
         if(Order.submitButton.classList.contains('active')){
             Order.submitButton.classList.remove('active');
         }
+    },
+    addToSubTotal(price){
+        const subtotal = Number(this.subTotalInput.value) + Number(price);
+        this.subTotalInput.value = `${subtotal}`;
+
+        OrderInvoice.setSubTotal(`${subtotal}.00`);
+    },
+    addToTotal(price){
+        const total = Number(this.totalInput.value) + Number(price);
+        this.totalInput.value = `${total}`;
+
+        OrderInvoice.setTotal(`${total}.00`);
+    },
+    subtractFromSubTotal(price){
+        if(this.subTotalInput.value === '0') return;
+
+        const subtotal = Number(this.subTotalInput.value) - Number(price);
+        this.subTotalInput.value = `${subtotal}`;
+
+        OrderInvoice.setSubTotal(`${subtotal}.00`);
+    },
+    subtractFromTotal(price){
+        if(this.totalInput.value === '0') return;
+        if(Number(this.totalInput.value) < Number(price)) return;
+
+        const total = Number(this.totalInput.value) - Number(price);
+        this.totalInput.value = `${total}`;
+
+        OrderInvoice.setTotal(`${total}.00`);
     },
    
     // intros
@@ -1028,7 +1101,7 @@ export const OrderForm = {
 
         OrderForm.addItem(data.id,data.name,data.title,data.prices,data.image,data.fields,data.themed);
 
-        disableSelectFieldOption(OrderForm.itemSelectElement,itemName);
+        disableSelectFieldOption(OrderForm.itemSelect,itemName);
 
         OrderForm.addTab(data.id,data.name,data.image);
         //OrderForm.activateTabs(data.id);
@@ -1037,7 +1110,8 @@ export const OrderForm = {
         OrderInvoice.addNumberOfItems();
         
         data.retrievalRestrictions.forEach( restriction => {
-            disableSelectFieldOption(OrderForm.retrievalSelectElement,restriction);
+            disableSelectFieldOption(OrderForm.retrievalSelect,restriction);
+            OrderForm.setRetrievalInformationAvailability(restriction,false);
         })
 
         // OrderProgress.listenToAreaInputs('.js-item-info',2);
@@ -1073,9 +1147,9 @@ export const OrderForm = {
     },
     selectRetrievalType(changeEvent){
         const retrievalType = changeEvent.target.value;
+        const currentState = changeEvent.target.dataset.state;
 
         OrderForm.setAddress(retrievalType);
-        
         OrderInvoice.setRetrievalType(retrievalType);
 
         //OrderProgress.setState(3);
@@ -1089,21 +1163,24 @@ export const OrderForm = {
             OrderInvoice.setRetrievalPrice(`${retrievalPrice}.00`);
             OrderInvoice.setRetrievalCost(`${retrievalPrice}.00`);
             //Order.addToTotal(retrievalPrice);
+            OrderForm.addToTotal(retrievalPrice);
         }else{
             OrderInvoice.setRetrievalPrice(`${retrievalPrice}`);
             OrderInvoice.setRetrievalCost(`00.00`);
             
+            if(currentState === 'shipping'){
+                OrderForm.subtractFromTotal('15');
+            }
             // if(document.querySelector('#OrderFormSubTotal').value !== 
             //     document.querySelector('#OrderFormTotal').value){
             //         Order.subtractFromTotal('15');
             // }
            
         }
+        changeEvent.target.dataset.state = retrievalType;
     },
     selectPaymentType(changeEvent){
-        const paymentType = changeEvent.target.value;
-        OrderInvoice.setPaymentType(paymentType);
-
+        OrderInvoice.setPaymentType(changeEvent.target.value);
         //OrderProgress.setState(4);
     },
     selectAgreementCheckbox(){
@@ -1125,59 +1202,63 @@ export const OrderForm = {
 
     },
     listen(){
-        OrderForm.itemSelectElement.addEventListener('change',OrderForm.selectItem);
-        OrderForm.retrievalSelectElement.addEventListener('change', OrderForm.selectRetrievalType);
-        OrderForm.paymentSelectElement.addEventListener('change', OrderForm.selectPaymentType);
-        OrderForm.agreementCheckboxElement.addEventListener('change', OrderForm.selectAgreementCheckbox);
+        OrderForm.itemSelect.addEventListener('change',OrderForm.selectItem);
+        OrderForm.retrievalSelect.addEventListener('change', OrderForm.selectRetrievalType);
+        OrderForm.paymentSelect.addEventListener('change', OrderForm.selectPaymentType);
+        OrderForm.agreementCheckbox.addEventListener('change', OrderForm.selectAgreementCheckbox);
         OrderForm.form.addEventListener('submit', OrderForm.submit)
     },
     initialize(){
         try{
             // order form
-            OrderForm.form = document.querySelector('#OrderForm');
-            if(!OrderForm.form) throw new Error('missing element - order form');
+            this.form = document.querySelector('#OrderForm');
+            if(!this.form) throw new Error('missing element - order form');
 
-            OrderForm.itemSelectElement = document.querySelector('#OrderFormItem');
-            if(!OrderForm.itemSelectElement) throw new Error('missing element - order item select');
+            this.itemSelect = document.querySelector('#OrderFormItem');
+            if(!this.itemSelect) throw new Error('missing element - order item select');
 
-            OrderForm.itemsInput = document.querySelector('#OrderItemsInput');
-            if(!OrderForm.itemsInput) throw new Error('missing element - order items list');
+            this.retrievalSelect = document.querySelector('#OrderFormRetrieval');
+            if(!this.retrievalSelect) throw new Error('missing element - order retrieval select');
 
-            OrderForm.retrievalSelectElement = document.querySelector('#OrderFormRetrieval');
-            if(!OrderForm.retrievalSelectElement) throw new Error('missing element - order retrieval select');
+            this.paymentSelect = document.querySelector('#OrderFormPaymentType');
+            if(!this.paymentSelect) throw new Error('missing element - order payment select');
 
-            OrderForm.paymentSelectElement = document.querySelector('#OrderFormPaymentType');
-            if(!OrderForm.paymentSelectElement) throw new Error('missing element - order payment select');
+            this.agreementCheckbox = document.querySelector('#OrderFormAgreementCheckbox');
+            if(! this.agreementCheckbox) throw new Error('missing element - order agreement checkbox');
 
-            OrderForm.agreementCheckboxElement = document.querySelector('#OrderFormAgreementCheckbox');
-            if(! OrderForm.agreementCheckboxElement) throw new Error('missing element - order agreement checkbox');
+            this.dateInput = document.querySelector('#OrderFormDate');
+            if(!this.dateInput) throw new Error('missing element - order date input');
 
-            OrderForm.personalInformationElement = document.querySelector('.js-order-form .js-personal-information');
-            if(! OrderForm.personalInformationElement) throw new Error('missing element - order personal information');
+            this.itemsInput = document.querySelector('#OrderItemsInput');
+            if(!this.itemsInput) throw new Error('missing element - order items list');
 
-            OrderForm.submitButton = document.querySelector('.js-order-form-submit-btn');
-            if(!OrderForm.submitButton) throw new Error('missing element - order submit button');
+            this.totalInput = document.querySelector('#OrderFormTotal');
+            if(!this.totalInput) throw new Error('missing element - order total input');
 
-            // OrderForm.selectElements = document.querySelectorAll('.form-select');
-            // if(!OrderForm.selectElements) throw new Error('missing element - order form ');
+            this.subTotalInput = document.querySelector('#OrderFormSubTotal');
+            if(!this.subTotalInput) throw new Error('missing element - order subtotal input');
+
+            this.personalInformationElement = document.querySelector('.js-order-form .js-personal-information');
+            if(!this.personalInformationElement) throw new Error('missing element - order personal information');
+
+            this.retrievalPriceInformationItems = [...document.querySelectorAll('[data-retrieval-id]')];
+            if(this.retrievalPriceInformationItems.length < 3) throw new Error('missing element(s) - order retrieval information price item(s)');
+
+            this.submitButton = document.querySelector('.js-order-form-submit-btn');
+            if(!this.submitButton) throw new Error('missing element - order submit button');
 
             // order tabs
-            OrderForm.tabList = document.querySelector('.js-order-item-tab-list');
-            if(!OrderForm.tabList) throw new Error('missing element - order item tab list');
+            this.tabList = document.querySelector('.js-order-item-tab-list');
+            if(!this.tabList) throw new Error('missing element - order item tab list');
 
             // order items
             this.itemList = document.querySelector('.js-order-item-list');
             if(!this.itemList) throw new Error('missing element - order item list');
 
-
-            OrderForm.listen();
-
             OrderInvoice.initialize();
 
-            OrderForm.setDate();
-
-            const div = document.createElement('div');
-            transition('show',div,['show','active'],'open',5000);
+            this.listen();
+            this.setDate();
 
         }catch(error){
             console.warn(error);

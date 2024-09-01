@@ -172,8 +172,8 @@
                     <input type="text" name="items" id="OrderItemsInput" autocomplete="off" hidden>
                 </div>
                 <div class="retrieval-information">
-                    <div class="retrieval-prices">
-                        <div class="retrieval-information-pickup js-retrieval-information-pickup">
+                    <div class="prices">
+                        <div class="price-item" data-retrieval-id="pickup">
                             <h4>pickup</h4>
                             <div class="img-wrapper">
                                 <img src="img/icon/retrieval/bbb_icon-pickup_128x128.png" alt="">
@@ -182,7 +182,7 @@
                             <p>On site<br>(West Point, IA)</p>
                         </div>
                         
-                        <div class="retrieval-information-delivery js-retrieval-information-delivery">
+                        <div class="price-item" data-retrieval-id="delivery">
                             <h4>delivery</h4>
                             <div class="img-wrapper">
                                 <img src="img/icon/retrieval/bbb_icon_delivery_128x128.png" alt="">
@@ -190,7 +190,7 @@
                             <p><strong class="price pink-text">$0.65</strong> /mile roundtrip</p>
                             <p>30 mile radius<br>of West Point, Iowa</p>
                         </div>
-                        <div class="retrieval-information-shipping js-retrieval-information-shipping">
+                        <div class="price-item" data-retrieval-id="shipping">
                             <h4>shipping</h4>
                             <div class="img-wrapper">
                                 <img src="img/icon/retrieval/bbb_icon_shipping_128x128.png" alt="">
@@ -202,7 +202,7 @@
                     </div>
                     <div class="field">
                         <label for="OrderFormRetrieval" class="form-label">retrieval type</label>
-                        <select name="retrieval" id="OrderFormRetrieval" class="form-select" data-input="retrieval" autocomplete="off" required>
+                        <select name="retrieval" id="OrderFormRetrieval" class="form-select" data-state="" autocomplete="off" required>
                             <option value=""selected disabled>-- select --</option>
                             <option value="pickup" data-price="free">Pickup</option>
                             <option value="shipping" data-price="15">Shipping</option>
@@ -240,7 +240,7 @@
                     </div>
                     <div class="field">
                         <label for="OrderFormPaymentType" class="form-label">payement type</label>
-                        <select name="payment" id="OrderFormPaymentType" class="form-select" data-input="payment" autocomplete="off" required>
+                        <select name="payment" id="OrderFormPaymentType" class="form-select" autocomplete="off" required>
                             <option value=""selected disabled>-- select --</option>
                             <option value="cash">cash</option>
                             <option value="card">card</option>
@@ -371,10 +371,10 @@
                                 <p>payment: <span id="InvoicePaymentTypeOutput">none</span></p>
                             </div>
                             <div class="totals">
-                                <p>sub-total ($): <span data-output="invoice-sub-total">00.00</span></p>
+                                <p>sub-total ($): <span id="InvoiceSubTotalOutput">00.00</span></p>
                                 <p>retrieval ($): <span id="InvoiceRetrievalCostOutput">00.00</span></p>
                                 <p>tax ($): <span>00.00</span></p>
-                                <p>total ($): <span data-output="invoice-total">00.00</span></p>
+                                <p>total ($): <span id="InvoiceTotalOutput">00.00</span></p>
                             </div>
                         </div>
                         
