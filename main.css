@@ -173,9 +173,17 @@ input[hidden=true]{
     box-shadow: 2px 2px 10px black,
     inset 2px 2px 5px hsl(0 0% 100% / 0.2);
 }
+.site-box-link:active{
+    scale: .98;
+    transition: scale 100ms ease;
+}
 
 .btn{
     cursor: pointer;
+}
+.btn:active{
+    scale: 0.98;
+    transition: scale 100ms ease;
 }
 .icon-png{
     filter: invert(100%);
@@ -198,27 +206,22 @@ input[hidden=true]{
 
 
 
-.custom-date-component{
+.custom-date-field{
    text-align: center;
     
 }
-.custom-date-component > div{
-    margin-bottom: 12px;
-}
-.custom-date-component > div .img-wrapper{
+.custom-date-field > label .img-wrapper{
    margin-left: 32px;
 }
-.custom-date-component > div .img-wrapper > img{
+.custom-date-field > label .img-wrapper > img{
     width: 16px;
 }
-.custom-date-component > input{
-   margin-bottom: 12px;
+.custom-date-field > input{
    background-color: var(--site-color-accent2);
 }
 
 .form-label{
     font-weight: 700;
-    /* min-width: 0px; */
 }
 .form-text-input,
 .form-textarea{
@@ -238,6 +241,12 @@ input[hidden=true]{
     box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
     inset -1px -1px 2px black,
     5px 5px 10px black;
+
+    scale: 1;
+    transition: scale 100ms ease;
+}
+.form-select:active{
+    scale: .98;
 }
 .form-select > option{
     background-color: hsl(0 0% 20%);
@@ -2846,6 +2855,7 @@ input[hidden=true]{
     top: 0; left: 0;
     width: 100%;
     height: 100%;
+    border-radius: inherit;
     background-image: var(--site-gradient);
     opacity: 0;
     z-index: -1;
@@ -3532,6 +3542,10 @@ input[hidden=true]{
     box-shadow: 2px 2px 10px black,
     inset 2px 2px 5px hsl(0 0% 100% / 0.2);
     cursor: pointer;
+}
+.navigation-gallery-item:active{
+    scale: .98;
+    transition: scale 100ms ease;
 }   
 .navigation-gallery-item > a{
     display: inline-block;
@@ -5140,31 +5154,28 @@ input[hidden=true]{
 }
 .ordering-area > header{
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     grid-template-rows: auto;
     justify-content: center;
     align-items: center;
     gap: 32px;
 }
-
-label[for=OrderFormItem]{
-    grid-column: 2;
+.ordering-area > header .field{
+    grid-column: 1;
     grid-row: 1;
-   
+
     max-width: 500px;
     padding: 16px 64px;
+    text-align: center;
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
-
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: repeat(2,auto);
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+}
+.ordering-area > header .field > label{
+    display: block;
+    margin-bottom: 12px;
 }
 .ordering-area > header > img{
-    grid-column: 3;
+    grid-column: 2;
     grid-row: 1;
 }
 
@@ -5182,7 +5193,15 @@ label[for=OrderFormItem]{
     /* margin-left: 12px; */
     cursor: pointer;
 }
-
+.order-form .field-output{
+    font-size: .67rem;
+    font-weight: 500;
+    opacity: 1;
+    transition: opacity 300ms ease;
+}
+.order-form .field-output.show{
+    opacity: 1;
+}
 .order-form > header > h2{
     color: var(--fc-rare);
     font-size: 16px;
@@ -5319,7 +5338,7 @@ label[for=OrderFormItem]{
 }
 
 
-/* === ORDER ITEM === */
+/* === ORDER ITEM LIST === */
 
 .order-item-list{
     position: relative;
@@ -5352,6 +5371,11 @@ label[for=OrderFormItem]{
 }
 .order-item-intro.show{
     opacity: 1;
+}
+.order-item-intro.removing{
+    translate: 0 100px;
+    opacity: 0;
+    transition: translate 500ms ease, opacity 300ms ease;
 }
 .order-item-intro::before{
     content:"";
@@ -5388,7 +5412,7 @@ label[for=OrderFormItem]{
 
 
 
-
+/* === ORDER ITEM === */
 .order-item{
     grid-column: 1;
     grid-row: 1;
@@ -5399,24 +5423,33 @@ label[for=OrderFormItem]{
 
     display: none;
 
-    scale: 0.9;
+    translate: 0 100px;
     opacity: 0;
-    transition: scale 500ms ease, opacity 300ms ease;
+    transition: translate 500ms ease, opacity 300ms ease;
 }
 .order-item.open{
     display: block;
 }
 .order-item.show{
-    scale: 1;
+    translate: 0 0;
     opacity: 1;
 }
 .order-item.active{
     pointer-events: all;
 }
-
-
+.order-item.keeping{
+    scale: 0.9;
+    translate: -100px -100px;
+    opacity: 0; 
+    transition: scale 500ms ease, translate 500ms ease, opacity 300ms ease;
+}
+.order-item.removing{
+    translate: 0 100px;
+    opacity: 0; 
+    transition: translate 500ms ease, opacity 300ms ease;
+}
 .order-item > header{
-    margin-bottom: 16px;
+    margin-bottom: 32px;
 
     display: grid;
     grid-template-columns: repeat(3,auto);
@@ -5441,14 +5474,59 @@ label[for=OrderFormItem]{
     box-shadow: inset 1px 1px 5px  hsl(0 100% 30%),
     inset -1px -1px 5px hsl(0 0% 0%);
 }
-
 .order-item > fieldset{
-    border: none;
+    border: none; 
+}
+.order-item > fieldset:not(:last-of-type){
+    margin-bottom: 32px;
+}
+
+.order-item > fieldset.common{
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: auto;
+}
+.order-item > fieldset.extra{
+    margin-bottom: 48px;
+}
+.order-item > fieldset.common .field,
+.order-item > fieldset.extra .field{
+    text-align: center;
+}
+.order-item > fieldset.common .field > label,
+.order-item > fieldset.extra .field > label{
+   display: block;
+}
+.order-item > fieldset.common .field > *:not(:last-child),
+.order-item > fieldset.extra .field > *:not(:last-child){
+    margin-bottom: 12px;
+}
+.order-item > fieldset.theme .field{
+    margin-bottom: 24px;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: repeat(2,auto);
+    gap: 12px;
+}
+.order-item > fieldset.theme .field > *:nth-child(1){
+    grid-column: 1;
+    grid-row: 1;
+}
+.order-item > fieldset.theme .field > *:nth-child(2){
+    grid-column: 2;
+    grid-row: 1;
+}
+.order-item > fieldset.theme .field > *:nth-child(3){
+    grid-column: 1/3;
+    grid-row: 2;
+}
+.order-item > fieldset.theme .field .field-output{
+   text-align: center;
 }
 .order-item-price-display,
 .order-item-prices-display{
-    align-self: center;
-    justify-self: center;
+    text-align: center;
 }
 .order-item-price-display h4{
     line-height: 1.4em;
@@ -5478,9 +5556,6 @@ label[for=OrderFormItem]{
 
     line-height: 1.4em;
     margin-bottom: 8px;
-}
-.order-item-prices-display > div{
-    
 }
 .order-item-prices-display > div:nth-of-type(1){
     grid-column: 1;
@@ -5512,199 +5587,19 @@ label[for=OrderFormItem]{
     font-weight: 700;
     font-size: 1.2rem;
 }
-
-
-
-
-/* SUGAR COOKIES */
-.sugar-cookies-item{
-   
-}
-.sugar-cookies-item .form-group:nth-of-type(1){
-    text-align: center;
-    margin-bottom: 32px;
-
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-}
-.sugar-cookies-item .form-group:nth-of-type(1) > label > div{
-    margin-bottom: 12px;
-}
-
-.sugar-cookies-item .form-group:nth-of-type(2) > label{
-    margin-bottom: 16px;
-
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 16px;
-}
-.sugar-cookies-item .form-group:nth-of-type(2) > label > div{
-    align-self: flex-start;
-    padding-bottom: 8px;
-}
-.sugar-cookies-item .form-group:nth-of-type(2) > label:nth-of-type(1){
-    margin-bottom: 16px;
-}
-.sugar-cookies-item .form-group:nth-of-type(2) > label > input,
-.sugar-cookies-item .form-group:nth-of-type(2) > label > textarea{
-    /* min-width: 100px; */
-}
-
-
-/* DROP COOKIES */
-.drop-cookies-item{
-
-}
-
-.drop-cookies-item .form-group:nth-of-type(1){
-    text-align: center;
-    margin-bottom: 32px;
-
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-}
-.drop-cookies-item .form-group:nth-of-type(1) > label > div{
-    margin-bottom: 12px;
-}
-.drop-cookies-item .form-group:nth-of-type(2){
-    text-align: center;
-    margin-bottom: 32px;
-
+#DropCookies > fieldset.extra,
+#CakePops > fieldset.extra{
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
 }
-.drop-cookies-item .form-group:nth-of-type(2) > label > div{
-    margin-bottom: 12px;
-}
-
-/* LAYER CAKE and SHEET CAKE */
-.layer-cake-item{
-   
-}
-
-.layer-cake-item .form-group:nth-of-type(1),
-.sheet-cake-item .form-group:nth-of-type(1){
-    text-align: center;
-    margin-bottom: 32px;
-
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-}
-.layer-cake-item .form-group:nth-of-type(1) > label > div,
-.sheet-cake-item .form-group:nth-of-type(1) > label > div{
-    margin-bottom: 12px;
-}
-.layer-cake-item .form-group:nth-of-type(2),
-.sheet-cake-item .form-group:nth-of-type(2){
-    text-align: center;
-    margin-bottom: 48px;
-
+#LayerCake > fieldset.extra,
+#SheetCake > fieldset.extra,
+#CupCakes > fieldset.extra{
     display: grid;
     grid-template-columns: repeat(3,auto);
     grid-template-rows: auto;
 }
-.layer-cake-item .form-group:nth-of-type(2) > label > div,
-.sheet-cake-item .form-group:nth-of-type(2) > label > div{
-    margin-bottom: 12px;
-}
-.layer-cake-item .form-group:nth-of-type(3),
-.sheet-cake-item .form-group:nth-of-type(3){
-    margin-bottom: 16px;
-}
-.layer-cake-item .form-group:nth-of-type(3) > label,
-.sheet-cake-item .form-group:nth-of-type(3) > label{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-    align-items: flex-end;
-    gap: 16px;
-}
-.layer-cake-item .form-group:nth-of-type(3) > label > div,
-.sheet-cake-item .form-group:nth-of-type(3) > label > div{
-    align-self: flex-start;
-    padding-bottom: 8px;
-}
-.layer-cake-item .form-group:nth-of-type(3) > label:nth-of-type(1),
-.sheet-cake-item .form-group:nth-of-type(3) > label:nth-of-type(1){
-    margin-bottom: 16px;
-}
-
-/* CUPCAKES */
-.cup-cakes-item{
-
-}
-
-.cup-cakes-item .form-group:nth-of-type(1){
-    text-align: center;
-    margin-bottom: 32px;
-
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-}
-.cup-cakes-item .form-group:nth-of-type(1) > label > div{
-    margin-bottom: 12px;
-}
-.cup-cakes-item .form-group:nth-of-type(2){
-    text-align: center;
-    margin-bottom: 48px;
-
-    display: grid;
-    grid-template-columns: repeat(3,auto);
-    grid-template-rows: auto;
-}
-.cup-cakes-item .form-group:nth-of-type(2) > label > div{
-    margin-bottom: 12px;
-}
-.cup-cakes-item .form-group:nth-of-type(3){
-    margin-bottom: 16px;
-}
-.cup-cakes-item .form-group:nth-of-type(3) > label{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-    align-items: flex-end;
-    gap: 16px;
-}
-.cup-cakes-item .form-group:nth-of-type(3) > label > div{
-    align-self: flex-start;
-    padding-bottom: 8px;
-}
-.cup-cakes-item .form-group:nth-of-type(3) > label:nth-of-type(1){
-    margin-bottom: 16px;
-}
-
-
-/* CAKEPOPS */
-.cake-pops-item{
-
-}
-
-.cake-pops-item .form-group:nth-of-type(1){
-    text-align: center;
-    margin-bottom: 32px;
-
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-}
-.cake-pops-item .form-group:nth-of-type(1) > label > div{
-    margin-bottom: 12px;
-}
-.cake-pops-item .form-group:nth-of-type(2){
-    text-align: center;
-    margin-bottom: 32px;
-
-    display: grid;
-    grid-template-columns: repeat(2,auto);
-    grid-template-rows: auto;
-}
-.cake-pops-item .form-group:nth-of-type(2) > label > div{
-    margin-bottom: 12px;
-}
-
-
 
 
 
@@ -5813,10 +5708,6 @@ label[for=OrderFormItem]{
 .order-item .inspiration-content > label{
     grid-column: 1;
     grid-row: 2;
-    
-}
-.file-upload-element{
-    
 }
 .file-upload-element > input{
    display: none;
@@ -5891,13 +5782,7 @@ label[for=OrderFormItem]{
     text-align: center;
     padding: 32px;
 }
-label[for=OrderFormRetrieval]{
-    display: block;
-    margin-bottom: 32px;
-}
-label[for=OrderFormRetrieval] > div{
-    margin-bottom: 12px;
-}
+
 .order-form .retrieval-information .retrieval-prices{
     margin-bottom: 32px;
 
@@ -5959,6 +5844,20 @@ label[for=OrderFormRetrieval] > div{
     max-width: 42px;
     margin: 0 auto 12px auto;
 }
+
+
+.order-form .retrieval-information .field{
+    margin-bottom: 32px;
+}
+.order-form .retrieval-information .field > label{
+    display: block;
+}
+.order-form .retrieval-information .field > *:not(:last-child){
+    margin-bottom: 12px;
+}
+
+
+
 .order-form .retrieval-information .retrieval-times{
     text-align: left;
 }
@@ -6028,7 +5927,17 @@ label[for=OrderFormRetrieval] > div{
     height: 50px;
     border-radius: 16px;
 }
-label[for=OrderFormPaymentType] > div{
+
+
+
+
+.order-form .payment-information .field{
+    /* margin-bottom: 32px; */
+}
+.order-form .payment-information .field > label{
+    display: block;
+}
+.order-form .payment-information .field > *:not(:last-child){
     margin-bottom: 12px;
 }
 
@@ -6040,21 +5949,50 @@ label[for=OrderFormPaymentType] > div{
     border-radius: 16px;
     padding: 32px;
 }
+.order-form .personal-information > fieldset{
+    border: none;
+}
 .order-form .personal-information .basic-information{
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3,auto);
-    row-gap: 16px;
+    column-gap: 12px;
 }
-.order-form .personal-information .basic-information > label{
-    margin-bottom: 16px;
+
+.order-form .personal-information .basic-information .field{
+    margin-bottom: 24px;
 
     display: grid;
-    grid-template-columns: 1fr 4fr;
-    grid-template-rows: auto;
-    justify-content: flex-end;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: repeat(2,auto);
+    column-gap: 12px;
+    /* row-gap: 8px; */
+}
+.order-form .personal-information .basic-information .field > *:nth-child(1){
+    grid-column: 1;
+    grid-row: 1;
+}
+.order-form .personal-information .basic-information .field > *:nth-child(2){
+    grid-column: 2;
+    grid-row: 1;
+}
+.order-form .personal-information .basic-information .field > *:nth-child(3){
+    grid-column: 1/3;
+    grid-row: 2;
+}
+.order-form .personal-information .basic-information .field .field-output{
+   text-align: center;
+}
+.order-form .personal-information .basic-information .field > label{
+    display: block;
+}
+.order-form .personal-information .basic-information .field > *:not(:last-child){
+    margin-bottom: 12px;
+}
+.order-form .personal-information .basic-information .field:nth-of-type(3){
+    max-width: fit-content;
 }
 
 .order-form .personal-information .address-information{
@@ -6066,36 +6004,38 @@ label[for=OrderFormPaymentType] > div{
     column-gap: 32px;
     row-gap: 16px;
 
-    scale: 0.9;
+    translate: 0 100px;
     opacity: 0;
-    transition: scale 500ms ease, opacity 300ms ease;
+    transition: translate 500ms ease, opacity 300ms ease;
 }
 .order-form .personal-information .address-information.open{
     display: grid;
 }
 .order-form .personal-information .address-information.show{
-    scale: 1;
+    translate: 0 0;
     opacity: 1;
 }
 .order-form .personal-information .address-information .address-informent-message{
     grid-column: 1/4;
     grid-row: 1;
 }
-.order-form .personal-information .address-information > label:nth-of-type(1){
+.order-form .personal-information .address-information .field:nth-of-type(1){
     grid-column: 1/4;
     grid-row: 2;
 }
-.order-form .personal-information .address-information > label:nth-of-type(2){
+.order-form .personal-information .address-information .field:nth-of-type(2){
     grid-column: 1/4;
     grid-row: 3;
 }
-.order-form .personal-information .address-information > label:nth-of-type(3){
+.order-form .personal-information .address-information .field:nth-of-type(3){
     grid-column: 1;
     grid-row: 4;
 }
-.order-form .personal-information .address-information > label:nth-of-type(4){
+.order-form .personal-information .address-information .field:nth-of-type(4){
     grid-column: 2;
     grid-row: 4;
+
+    max-width: 200px;
 }
 .order-form .personal-information .address-information .distance-information{
     grid-column: 1/4;
@@ -6113,21 +6053,60 @@ label[for=OrderFormPaymentType] > div{
     color: yellow;
 }
 
-.order-form .personal-information .address-information > label{
-    text-align: left;
+.order-form .personal-information .address-information .field:nth-of-type(1),
+.order-form .personal-information .address-information .field:nth-of-type(2),
+.order-form .personal-information .address-information .field:nth-of-type(4){
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-    justify-content: flex-start;
-    gap: 16px;
+    grid-template-rows: repeat(2,auto);
+    column-gap: 12px;
+    row-gap: 8px;
 }
-label[for=OrderFormState] > select{
-    max-width: 150px;
+.order-form .personal-information .address-information .field:nth-of-type(1) > label,
+.order-form .personal-information .address-information .field:nth-of-type(2)  > label,
+.order-form .personal-information .address-information .field:nth-of-type(4)  > label{
+    grid-column: 1;
+    grid-row: 1;
 }
-label[for=OrderFormZipCode] > input{
-    max-width: 100px;
+.order-form .personal-information .address-information .field:nth-of-type(1) > input,
+.order-form .personal-information .address-information .field:nth-of-type(2)  > input,
+.order-form .personal-information .address-information .field:nth-of-type(4)  > input{
+    grid-column: 2;
+    grid-row: 1;
 }
-
+.order-form .personal-information .address-information .field:nth-of-type(1) .field-output,
+.order-form .personal-information .address-information .field:nth-of-type(2) .field-output,
+.order-form .personal-information .address-information .field:nth-of-type(4) .field-output{
+    grid-column: 1/3;
+    grid-row: 2;
+    
+    text-align: center;
+}
+.order-form .personal-information .address-information .field:nth-of-type(1),
+.order-form .personal-information .address-information .field:nth-of-type(2),
+.order-form .personal-information .address-information .field:nth-of-type(4){
+    margin-bottom: 12px;
+}
+.order-form .personal-information .address-information .field:nth-of-type(1) .field-output,
+.order-form .personal-information .address-information .field:nth-of-type(2) .field-output,
+.order-form .personal-information .address-information .field:nth-of-type(4) .field-output{
+    grid-column: 1/3;
+    grid-row: 2;
+    
+    text-align: center;
+}
+.order-form .personal-information .address-information .field:nth-of-type(3){
+    text-align: center;
+}
+.order-form .personal-information .address-information .field:nth-of-type(3) > label{
+    display: block;
+}
+.order-form .personal-information .address-information .field:nth-of-type(3) > *:not(:last-child){
+    margin-bottom: 12px;
+}
+.order-form .personal-information .address-information .field:nth-of-type(4) > *{
+    align-self: flex-start;
+}
 .order-form .get-distance-btn,
 .order-form .check-distance-btn{
     display: inline-block;
@@ -6145,7 +6124,6 @@ label[for=OrderFormZipCode] > input{
 .order-form .personal-information .distance-information{
     margin-top: 32px;
 }
-
 .order-form .personal-information .distance-information > div{
     text-align: center;
 }
@@ -6181,6 +6159,20 @@ label[for=OrderFormZipCode] > input{
     margin-left: 32px;
     margin-right: 8px;
 }
+.order-form .personal-information .pickup-distance-information{
+    display: none;
+
+    translate: 0 100px;
+    opacity: 0;
+    transition: translate 500ms ease, opacity 300ms ease;
+}
+.order-form .personal-information .pickup-distance-information.open{
+    display: block;
+}
+.order-form .personal-information .pickup-distance-information.open{
+    translate: 0 0;
+    opacity: 1;
+}
 .order-form .personal-information .pickup-distance-information > h3{
     margin-bottom: 12px;
 }
@@ -6201,171 +6193,163 @@ label[for=OrderFormZipCode] > input{
     inset 2px 2px 4px hsl(0 0% 100% / 0.3);
 }
 
+
+
+
 /* ORDER INVOICE */
 .order-invoice{
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
     padding-block: 32px;
-    padding-inline: 16px;
+    padding-inline: 24px;
 }
-.order-invoice > h3{
-    text-align: center;
-    margin-bottom: 24px;
-}
-.order-invoice .product-list{
-    list-style: none;
-    max-width: 600px;
-    margin: 0 auto;
-    margin-bottom: 24px;
-}
-.order-invoice .product-item{
-    outline: 1px solid var(--fc-rare);
-    border-radius: 16px;
-}
-.order-invoice .product-item h4,
-.order-invoice .product-item p{
-    font-size: .8rem;
-    line-height: 1.4em;
-}
-.order-invoice .product-item .row:nth-of-type(1){
-
-    display: grid;
-    grid-template-columns: repeat(6,auto);
-    grid-template-rows: auto;
-    
-}
-.order-invoice .product-item .row:nth-of-type(1) .column{
-    text-align: center;
-    padding-block: 8px;
-    padding-inline: 8px;
-    
-}
-.order-invoice .product-item .row:nth-of-type(1) .column:nth-child(1){
-    text-align: center;
-    outline: 1px solid var(--fc-rare);
-    border-radius: 16px;
-    background-color: hsl(0 0% 10%);
-}
-.order-invoice .product-item .row:nth-of-type(1) .column > p{
-    font-size: .8rem;
-}
-.order-invoice .product-item .row:nth-of-type(1) .column:nth-child(1) > p{
-    font-weight: 700;
-}
-.order-invoice .product-item .row:nth-of-type(2){
-    padding-block: 8px;
-    padding-inline: 8px;
-
-    display: grid;
-    grid-template-columns: auto 100px;
-    grid-template-rows: repeat(3,fit-content);
-    gap: 8px;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(1){
-    grid-column: 1;
-    grid-row: 1;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(2){
-    grid-column: 1;
-    grid-row: 2;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(3){
-    grid-column: 2;
-    grid-row: 1/3;
-    justify-self: flex-end;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(4){
-    grid-column: 1/3;
-    grid-row: 3;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(1),
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(2){
-    display: grid;
-    grid-template-columns: repeat(2,auto);
-    grid-template-rows: auto;
-    justify-content: flex-start;
-    column-gap: 8px;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(2) > p{
-    line-height: 1.2em;
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(3){
-    width: 75px;
-    max-height: 100px;
-    overflow: hidden;
-    text-align: center;
-}
-
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(3) .img-wrapper > img{
-    width: 100%;
-    object-fit: contain;
-    border-radius: 10px;
-    outline: 2px solid var(--fc-rare);
-}
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(4) > p{
-    font-weight: 700;
+.order-invoice > header{
     text-align: right;
-    
+    margin-bottom: 24px;
 }
-.order-invoice .product-item .row:nth-of-type(2) .column:nth-child(4) > p > span{
-    font-weight: normal;
+.order-invoice > header > h2{
+    font-size: 2rem;
 }
-.order-invoice .information{
-    outline: 1px solid var(--fc-rare);
-    border-radius: 16px;
-    padding-block: 12px;
-    padding-inline: 16px;
-
+.order-invoice .content > *:not(:last-child){
+    margin-bottom: 24px;
+}
+.order-invoice .content .information{
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: repeat(2,auto);
 }
-.order-invoice .information .personal{
+.order-invoice .content .information > div p{
+    line-height: 1.4em;
+    font-size: .8rem;
+}
+.order-invoice .content .information .business{
     grid-column: 1;
     grid-row: 1;
 }
-.order-invoice .information .extras{
+.order-invoice .content .information .business > p:first-child{
+    font-size: 1rem;
+    font-weight: 500;
+}
+.order-invoice .content .information .customer{
     grid-column: 2;
     grid-row: 1;
+
+    text-align: right;
 }
-.order-invoice .information .totals{
-    grid-column: 2;
+.order-invoice .content .information .extras{
+    grid-column: 1/3;
     grid-row: 2;
 }
 
-.order-invoice .information div p{
-    line-height: 1.6em;
+.order-invoice .content .items{
+
+}
+.order-invoice .content .items [data-output]{
+    font-weight: 500;
+}
+.order-invoice .content .items .column{
+    text-align: center;
+    /* outline: 1px solid yellow; */
+}
+.order-invoice .content .items h4,
+.order-invoice .content .items p{
     font-size: .8rem;
 }
-.order-invoice .information div p{
-    font-weight: 700;
-}
-.order-invoice .information div p > span{
-    font-weight: normal;
-}
-.order-invoice .information .personal p{
-    text-transform: uppercase;
-}
-.order-invoice .information .personal > p:first-child{
+.order-invoice .content .items > header{
     margin-bottom: 12px;
 }
-.order-invoice .information .personal > p:first-child > span{
-    font-weight: 700;
+.order-invoice .content .items > header > h3{
+    margin-bottom: 8px;
+    font-size: 1rem;
 }
-.order-invoice .information .extras,
-.order-invoice .information .totals{
+.order-invoice .content .items > header .row{
+
+    display: grid;
+    grid-template-columns: auto 4fr 1fr auto;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    gap: 12px;
+}
+.order-invoice .content .items .items-list{
+    list-style: none;
+}
+.order-invoice .content .items .items-list .item{
+    position: relative;
+    padding-inline: 12px;
+    padding-block: 8px;
+    outline: 1px solid var(--fc-rare);
+    margin-bottom: 16px;
+    border-radius: 16px;
+}
+.order-invoice .content .items .items-list .item .row{
+    
+    margin-bottom: 4px;
+}
+.order-invoice .content .items .items-list .item .row:first-child{
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: auto 4fr 1fr auto;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    gap: 12px;
+}
+.order-invoice .content .items .items-list .item .row:first-child .column:nth-child(2) span{
+    margin-left: 4px;
+    margin-right: 4px;
+    text-transform: lowercase;
+}
+.order-invoice .content .items .items-list .item .row:nth-child(2){
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    justify-content: flex-start;
+    gap: 12px;
+}
+.order-invoice .content .items .items-list .item .row:nth-child(2) h4{
+    font-size: .67rem;
+}
+.order-invoice .content .items .items-list .item .row:nth-child(2) p{
+    font-size: .67rem;
+    font-style: italic;
+}
+.order-invoice .content .items .items-list .item .row:nth-child(2) .column:nth-child(3){
+    max-width: 300px;
+}
+.order-invoice .content .images h3{
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+.order-invoice .content .images .images-list{
+    list-style: none;
+
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.order-invoice .content .images .images-list .img-wrapper{
+    max-width: 75px;
+    height: fit-content;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.order-invoice .content .images .images-list .img-wrapper > img{
+    /* object-fit: contain; */
+}
+.order-invoice .content .bottom{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: auto;
+}
+.order-invoice .content .bottom p{
+    font-size: .8rem;
+    line-height: 1.4em;
+}
+.order-invoice .content .bottom .totals{
     text-align: right;
 }
-.order-invoice .information .extras > p > span,
-.order-invoice .information .totals > p > span{
-    margin-left: 8px;
-}
-.order-invoice .information .extras > p:nth-of-type(3){
-    display: none;
-}
-.order-invoice .information .totals{
-    text-align: right;
-}
+
+
 
 
 
@@ -6387,18 +6371,18 @@ label[for=OrderFormZipCode] > input{
 .before-order-submission > p:last-of-type{
     margin-bottom: 32px;
 }
-.before-order-submission > label{
-    display: inline-block;
+.before-order-submission .field{
+    outline: 2px solid var(--site-color-accent2);
+    width: fit-content;
+    margin: 0 auto;
     padding: 12px;
     border-radius: 16px;
-    outline: 1px solid var(--site-color-accent2);
-}
-.before-order-submission > label > span{
     font-size: .8rem;
     font-weight: 700;
-    margin-right: 12px;
 }
-
+.before-order-submission .field > input{
+    margin-left: 12px;
+}
 /* ORDER FORM CONTROLS */
 .order-form-controls{
     outline: 1px solid var(--fc-rare);
@@ -6608,108 +6592,16 @@ label[for=OrderFormZipCode] > input{
     .order-item > header > img{
         max-width: 42px;
     }
-    .sugar-cookies-item .form-group:nth-of-type(1),
-    .drop-cookies-item .form-group:nth-of-type(1),
-    .layer-cake-item .form-group:nth-of-type(1),
-    .sheet-cake-item .form-group:nth-of-type(1),
-    .cup-cakes-item .form-group:nth-of-type(1),
-    .cake-pops-item .form-group:nth-of-type(1){
-        grid-template-columns: repeat(2,1fr);
-        grid-template-rows: auto auto;
-        justify-content: space-between;
-        column-gap: 12px;
-        row-gap: 24px;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .drop-cookies-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .layer-cake-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .sheet-cake-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .cup-cakes-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .cake-pops-item .form-group:nth-of-type(1) > div:nth-child(1){
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .drop-cookies-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .layer-cake-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .sheet-cake-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .cup-cakes-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .cake-pops-item .form-group:nth-of-type(1) > label:nth-child(2){
-        grid-column: 1/3;
-        grid-row: 2;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .drop-cookies-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .layer-cake-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .sheet-cake-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .cup-cakes-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .cake-pops-item .form-group:nth-of-type(1) > label:nth-child(3){
-        grid-column: 2;
-        grid-row: 1;
-
-    }
 }
 @media only screen and (max-width: 500px){
     .ordering-area > header{
         gap: 8px;
     }
     
-    label[for=OrderFormItem]{
-        padding: 16px 32px;
-    }
-    label[for=OrderFormItem] > span{
-        text-align: center;
-    }
+   
 
     /* ORDER ITEMS */
-    .order-item{
-        padding-inline: 0px;
-    }
-    .order-item > fieldset:nth-of-type(1){
-        border: 2px solid blue;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(2),
-    .layer-cake-item .form-group:nth-of-type(3),
-    .sheet-cake-item .form-group:nth-of-type(3),
-    .cup-cakes-item .form-group:nth-of-type(3){
-        padding-inline: 32px;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(2) > label,
-    .layer-cake-item .form-group:nth-of-type(3) > label,
-    .sheet-cake-item .form-group:nth-of-type(3) > label,
-    .cup-cakes-item .form-group:nth-of-type(3) > label{
-        outline: 1px solid yellow;
-        width: 50%;
-
-        grid-template-columns: auto;
-        grid-template-rows: auto auto;  
-    }
-    .sugar-cookies-item .form-group:nth-of-type(2) > label > div,
-    .layer-cake-item .form-group:nth-of-type(3) > label > div,
-    .sheet-cake-item .form-group:nth-of-type(3) > label > div,
-    .cup-cakes-item .form-group:nth-of-type(3) > label > div{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(2) > label > :not(:first-child),
-    .layer-cake-item .form-group:nth-of-type(3) > label > :not(:first-child),
-    .sheet-cake-item .form-group:nth-of-type(3) > label > :not(:first-child),
-    .cup-cakes-item .form-group:nth-of-type(3) > label > :not(:first-child){
-        outline: 1px solid yellow;
-        width: 50%;
-        
-        grid-column: 1;
-        grid-row: 2;
-    }
-    /* .sugar-cookies-item .form-group:nth-of-type(2) > label > textarea,
-    .layer-cake-item .form-group:nth-of-type(3) > label > textarea,
-    .sheet-cake-item .form-group:nth-of-type(3) > label > textarea,
-    .cup-cakes-item .form-group:nth-of-type(3) > label > textarea{
-        outline: 1px solid yellow;
-        width: 50%;
-    } */
-
-
+    
     .order-form .payment-information .payment-details > ul{
         list-style: none;
         margin-bottom: 32px;
@@ -6872,27 +6764,6 @@ label[for=OrderFormZipCode] > input{
         width: 32px;
     }
 
-    .sugar-cookies-item .form-group:nth-of-type(1),
-    .drop-cookies-item .form-group:nth-of-type(1),
-    .layer-cake-item .form-group:nth-of-type(1),
-    .sheet-cake-item .form-group:nth-of-type(1),
-    .cup-cakes-item .form-group:nth-of-type(1),
-    .cake-pops-item .form-group:nth-of-type(1){
-        grid-template-columns: 1fr;
-        grid-template-rows:  repeat(3,auto);
-        justify-content: space-between;
-        column-gap: 0px;
-        row-gap: 24px;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .drop-cookies-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .layer-cake-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .sheet-cake-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .cup-cakes-item .form-group:nth-of-type(1) > div:nth-child(1),
-    .cake-pops-item .form-group:nth-of-type(1) > div:nth-child(1){
-        grid-column: 1;
-        grid-row: 1;
-    }
     .order-item-prices-display{
        
         grid-template-columns: repeat(4,auto);
@@ -6930,25 +6801,6 @@ label[for=OrderFormZipCode] > input{
     .order-item-prices-display > div:nth-of-type(4){
         grid-column: 4;
         grid-row: 2;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .drop-cookies-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .layer-cake-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .sheet-cake-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .cup-cakes-item .form-group:nth-of-type(1) > label:nth-child(2),
-    .cake-pops-item .form-group:nth-of-type(1) > label:nth-child(2){
-        grid-column: 1;
-        grid-row: 2;
-    }
-    .sugar-cookies-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .drop-cookies-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .layer-cake-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .sheet-cake-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .cup-cakes-item .form-group:nth-of-type(1) > label:nth-child(3),
-    .cake-pops-item .form-group:nth-of-type(1) > label:nth-child(3){
-        grid-column: 1;
-        grid-row: 3;
-
     }
 }
 @media only screen and (max-width: 350px){

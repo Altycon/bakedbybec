@@ -126,7 +126,8 @@ export const OrderItemData ={
         ],
         imageSourcePath: `img/icon/product/bbb_icon_cakepops_128x128.png`
     },
-}
+};
+
 
 export const listOfUsStates = [
   { content: "Alabama", value: "AL" },

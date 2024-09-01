@@ -29,8 +29,8 @@
 
     <script type="module" src="js/pages/ordering/order.js"></script>
 </head>
-<body>
-    <div class="page-background"></div>
+<body id="OrderBody">
+    <div class="page-background" hidden></div>
     <header class="page-header">
 
         <h1 class="website-title">
@@ -119,8 +119,9 @@
 
         <section class="ordering-area js-ordering-area">
             <header>
-                <label for="OrderFormItem" class="form-label"><span>What would you like?</span>
-                    <select name="quantity" id="OrderFormItem" class="form-select" autocomplete="off" required>
+                <div class="field">
+                    <label for="OrderFormItem" class="form-label">What would you like?</label>
+                    <select name="item" id="OrderFormItem" class="form-select" autocomplete="off" required>
                         <option value=""selected disabled>-- select --</option>
                         <option value="sugar-cookies">sugar cookies</option>
                         <option value="drop-cookies">drop cookies</option>
@@ -129,12 +130,17 @@
                         <option value="cup-cakes">cupcakes</option>
                         <option value="cake-pops">cake pops</option>
                     </select>
-                </label>
-                <img src="img/icon/site/bbb_icon_meet_128x128.png" width="100" alt="">
+                </div>
+                <div class="img-wrapper">
+                    <img src="img/icon/site/bbb_icon_meet_128x128.png" width="100" alt="">
+                </div>
             </header>
             <form id="OrderForm" class="order-form js-order-form">
                 <header>
                     <h2>order form</h2>
+                    <input type="date" name="date" id="OrderFormDate" autocomplete="off" hidden>
+                    <input type="text" name="sub-total" value="0" id="OrderFormSubTotal" autocomplete="off" hidden>
+                    <input type="text" name="total" value="0" id="OrderFormTotal" autocomplete="off" hidden>
                 </header>
                 <div class="order-items">
                     <ul class="order-item-tab-list js-order-item-tab-list">
@@ -163,6 +169,7 @@
                         <option value="retirement"></option>
                         <option value="school"></option>
                     </datalist>
+                    <input type="text" name="items" id="OrderItemsInput" autocomplete="off" hidden>
                 </div>
                 <div class="retrieval-information">
                     <div class="retrieval-prices">
@@ -193,15 +200,16 @@
                             <p><strong class="attention-text">Only available in Iowa</strong></p>
                         </div>
                     </div>
-                    <label for="OrderFormRetrieval" class="form-label">
-                        <div>retrieval type</div>
-                        <select name="" id="OrderFormRetrieval" class="form-select" data-input="retrieval" autocomplete="off" required>
+                    <div class="field">
+                        <label for="OrderFormRetrieval" class="form-label">retrieval type</label>
+                        <select name="retrieval" id="OrderFormRetrieval" class="form-select" data-input="retrieval" autocomplete="off" required>
                             <option value=""selected disabled>-- select --</option>
                             <option value="pickup" data-price="free">Pickup</option>
                             <option value="shipping" data-price="15">Shipping</option>
                             <option value="delivery" data-price="0.65 /mile">Delivery</option>
                         </select>
-                    </label>
+                        <div class="field-output">retrieval output text area</div>
+                    </div>
                     <div class="retrieval-times">
                         <h4>pickup/delivery times</h4>
                         <p>monday - friday: <strong>4:30pm - 6:00pm</strong></p>
@@ -230,8 +238,8 @@
                             </li>
                         </ul>
                     </div>
-                    <label for="OrderFormPaymentType" class="form-label">
-                        <div>payment type</div>
+                    <div class="field">
+                        <label for="OrderFormPaymentType" class="form-label">payement type</label>
                         <select name="payment" id="OrderFormPaymentType" class="form-select" data-input="payment" autocomplete="off" required>
                             <option value=""selected disabled>-- select --</option>
                             <option value="cash">cash</option>
@@ -239,78 +247,140 @@
                             <option value="paypal">paypal</option>
                             <option value="venmo">venmo</option>
                         </select>
-                    </label>
+                        <div class="field-output">payment error text area</div>
+                    </div>
                 </div>
                 <div class="personal-information js-personal-information">
-                    <div class="basic-information">
-                        <label for="OrderFormName" class="form-label"><span>name</span>
+                    <fieldset class="basic-information">
+                        <div class="field">
+                            <label for="OrderFormName" class="form-label">name</label>
                             <input type="text" 
                                 name="name" 
                                 id="OrderFormName" 
                                 class="form-text-input js-personal-info" 
                                 data-input="name"
                                 placeholder="full name"
-                                pattern="^[A-Za-z\s'-]{1,40}$"
-                                autocomplete="off" required>
-                        </label>
-        
-                        <label for="OrderFormEmail" class="form-label"><span>email</span>
+                                autocomplete="off" 
+                                required>
+                            <div class="field-output">name field output area</div>
+                        </div>
+                        <div class="field">
+                            <label for="OrderFormEmail" class="form-label">email</label>
                             <input type="email" 
                                 name="email" 
                                 id="OrderFormEmail" 
                                 class="form-text-input js-personal-info"
                                 data-input="email" 
                                 placeholder="youremail@host.com"
-                                pattern="^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$"  
+                                title="ex: emailname@host.com"
                                 autocomplete="off" 
                                 required>
-                        </label>
-            
-                        <label for="OrderFormPhoneNumber" class="form-label"><span>phone number</span>
+                            <div class="field-output">email field output area</div>
+                        </div>
+                        <div class="field">
+                            <label for="OrderFormPhoneNumber" class="form-label">phone number</label>
                             <input type="tel" 
                                 name="phone-number" 
                                 id="OrderFormPhoneNumber" 
                                 class="form-text-input js-personal-info" 
                                 placeholder="555-555-5555"
                                 data-input="phone-number" 
-                                autocomplete="off" required>
-                        </label>
-                    </div>
-                    
-                   <!-- address information injected here -->
-                    
+                                autocomplete="off" 
+                                required>
+                            <div class="field-output">phone number field output area</div>
+                        </div>
+                    </fieldset>
+
+                  
+                   
                 </div>
                 <div class="order-invoice">
-                    <h3>order information</h3>
-                    <ul class="product-list js-order-invoice-item-list">
-                        <!-- invoice items injected here  -->
-                    </ul>
-                    <div class="information">
-                        <div class="personal">
-                            <p><span data-output="order-date">07/19/2025</span></p>
-                            <p><span data-output="name">name</span></p>
-                            <div class="address">
-                                <p><span data-output="street">address</span></p>
-                                <p><span data-output="city">city</span>, <span data-output="state">state</span> <span data-output="zip-code">zip code</span></p>
+                    <header>
+                        <h2>invoice</h2>
+                        <p><span id="InvoiceDateOutput"></span></p>
+                    </header>
+                    
+                    <div class="content">
+                        <div class="information">
+                            <div class="business">
+                                <p>BAKED BY BEC</p>
+                                <p>West Point, IA 55555</p>
+                                <p>bakedbybec@some.com</p>
                             </div>
-                            <p><span data-output="email">email</span></p>
-                            <p><span data-output="phone-number">phone number</span></p> 
+                            <div class="customer">
+                                <p><span data-output="name">SuiDenni Jett</span></p>
+                                <div class="address">
+                                    <p><span data-output="street">555 sn end ave</span></p>
+                                    <p><span data-output="city">dairyfill</span>, <span data-output="state">XJ</span> <span data-output="zip-code">55555</span></p>
+                                </div>
+                                <p><span data-output="email">gather.ing00@llnahledge.com</span></p>
+                                <p><span data-output="phone-number">333-555-999</span></p> 
+                            </div>
                         </div>
-                        <div class="extras">
-                            <p>retrieval type: <span data-output="retrieval">none</span></p>
-                            <p>retrieval price ($): <span data-output="retrieval-price">none</span></p>
-                            <p>retrieval distance: <span data-output="retrieval-distance">00.00<span> miles</span></span></p>
-                            <p>payment: <span data-output="payment">none</span></p>
+                        <div class="items">
+                            <header>
+                                <h3>items (<span id="InvoiceItemQuantity">0</span>)</h3>
+                                <div class="row">
+                                    <div class="column">
+                                        <h4>quantity</h4>
+                                    </div>
+                                    <div class="column">
+                                        <h4>description</h4>
+                                    </div>
+                                    <div class="column">
+                                        <h4>date needed</h4>
+                                    </div>
+                                    <div class="column">
+                                        <h4>price</h4>
+                                    </div>
+                                </div>
+                            </header>
+                            <ul class="items-list js-invoice-items-list">
+                                <!-- invoice items injected here  -->
+                            </ul>
                         </div>
-                        <div class="totals">
-                            <p>sub-total ($): <span data-output="invoice-sub-total">00.00</span></p>
-                            <p>retrieval ($): <span data-output="retrieval-cost">00.00</span></p>
-                            <p>tax ($): <span>00.00</span></p>
-                            <p>total ($): <span data-output="invoice-total">00.00</span></p>
+                        <!-- <div class="images">
+                            <h3>images</h3>
+                            <ul class="images-list">
+                                <li class="img-wrapper portrait">
+                                    <img src="img/gallery/layercake/layercake_unicorn-front-back_full_large.jpeg" alt="">
+                                </li>
+                                <li class="img-wrapper landscape">
+                                    <img src="img/gallery/layercake/layercake_godzilla-birthday_full_large.jpg" alt="">
+                                </li>
+                                <li class="img-wrapper landscape">
+                                    <img src="img/gallery/layercake/layercake_blue-spiral-galaxy_full_large.jpeg" alt="">
+                                </li>
+                                <li class="img-wrapper portrait">
+                                    <img src="img/gallery/layercake/layercake_horse-birthday_full_large.jpeg" alt="">
+                                </li>
+                                <li class="img-wrapper landscape">
+                                    <img src="img/gallery/layercake/layercake_jack-skeleton_full_large.jpg" alt="">
+                                </li>
+                                <li class="img-wrapper landscape">
+                                    <img src="img/gallery/layercake/layercake_taco-birthday_full_large.jpeg" alt="">
+                                </li>
+                            </ul>
+                            
+                        </div> -->
+                        <div class="bottom">
+                            <div class="extras">
+                                <p>retrieval type: <span id="InvoiceRetrievalTypeOutput">none</span></p>
+                                <p>retrieval price ($): <span id="InvoiceRetrievalPriceOutput">none</span></p>
+                                <p>retrieval distance: <span id="InvoiceRetrievalDistanceOutput">00.00<span> miles</span></span></p>
+                                <p>payment: <span id="InvoicePaymentTypeOutput">none</span></p>
+                            </div>
+                            <div class="totals">
+                                <p>sub-total ($): <span data-output="invoice-sub-total">00.00</span></p>
+                                <p>retrieval ($): <span id="InvoiceRetrievalCostOutput">00.00</span></p>
+                                <p>tax ($): <span>00.00</span></p>
+                                <p>total ($): <span data-output="invoice-total">00.00</span></p>
+                            </div>
                         </div>
-                        
                         
                     </div>
+                    
+                    
                 </div>
                 <div class="before-order-submission">
                     <p>Reciept for the order will be <strong class="pink-text">sent via email</strong>.</p>
@@ -318,12 +388,13 @@
                     <p>Orders placed after 6pm(CST) will be handled before 6pm the following business day.</p>
                     <p>I look forward to adding something sweet to your next event.</p>
                     <p>Thank you for ordering with <strong class="pink-text">Baked by Bec</strong>!</p>
-                    <label for="OrderFormAgreementCheckbox"><span>I have entered the information above correctly and am ready to order!</span>
+                    <div class="field">
+                        <label for="OrderFormAgreementCheckbox">I have entered the information above correctly and am ready to order!</label>
                         <input type="checkbox" id="OrderFormAgreementCheckbox" autocomplete="off" required>
-                    </label>
+                    </div>
                 </div>
                 <div class="order-form-controls">
-                    <button type="button" class="btn order-form-submit-btn js-order-form-submit-btn">place order</button>
+                    <button type="submit" class="btn order-form-submit-btn js-order-form-submit-btn">place order</button>
                 </div> 
            </form>
         </section>

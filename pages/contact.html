@@ -101,7 +101,7 @@
             <h1 class="page-title">contact</h1>
         </header>
         
-        <form class="contact-form">
+        <form id="ContactForm" class="contact-form">
             <fieldset>
                 <label for="ContactNameInput" class="form-label">
                     <div>name</div>
@@ -110,7 +110,6 @@
                         id="ContactNameInput"
                         class="form-text-input" 
                         placeholder="full name"
-                        pattern="^[A-Za-z\s'-]{1,40}"
                         autocomplete="off" 
                         required>
                 </label>
@@ -122,7 +121,6 @@
                         class="form-text-input"
                         title="ex: email@host.com"
                         placeholder="email@host.com"
-                        pattern="^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$"
                         autocomplete="off"
                         required>
                 </label>
@@ -156,7 +154,7 @@
                 <p>* It can take up to 24 hours for a response.</p>
                 <p>** Any messages after 6pm will be handled the following business day.</p>
             </div>
-            <button type="button" class="btn contact-form-submit-btn">Send</button>
+            <button type="button" class="btn contact-form-submit-btn js-contact-form-submit-btn">Send</button>
         </form>
     </main>
 

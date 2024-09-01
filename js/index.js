@@ -4,22 +4,6 @@ import { createIntersectionObserver } from "./intersection_observer.js";
 import { openInHouseBakerySign } from "./utilities.js";
 
 
-function handleNotes(){
-    document.querySelector('.notes-open-btn').addEventListener('click', (event)=>{
-        const notes = document.querySelector('.notes');
-        notes.querySelector('.notes-close-btn').addEventListener('click', function close(){
-            notes.classList.remove('show');
-            setTimeout( ()=>{
-                notes.classList.remove('open');
-                event.target.removeEventListener('click', close);
-                document.body.style.overflow = 'auto';
-            },200)            
-        })
-        notes.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        setTimeout( ()=> { notes.classList.add('show') },100);
-    });
-};
 
 function siteOpeningTransition(){
     document.querySelector('.home-navigation-primary').classList.add('reveal');
@@ -65,8 +49,6 @@ function initializeSite(){
     if(innerWidth < 800) threshold = 0.2;
     
     createIntersectionObserver('.intersection',threshold);
-
-    handleNotes();
 
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
 }

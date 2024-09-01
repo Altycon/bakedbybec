@@ -1,4 +1,17 @@
 
+const MILLISECONDS_PER_DAY = 86400000;
+
+function isObject(value){
+    return (
+        typeof value === 'object' &&
+        value !== null &&
+        !Array.isArray(value) &&
+        !(value instanceof RegExp) &&
+        !(value instanceof Date) &&
+        !(value instanceof Set) &&
+        !(value instanceof Map)
+    );
+};
 
 export function zeroPadLeftToString(num){
     if(+num > 9) return `${num}`;
@@ -8,13 +21,20 @@ export function zeroPadLeftToString(num){
 export function capitalize(word){
     return word.charAt(0).toUpperCase() + word.slice(1)
 };
-export function fixCanvas(canvas,dpi){
-    const styleWidth = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
-    const styleHeight = +getComputedStyle(canvas).getPropertyValue('height').slice(0,-2);
-    canvas.setAttribute('width', styleWidth * dpi);
-    canvas.setAttribute('height', styleHeight * dpi);
-    return canvas;
-};
+export function getTodaysDateString(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    return `${year}-${zeroPadLeftToString(month)}-${zeroPadLeftToString(day)}`;
+}
+// export function fixCanvas(canvas,dpi){
+//     const styleWidth = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
+//     const styleHeight = +getComputedStyle(canvas).getPropertyValue('height').slice(0,-2);
+//     canvas.setAttribute('width', styleWidth * dpi);
+//     canvas.setAttribute('height', styleHeight * dpi);
+//     return canvas;
+// };
 
 export function openInHouseBakerySign(event){
 
@@ -46,7 +66,16 @@ export function limitDateInputSelection(dateElement,numberOfDaysToLimit){
 
     dateElement.setAttribute('min', dateString);
 };
-
+export function getFutureDateByDays(numberOfDays){
+    const today = new Date();
+    const nowTimestamp = today.getTime();
+    const futureTimestamp = nowTimestamp + (numberOfDays * MILLISECONDS_PER_DAY);
+    const futurePeriod = new Date(futureTimestamp);
+    const year = zeroPadLeftToString(futurePeriod.getFullYear());
+    const month = zeroPadLeftToString(futurePeriod.getMonth() + 1);
+    const day = zeroPadLeftToString(futurePeriod.getDate());
+    return `${year}-${month}-${day}`;
+}
 export function disableSelectFieldOption(select,optionValue){
     if(select instanceof Node){
         select.querySelector(`option[value=${optionValue}`).setAttribute('disabled',true);
@@ -95,13 +124,13 @@ export function clearParentElement(parentElement){
         }
     }
 };
-export function createHtmlElement(tagName, attributes = {}, content){
+export function createHtmlElement(tagName, attributes = {}, content, listeners){
     const element = document.createElement(tagName);
  
     for(const [key, value] of Object.entries(attributes)){
         if(key === 'class'){
             element.classList.add(...value.split(' '));
-        }else if(key in element){
+        }else if((Object.getOwnPropertyDescriptor(element, key)?.writable)){
             element[key] = value;
         }else{
             element.setAttribute(key, value);
@@ -122,6 +151,19 @@ export function createHtmlElement(tagName, attributes = {}, content){
             element.textContent = content;
         }
     }
+    if(listeners){
+        if(Array.isArray(listeners)){
+            listeners.forEach( listener => {
+                element.addEventListener(listener.type, listener.listen);
+            });
+        }
+        if(isObject(listeners)){
+            element.addEventListener(listeners.type, listeners.listen);
+        }
+        
+    }
 
     return element;
 };
+
+const ItemRemoveEvent = new CustomEvent('bbb:remove-order-item');

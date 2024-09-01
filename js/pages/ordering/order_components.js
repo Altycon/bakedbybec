@@ -10,6 +10,7 @@ import {
 } from "../../utilities.js";
 import { listOfUsStates } from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
+import { Order } from './order.js';
 
 
 
@@ -55,12 +56,18 @@ export const OrderComponent = {
             event.target.classList.remove('selected');
         }
     },
+    
     handleItemPriceQuantityCalculation(changeEvent){
         const li = changeEvent.target.closest('li');
         const datalistOption = li.querySelector(`#${li.id}Prices option[value="${li.dataset.itemId}"]`);
         const optionPrice = datalistOption.dataset.price;
         const price = Number(optionPrice) * Number(changeEvent.target.value);
-    
+
+        Order.addToSubTotal(price);
+        Order.addToTotal(price);
+        
+        document.querySelector(`#${li.id}Cost`).value = `${optionPrice}`;
+        document.querySelector(`#${li.id}Price`).value = `${price}`;
         const quantityOutput = document.querySelector(`[data-output="${li.dataset.itemId}-price"]`);
         quantityOutput.textContent = `${price}`;
     },
@@ -73,7 +80,12 @@ export const OrderComponent = {
             const datalistOption = li.querySelector(`#${li.id}Prices option[value="${sizeFieldSelect.value}"]`);
             const optionPrice = datalistOption.dataset.price;
             const price = Number(optionPrice) * Number(changeEvent.target.value);
-    
+
+            Order.addToSubTotal(price);
+            Order.addToTotal(price);
+            
+            document.querySelector(`#${li.id}Cost`).value = `${optionPrice}`;
+            document.querySelector(`#${li.id}Price`).value = `${price}`;
             const quantityOutput = document.querySelector(`[data-output="${li.dataset.itemId}-price"]`);
             quantityOutput.textContent = `${price}`;
         }
@@ -86,11 +98,17 @@ export const OrderComponent = {
             const datalistOption = li.querySelector(`#${li.id}Prices option[value="${changeEvent.target.value}"]`)
             const optionPrice = datalistOption.dataset.price;
             const price = Number(optionPrice) * Number(quantityFieldElement.value);
-    
+            
+            Order.addToSubTotal(price);
+            Order.addToTotal(price);
+
+            document.querySelector(`#${li.id}Cost`).value = `${optionPrice}`;
+            document.querySelector(`#${li.id}Price`).value = `${price}`;
             const quantityOutput = document.querySelector(`[data-output="${li.dataset.itemId}-price"]`);
             quantityOutput.textContent = `${price}`;
         }
     },
+
     activateAndShowOrderItem(itemId){
         const orderItem = document.querySelector(`[data-item-id="${itemId}"]`);
         if(!orderItem) return;
@@ -106,6 +124,11 @@ export const OrderComponent = {
         }
         if(!informationElement.classList.contains('unavailable')) return;
         informationElement.classList.remove('unavailable');
+    },
+    enableRetrievalSelection(retrievalOption){
+        const option = Order.retrievalSelectField.querySelector(`option[value="${retrievalOption}"]`);
+        if(!option) console.warn('item retrieval option to be enabled, not found');
+        option.setAttribute('disabled', 'false');
     },
     addInspirationContent(event){
         event.preventDefault();
@@ -199,6 +222,15 @@ export const OrderComponent = {
             }
         }
     },
+    removeItemFromInputList(itemId){
+        const orderItemsInput = document.querySelector('#OrderItemsInput');
+        if(!orderItemsInput) return;
+        const itemList = orderItemsInput.value.split(',');
+        if(!itemList || itemList.length === 0) return;
+        const updatedList = itemList.filter( item => itemId !== item).join(',');
+        orderItemsInput.value = updatedList;
+    },
+
     removeItemFromInvoice(itemId){
         const invoiceItem = document.querySelector(`.order-invoice [data-item-connection-id="${itemId}"]`);
         if(invoiceItem) invoiceItem.remove();
@@ -211,9 +243,16 @@ export const OrderComponent = {
     
         if(!OrderComponent.itemListHasCakes(itemId)){
             enableSelectFieldOption(`#OrderFormItem`,itemId);
+            enableSelectFieldOption('#OrderFormRetrieval','shipping');
             OrderComponent.markRetrievalTypeAvailable('shipping');
         }
         
+        const priceInput = document.querySelector(`[name="${itemId}-price"]`);
+        // console.log(priceInput)
+        if(priceInput && priceInput.value){
+            Order.subtractFromSubTotal(priceInput.value);
+            Order.subtractFromTotal(priceInput.value);
+        }
         const orderItemList = document.querySelector('.js-order-item-list');
         orderItemList.removeChild(
             document.querySelector(`[data-item-id="${itemId}"]`)
@@ -225,8 +264,10 @@ export const OrderComponent = {
         }else{
             OrderProgress.inspectAreaInputProgress('.js-item-info',2);
         }
-
+        OrderComponent.removeItemFromInputList(itemId);
         OrderComponent.removeItemFromInvoice(itemId);
+
+        
         
         const orderItemSelection = document.querySelector(`#OrderFormItem`);
         orderItemSelection.querySelector(`option[value="${itemId}"]`).removeAttribute('disabled');
@@ -308,20 +349,41 @@ export const OrderComponent = {
         },createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --')
         );
         selectOptions.forEach( selectOption =>{
-            if(!selectOption.content){
-                select.appendChild(createHtmlElement('option',{value: selectOption.value}, selectOption.value))
-            }else{
-                select.appendChild(createHtmlElement('option',{value: selectOption.value}, selectOption.content))
-            }
-            
+            select.appendChild(createHtmlElement('option',{
+                value: selectOption.value
+            }, `${selectOption.content ? selectOption.content:selectOption.value}`))
         });
-        //select.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
         select.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
+
+
+        const field = createHtmlElement('div', { class: 'field' },[
+            createHtmlElement('select',{
+                id:selectId, 
+                name:selectName, 
+                class:`form-select ${inputClassName}`,
+            })
+        ])
         
         return createHtmlElement('label',{ for:selectId, class:'form-label' },[
             createHtmlElement('div',{},selectTitle),
             select
         ]);
+    },
+    orderSelectFieldComponent(attributes){
+        const select = createHtmlElement('select',attributes,
+            createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --'),
+            { type: 'input', listen: OrderComponent.displayInputContentInOutputElement }
+        );
+        selectOptions.forEach( selectOption =>{
+            select.appendChild(createHtmlElement('option',{
+                value: selectOption.value
+            }, `${selectOption.content ? selectOption.content:selectOption.value}`))
+        });
+        return createHtmlElement('div', { class: 'field' },[
+            createHtmlElement('label',{ for: attributes.id, class: 'form-label' }),
+            select,
+            createHtmlElement('div', { class: 'field-output' },'select field output area')
+        ])
     },
     orderTextInputComponent(inputTitle,inputId,inputName,inputClassName){
         const input = createHtmlElement('input',{ 
@@ -336,7 +398,7 @@ export const OrderComponent = {
             input.setAttribute('list','ItemThemes');
         }
         input.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
-    
+
         return createHtmlElement('label',{ for:inputId, class:`form-label` },[
             createHtmlElement('div',{},inputTitle),
             input
@@ -346,19 +408,48 @@ export const OrderComponent = {
         const textarea = createHtmlElement('textarea',{ 
             id:textareaId, 
             name:textareaName,
-            // cols: '30',
             rows: '3',
             required:'true',
             autocomplete:'off',
             class:`form-textarea ${inputClassName}`,
         });
-        //textarea.addEventListener('change', OrderComponent.toggleFieldSelectionStyle);
         textarea.addEventListener('input', OrderComponent.displayInputContentInOutputElement);
     
         return createHtmlElement('label',{ for:textareaId, class:`form-label` },[
             createHtmlElement('div',{},textareaTitle),
             textarea
         ]);
+    },
+    orderFieldComponent(tagName,attributes,textContent,options){
+        if(tagName === 'select' && options){
+
+            const select = createHtmlElement('select',attributes,
+                createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --'),
+                { type: 'input', listen: OrderComponent.displayInputContentInOutputElement }
+            );
+            options.forEach( selectOption =>{
+                select.appendChild(createHtmlElement('option',{
+                    value: selectOption.value
+                }, `${selectOption.content ? selectOption.content:selectOption.value}`))
+            });
+            return createHtmlElement('div', { class: 'field' },[
+                createHtmlElement('label',{ for: attributes.id, class: 'form-label' }),
+                select,
+                createHtmlElement('div', { class: 'field-output' },'select field output area')
+            ])
+
+        }else{
+
+            return createHtmlElement('div', { class: 'field' },[
+                createHtmlElement('label', { for: attributes.id, class: 'form-label'},textContent),
+                createHtmlElement(tagName, attributes, null, { 
+                    type: 'input', 
+                    listen: OrderComponent.displayInputContentInOutputElement 
+                }),
+                createHtmlElement('div', { class: 'field-output' },'field output area')
+            ]);
+        }
+        
     },
 
     //item component
@@ -564,10 +655,31 @@ export const OrderComponent = {
             li.appendChild(fieldset);
         }
         if(itemData.name !== 'drop-cookies' && itemData.name !== 'cake-pops'){
+            // li.appendChild(
+            //     createHtmlElement('fieldset',{ class: 'form-group'},[
+            //         OrderComponent.orderTextInputComponent('theme/occasion',`${itemData.id}Theme`,`${itemData.name}-theme`,'js-item-info'),
+            //         OrderComponent.orderTextAreaComponent('personalization',`${itemData.id}Personalization`,`${itemData.name}-personalization`,'js-item-info'),
+            //         OrderComponent.inspirationComponent() 
+            //     ])
+            // )
             li.appendChild(
                 createHtmlElement('fieldset',{ class: 'form-group'},[
-                    OrderComponent.orderTextInputComponent('theme/occasion',`${itemData.id}Theme`,`${itemData.name}-theme`,'js-item-info'),
-                    OrderComponent.orderTextAreaComponent('personalization',`${itemData.id}Personalization`,`${itemData.name}-personalization`,'js-item-info'),
+                    OrderComponent.orderFieldComponent('input',{
+                        id: `${itemData.id}Theme`,
+                        name: `${itemData.name}-theme`,
+                        class:`form-text-input js-item-info`,
+                        list: 'ItemThemes',
+                        required:'true',
+                        autocomplete:'off'
+                    }, 'theme/occasion'),
+                    OrderComponent.orderFieldComponent('textarea',{
+                        id: `${itemData.id}Personalization`, 
+                        name: `${itemData.name}-personalization`,
+                        class:`form-textarea js-item-info`,
+                        rows: '3',
+                        required:'true',
+                        autocomplete:'off',
+                    },'personalization'),
                     OrderComponent.inspirationComponent() 
                 ])
             )
@@ -579,6 +691,22 @@ export const OrderComponent = {
                 itemData.name,
                 itemData.prices
             )
+        )
+        li.append(
+            createHtmlElement('input',{
+                type: 'text',
+                id: `${itemData.id}Price`,
+                name: `${itemData.name}-price`,
+                autocomplete: 'off',
+                hidden: 'true'
+            }),
+            createHtmlElement('input',{
+                type: 'text',
+                id: `${itemData.id}Cost`,
+                name: `${itemData.name}-cost`,
+                autocomplete: 'off',
+                hidden: 'true'
+            })
         )
         return li;
     },
@@ -607,15 +735,39 @@ export const OrderComponent = {
         return addressInformationComponent;
     },
     orderAddressDistanceComponent(addressType){
-        const distanceLink = createHtmlElement('a',{
-            class:'link check-distance-btn js-check-distance-btn',
+        const distanceLink = createHtmlElement('button',{
+            class:'button check-distance-btn js-check-distance-btn',
             src: "",
         },(addressType === 'pickup' ? 'get approx distance':'check delivery address availability'));
     
-        distanceLink.addEventListener('click', (clickEvent)=>{
+        distanceLink.addEventListener('click', async (clickEvent)=>{
             clickEvent.preventDefault();
-    
-            alert(`This doesn't do anything yet`);
+
+            if(!confirm('Are you sure you want to continue?')) return;
+
+            try{
+                const currentLocation = await Order.getCurrentLocation();
+
+                // if(!currentLocation){
+                //     throw new Error('Browser Location Error: could not retrieve location from browser');
+                // }
+
+                // get address information and add to body
+
+                const fetchResponse = await fetch(new URL('/api/distance-request','http://127.0.0.1:3456'),{
+                    method: 'post',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(currentLocation)
+                });
+               
+                const data = await fetchResponse.json();
+
+                console.log('data', data);
+            }catch(error){
+                console.warn('Distance Request Error: ', error.message);
+            }
         });
     
         if(addressType === 'pickup'){
@@ -674,7 +826,7 @@ export const OrderComponent = {
             OrderComponent.orderTextInputComponent('street','OrderFormStreet','street','js-personal-info'),
             OrderComponent.orderTextInputComponent('city','OrderFormCity','city','js-personal-info'),
             OrderComponent.orderSelectComponent('state','OrderFormState','state',(addressType === 'pickup' ? listOfUsStates:[listOfUsStates[14]]),'js-personal-info'),
-            OrderComponent.orderTextInputComponent('zip','OrderFormZipCode','zip-code','js-personal-info'),
+            OrderComponent.orderTextInputComponent('zip','OrderFormZipCode','zipcode','js-personal-info'),
         ]);
         if(addressType === 'delivery' || addressType === 'pickup'){
             addressInformationComponent.appendChild(
@@ -706,7 +858,7 @@ export const OrderComponent = {
             );
         });
     
-        return createHtmlElement('li', { class: 'product-item', 'data-item-connection-id': itemName },[
+        return createHtmlElement('li', { class: 'order-invoice-item', 'data-item-connection-id': itemName },[
             infoRow,
             createHtmlElement('div', { class: 'row' },[
                 OrderComponent.createInvoiceItemColumnComponent('theme','none',`${itemName}-theme`),

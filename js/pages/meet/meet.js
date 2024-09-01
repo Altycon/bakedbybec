@@ -1,13 +1,18 @@
 import { AImageViewer } from "../../image_viewer.js";
-import { pageNavigation } from "../../navigation.js";
+import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { openInHouseBakerySign } from "../../utilities.js";
 
 
 
 function initializeMeetPage(){
 
-    pageNavigation();
-    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
+    const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
+    if(inHouseBakeryButton){
+        inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+    }
+    if(!isPageNavigationDisplayed()){
+        pageNavigation();
+    }
 
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
 };

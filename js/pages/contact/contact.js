@@ -1,52 +1,95 @@
-import { pageNavigation } from "../../navigation.js";
-import { openInHouseBakerySign } from "../../utilities.js";
+import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
+import { createHtmlElement, openInHouseBakerySign } from "../../utilities.js";
 
-function otherTopicInputComponent(){
-    const input = document.createElement('input');
-    input.setAttribute('type','text');
-    input.setAttribute('id','OtherTopicInput');
-    input.setAttribute('name','other-topic');
-    input.setAttribute('placeholder','topic');
-    input.setAttribute('required','true');
-    input.classList.add('form-text-input');
-    return input;
-};
-function addTopicInputComponent(){
-    const topicArea = document.querySelector('.contact-form .topic');
-    const topicInput = otherTopicInputComponent();
-    topicArea.appendChild(
-        new DocumentFragment().appendChild(topicInput)
-    );
-    topicInput.classList.add('open');
-    setTimeout( ()=> { topicInput.classList.add('show'); },100);
-};
-function removeTopicInputComponent(){
-    const otherTopicInput = document.querySelector('#OtherTopicInput');
-    otherTopicInput.classList.add('removing');
-    setTimeout( ()=> {
-        otherTopicInput.remove();
-    },300)
-}
 
-function initializeContactPage(){
+const Contact = {
+    form: undefined,
+    topicSelect: undefined,
+    topicArea: undefined,
+    submitButton: undefined,
 
-    pageNavigation();
-    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
-
-    const topicSelect = document.querySelector('#ContactTopicSelect');
-    topicSelect.addEventListener('change',(changeEvent)=>{
-       
-
+    otherTopicComponent(){
+        return createHtmlElement('input', {
+            type: 'text',
+            id: 'OtherTopicInput',
+            name: 'other-topic',
+            placeholder: 'topic',
+            required: 'true',
+            class: 'form-text-input'
+        });
+    },
+    appendComponent(component,parent,callback){
+        parent.appendChild(
+            new DocumentFragment().appendChild(component)
+        );
+        if(callback) callback(component)
+    },
+    removeComponent(selector, callback){
+        const component = document.querySelector(selector);
+        if(callback){
+            callback(component);
+        }else{
+            component.remove();
+        }
+    },
+    addOtherTopicComponent(){
+        this.appendComponent( 
+            this.otherTopicComponent(),
+            this.topicArea, 
+            (component)=>{
+                component.classList.add('open');
+                setTimeout( ()=> { component.classList.add('show'); },100);
+        });
+    },
+    removeOtherTopicComponent(){
+        this.removeComponent('#OtherTopicInput', (component)=>{
+            component.classList.add('removing');
+            setTimeout( ()=> { component.remove(); },300);
+        });
+    },
+    handleOtherTopicOption(changeEvent){
         if(changeEvent.target.value === 'other'){
             if(!document.querySelector('#OtherTopicInput')){
-                addTopicInputComponent();
+                this.addOtherTopicComponent();
             }
         }else{
             if(document.querySelector('#OtherTopicInput')){
-                removeTopicInputComponent();
+                this.removeOtherTopicComponent();
             }
         }
-    })
+    },
+    listen(){
+        this.topicSelect.addEventListener('change', (changeEvent)=>{
+            this.handleOtherTopicOption(changeEvent);
+        });
+        // this.form.addEventListener('submit', (submitEvent)=>{
+        //     submitEvent.preventDefault();
+        //     const formData = new FormData(submitEvent.target);
+        //     console.log(formData);
+        // });
+        this.submitButton.addEventListener('click', ()=>{
+            alert( `you can't do that`)
+        })
+    },
+    initialzie(){
+        this.form = document.querySelector('#ContactForm');
+        this.topicArea = document.querySelector('.contact-form .topic');
+        this.topicSelect = document.querySelector('#ContactTopicSelect');
+        this.submitButton = document.querySelector('.js-contact-form-submit-btn');
+        this.listen();
+    }
+}
+function initializeContactPage(){
+
+    const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
+    if(inHouseBakeryButton){
+        inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+    }
+    if(!isPageNavigationDisplayed()){
+        pageNavigation();
+    }
+
+    Contact.initialzie();
     
 };
 

@@ -1,11 +1,16 @@
-import { pageNavigation } from "../../navigation.js";
+import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { createIntersectionObserver } from "../../intersection_observer.js";
 import { openInHouseBakerySign } from "../../utilities.js";
 
 function initializeProductPage(){
 
-    pageNavigation();
-    document.querySelector('.js-in-house-bakery-btn').addEventListener('click', openInHouseBakerySign);
+    const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
+    if(inHouseBakeryButton){
+        inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+    }
+    if(!isPageNavigationDisplayed()){
+        pageNavigation();
+    }
 
     createIntersectionObserver('.intersection', 0.5);
     

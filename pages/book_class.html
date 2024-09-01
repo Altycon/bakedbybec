@@ -234,7 +234,7 @@
             </article>
         </section>
 
-        <form class="book-class-form">
+        <form id="BookClassForm" class="book-class-form">
             
             <fieldset>
                 <label for="BookClassFormNameInput" class="form-label">
@@ -244,7 +244,6 @@
                     id="BookClassFormNameInput"
                     class="form-text-input" 
                     placeholder="full name"
-                    pattern="^[A-Za-z\s'-]{1,40}$"
                     autocomplete="off"
                     required>
                 </label>
@@ -255,13 +254,13 @@
                     id="BookClassFormEmailInput" 
                     class="form-text-input"
                     placeholder="email@host.com"
-                    pattern="^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$"
+                    pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                     autocomplete="off"
                     required>
                 </label>
                 <label for="BookClassFormClassSelect" class="form-label">
                     <div>class</div>
-                    <select name="class" id="BookClassFormClassSelect" class="form-select" autocomplete="off" required>
+                    <select name="class-type" id="BookClassFormClassSelect" class="form-select" autocomplete="off" required>
                         <option value=""selected disabled>-- select</option>
                         <option value="kids">kids</option>
                         <option value="adults">adults</option>
@@ -284,7 +283,7 @@
                 <p>** Any messages after 6pm will be handled the following business day.</p>
             </div>
             
-            <button type="button" class="btn book-class-submit-btn">request class</button>
+            <button type="submit" id="BookClassSubmitButton" class="btn book-class-submit-btn">request class</button>
         </form>
         <div class="book-class-background"></div>
     </main>

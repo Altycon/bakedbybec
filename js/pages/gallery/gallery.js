@@ -9,8 +9,6 @@ const Gallery = {
     images: undefined,
     sections: undefined,
 
-    // I need to remove the loader after it finishes, not just display: none;?
-
     deactivateTabs(){
         this.tabs.forEach( tab => {
             if(tab.classList.contains('active')){
@@ -74,10 +72,14 @@ const Gallery = {
                 if(img.complete){
                     completedImages++;
                 }else{
-                    img.addEventListener('load', function loadImage(){
+                    img.addEventListener('load', function imageLoaded(){
                         completedImages++;
                         checkAllImagesLoaded();
-                        img.removeEventListener('load',loadImage);
+                        img.removeEventListener('load',imageLoaded);
+                    });
+                    img.addEventListener('error', function imageErrored(errorEvent){
+                        console.warn(`image not loaded: ${errorEvent.target.src}`);
+                        img.removeEventListener('error', imageErrored);
                     })
                 }
             });
@@ -106,6 +108,7 @@ const Gallery = {
         this.listen();
     }
 };
+
 function initializeGalleryPage(){
 
     const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
@@ -115,16 +118,14 @@ function initializeGalleryPage(){
     
     if(!isPageNavigationDisplayed()){
         pageNavigation();
-        console.log('navigation not displayed')
     }
     
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
 
     Gallery.initialize();
 
-    // I should do this check in a separate function ??? Idk
     if(window.location.hash && window.location.hash !== ""){
-        const galleryId = window.location.hash.split('#')[1];
+        const galleryId = window.location.hash.split('#')[1] || 'SugarCookies';
         Gallery.activateTab(galleryId);
 
         Gallery.loadImages(galleryId)
@@ -133,7 +134,7 @@ function initializeGalleryPage(){
         })
         .catch( error => {
             console.log('LoadingImageError: ',error.message);
-            alert('Reload page');
+            alert('if images did not load, please reload page.');
         })
     }else{
         Gallery.activateTab('SugarCookies');
@@ -143,7 +144,7 @@ function initializeGalleryPage(){
         })
         .catch( error => {
             console.log('LoadingImageError: ',error.message);
-            alert('Reload page')
+            alert('if images did not load, please reload page.');
         })
     }
 };
