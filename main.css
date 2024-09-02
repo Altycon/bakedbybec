@@ -2984,9 +2984,7 @@ input[hidden=true]{
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 2rem;
-
         scroll-snap-align: center;
-       
         border-radius: 10px;
         background-image: var(--bg-gradient-glass);
     }
@@ -3011,6 +3009,9 @@ input[hidden=true]{
         background-size: cover;
     }
     .products-list .products-item:nth-of-type(3)::before{
+        background-size: cover;
+    }
+    .products-list .products-item:nth-of-type(4)::before{
         background-size: cover;
     }
     .products-list .products-item:nth-of-type(5)::before{
