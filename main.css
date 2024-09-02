@@ -3273,11 +3273,11 @@ input[hidden=true]{
     padding-bottom: 128px;
 }
 .meet-main > section > p{
-   
+    padding-inline: 16px;
     text-align: center;
     text-wrap: pretty;
     max-width: 800px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.5em;
 }
 .meet-main > section > p > span{
@@ -3361,10 +3361,12 @@ input[hidden=true]{
 }
 .meet-main > section:nth-of-type(3) .meet-img-wrapper{
     max-width: 500px;
-    aspect-ratio: 4/3;
-    object-fit: cover;
+    aspect-ratio: 5/5;
     margin: 0 auto;
     border-radius: 10px;
+}
+.meet-main > section:nth-of-type(3) .meet-img-wrapper > img{
+    object-fit: cover;
 }
 .meet-main > section:nth-of-type(3) .meet-img-wrapper::after{
     content: "";
