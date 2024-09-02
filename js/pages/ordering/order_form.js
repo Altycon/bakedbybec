@@ -1,3 +1,4 @@
+import { AImageViewer } from "../../image_viewer.js";
 import { 
     appendElementToParentWithFragment, 
     capitalize, 
@@ -91,8 +92,11 @@ const OrderInvoice = {
     subTotalOutput: undefined,
     totalOutput: undefined,
     itemsList: undefined,
+    imageContent: undefined,
     imageList: undefined,
     hasImages: false,
+    items: [],
+    images: [],
     
     setDate(dateString){
         if(!dateString) dateString = getTodaysDateString();
@@ -136,37 +140,33 @@ const OrderInvoice = {
         if(imageColumn){
             list.appendChild(imageColumn);
         }
-        return createHtmlElement('div', { class:'images' },[
+        const imageContent = createHtmlElement('div', { class:'images' },[
             createHtmlElement('h3',{},'images'),
             list
         ]);
+        this.imageContent = imageContent;
+        return imageContent
     },
-    createImageColumn(outputId,imagePath){
-        return createHtmlElement('li',{ class: 'img-wrapper' },
-            createHtmlElement('img', { src: imagePath, 'data-output':outputId})
+    createImageColumn(outputId,imageSource){
+        return createHtmlElement('li',{ class: 'img-wrapper', 'data-connection-id':outputId },
+            createHtmlElement('img', { src: imageSource })
         )
     },
-    appendImagesContent(){
+    appendImagesContent(imageContentElement){
         this.content.insertBefore(
             new DocumentFragment().appendChild(
-                this.createImagesContent()
+                imageContentElement
             ),
             document.querySelector('.order-invoice .content .bottom')
         );
         this.hasImages = true;
     },
-    appendImageColumn(outputId,imagePath){
-        const imageColumn = this.createImageColumn(outputId,imagePath);
-        if(!this.hasImages){
-            this.createImages(imageColumn);
-        }else{
-            this.imageList.appendChild(
-                new DocumentFragment().appendChild(
-                    imageColumn
-                )
+    appendImageColumn(imageColumn){
+        this.imageList.appendChild(
+            new DocumentFragment().appendChild(
+                imageColumn
             )
-        }
-        
+        );
     },
     createItemDescription(itemId,itemTitle,fields){
         const description = createHtmlElement('p',{});
@@ -202,7 +202,7 @@ const OrderInvoice = {
     },
     createItem(itemId,itemTitle,themed,fields){
 
-        const li = createHtmlElement('li', { class: 'item' },
+        const li = createHtmlElement('li', { class: 'item', 'data-connection-id':itemId},
             createHtmlElement('div', { class: 'row' },[
                 createHtmlElement('div', { class: 'column' },
                     createHtmlElement('p', { 'data-output':`${itemId}Quantity` },'0')
@@ -247,10 +247,54 @@ const OrderInvoice = {
         }
         this.itemsList.appendChild(
             new DocumentFragment().appendChild(item)
-        )   
+        );
+        this.items.push(item) 
+    },
+    addImage(outputId,imageSource){
+        const image = this.createImageColumn(outputId,imageSource);
+        if(!this.hasImages){
+            this.appendImagesContent(
+                this.createImagesContent(image)
+            );
+            this.images.push(image);
+            return;
+        }
+        this.appendImageColumn(image);
+        this.images.push(image);
+    },
+    removeImage(outputId){
+        if(!this.hasImages) return;
+        if(this.images.length <= 1){
+            this.imageContent.remove();
+            this.imageContent = undefined;
+            this.hasImages = false;
+        }else{
+            for(let i = 0; i < this.images.length; i++){
+                const image = this.images[i];
+                if(image.dataset.connectionId === outputId){
+                    this.images.splice(i,1);
+                    image.remove();
+                    break;
+                }
+            }
+        }
+    },
+    removeItem(itemId){
+        for(let i = 0; i < this.items.length; i++){
+            const item = this.items[i];
+            if(item.dataset.connectionId === itemId){
+                this.items.splice(i,1);
+                this.removeImage(itemId);
+                item.remove();
+                break;
+            }
+        }
     },
     initialize(){
         try{
+            this.content = document.querySelector('.js-order-invoice-content');
+            if(!this.content) throw new Error('missing element - invoice content');
+
             this.itemsList = document.querySelector('.js-invoice-items-list');
             if(!this.itemsList) throw new Error('missing element - invoice items list');
 
@@ -331,7 +375,9 @@ const ProductComponent ={
         transition('add-remove',itemElement,'removing',['open','show','active','removing'],500,
             (element)=> element.remove()
         );
+        OrderInvoice.removeItem(itemElement.id);
         OrderForm.removeItem(itemElement.id);
+        
 
         enableSelectFieldOption(OrderForm.itemSelect,itemElement.dataset.name);
         OrderForm.itemSelect.value = "";
@@ -380,6 +426,9 @@ const ProductComponent ={
             console.warn(`${itemId} inpiration element does not exist`);
             return;
         }
+
+
+        // I need to change all of this and remove
         appendElementToParentWithFragment(
             inspirationElement,
             inspirationContentComponent
@@ -401,12 +450,7 @@ const ProductComponent ={
         item.querySelector(`.inspiration-controls > h3`).classList.remove('show');
         clickEvent.currentTarget.classList.remove('show');
 
-        const invoiceItemImageElement = document.querySelector(`img[data-output="${item.dataset.itemId}"]`);
-        if(invoiceItemImageElement){
-            invoiceItemImageElement.src = "";
-        }else{
-            console.warn('invoice item image elemnent does not exist to be cleared');
-        }
+      
 
         // OrderProgress.removeState(2);
         // OrderProgress.inspectAreaInputProgress('.js-item-info',2);
@@ -580,12 +624,16 @@ const ProductComponent ={
                 fileReader.onload = function(){
                     imageOutput.src = fileReader.result;
                     imageOutput.parentElement.classList.add('show');
+
                     AImageViewer.addImage(imageOutput);
 
-                    const output = document.querySelector(`img[data-output="${name}"]`);
-                    if(output){
-                        output.src = fileReader.result;
-                    }
+                    OrderInvoice.addImage(id,fileReader.result);
+
+                    // const output = document.querySelector(`img[data-output="${name}"]`);
+                    // if(output){
+                    //     output.src = fileReader.result;
+                    // }
+                    
                 };
                 fileReader.readAsDataURL(file);
             });
