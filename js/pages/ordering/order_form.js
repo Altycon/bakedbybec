@@ -47,7 +47,6 @@ function transition(type,element,immediateClassNames,delayedClassNames,delay,del
     }
 };
 function connectInputToOutput(event){
-    console.log(event.target)
     const outputId = event.target.id;
     const outputElement = document.querySelector(`[data-output="${outputId}"]`);
     if(outputElement){
@@ -66,6 +65,7 @@ function connectInputToOutput(event){
     }else{
         console.error(`output element for ${outputId} missing or not connected`)
     }
+    console.log('this was hit too')
 };
 async function getCurrentLocation(){
     try{
@@ -133,6 +133,10 @@ const OrderInvoice = {
     },
     setTotal(price){
         this.totalOutput.textContent = price;
+    },
+    setItemPriceById(itemId,price){
+        const output = document.querySelector(`[data-output="${itemId}Price"]`);
+        if(output) output.textContent = `${price}`;
     },
     createImagesContent(imageColumn){
         const list = createHtmlElement('ul',{ class: 'images-list' });
@@ -350,6 +354,7 @@ const TabComponent = {
     }
 }
 const ProductComponent ={
+    remove: undefined,
     intro(){
         return createHtmlElement('div', { class: `order-item-intro js-order-item-intro`},
             createHtmlElement('ul',{},[
@@ -363,56 +368,6 @@ const ProductComponent ={
         )
     },
     // handlers
-    remove(clickEvent){
-        if(clickEvent instanceof Event){
-            clickEvent.preventDefault();
-        }
-        const itemElement = clickEvent.target.closest('li');
-        if(!itemElement){
-            console.warn(`order item element does not exist to remove`);
-            return;
-        }
-        transition('add-remove',itemElement,'removing',['open','show','active','removing'],500,
-            (element)=> element.remove()
-        );
-        OrderInvoice.removeItem(itemElement.id);
-        OrderForm.removeItem(itemElement.id);
-        
-
-        enableSelectFieldOption(OrderForm.itemSelect,itemElement.dataset.name);
-        OrderForm.itemSelect.value = "";
-        OrderInvoice.subtractNumberOfItems();
-
-        const activeTab = document.querySelector(`[data-tab-id="${itemElement.id}"].active`);
-        if(activeTab){
-            let nextTab = activeTab.nextElementSibling || activeTab.previousElementSibling;
-            if(nextTab){
-                nextTab.classList.add('active');
-                for(let i = 0; i < OrderForm.items.length; i++){
-                    const item = OrderForm.items[i];
-                    if(item.id === nextTab.dataset.tabId){
-                        transition('add',item,'open',['show','active']);
-                        break;
-                    }
-                }
-            }
-            activeTab.remove();
-            OrderForm.removeTab(activeTab.dataset.tabId);
-        }
-        
-        if(OrderForm.items.length === 0){
-            OrderForm.addTabIntro();
-            OrderForm.addItemIntro();
-        }
-
-        if(OrderForm.hasCakes(itemElement.id)){
-            disableSelectFieldOption('#OrderFormRetrieval','shipping');
-            OrderForm.setRetrievalInformationAvailability('shipping',false);
-        }else{
-            enableSelectFieldOption('#OrderFormRetrieval','shipping');
-            OrderForm.setRetrievalInformationAvailability('shipping',true);
-        }
-    },
     addInspiration(event){
         event.preventDefault();
         // gotta get the id and name 
@@ -469,6 +424,57 @@ const ProductComponent ={
         // OrderProgress.removeState(5);
         // OrderProgress.listenToAreaInputs('.js-personal-info',5);
     },
+    calculatePriceByQuantity(changeEvent){
+        const li = changeEvent.target.closest('li');
+        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${li.dataset.name}"]`);
+        const optionPrice = datalistOption.dataset.price;
+        const price = Number(optionPrice) * Number(changeEvent.target.value);
+
+        const costInput = document.querySelector(`#${li.id}Cost`);
+        if(costInput) costInput.value = `${optionPrice}`;
+        const priceInput = document.querySelector(`#${li.id}Price`)
+        if(priceInput) priceInput.value = `${price}`;
+        
+        OrderInvoice.setItemPriceById(li.id,price);
+        OrderForm.addToSubTotal(price);
+        OrderForm.addToTotal(price);
+    },
+    calculatePriceFromQuantityWithSize(changeEvent){
+        const li = changeEvent.target.closest('li');
+        const sizeFieldSelect = li.querySelector(`#${li.id}Size`);
+        if(!sizeFieldSelect || sizeFieldSelect.value === '-- select --') return;
+
+        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${sizeFieldSelect.value}"]`);
+        const optionPrice = datalistOption.dataset.price;
+        const price = Number(optionPrice) * Number(changeEvent.target.value);
+        
+        const costInput = document.querySelector(`#${li.id}Cost`);
+        if(costInput) costInput.value = `${optionPrice}`;
+        const priceInput = document.querySelector(`#${li.id}Price`)
+        if(priceInput) priceInput.value = `${price}`;
+       
+        OrderInvoice.setItemPriceById(li.id,price);
+        OrderForm.addToSubTotal(price);
+        OrderForm.addToTotal(price);
+    },
+    calculatePriceFromSizeWithQuantity(changeEvent){
+        const li = changeEvent.target.closest('li');
+        const quantityFieldElement = li.querySelector(`#${li.id}Quantity`);
+        
+        if(!quantityFieldElement || quantityFieldElement.value === '-- select --') return;
+        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${changeEvent.target.value}"]`)
+        const optionPrice = datalistOption.dataset.price;
+        const price = Number(optionPrice) * Number(quantityFieldElement.value);
+
+        const costInput = document.querySelector(`#${li.id}Cost`);
+        if(costInput) costInput.value = `${optionPrice}`;
+        const priceInput = document.querySelector(`#${li.id}Price`)
+        if(priceInput) priceInput.value = `${price}`;
+        
+        OrderInvoice.setItemPriceById(li.id,price);
+        OrderForm.addToSubTotal(price);
+        OrderForm.addToTotal(price);
+    },
 
     // components
     selectField(attributes,textContent,options){
@@ -476,7 +482,16 @@ const ProductComponent ={
             createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --'),
             { type: 'change', listen: connectInputToOutput }
         );
-        // if(attributes.name && attributes.name === 'layer-cakes')
+        if(attributes.id.includes('SugarCookiesQuantity') ||
+            attributes.id.includes('DropCookiesQuantity') ||
+            attributes.id.includes('CakePopsQuantity')){
+            select.addEventListener('change', this.calculatePriceByQuantity);
+        }else if(attributes.id.includes('Quantity')){
+            select.addEventListener('change', this.calculatePriceFromQuantityWithSize);
+        }else if(attributes.id.includes('Size')){
+            select.addEventListener('change', this.calculatePriceFromSizeWithQuantity);
+        }
+
         options.forEach( selectOption =>{
             select.appendChild(createHtmlElement('option',{
                 value: selectOption.value
@@ -880,6 +895,11 @@ const ProductComponent ={
             ))
         ]);
     },
+    initialize(removeHandler){
+        if(removeHandler){
+            this.remove = removeHandler
+        }
+    }
 }
 export const OrderForm = {
     form: undefined,
@@ -941,12 +961,12 @@ export const OrderForm = {
             }
         }
     },
-    activeSubmitButton(){
+    activateSubmitButton(){
         if(!Order.submitButton.classList.contains('active')){
             Order.submitButton.classList.add('active');
         }
     },
-    deactiveSubmitButton(){
+    deactivateSubmitButton(){
         if(Order.submitButton.classList.contains('active')){
             Order.submitButton.classList.remove('active');
         }
@@ -1041,11 +1061,16 @@ export const OrderForm = {
         }
     },
     removeTab(tabId){
-        for(let i = 0; i < OrderForm.tabs.length; i++){
-            const tab = OrderForm.tabs[i];
+        for(let i = 0; i < this.tabs.length; i++){
+            const tab = this.tabs[i];
+            const nextTab = this.tabs[i+1] || this.tabs[i-1];
             if(tab && tab.dataset.tabId === tabId){
-                OrderForm.tabs.splice(i,1);
-                break;
+                if(nextTab){
+                    transition('add',nextTab,'active');
+                }
+                this.tabs.splice(i,1);
+                tab.remove();
+                return nextTab;
             }
         }
     },
@@ -1100,12 +1125,45 @@ export const OrderForm = {
   
     
     // item
-    removeItem(itemId){
-        OrderForm.items.forEach( (item,index)=>{
-            if(item && item.id === itemId){
-                OrderForm.items.splice(index,1)
+    removeItem(clickEvent){
+        clickEvent.preventDefault();
+        const itemElement = clickEvent.target.closest('li');
+        if(!itemElement){
+            console.warn(`order item element does not exist to remove`);
+            return;
+        }
+        const itemId = itemElement.id;
+
+        for(let i = 0; i < OrderForm.items.length; i++){
+            const item = OrderForm.items[i];
+            if(item.id === itemId){
+                const nextTab = OrderForm.removeTab(itemId);
+                if(nextTab){
+                    const itemToActive = OrderForm.items.find( element => element.id === nextTab.dataset.tabId);
+                    if(itemToActive) transition('add',itemToActive,'open',['show','active']);
+                }
+                OrderForm.items.splice(i,1);
+                item.remove();
+                break;
             }
-        });
+        }
+        enableSelectFieldOption(OrderForm.itemSelect,itemElement.dataset.name);
+        OrderForm.itemSelect.value = "";
+
+        OrderInvoice.removeItem(itemId);
+        OrderInvoice.subtractNumberOfItems();
+
+        if(OrderForm.items.length === 0){
+            OrderForm.addItemIntro();
+            OrderForm.addTabIntro();
+        }
+        if(OrderForm.hasCakes(itemId)){
+            disableSelectFieldOption(OrderForm.retrievalSelect,'shipping');
+            OrderForm.setRetrievalInformationAvailability('shipping',false);
+        }else{
+            enableSelectFieldOption(OrderForm.retrievalSelect,'shipping');
+            OrderForm.setRetrievalInformationAvailability('shipping',true);
+        }
     },
     hideItems(){
         if(this.itemList.children.length <= 0) return;
@@ -1239,10 +1297,10 @@ export const OrderForm = {
             return;
         }
         if(isChecked){
-            OrderForm.activeSubmitButton();
+            OrderForm.activateSubmitButton();
             //OrderProgress.setState(6);
         }else{
-            OrderForm.deactiveSubmitButton();
+            OrderForm.deactivateSubmitButton();
             //OrderProgress.removeState(6);
         }
     },
@@ -1303,6 +1361,7 @@ export const OrderForm = {
             this.itemList = document.querySelector('.js-order-item-list');
             if(!this.itemList) throw new Error('missing element - order item list');
 
+            ProductComponent.initialize(this.removeItem)
             OrderInvoice.initialize();
 
             this.listen();
