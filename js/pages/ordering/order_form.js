@@ -13,7 +13,7 @@ import { listOfUsStates, OrderItemData } from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
 import { PRODUCT_DATA } from "./product_data.js";
 
-const removeEvent = new CustomEvent('bbb:remove-item')
+
 function transition(type,element,immediateClassNames,delayedClassNames,delay,delayedCallback){
     function handleClasses(classNames,action){
         if(classNames){
@@ -65,7 +65,6 @@ function connectInputToOutput(event){
     }else{
         console.error(`output element for ${outputId} missing or not connected`)
     }
-    console.log('this was hit too')
 };
 async function getCurrentLocation(){
     try{
@@ -89,8 +88,12 @@ const OrderInvoice = {
     retrievalCostOutput: undefined,
     retrievalDistanceOutput: undefined,
     paymentTypeOutput: undefined,
+    fullNameOutput: undefined,
+    emailOutput: undefined,
+    phoneNumberOutput: undefined,
     subTotalOutput: undefined,
     totalOutput: undefined,
+    addressArea: undefined,
     itemsList: undefined,
     imageContent: undefined,
     imageList: undefined,
@@ -120,13 +123,22 @@ const OrderInvoice = {
         this.retrievalPriceOutput.textContent = price;
     },
     setRetrievalCost(cost){
-        this.retrievalCostOutput = cost;
+        this.retrievalCostOutput.textContent = cost;
     },
     setRetrievalDistance(distance){
         this.retrievalDistanceOutput.textContent = distance;
     },
     setPaymentType(type){
         this.paymentTypeOutput.textContent = type;
+    },
+    setFullName(text){
+        this.fullNameOutput.textContent = text;
+    },
+    setEmail(text){
+        this.emailOutput.textContent = text;
+    },
+    setPhoneNumber(num){
+        this.phoneNumberOutput.textContent = `${num}`;
     },
     setSubTotal(price){
         this.subTotalOutput.textContent = price;
@@ -294,6 +306,16 @@ const OrderInvoice = {
             }
         }
     },
+    showAddress(){
+        if(!this.addressArea.classList.contains('show')){
+            transition('add',this.addressArea,'open','show');
+        }
+    },
+    hideAddress(){
+        if(this.addressArea.classList.contains('show')){
+            transition('remove',this.addressArea,'show','open');
+        }
+    },
     initialize(){
         try{
             this.content = document.querySelector('.js-order-invoice-content');
@@ -323,17 +345,117 @@ const OrderInvoice = {
             this.paymentTypeOutput = document.querySelector('#InvoicePaymentTypeOutput');
             if(!this.paymentTypeOutput) throw new Error('missing element - invoice payment type output');
 
+            this.fullNameOutput = document.querySelector('#InvoiceFullNameOutput');
+            if(!this.fullNameOutput) throw new Error('missing element - invoice full name output');
+
+            this.emailOutput = document.querySelector('#InvoiceEmailOutput');
+            if(!this.emailOutput) throw new Error('missing element - invoice email output');
+
+            this.phoneNumberOutput = document.querySelector('#InvoicePhoneNumberOutput');
+            if(!this.phoneNumberOutput) throw new Error('missing element - invoice phone number output');
+
             this.subTotalOutput = document.querySelector('#InvoiceSubTotalOutput');
             if(!this.subTotalOutput) throw new Error('missing element - invoice subtotal output');
 
             this.totalOutput = document.querySelector('#InvoiceTotalOutput');
             if(!this.totalOutput) throw new Error('missing element - invoice total output');
 
+            this.addressArea = document.querySelector('#InvoiceAddress');
+            if(!this.addressArea) throw new Error('missing element - invoice address area');
+           
         }catch(error){
             console.warn(error);
         }
         
     }
+};
+const FormComponent = {
+    calculatePriceByQuantity(changeEvent){
+        const li = changeEvent.target.closest('li');
+        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${li.dataset.name}"]`);
+        const optionPrice = datalistOption.dataset.price;
+        const price = Number(optionPrice) * Number(changeEvent.target.value);
+
+        const costInput = document.querySelector(`#${li.id}Cost`);
+        if(costInput) costInput.value = `${optionPrice}`;
+        const priceInput = document.querySelector(`#${li.id}Price`)
+        if(priceInput) priceInput.value = `${price}`;
+        
+        OrderInvoice.setItemPriceById(li.id,price);
+        OrderForm.addToSubTotal(price);
+        OrderForm.addToTotal(price);
+    },
+    calculatePriceFromQuantityWithSize(changeEvent){
+        const li = changeEvent.target.closest('li');
+        const sizeFieldSelect = li.querySelector(`#${li.id}Size`);
+        if(!sizeFieldSelect || sizeFieldSelect.value === '-- select --') return;
+
+        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${sizeFieldSelect.value}"]`);
+        const optionPrice = datalistOption.dataset.price;
+        const price = Number(optionPrice) * Number(changeEvent.target.value);
+        
+        const costInput = document.querySelector(`#${li.id}Cost`);
+        if(costInput) costInput.value = `${optionPrice}`;
+        const priceInput = document.querySelector(`#${li.id}Price`)
+        if(priceInput) priceInput.value = `${price}`;
+       
+        OrderInvoice.setItemPriceById(li.id,price);
+        OrderForm.addToSubTotal(price);
+        OrderForm.addToTotal(price);
+    },
+    calculatePriceFromSizeWithQuantity(changeEvent){
+        const li = changeEvent.target.closest('li');
+        const quantityFieldElement = li.querySelector(`#${li.id}Quantity`);
+        
+        if(!quantityFieldElement || quantityFieldElement.value === '-- select --') return;
+        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${changeEvent.target.value}"]`)
+        const optionPrice = datalistOption.dataset.price;
+        const price = Number(optionPrice) * Number(quantityFieldElement.value);
+
+        const costInput = document.querySelector(`#${li.id}Cost`);
+        if(costInput) costInput.value = `${optionPrice}`;
+        const priceInput = document.querySelector(`#${li.id}Price`)
+        if(priceInput) priceInput.value = `${price}`;
+        
+        OrderInvoice.setItemPriceById(li.id,price);
+        OrderForm.addToSubTotal(price);
+        OrderForm.addToTotal(price);
+    },
+    selectField(attributes,textContent,options){
+        const select = createHtmlElement('select',attributes,
+            createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --'),
+            { type: 'change', listen: connectInputToOutput }
+        );
+        if(attributes.id.includes('SugarCookiesQuantity') ||
+            attributes.id.includes('DropCookiesQuantity') ||
+            attributes.id.includes('CakePopsQuantity')){
+            select.addEventListener('change', this.calculatePriceByQuantity);
+        }else if(attributes.id.includes('Quantity')){
+            select.addEventListener('change', this.calculatePriceFromQuantityWithSize);
+        }else if(attributes.id.includes('Size')){
+            select.addEventListener('change', this.calculatePriceFromSizeWithQuantity);
+        }
+
+        options.forEach( selectOption =>{
+            select.appendChild(createHtmlElement('option',{
+                value: selectOption.value
+            }, `${selectOption.textContent ? selectOption.textContent:selectOption.value}`))
+        });
+        return createHtmlElement('div', { class: 'field' },[
+            createHtmlElement('label',{ for: attributes.id, class: 'form-label' },textContent),
+            select,
+            createHtmlElement('div', { class: 'field-output' },'select field output area')
+        ])
+    },
+    field(tagName,attributes,textContent){
+        return createHtmlElement('div', { class: 'field' },[
+            createHtmlElement('label', { for: attributes.id, class: 'form-label'},textContent),
+            createHtmlElement(tagName, attributes, null, 
+                { type: 'input', listen: connectInputToOutput }
+            ),
+            createHtmlElement('div', { class: 'field-output' },'field output area')
+        ]);
+    },
 };
 const TabComponent = {
     intro(){
@@ -352,7 +474,7 @@ const TabComponent = {
             createHtmlElement('img',{ src: imagePath })
         ], { type: 'click', listen: TabComponent.switchTab});
     }
-}
+};
 const ProductComponent ={
     remove: undefined,
     intro(){
@@ -405,114 +527,14 @@ const ProductComponent ={
         item.querySelector(`.inspiration-controls > h3`).classList.remove('show');
         clickEvent.currentTarget.classList.remove('show');
 
-      
+        OrderInvoice.removeImage(clickEvent.target.dataset.imageId);
 
-        // OrderProgress.removeState(2);
-        // OrderProgress.inspectAreaInputProgress('.js-item-info',2);
-    },
-    addAddress(clickEvent){
-        const buttonParent = clickEvent.target.closest('.js-pickup-distance-information');
-        const retrievalType = clickEvent.target.dataset.retrievalType;
-        const personalInformationElement = document.querySelector('.js-order-form .js-personal-information');
-        const addressComponent = ProductComponent.addressFieldset(retrievalType);
-        buttonParent.remove();
-        appendElementToParentWithFragment(
-            personalInformationElement,
-            addressComponent
-        );
-        transitionElementOpen(addressComponent);
-        // OrderProgress.removeState(5);
-        // OrderProgress.listenToAreaInputs('.js-personal-info',5);
-    },
-    calculatePriceByQuantity(changeEvent){
-        const li = changeEvent.target.closest('li');
-        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${li.dataset.name}"]`);
-        const optionPrice = datalistOption.dataset.price;
-        const price = Number(optionPrice) * Number(changeEvent.target.value);
-
-        const costInput = document.querySelector(`#${li.id}Cost`);
-        if(costInput) costInput.value = `${optionPrice}`;
-        const priceInput = document.querySelector(`#${li.id}Price`)
-        if(priceInput) priceInput.value = `${price}`;
-        
-        OrderInvoice.setItemPriceById(li.id,price);
-        OrderForm.addToSubTotal(price);
-        OrderForm.addToTotal(price);
-    },
-    calculatePriceFromQuantityWithSize(changeEvent){
-        const li = changeEvent.target.closest('li');
-        const sizeFieldSelect = li.querySelector(`#${li.id}Size`);
-        if(!sizeFieldSelect || sizeFieldSelect.value === '-- select --') return;
-
-        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${sizeFieldSelect.value}"]`);
-        const optionPrice = datalistOption.dataset.price;
-        const price = Number(optionPrice) * Number(changeEvent.target.value);
-        
-        const costInput = document.querySelector(`#${li.id}Cost`);
-        if(costInput) costInput.value = `${optionPrice}`;
-        const priceInput = document.querySelector(`#${li.id}Price`)
-        if(priceInput) priceInput.value = `${price}`;
-       
-        OrderInvoice.setItemPriceById(li.id,price);
-        OrderForm.addToSubTotal(price);
-        OrderForm.addToTotal(price);
-    },
-    calculatePriceFromSizeWithQuantity(changeEvent){
-        const li = changeEvent.target.closest('li');
-        const quantityFieldElement = li.querySelector(`#${li.id}Quantity`);
-        
-        if(!quantityFieldElement || quantityFieldElement.value === '-- select --') return;
-        const datalistOption = li.querySelector(`#${li.id}Prices option[value="${changeEvent.target.value}"]`)
-        const optionPrice = datalistOption.dataset.price;
-        const price = Number(optionPrice) * Number(quantityFieldElement.value);
-
-        const costInput = document.querySelector(`#${li.id}Cost`);
-        if(costInput) costInput.value = `${optionPrice}`;
-        const priceInput = document.querySelector(`#${li.id}Price`)
-        if(priceInput) priceInput.value = `${price}`;
-        
-        OrderInvoice.setItemPriceById(li.id,price);
-        OrderForm.addToSubTotal(price);
-        OrderForm.addToTotal(price);
-    },
-
-    // components
-    selectField(attributes,textContent,options){
-        const select = createHtmlElement('select',attributes,
-            createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --'),
-            { type: 'change', listen: connectInputToOutput }
-        );
-        if(attributes.id.includes('SugarCookiesQuantity') ||
-            attributes.id.includes('DropCookiesQuantity') ||
-            attributes.id.includes('CakePopsQuantity')){
-            select.addEventListener('change', this.calculatePriceByQuantity);
-        }else if(attributes.id.includes('Quantity')){
-            select.addEventListener('change', this.calculatePriceFromQuantityWithSize);
-        }else if(attributes.id.includes('Size')){
-            select.addEventListener('change', this.calculatePriceFromSizeWithQuantity);
-        }
-
-        options.forEach( selectOption =>{
-            select.appendChild(createHtmlElement('option',{
-                value: selectOption.value
-            }, `${selectOption.textContent ? selectOption.textContent:selectOption.value}`))
-        });
-        return createHtmlElement('div', { class: 'field' },[
-            createHtmlElement('label',{ for: attributes.id, class: 'form-label' },textContent),
-            select,
-            createHtmlElement('div', { class: 'field-output' },'select field output area')
-        ])
-    },
-    field(tagName,attributes,textContent){
-        return createHtmlElement('div', { class: 'field' },[
-            createHtmlElement('label', { for: attributes.id, class: 'form-label'},textContent),
-            createHtmlElement(tagName, attributes, null, 
-                { type: 'input', listen: connectInputToOutput }
-            ),
-            createHtmlElement('div', { class: 'field-output' },'field output area')
-        ]);
+        OrderProgress.removeState(2);
+        OrderProgress.inspectAreaInputProgress('.js-item-info',2);
     },
     
+
+    // components
     priceDisplay(prices){
         if(prices.length === 1){
             return createHtmlElement('div',{ class: 'order-item-price-display'},[
@@ -590,7 +612,7 @@ const ProductComponent ={
         return createHtmlElement('fieldset',{ class: 'common'},[
             this.priceDisplay(prices),
             this.dateNeededField(`${id}Date`,`${name}-date`),
-            this.selectField({
+            FormComponent.selectField({
                 id: quantity.id,
                 name: quantity.name,
                 class: 'form-select js-item-info',
@@ -606,7 +628,7 @@ const ProductComponent ={
             const field = fields[key];
             
             extraFields.push(
-                this.selectField({
+                FormComponent.selectField({
                     id: field.id,
                     name: field.name,
                     class: 'form-select js-item-info',
@@ -672,7 +694,7 @@ const ProductComponent ={
             )
         ]);
     },
-    inspirationSelect(){
+    inspirationSelect(id){
         return createHtmlElement('div',{ class: 'inspiration js-inspiration'},
             createHtmlElement('div',{ class: 'inspiration-controls' },[
                 createHtmlElement('button', { type: 'button', class: 'btn add-inspiration-btn show' },[
@@ -680,7 +702,11 @@ const ProductComponent ={
                     createHtmlElement('img', { src: `img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
                 ], { type: 'click', listen: this.addInspiration }),
                 createHtmlElement('h3',{},'inspiration image'),
-                createHtmlElement('button', { type: 'button', class: `btn remove-inspiration-btn`},
+                createHtmlElement('button', { 
+                    type: 'button', 
+                    class: `btn remove-inspiration-btn`,
+                    'data-image-id':id
+                    },
                     `remove X`,
                     { type: 'click', listen: this.removeInspiration }
                 ),
@@ -689,7 +715,7 @@ const ProductComponent ={
     },
     themeFieldset(id,name){
         return createHtmlElement('fieldset',{ class: 'theme'},[
-            this.field('input',{
+            FormComponent.field('input',{
                 id: `${id}Theme`,
                 name: `${name}-theme`,
                 class:`form-text-input js-item-info`,
@@ -698,7 +724,7 @@ const ProductComponent ={
                 required:'true',
                 autocomplete:'off'
             }, 'theme/occasion'),
-            this.field('textarea',{
+            FormComponent.field('textarea',{
                 id: `${id}Personalization`, 
                 name: `${name}-personalization`,
                 class:`form-textarea js-item-info`,
@@ -707,7 +733,7 @@ const ProductComponent ={
                 required:'true',
                 autocomplete:'off',
             },'personalization'),
-            this.inspirationSelect() 
+            this.inspirationSelect(id) 
         ])
     },
     priceDataList(id,name,prices){
@@ -769,43 +795,36 @@ const ProductComponent ={
         )
         return component;
     },
+    initialize(removeHandler){
+        if(removeHandler){
+            this.remove = removeHandler
+        }
+    }
+}
+const AddressComponent = {
+    fetchDistanceForPickup: undefined,
+    fetchDistanceForDelivery: undefined,
     
-    addressDistance(addressType){
+    distanceButton(addressType){
+        const textContent = (addressType === 'pickup' ? 'get approx distance':'check delivery address availability')
         const distanceButton = createHtmlElement('button',{
             type: 'button',
             class:'button check-distance-btn js-check-distance-btn',
-        },(addressType === 'pickup' ? 'get approx distance':'check delivery address availability'));
-    
-        distanceButton.addEventListener('click', async (clickEvent)=>{
-            clickEvent.preventDefault();
-
-            if(!confirm('Are you sure you want to continue?')) return;
-
-            try{
-                //const currentLocation = await Order.getCurrentLocation();
-
-                const fetchResponse = await fetch(new URL('/api/distance-request','http://127.0.0.1:3456'),{
-                    method: 'post',
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify(currentLocation)
-                });
-               
-                //const data = await fetchResponse.json();
-
-                console.log('data', data);
-            }catch(error){
-                console.warn('Distance Request Error: ', error.message);
-            }
-        });
-    
+        },textContent);
+        if(addressType === 'pickup'){
+            distanceButton.addEventListener('click', this.fetchDistanceForPickup);
+        }else if(addressType === 'delivery'){
+            distanceButton.addEventListener('click', this.fetchDistanceForDelivery);
+        }
+        return distanceButton;
+    },
+    addressDistance(addressType){
         if(addressType === 'pickup'){
             return createHtmlElement('div',{
                 class: 'distance-information js-distance-information'},
                 createHtmlElement('div',{},[
                     createHtmlElement('h3',{},'distance/mileage'),
-                    distanceButton,
+                    this.distanceButton(addressType),
                     createHtmlElement('p',{},[
                         'approx: distance: ',
                         createHtmlElement('span',{'data-output':'distance'},'0'),
@@ -818,7 +837,7 @@ const ProductComponent ={
                 class: 'distance-information js-distance-information'},
                 createHtmlElement('div',{},[
                     createHtmlElement('h3',{},'distance/mileage'),
-                    distanceButton,
+                    this.distanceButton(addressType),
                     createHtmlElement('p',{},[
                         'availability: ',
                         createHtmlElement('span',{'data-output':'delivery-availability'},'none')
@@ -843,7 +862,7 @@ const ProductComponent ={
                 createHtmlElement('span',{class: 'address-type-output'},addressType),
                 ' address information'
             ]),
-            this.field('input',{ 
+            FormComponent.field('input',{ 
                 type: 'text',
                 id: 'OrderFormStreet', 
                 name: 'street', 
@@ -852,7 +871,7 @@ const ProductComponent ={
                 required: 'true' 
             },'street'
             ),
-            this.field('input',{
+            FormComponent.field('input',{
                 type: 'text',
                 id: 'OrderFormCity',
                 name: 'city',
@@ -860,14 +879,14 @@ const ProductComponent ={
                 autocomplete: 'off',
                 required: 'true' 
             },'city'),
-            this.selectField({
+            FormComponent.selectField({
                 id:'OrderFormState',
                 name: 'state',
                 class: 'form-select js-personal-info',
                 autocomplete: 'off',
                 required: 'true'
             },'state',(addressType === 'pickup' ? listOfUsStates:[listOfUsStates[14]])),
-            this.field('input',{
+            FormComponent.field('input',{
                 type: 'text',
                 id: 'OrderFormZipCode',
                 name: 'zipcode',
@@ -883,6 +902,23 @@ const ProductComponent ={
         }
         return addressInformationComponent;
     },
+    addAddress(clickEvent){
+        const buttonParent = clickEvent.target.closest('.js-pickup-distance-information');
+        const retrievalType = clickEvent.target.dataset.retrievalType;
+        const personalInformationElement = document.querySelector('.js-order-form .js-personal-information');
+        const addressComponent = AddressComponent.addressFieldset(retrievalType);
+        buttonParent.remove();
+        appendElementToParentWithFragment(
+            personalInformationElement,
+            addressComponent
+        );
+        transitionElementOpen(addressComponent);
+
+        OrderInvoice.showAddress();
+
+        OrderProgress.removeState(5);
+        OrderProgress.listenToAreaInputs('.js-personal-info',5);
+    },
     pickupDistanceInformation(){
         return createHtmlElement('div', { class: 'pickup-distance-information js-pickup-distance-information'},[
             createHtmlElement('h3',{},'distance/mileage'),
@@ -895,10 +931,13 @@ const ProductComponent ={
             ))
         ]);
     },
-    initialize(removeHandler){
-        if(removeHandler){
-            this.remove = removeHandler
+    initialize(fetchDistanceForPickup,fetchDistanceForDelivery){
+        if(!fetchDistanceForPickup || !fetchDistanceForDelivery){
+            console.warn('missing handlers - address component missing one or all handlers')
+            return;
         }
+        this.fetchDistanceForPickup = fetchDistanceForPickup;
+        this.fetchDistanceForDelivery = fetchDistanceForDelivery;
     }
 }
 export const OrderForm = {
@@ -908,6 +947,9 @@ export const OrderForm = {
     itemsInput: undefined,
     retrievalSelect: undefined,
     paymentSelect: undefined,
+    fullNameInput: undefined,
+    emailInput: undefined,
+    phoneNumberInput: undefined,
     agreementCheckbox: undefined,
     personalInformationElement: undefined,
     retrievalPriceInformationItems: undefined,
@@ -962,13 +1004,13 @@ export const OrderForm = {
         }
     },
     activateSubmitButton(){
-        if(!Order.submitButton.classList.contains('active')){
-            Order.submitButton.classList.add('active');
+        if(!OrderForm.submitButton.classList.contains('active')){
+            OrderForm.submitButton.classList.add('active');
         }
     },
     deactivateSubmitButton(){
-        if(Order.submitButton.classList.contains('active')){
-            Order.submitButton.classList.remove('active');
+        if(OrderForm.submitButton.classList.contains('active')){
+            OrderForm.submitButton.classList.remove('active');
         }
     },
     addToSubTotal(price){
@@ -1133,6 +1175,7 @@ export const OrderForm = {
             return;
         }
         const itemId = itemElement.id;
+        const itemPrice = itemElement.querySelector(`#${itemId}Price`).value;
 
         for(let i = 0; i < OrderForm.items.length; i++){
             const item = OrderForm.items[i];
@@ -1142,6 +1185,8 @@ export const OrderForm = {
                     const itemToActive = OrderForm.items.find( element => element.id === nextTab.dataset.tabId);
                     if(itemToActive) transition('add',itemToActive,'open',['show','active']);
                 }
+                OrderForm.subtractFromSubTotal(itemPrice);
+                OrderForm.subtractFromTotal(itemPrice);
                 OrderForm.items.splice(i,1);
                 item.remove();
                 break;
@@ -1210,7 +1255,6 @@ export const OrderForm = {
         disableSelectFieldOption(OrderForm.itemSelect,itemName);
 
         OrderForm.addTab(data.id,data.name,data.image);
-        //OrderForm.activateTabs(data.id);
 
         OrderInvoice.addItem(data.id,data.title,data.themed,data.invoiceFields);
         OrderInvoice.addNumberOfItems();
@@ -1220,9 +1264,9 @@ export const OrderForm = {
             OrderForm.setRetrievalInformationAvailability(restriction,false);
         })
 
-        // OrderProgress.listenToAreaInputs('.js-item-info',2);
-        // OrderProgress.inspectAreaInputProgress('.js-item-info',2);
-        // OrderProgress.setState(1);
+        OrderProgress.listenToAreaInputs('.js-item-info',2);
+        OrderProgress.inspectAreaInputProgress('.js-item-info',2);
+        OrderProgress.setState(1);
 
         changeEvent.target.value = "";
     },
@@ -1242,13 +1286,15 @@ export const OrderForm = {
         }
         if(retrievalType === 'delivery' || retrievalType === 'shipping'){
             this.appendAddress(
-                ProductComponent.addressFieldset(retrievalType)
+                AddressComponent.addressFieldset(retrievalType)
             );
-            //OrderProgress.listenToAreaInputs('.js-personal-info',5);
+            OrderInvoice.showAddress();
+            OrderProgress.listenToAreaInputs('.js-personal-info',5);
         }else{
             this.appendAddress(
-                ProductComponent.pickupDistanceInformation()
+                AddressComponent.pickupDistanceInformation()
             );
+            OrderInvoice.hideAddress();
         }
     },
     selectRetrievalType(changeEvent){
@@ -1258,7 +1304,7 @@ export const OrderForm = {
         OrderForm.setAddress(retrievalType);
         OrderInvoice.setRetrievalType(retrievalType);
 
-        //OrderProgress.setState(3);
+        OrderProgress.setState(3);
 
         const option = [...changeEvent.target.options].find( option => option.value === retrievalType);
         const retrievalPrice = option.dataset.price;
@@ -1268,7 +1314,6 @@ export const OrderForm = {
         if(changeEvent.target.value === 'shipping'){
             OrderInvoice.setRetrievalPrice(`${retrievalPrice}.00`);
             OrderInvoice.setRetrievalCost(`${retrievalPrice}.00`);
-            //Order.addToTotal(retrievalPrice);
             OrderForm.addToTotal(retrievalPrice);
         }else{
             OrderInvoice.setRetrievalPrice(`${retrievalPrice}`);
@@ -1277,19 +1322,14 @@ export const OrderForm = {
             if(currentState === 'shipping'){
                 OrderForm.subtractFromTotal('15');
             }
-            // if(document.querySelector('#OrderFormSubTotal').value !== 
-            //     document.querySelector('#OrderFormTotal').value){
-            //         Order.subtractFromTotal('15');
-            // }
-           
         }
         changeEvent.target.dataset.state = retrievalType;
     },
     selectPaymentType(changeEvent){
         OrderInvoice.setPaymentType(changeEvent.target.value);
-        //OrderProgress.setState(4);
+        OrderProgress.setState(4);
     },
-    selectAgreementCheckbox(){
+    selectAgreementCheckbox(changeEvent){
         const progressState = OrderProgress.inspectState();
         const isChecked = changeEvent.target.checked;
         if(progressState.length > 0){
@@ -1298,21 +1338,95 @@ export const OrderForm = {
         }
         if(isChecked){
             OrderForm.activateSubmitButton();
-            //OrderProgress.setState(6);
+            OrderProgress.setState(6);
         }else{
             OrderForm.deactivateSubmitButton();
-            //OrderProgress.removeState(6);
+            OrderProgress.removeState(6);
         }
     },
-    submit(){
+    counter: 0,
+    submit(clickEvent){
+        clickEvent.preventDefault();
 
+        const list = [
+            'I disagree with your decision. try again',
+            'nope. not this time. try again',
+            'really? do you think something is going to happen? try again',
+            'fine. ill do nothing again. try again',
+            'how long you gonna try this? try again',
+            `you've realized that there may be more and want to continue? try again`
+        ]
+        if(clickEvent.target.classList.contains('active')){
+            alert(list[OrderForm.counter]);
+            OrderForm.counter++;
+            if(OrderForm.counter >= list.length){
+                OrderForm.counter = 0;
+            }
+        }
+    },
+    async fetchDistanceForPickup(clickEvent){
+        clickEvent.preventDefault();
+
+            if(!confirm('Are you sure you want to continue?')) return;
+
+            try{
+                const currentLocation = await getCurrentLocation();
+
+                // const fetchResponse = await fetch(new URL('/api/distance-request','http://127.0.0.1:3456'),{
+                //     method: 'post',
+                //     headers: {
+                //         'Content-Type':'application/json'
+                //     },
+                //     body: JSON.stringify(currentLocation)
+                // });
+               
+                // const data = await fetchResponse.json();
+
+                // console.log('data', data);
+
+                console.log('pickup handler', currentLocation);
+            }catch(error){
+                console.warn('Distance Request Error: ', error.message);
+            }
+    },
+    async fetchDistanceForDelivery(){
+        if(!confirm('Are you sure you want to continue?')) return;
+
+            try{
+                const currentLocation = await getCurrentLocation();
+
+                // const fetchResponse = await fetch(new URL('/api/distance-request','http://127.0.0.1:3456'),{
+                //     method: 'post',
+                //     headers: {
+                //         'Content-Type':'application/json'
+                //     },
+                //     body: JSON.stringify(currentLocation)
+                // });
+               
+                // const data = await fetchResponse.json();
+
+                // console.log('data', data);
+                console.log('delivery handler', currentLocation)
+            }catch(error){
+                console.warn('Distance Request Error: ', error.message);
+            }
     },
     listen(){
-        OrderForm.itemSelect.addEventListener('change',OrderForm.selectItem);
-        OrderForm.retrievalSelect.addEventListener('change', OrderForm.selectRetrievalType);
-        OrderForm.paymentSelect.addEventListener('change', OrderForm.selectPaymentType);
-        OrderForm.agreementCheckbox.addEventListener('change', OrderForm.selectAgreementCheckbox);
-        OrderForm.form.addEventListener('submit', OrderForm.submit)
+        this.itemSelect.addEventListener('change',this.selectItem);
+        this.retrievalSelect.addEventListener('change', this.selectRetrievalType);
+        this.paymentSelect.addEventListener('change', this.selectPaymentType);
+        this.fullNameInput.addEventListener('input', (inputEvent)=>{
+            OrderInvoice.setFullName(inputEvent.target.value);
+        });
+        this.emailInput.addEventListener('input', (inputEvent)=>{
+            OrderInvoice.setEmail(inputEvent.target.value);
+        });
+        this.phoneNumberInput.addEventListener('input', (inputEvent)=>{
+            OrderInvoice.setPhoneNumber(inputEvent.target.value);
+        });
+        this.agreementCheckbox.addEventListener('change', this.selectAgreementCheckbox);
+       // this.form.addEventListener('submit', this.submit)
+       this.submitButton.addEventListener('click', this.submit);
     },
     initialize(){
         try{
@@ -1328,6 +1442,15 @@ export const OrderForm = {
 
             this.paymentSelect = document.querySelector('#OrderFormPaymentType');
             if(!this.paymentSelect) throw new Error('missing element - order payment select');
+
+            this.fullNameInput = document.querySelector('#OrderFormFullNameInput');
+            if(!this.fullNameInput) throw new Error('missing element - order full name input');
+
+            this.emailInput = document.querySelector('#OrderFormEmailInput');
+            if(!this.emailInput) throw new Error('missing element - order email input');
+
+            this.phoneNumberInput = document.querySelector('#OrderFormPhoneNumberInput');
+            if(!this.phoneNumberInput) throw new Error('missing element - order phone number input');
 
             this.agreementCheckbox = document.querySelector('#OrderFormAgreementCheckbox');
             if(! this.agreementCheckbox) throw new Error('missing element - order agreement checkbox');
@@ -1361,7 +1484,11 @@ export const OrderForm = {
             this.itemList = document.querySelector('.js-order-item-list');
             if(!this.itemList) throw new Error('missing element - order item list');
 
-            ProductComponent.initialize(this.removeItem)
+            ProductComponent.initialize(this.removeItem);
+            AddressComponent.initialize(
+                this.fetchDistanceForPickup,
+                this.fetchDistanceForDelivery
+            );
             OrderInvoice.initialize();
 
             this.listen();

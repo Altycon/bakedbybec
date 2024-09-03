@@ -253,10 +253,10 @@
                 <div class="personal-information js-personal-information">
                     <fieldset class="basic-information">
                         <div class="field">
-                            <label for="OrderFormName" class="form-label">name</label>
+                            <label for="OrderFormFullNameInput" class="form-label">name</label>
                             <input type="text" 
                                 name="name" 
-                                id="OrderFormName" 
+                                id="OrderFormFullNameInput" 
                                 class="form-text-input js-personal-info" 
                                 data-input="name"
                                 placeholder="full name"
@@ -265,10 +265,10 @@
                             <div class="field-output">name field output area</div>
                         </div>
                         <div class="field">
-                            <label for="OrderFormEmail" class="form-label">email</label>
+                            <label for="OrderFormEmailInput" class="form-label">email</label>
                             <input type="email" 
                                 name="email" 
-                                id="OrderFormEmail" 
+                                id="OrderFormEmailInput" 
                                 class="form-text-input js-personal-info"
                                 data-input="email" 
                                 placeholder="youremail@host.com"
@@ -278,10 +278,10 @@
                             <div class="field-output">email field output area</div>
                         </div>
                         <div class="field">
-                            <label for="OrderFormPhoneNumber" class="form-label">phone number</label>
+                            <label for="OrderFormPhoneNumberInput" class="form-label">phone number</label>
                             <input type="tel" 
                                 name="phone-number" 
-                                id="OrderFormPhoneNumber" 
+                                id="OrderFormPhoneNumberInput" 
                                 class="form-text-input js-personal-info" 
                                 placeholder="555-555-5555"
                                 data-input="phone-number" 
@@ -308,13 +308,16 @@
                                 <p>bakedbybec@some.com</p>
                             </div>
                             <div class="customer">
-                                <p><span data-output="name">SuiDenni Jett</span></p>
-                                <div class="address">
-                                    <p><span data-output="street">555 sn end ave</span></p>
-                                    <p><span data-output="city">dairyfill</span>, <span data-output="state">XJ</span> <span data-output="zip-code">55555</span></p>
+                                <p><span id="InvoiceFullNameOutput">customer name</span></p>
+                                <div id="InvoiceAddress" class="address">
+                                    <p><span data-output="OrderFormStreet">street</span></p>
+                                    <p>
+                                        <span data-output="OrderFormCity">city</span>, 
+                                        <span data-output="OrderFormState">state</span> 
+                                        <span data-output="OrderFormZipCode">zip code</span></p>
                                 </div>
-                                <p><span data-output="email">gather.ing00@llnahledge.com</span></p>
-                                <p><span data-output="phone-number">333-555-999</span></p> 
+                                <p><span id="InvoiceEmailOutput">customer email</span></p>
+                                <p><span id="InvoicePhoneNumberOutput">customer number</span></p> 
                             </div>
                         </div>
                         <div class="items">
@@ -339,30 +342,7 @@
                                 <!-- invoice items injected here  -->
                             </ul>
                         </div>
-                        <!-- <div class="images">
-                            <h3>images</h3>
-                            <ul class="images-list">
-                                <li class="img-wrapper portrait">
-                                    <img src="img/gallery/layercake/layercake_unicorn-front-back_full_large.jpeg" alt="">
-                                </li>
-                                <li class="img-wrapper landscape">
-                                    <img src="img/gallery/layercake/layercake_godzilla-birthday_full_large.jpg" alt="">
-                                </li>
-                                <li class="img-wrapper landscape">
-                                    <img src="img/gallery/layercake/layercake_blue-spiral-galaxy_full_large.jpeg" alt="">
-                                </li>
-                                <li class="img-wrapper portrait">
-                                    <img src="img/gallery/layercake/layercake_horse-birthday_full_large.jpeg" alt="">
-                                </li>
-                                <li class="img-wrapper landscape">
-                                    <img src="img/gallery/layercake/layercake_jack-skeleton_full_large.jpg" alt="">
-                                </li>
-                                <li class="img-wrapper landscape">
-                                    <img src="img/gallery/layercake/layercake_taco-birthday_full_large.jpeg" alt="">
-                                </li>
-                            </ul>
-                            
-                        </div> -->
+                        
                         <div class="bottom">
                             <div class="extras">
                                 <p>retrieval type: <span id="InvoiceRetrievalTypeOutput">none</span></p>
@@ -394,7 +374,7 @@
                     </div>
                 </div>
                 <div class="order-form-controls">
-                    <button type="submit" class="btn order-form-submit-btn js-order-form-submit-btn">place order</button>
+                    <button type="button" class="btn order-form-submit-btn js-order-form-submit-btn">place order</button>
                 </div> 
            </form>
         </section>
