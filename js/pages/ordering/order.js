@@ -2,6 +2,12 @@ import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { openInHouseBakerySign, } from "../../utilities.js";
 import { OrderProgress } from "./order_progress.js";
 import { OrderForm } from "./order_form.js";
+import { Confirmation } from "../../confirmation.js";
+import { ANotification } from "../../notification.js";
+
+
+Confirmation.initialize();
+ANotification.initialize();
 
 function openOrderForm(event){
     event.preventDefault();
@@ -25,7 +31,6 @@ function openOrderForm(event){
         OrderProgress.initialize(document.querySelector('.js-order-progress-bar'));
         OrderProgress.display();
         setTimeout( ()=>{
-            //beforeYouOrderElement.classList.add('hide');
             beforeYouOrderElement.remove();
             orderAreaElement.classList.add('open');
             
@@ -34,13 +39,13 @@ function openOrderForm(event){
             orderAreaElement.classList.add('show');
             OrderProgress.setState(0);
             OrderProgress.listenToAreaInputs('.js-personal-info',5);
+            
         },400);
-
         OrderForm.initialize();
     }
 };
 
-function initializeOrderingPage(){
+function initializeOrderPage(){
 
     // let externalItemValue = undefined;
 
@@ -49,17 +54,18 @@ function initializeOrderingPage(){
     //     externalItemValue = window.location.hash.split('#')[1];
     //     // add the item to the order item list
     // }
-
-    const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
-    if(inHouseBakeryButton){
+    try{
+        const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
+        if(!inHouseBakeryButton) throw new Error('missing element - in house bakery button')
         inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
-    }
-    if(!isPageNavigationDisplayed()){
-        pageNavigation();
-    }
-    const openOrderFormButton = document.querySelector('.js-open-order-form-btn')
-    if(openOrderFormButton){
+        if(!isPageNavigationDisplayed()){
+            pageNavigation();
+        }
+        const openOrderFormButton = document.querySelector('.js-open-order-form-btn')
+        if(!openOrderFormButton) throw new Error('missing element - open order form button');
         openOrderFormButton.addEventListener('click', openOrderForm);
+    }catch(error){
+        console.error('Order Page Initialization Error: ', error.message)
     }
 };
-initializeOrderingPage();
+initializeOrderPage();

@@ -1,6 +1,7 @@
 
 export function isPageNavigationDisplayed(){
     const pageNavigationElement = document.querySelector('.page-navigation-primary');
+    if(!pageNavigationElement) throw new Error('missing element - page navigation primary element')
     const displayValue = getComputedStyle(pageNavigationElement).getPropertyValue('display');
     return (displayValue !== 'none');
 };
