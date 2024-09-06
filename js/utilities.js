@@ -22,12 +22,27 @@ export function capitalize(word){
     return word.charAt(0).toUpperCase() + word.slice(1)
 };
 export function getTodaysDateString(){
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    return `${year}-${zeroPadLeftToString(month)}-${zeroPadLeftToString(day)}`;
-}
+    const currentDate = new Date();
+    const formator = new Intl.DateTimeFormat('en-Us',{
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+    });
+    return formator.format(currentDate); 
+};
+export function formatDateString(dateString,options){
+    const currentDate = new Date(dateString);
+    if(options){
+        const formator = new Intl.DateTimeFormat('en-Us',options);
+        return formator.format(currentDate); 
+    }
+    const formator = new Intl.DateTimeFormat('en-Us',{
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+    });
+    return formator.format(currentDate); 
+};
 // export function fixCanvas(canvas,dpi){
 //     const styleWidth = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
 //     const styleHeight = +getComputedStyle(canvas).getPropertyValue('height').slice(0,-2);

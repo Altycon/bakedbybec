@@ -7,6 +7,7 @@ import {
     createHtmlElement, 
     disableSelectFieldOption, 
     enableSelectFieldOption, 
+    formatDateString, 
     getFutureDateByDays, 
     getTodaysDateString, 
     transitionElementOpen 
@@ -60,7 +61,12 @@ function connectInputToOutput(event){
                 outputElement.textContent = `${event.target.value} dozen`;
                 break;
             default : 
-            outputElement.textContent = event.target.value;
+            if(outputId.includes('Date')){
+                outputElement.textContent = formatDateString(event.target.value);
+            }else{
+                outputElement.textContent = event.target.value;
+            }
+            
             break;
         }
         
@@ -808,10 +814,10 @@ const AddressComponent = {
     fetchDistanceForDelivery: undefined,
     
     distanceButton(addressType){
-        const textContent = (addressType === 'pickup' ? 'get approx distance':'check delivery address availability')
+        const textContent = (addressType === 'pickup' ? 'get approx distance':'check delivery availability')
         const distanceButton = createHtmlElement('button',{
             type: 'button',
-            class:'button check-distance-btn js-check-distance-btn',
+            class:'btn check-distance-btn js-check-distance-btn',
         },textContent);
         if(addressType === 'pickup'){
             distanceButton.addEventListener('click', this.fetchDistanceForPickup);
@@ -823,46 +829,78 @@ const AddressComponent = {
     addressDistance(addressType){
         if(addressType === 'pickup'){
             return createHtmlElement('div',{
-                class: 'distance-information js-distance-information'},
-                createHtmlElement('div',{},[
+                class: 'distance-information js-distance-information'},[
+                createHtmlElement('header',{},[
                     createHtmlElement('h3',{},'distance/mileage'),
-                    this.distanceButton(addressType),
-                    createHtmlElement('p',{},[
-                        'approx: distance: ',
-                        createHtmlElement('span',{ id:'PickupDistance'},'0'),
-                        ' miles'
+                    this.distanceButton(addressType)
+                ]),
+                createHtmlElement('div', { class: 'distance-output' },[
+                    createHtmlElement('div', { class: 'distance-output-response' },[
+                        createHtmlElement('p', { id: 'DistanceResponseOutput' },'all measurements are approximate'),
+                        createHtmlElement('div',{ class: 'distance-loader js-distance-loader'},[
+                            createHtmlElement('div', { class: 'animator' },[
+                                createHtmlElement('span',{ style: '--i: 1;'}),
+                                createHtmlElement('span',{ style: '--i: 2;'}),
+                                createHtmlElement('span',{ style: '--i: 3;'}),
+                                createHtmlElement('span',{ style: '--i: 4;'}),
+                                createHtmlElement('span',{ style: '--i: 5;'})
+                            ])
+                        ])
                     ]),
-                    createHtmlElement('p',{},[
-                        'approx: time: ',
-                        createHtmlElement('span',{ id:'PickupTime'},'0')
+                    createHtmlElement('div', { class: 'distance-output-data' },[
+                        createHtmlElement('p',{},[
+                            'approx: distance: ',
+                            createHtmlElement('span',{ id:'PickupDistance'},'00.00'),
+                            ' miles'
+                        ]),
+                        createHtmlElement('p',{},[
+                            'approx: time: ',
+                            createHtmlElement('span',{ id:'PickupTime'},'00h 00m')
+                        ])
                     ])
                 ])
-            );
+            ]);
         }else if(addressType === 'delivery'){
             return createHtmlElement('div',{
-                class: 'distance-information js-distance-information'},
-                createHtmlElement('div',{},[
+                class: 'distance-information js-distance-information'},[
+                createHtmlElement('header',{},[
                     createHtmlElement('h3',{},'distance/mileage'),
                     this.distanceButton(addressType),
-                    createHtmlElement('p',{},[
-                        'availability: ',
-                        createHtmlElement('span',{ id:'DeliveryAvailability'},'none')
+                ]),
+                createHtmlElement('div', { class: 'distance-output' },[
+                    createHtmlElement('div', { class: 'distance-output-response' },[
+                        createHtmlElement('p', { id: 'DistanceResponseOutput' },'distance will be retrieved from google'),
+                        createHtmlElement('div',{ class: 'distance-loader js-distance-loader'},[
+                            createHtmlElement('div', { class: 'animator' },[
+                                createHtmlElement('span',{ style: '--i: 1;'}),
+                                createHtmlElement('span',{ style: '--i: 2;'}),
+                                createHtmlElement('span',{ style: '--i: 3;'}),
+                                createHtmlElement('span',{ style: '--i: 4;'}),
+                                createHtmlElement('span',{ style: '--i: 5;'})
+                            ])
+                        ])
                     ]),
-                    createHtmlElement('p',{},[
-                        'approx. distance: ',
-                        createHtmlElement('span',{ id:'DeliveryDistance' },'0'),
-                        ' miles'
-                    ]),
-                    createHtmlElement('p',{},[
-                        'approx. time: ',
-                        createHtmlElement('span',{ id:'DeliveryTime' },'0')
-                    ]),
-                    createHtmlElement('p',{},[
-                        'approx. price($): ',
-                        createHtmlElement('span',{ id:'DeliveryPrice' },'0')
+                    createHtmlElement('div', { class: 'distance-output-data' },[
+                        createHtmlElement('p',{},[
+                            'availability: ',
+                            createHtmlElement('span',{ id:'DeliveryAvailability'},'none')
+                        ]),
+                        createHtmlElement('p',{},[
+                            'approx. distance: ',
+                            createHtmlElement('span',{ id:'DeliveryDistance' },'00.00'),
+                            ' miles'
+                        ]),
+                        createHtmlElement('p',{},[
+                            'approx. time: ',
+                            createHtmlElement('span',{ id:'DeliveryTime' },'00h 00m')
+                        ]),
+                        createHtmlElement('p',{},[
+                            'approx. price($): ',
+                            createHtmlElement('span',{ id:'DeliveryPrice' },'00.00')
+                        ])
                     ])
                 ])
-            );
+            ]);
         }
     },
     addressFieldset(addressType){
@@ -1059,6 +1097,7 @@ export const OrderForm = {
 
         OrderInvoice.setTotal(`${total}.00`);
     },
+
    
     // intros
     removeTabIntro(){
@@ -1370,33 +1409,49 @@ export const OrderForm = {
     async fetchDistanceForPickup(clickEvent){
         clickEvent.preventDefault();
 
-        Confirmation.confirm(`This is just a test. Continue?`, ()=>{
+        Confirmation.confirm(`This is just a test. Continue?`, (confirmed)=>{
              // TESTING 
+            if(!confirmed) return;
+            // apply loading animation
+            const loader = document.querySelector('.order-form .distance-loader');
+            if(loader && !loader.classList.contains('loading')){
+                loader.classList.add('loading');
+            }
+            const distanceResponseOutput = document.querySelector('#DistanceResponseOutput');
 
-                // apply loading animation
+            const streetInput = document.querySelector('#OrderFormStreet');
+            const street = streetInput.value;
+            const cityInput = document.querySelector('#OrderFormCity');
+            const city = cityInput.value;
+            const stateInput = document.querySelector('#OrderFormState');
+            const state = stateInput.value;
+            const zipCodeInput = document.querySelector('#OrderFormZipCode');
+            const zipCode = zipCodeInput.value;
 
-                const streetInput = document.querySelector('#OrderFormStreet');
-                const street = streetInput.value;
-                const cityInput = document.querySelector('#OrderFormCity');
-                const city = cityInput.value;
-                const stateInput = document.querySelector('#OrderFormState');
-                const state = stateInput.value;
-                const zipCodeInput = document.querySelector('#OrderFormZipCode');
-                const zipCode = zipCodeInput.value;
+            // get the distance based on address
+            const addressString = `${street} ${city}, ${state} ${zipCode}`;
+            
+            const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
+            const fakeDistanceMiles = '234.43';
+            const fakeTime = '12h 34m';
+            const pickupDistanceOutput = document.querySelector('#PickupDistance');
+            const pickupTimeOutput = document.querySelector('#PickupTime');
+            setTimeout( ()=>{
+                
+                pickupDistanceOutput.textContent = fakeDistanceMiles;
+                pickupTimeOutput.textContent = fakeTime;
+                const notificationMessage = `distance retrieved from: ${addressString}`;
+                ANotification.notify(notificationMessage);
 
-                // get the distance based on address
-                const addressString = `${street} ${city}, ${state} ${zipCode}`;
-               
-                const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
-                const fakeDistanceMiles = '234.43';
-                const fakeTime = '12h 34m';
-                const pickupDistanceOutput = document.querySelector('#PickupDistance');
-                const pickupTimeOutput = document.querySelector('#PickupTime');
-                setTimeout( ()=>{
-                    pickupDistanceOutput.textContent = fakeDistanceMiles;
-                    pickupTimeOutput.textContent = fakeTime;
-                    ANotification.notify(`distance retrieved from: ${addressString}`);
-                },3000)
+                const succesResponseMessage = `That's not too far. You can pick up your order!`;
+                const errorResponseMessage = `'That's pretty far. Road trips are always fun!`;
+                const randomResponse = Math.random() < 0.5 ? errorResponseMessage:succesResponseMessage;
+                distanceResponseOutput.textContent = `success! ${randomResponse}`;
+
+                if(loader.classList.contains('loading')){
+                    loader.classList.remove('loading');
+                }
+            },3000)
         })
 
             //if(!confirm('This is only a test and returned information is incorrect')) return;
@@ -1449,49 +1504,62 @@ export const OrderForm = {
             //}
     },
     async fetchDistanceForDelivery(){
-        Confirmation.confirm('This is only a test.', ()=>{
+        Confirmation.confirm('This is only a test.', (confirmed)=>{
             // TESTING
+        if(!confirmed) return;
+            // apply loading animation
+            const loader = document.querySelector('.order-form .distance-loader');
+            if(loader && !loader.classList.contains('loading')){
+                loader.classList.add('loading');
+            }
+            const distanceResponseOutput = document.querySelector('#DistanceResponseOutput');
 
-                 // apply loading animation
+            const streetInput = document.querySelector('#OrderFormStreet');
+            const street = streetInput.value;
+            const cityInput = document.querySelector('#OrderFormCity');
+            const city = cityInput.value;
+            const stateInput = document.querySelector('#OrderFormState');
+            const state = stateInput.value;
+            const zipCodeInput = document.querySelector('#OrderFormZipCode');
+            const zipCode = zipCodeInput.value;
 
-                 const streetInput = document.querySelector('#OrderFormStreet');
-                 const street = streetInput.value;
-                 const cityInput = document.querySelector('#OrderFormCity');
-                 const city = cityInput.value;
-                 const stateInput = document.querySelector('#OrderFormState');
-                 const state = stateInput.value;
-                 const zipCodeInput = document.querySelector('#OrderFormZipCode');
-                 const zipCode = zipCodeInput.value;
- 
-                 // get the distance based on address
-                 const addressString = `${street} ${city}, ${state} ${zipCode}`;
- 
-                 const deliveryMilesLimit = 30;
-                 const deliveryCost = 0.65;
-                 const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
-                 const fakeDistanceMiles = '26.89';
-                 const fakeTime = '32m';
-                 const deliveryAvailabilityOutput = document.querySelector('#DeliveryAvailability');
-                 const deliveryDistanceOutput = document.querySelector('#DeliveryDistance');
-                 const deliveryTimeOutput = document.querySelector('#DeliveryTime');
-                 const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
- 
-                 const fakeDistance = Number(fakeDistanceMiles);
-                 setTimeout( ()=>{
-                     if(fakeDistance > deliveryMilesLimit){
-                         deliveryAvailabilityOutput.textContent = 'not available';
-                         ANotification.notify(`delvery not available from: ${addressString}`);
-                     }else{
-                         const price = Number(fakeDistance) * deliveryCost;
-                         deliveryPriceOutput.textContent = `${price.toFixed(2)}`;
-                         deliveryAvailabilityOutput.textContent = 'available';
-                         OrderInvoice.setRetrievalCost(price.toFixed(2));
-                         OrderForm.addToTotal(price.toFixed(2));
-                         ANotification.notify(`delivery available from: ${addressString}`);
-                     }
-                     deliveryDistanceOutput.textContent = fakeDistanceMiles;
-                     deliveryTimeOutput.textContent = fakeTime;
-                 },3000)
+            // get the distance based on address
+            const addressString = `${street} ${city}, ${state} ${zipCode}`;
+
+            const deliveryMilesLimit = 30;
+            const deliveryCost = 0.65;
+            const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
+            const fakeDistanceMiles = `${(Math.random() * 100).toFixed(2)}`;
+            const fakeTime = '32m';
+            const deliveryAvailabilityOutput = document.querySelector('#DeliveryAvailability');
+            const deliveryDistanceOutput = document.querySelector('#DeliveryDistance');
+            const deliveryTimeOutput = document.querySelector('#DeliveryTime');
+            const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
+
+            const fakeDistance = Number(fakeDistanceMiles);
+            setTimeout( ()=>{
+                if(fakeDistance > deliveryMilesLimit){
+                    deliveryAvailabilityOutput.textContent = 'not available';
+                    ANotification.notify(`delvery not available from: ${addressString}`);
+                    const errorResponseMessage = `I'm sorry but that is too far for me to drive at this time.`;
+                    distanceResponseOutput.textContent = `success! ${errorResponseMessage}`;
+                    
+                }else{
+                    const price = Number(fakeDistance) * deliveryCost;
+                    deliveryPriceOutput.textContent = `${price.toFixed(2)}`;
+                    deliveryAvailabilityOutput.textContent = 'available';
+                    OrderInvoice.setRetrievalCost(price.toFixed(2));
+                    OrderForm.addToTotal(price.toFixed(2));
+                    ANotification.notify(`delivery available from: ${addressString}`);
+                    const succesResponseMessage = `That's not too far. You can pick up your order!`;
+                    distanceResponseOutput.textContent = `success! ${succesResponseMessage}`;
+                }
+                deliveryDistanceOutput.textContent = fakeDistanceMiles;
+                deliveryTimeOutput.textContent = fakeTime;
+                if(loader.classList.contains('loading')){
+                    loader.classList.remove('loading');
+                }
+            },3000)
         })
         //if(!confirm('This is only a test and returned information is incorrect')) return;
 
@@ -1558,6 +1626,10 @@ export const OrderForm = {
     counter: 0,
     getOrderData(){
         submitEvent.preventDefault();
+        // sanitize everything
+        // validate everything that needs validated
+        // throw and error certain area didnt get filled out
+        // make sure the form validates normally too (highlight fields unfilled)
         const form = submitEvent.target;
         const formData = new FormData(form);
         console.log('FormData', formData);
@@ -1602,9 +1674,10 @@ export const OrderForm = {
                 const personalization = formData.get(`${item}-personalization`);
                 if(personalization) itemData.personalization = personalization;
                 items.push(itemData);
-            })
+            });
+            data.items = items;
         }
-        data.items = items;
+        
         console.log('data', data);
     },
     submit(clickEvent){
