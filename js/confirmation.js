@@ -61,6 +61,7 @@ export const Confirmation = {
             if(!Confirmation.confirmButton) throw new Error('missing element - confirmation confirm button');
         }catch(error){
             console.error('Confirmation Error: ',error.message);
+            throw error;
         }
     }
 };

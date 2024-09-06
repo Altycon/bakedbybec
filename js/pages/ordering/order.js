@@ -1,13 +1,9 @@
 import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
-import { openInHouseBakerySign, } from "../../utilities.js";
+import { openInHouseBakerySign, scrollToTopOfPage, transition, } from "../../utilities.js";
 import { OrderProgress } from "./order_progress.js";
 import { OrderForm } from "./order_form.js";
 import { Confirmation } from "../../confirmation.js";
 import { ANotification } from "../../notification.js";
-
-
-Confirmation.initialize();
-ANotification.initialize();
 
 function openOrderForm(event){
     event.preventDefault();
@@ -15,34 +11,19 @@ function openOrderForm(event){
     const beforeYouOrderElement = document.querySelector('.js-before-you-order');
     const orderAreaElement = document.querySelector('.js-ordering-area');
 
-    if(!beforeYouOrderElement || !orderAreaElement){
-        console.warn('missing order area elements or error selecting elements')
-    }else{
-        
-        beforeYouOrderElement.classList.add('close');
+    beforeYouOrderElement.addEventListener('transitionend', (transitionEvent)=>{
+        transitionEvent.target.remove();
+    })
+    beforeYouOrderElement.classList.add('close');
 
-        if(document.documentElement.scrollTop > 0){
-            window.scroll({
-                top: 0,
-                behavior: 'smooth'
-            })
-        }
-        
-        OrderProgress.initialize(document.querySelector('.js-order-progress-bar'));
-        OrderProgress.display();
-        setTimeout( ()=>{
-            beforeYouOrderElement.remove();
-            orderAreaElement.classList.add('open');
-            
-        },300);
-        setTimeout( ()=> {
-            orderAreaElement.classList.add('show');
-            OrderProgress.setState(0);
-            OrderProgress.listenToAreaInputs('.js-personal-info',5);
-            
-        },400);
-        OrderForm.initialize();
-    }
+    scrollToTopOfPage();
+    
+    OrderProgress.display();
+
+    transition('add',orderAreaElement,'open','show',300, ()=>{
+        OrderProgress.setState(0);
+        OrderProgress.listenToAreaInputs('.js-personal-info',5);
+    });
 };
 
 function initializeOrderPage(){
@@ -55,17 +36,30 @@ function initializeOrderPage(){
     //     // add the item to the order item list
     // }
     try{
-        const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
-        if(!inHouseBakeryButton) throw new Error('missing element - in house bakery button')
-        inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+
+        Confirmation.initialize();
+        ANotification.initialize();
+
         if(!isPageNavigationDisplayed()){
             pageNavigation();
         }
+        const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
+        if(!inHouseBakeryButton) throw new Error('missing element - in house bakery button')
+        inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+        
+        OrderForm.initialize();
+        OrderProgress.initialize();
+
         const openOrderFormButton = document.querySelector('.js-open-order-form-btn')
         if(!openOrderFormButton) throw new Error('missing element - open order form button');
         openOrderFormButton.addEventListener('click', openOrderForm);
+
     }catch(error){
-        console.error('Order Page Initialization Error: ', error.message)
+        console.error('Order Page Initialization Error: ', error.message);
+        confirm('Something is missing on the page. Please reload the page. If this does not work, please contact us and let us know.')
+        if(ANotification){
+            ANotification.notify('There are missing elements on the page. Please reload page.')
+        }
     }
 };
 initializeOrderPage();

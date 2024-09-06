@@ -10,45 +10,14 @@ import {
     formatDateString, 
     getFutureDateByDays, 
     getTodaysDateString, 
-    transitionElementOpen 
+    transition
 } from "../../utilities.js";
 import { listOfUsStates} from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
 import { PRODUCT_DATA } from "./product_data.js";
 
 
-function transition(type,element,immediateClassNames,delayedClassNames,delay,delayedCallback){
-    function handleClasses(classNames,action){
-        if(classNames){
-            if(Array.isArray(classNames)){
-                element.classList[action](...classNames)  
-            }else{
-                element.classList[action](classNames)
-            }
-        }
-    }
-    switch(type){
-        case 'add':
-        case 'remove':
-            handleClasses(immediateClassNames,type);
-            if(delayedClassNames){
-                setTimeout( ()=>{
-                    handleClasses(delayedClassNames,type);
-                    if(delayedCallback) delayedCallback(element);
-                },delay ? delay:100)
-            }
-        break;
-        case 'add-remove':
-            handleClasses(immediateClassNames,'add');
-            if(delayedClassNames){
-                setTimeout( ()=>{
-                    handleClasses(delayedClassNames,'remove');
-                    if(delayedCallback) delayedCallback(element);
-                },delay ? delay:100)
-            }
-        break;
-    }
-};
+
 function connectInputToOutput(event){
     const outputId = event.target.id;
     const outputElement = document.querySelector(`[data-output="${outputId}"]`);
@@ -518,7 +487,7 @@ const ProductComponent ={
             inspirationElement,
             inspirationContentComponent
         );
-        transitionElementOpen(inspirationContentComponent);
+        transition('add',inspirationContentComponent,'open','show');
 
         item.querySelector(`.remove-inspiration-btn`).classList.add('show');
         item.querySelector(`.inspiration-controls > h3`).classList.add('show');
@@ -960,7 +929,7 @@ const AddressComponent = {
             personalInformationElement,
             addressComponent
         );
-        transitionElementOpen(addressComponent);
+        transition('add',addressComponent,'open','show');
 
         OrderInvoice.showAddress();
 
@@ -1740,7 +1709,7 @@ export const OrderForm = {
 
             this.paymentSelect = document.querySelector('#OrderFormPaymentType');
             if(!this.paymentSelect) throw new Error('missing element - order payment select');
-
+            
             this.fullNameInput = document.querySelector('#OrderFormFullNameInput');
             if(!this.fullNameInput) throw new Error('missing element - order full name input');
 
@@ -1794,6 +1763,7 @@ export const OrderForm = {
 
         }catch(error){
             console.warn(error);
+            throw error;
         }   
     }
 };

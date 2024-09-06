@@ -43,6 +43,46 @@ export function formatDateString(dateString,options){
     });
     return formator.format(currentDate); 
 };
+export function scrollToTopOfPage(){
+    if(document.documentElement.scrollTop > 0){
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
+    }
+};
+export function transition(type,element,immediateClassNames,delayedClassNames,delay,delayedCallback){
+    function handleClasses(classNames,action){
+        if(classNames){
+            if(Array.isArray(classNames)){
+                element.classList[action](...classNames)  
+            }else{
+                element.classList[action](classNames)
+            }
+        }
+    }
+    switch(type){
+        case 'add':
+        case 'remove':
+            handleClasses(immediateClassNames,type);
+            if(delayedClassNames){
+                setTimeout( ()=>{
+                    handleClasses(delayedClassNames,type);
+                    if(delayedCallback) delayedCallback(element);
+                },delay ? delay:100)
+            }
+        break;
+        case 'add-remove':
+            handleClasses(immediateClassNames,'add');
+            if(delayedClassNames){
+                setTimeout( ()=>{
+                    handleClasses(delayedClassNames,'remove');
+                    if(delayedCallback) delayedCallback(element);
+                },delay ? delay:100)
+            }
+        break;
+    }
+};
 // export function fixCanvas(canvas,dpi){
 //     const styleWidth = +getComputedStyle(canvas).getPropertyValue('width').slice(0,-2);
 //     const styleHeight = +getComputedStyle(canvas).getPropertyValue('height').slice(0,-2);

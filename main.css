@@ -5078,23 +5078,15 @@ input[hidden=true]{
     margin-bottom: 32px;
     text-align: center;
 
-    transform-origin: top;
-    scale: 1 1;
-    transition: scale 500ms ease 100ms;
+    translate: 0 0;
+    opacity: 1;
+    transition: translate 500ms ease, opacity 300ms ease;
 }
 .before-you-order.close{
-    scale: 1 0;
-}
-.before-you-order.hide{
-    display: none;
-}
-.before-you-order > *{
-    opacity: 1;
-    transition: opacity 300ms ease;
-}
-.before-you-order.close > *{
+    translate: 0 -100px;
     opacity: 0;
 }
+
 .before-you-order h2,
 .before-you-order p{
     line-height: 1.4em;

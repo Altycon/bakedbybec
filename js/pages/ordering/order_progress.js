@@ -1,4 +1,4 @@
-import { transitionElementOpen } from "../../utilities.js";
+import { transition } from "../../utilities.js";
 
 export const OrderProgress = {
     element: undefined,
@@ -84,21 +84,20 @@ export const OrderProgress = {
         });
     },
     display(){
-        transitionElementOpen(OrderProgress.element);
+        transition('add',OrderProgress.element,'open','show');
     },
-    initialize(progressBarElement){
+    initialize(){
 
-        OrderProgress.element = progressBarElement;
+        OrderProgress.element = document.querySelector('.js-order-progress-bar');
         
         try{
-            if(!progressBarElement instanceof Node){
+            if(!OrderProgress.element instanceof Node){
                 throw new Error('PROGRESS_BAR_ERROR: progress bar not a node element');
             }
-            this.elements = [...progressBarElement.querySelectorAll('[data-progress-state]')];
+            this.elements = [...OrderProgress.element.querySelectorAll('[data-progress-state]')];
         }catch(error){
             console.warn('ORDER PROGRESS ERROR: ', error.message);
-        }
-       
-        
+            throw error;
+        } 
     }
 }

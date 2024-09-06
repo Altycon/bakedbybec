@@ -101,6 +101,7 @@ export const ANotification = {
           
         }catch(error){
             console.error(`ANotification Error: `,error.message);
+            throw error;
         }
     }
 };
