@@ -20,7 +20,7 @@ function openOrderForm(event){
     
     OrderProgress.display();
 
-    transition('add',orderAreaElement,'open','show',300, ()=>{
+    transition('add',orderAreaElement,'open','show',500, ()=>{
         OrderProgress.setState(0);
         OrderProgress.listenToAreaInputs('.js-personal-info',5);
     });

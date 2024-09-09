@@ -138,7 +138,7 @@
             <form id="OrderForm" class="order-form js-order-form">
                 <header>
                     <h2>order form</h2>
-                    <input type="date" name="date" id="OrderFormDate" autocomplete="off" hidden>
+                    <input type="text" name="date" id="OrderFormDate" autocomplete="off" hidden>
                     <input type="text" name="sub-total" value="0" id="OrderFormSubTotal" autocomplete="off" hidden>
                     <input type="text" name="total" value="0" id="OrderFormTotal" autocomplete="off" hidden>
                 </header>
@@ -208,7 +208,7 @@
                             <option value="shipping" data-price="15">Shipping</option>
                             <option value="delivery" data-price="0.65 /mile">Delivery</option>
                         </select>
-                        <div class="field-output">retrieval output text area</div>
+                        <div class="field-output">* required</div>
                     </div>
                     <div class="retrieval-times">
                         <h4>pickup/delivery times</h4>
@@ -247,7 +247,7 @@
                             <option value="paypal">paypal</option>
                             <option value="venmo">venmo</option>
                         </select>
-                        <div class="field-output">payment error text area</div>
+                        <div class="field-output">* required</div>
                     </div>
                 </div>
                 <div class="personal-information js-personal-information">
@@ -262,7 +262,7 @@
                                 placeholder="full name"
                                 autocomplete="off" 
                                 required>
-                            <div class="field-output">name field output area</div>
+                            <div class="field-output">* required</div>
                         </div>
                         <div class="field">
                             <label for="OrderFormEmailInput" class="form-label">email</label>
@@ -275,7 +275,7 @@
                                 title="ex: emailname@host.com"
                                 autocomplete="off" 
                                 required>
-                            <div class="field-output">email field output area</div>
+                            <div class="field-output">* required</div>
                         </div>
                         <div class="field">
                             <label for="OrderFormPhoneNumberInput" class="form-label">phone number</label>
@@ -287,7 +287,7 @@
                                 data-input="phone-number" 
                                 autocomplete="off" 
                                 required>
-                            <div class="field-output">phone number field output area</div>
+                            <div class="field-output">* required</div>
                         </div>
                     </fieldset>
 

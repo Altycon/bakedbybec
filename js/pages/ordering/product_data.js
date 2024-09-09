@@ -16,6 +16,7 @@ const COOKIE_FLAVOR_OPTIONS =[
 const CAKE_FLAVOR_OPTIONS = [
     { textContent:'vanilla', value:'vanilla'},
     { textContent:'chocolate', value:'chocolate' },
+    { textContent:'funfetti', value:'funfetti' },
     { textContent:'lemon', value:'lemon' },
     { textContent:'red velvet', value:'red velvet' },
     { textContent:'strawberry', value:'strawberry' },
@@ -45,8 +46,8 @@ export const PRODUCT_DATA = {
         fields: {
             quantity: {
                 id:'SugarCookiesQuantity',
-                name: 'sugar-cookie-quanity',
-                textContent: 'quanity',
+                name: 'sugar-cookies-quantity',
+                textContent: 'quantity',
                 options: DOZEN_QUANTITY_OPTIONS
             },
             extended: false

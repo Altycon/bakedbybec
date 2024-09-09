@@ -209,7 +209,7 @@ const OrderInvoice = {
                 createHtmlElement('div', { class:'column' },
                     createHtmlElement('p',{},[
                         createHtmlElement('span',{},'$'),
-                        createHtmlElement('span',{ 'data-output':`${itemId}Price` })
+                        createHtmlElement('span',{ 'data-output':`${itemId}Price` },'00')
                     ])
                 )
             ])
@@ -421,7 +421,7 @@ const FormComponent = {
         return createHtmlElement('div', { class: 'field' },[
             createHtmlElement('label',{ for: attributes.id, class: 'form-label' },textContent),
             select,
-            createHtmlElement('div', { class: 'field-output' },'select field output area')
+            createHtmlElement('div', { class: 'field-output' },`* required`)
         ])
     },
     field(tagName,attributes,textContent){
@@ -430,7 +430,7 @@ const FormComponent = {
             createHtmlElement(tagName, attributes, null, 
                 { type: 'input', listen: connectInputToOutput }
             ),
-            createHtmlElement('div', { class: 'field-output' },'field output area')
+            createHtmlElement('div', { class: 'field-output' },`* required`)
         ]);
     },
 };
@@ -509,8 +509,6 @@ const ProductComponent ={
         OrderProgress.removeState(2);
         OrderProgress.inspectAreaInputProgress('.js-item-info',2);
     },
-    
-
     // components
     priceDisplay(prices){
         if(prices.length === 1){
@@ -624,6 +622,7 @@ const ProductComponent ={
             type: 'file', 
             id: `${id}ImageUploadInput`, 
             name: `${name}-image`,
+            accept: 'image/png, image/jpeg',
             class: 'file-upload-input js-item-info'
         });
     
@@ -642,12 +641,6 @@ const ProductComponent ={
                     AImageViewer.addImage(imageOutput);
 
                     OrderInvoice.addImage(id,fileReader.result);
-
-                    // const output = document.querySelector(`img[data-output="${name}"]`);
-                    // if(output){
-                    //     output.src = fileReader.result;
-                    // }
-                    
                 };
                 fileReader.readAsDataURL(file);
             });
@@ -819,13 +812,26 @@ const AddressComponent = {
                     createHtmlElement('div', { class: 'distance-output-data' },[
                         createHtmlElement('p',{},[
                             'approx: distance: ',
-                            createHtmlElement('span',{ id:'PickupDistance'},'00.00'),
-                            ' miles'
+                            createHtmlElement('span',{ id:'PickupDistance'},'00.00 miles')
                         ]),
                         createHtmlElement('p',{},[
                             'approx: time: ',
                             createHtmlElement('span',{ id:'PickupTime'},'00h 00m')
-                        ])
+                        ]),
+                        createHtmlElement('input', { 
+                            type: 'text',
+                            id: 'PickupDistanceInput',
+                            name: 'pickup-distance',
+                            autocomplete: 'off',
+                            hidden: 'true'
+                        }),
+                        createHtmlElement('input', { 
+                            type: 'text',
+                            id: 'PickupTimeInput',
+                            name: 'pickup-time',
+                            autocomplete: 'off',
+                            hidden: 'true'
+                        })
                     ])
                 ])
             ]);
@@ -866,8 +872,37 @@ const AddressComponent = {
                         createHtmlElement('p',{},[
                             'approx. price($): ',
                             createHtmlElement('span',{ id:'DeliveryPrice' },'00.00')
-                        ])
-                    ])
+                        ]),
+                        createHtmlElement('input', { 
+                            type: 'text',
+                            id: 'DeliveryAvailabilityInput',
+                            name: 'delivery-availability',
+                            autocomplete: 'off',
+                            hidden: 'true'
+                        }),
+                        createHtmlElement('input', { 
+                            type: 'text',
+                            id: 'DeliveryDistanceInput',
+                            name: 'delivery-distance',
+                            autocomplete: 'off',
+                            hidden: 'true'
+                        }),
+                        createHtmlElement('input', { 
+                            type: 'text',
+                            id: 'DeliveryTimeInput',
+                            name: 'delivery-time',
+                            autocomplete: 'off',
+                            hidden: 'true'
+                        }),
+                        
+                        createHtmlElement('input', { 
+                            type: 'text',
+                            id: 'DeliveryPriceInput',
+                            name: 'delivery-price',
+                            autocomplete: 'off',
+                            hidden: 'true'
+                        })
+                    ]),
                 ])
             ]);
         }
@@ -993,6 +1028,7 @@ export const OrderForm = {
         if(!dateString){
             dateString = getTodaysDateString();
         }
+        console.log(dateString)
         document.querySelector('#OrderFormDate').value = dateString;
         OrderInvoice.setDate(dateString);
     },
@@ -1192,6 +1228,13 @@ export const OrderForm = {
   
     
     // item
+    addToItemInput(itemName){
+        if(this.itemsInput.value === ''){
+            this.itemsInput.value = itemName;
+        }else{
+            this.itemsInput.value = `${this.itemsInput.value},${itemName}`;
+        }
+    },
     removeItem(clickEvent){
         clickEvent.preventDefault();
         const itemElement = clickEvent.target.closest('li');
@@ -1245,13 +1288,12 @@ export const OrderForm = {
             }
         }
     },
-    addItem(itemId,itemName,itemTitle,itemPrices,itemQuantity,itemImage,itemFields,itemThemed){
+    addItem(itemId,itemName,itemTitle,itemPrices,itemImage,itemFields,itemThemed){
         const item = ProductComponent.create(
             itemId,
             itemName,
             itemTitle,
             itemPrices,
-            itemQuantity,
             itemImage,
             itemFields,
             itemThemed
@@ -1265,6 +1307,7 @@ export const OrderForm = {
             new DocumentFragment().appendChild(item)
         );
         this.items.push(item);
+        OrderForm.addToItemInput(itemName);
         transition('add',item,'open',['show','active'],100);
     },
     selectItem(changeEvent){
@@ -1364,6 +1407,7 @@ export const OrderForm = {
         const isChecked = changeEvent.target.checked;
         if(progressState.length > 0){
             changeEvent.target.checked = false;
+            ANotification.notify('please fill out all empty fields before you order')
             return;
         }
         if(isChecked){
@@ -1375,231 +1419,182 @@ export const OrderForm = {
             OrderProgress.removeState(6);
         }
     },
-    async fetchDistanceForPickup(clickEvent){
-        clickEvent.preventDefault();
 
-        Confirmation.confirm(`This is just a test. Continue?`, (confirmed)=>{
-             // TESTING 
-            if(!confirmed) return;
-            // apply loading animation
-            const loader = document.querySelector('.order-form .distance-loader');
-            if(loader && !loader.classList.contains('loading')){
-                loader.classList.add('loading');
-            }
-            const distanceResponseOutput = document.querySelector('#DistanceResponseOutput');
 
-            const streetInput = document.querySelector('#OrderFormStreet');
-            const street = streetInput.value;
-            const cityInput = document.querySelector('#OrderFormCity');
-            const city = cityInput.value;
-            const stateInput = document.querySelector('#OrderFormState');
-            const state = stateInput.value;
-            const zipCodeInput = document.querySelector('#OrderFormZipCode');
-            const zipCode = zipCodeInput.value;
-
-            // get the distance based on address
-            const addressString = `${street} ${city}, ${state} ${zipCode}`;
-            
-            const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
-            const fakeDistanceMiles = '234.43';
-            const fakeTime = '12h 34m';
-            const pickupDistanceOutput = document.querySelector('#PickupDistance');
-            const pickupTimeOutput = document.querySelector('#PickupTime');
-            setTimeout( ()=>{
-                
-                pickupDistanceOutput.textContent = fakeDistanceMiles;
-                pickupTimeOutput.textContent = fakeTime;
-                const notificationMessage = `distance retrieved from: ${addressString}`;
-                ANotification.notify(notificationMessage);
-
-                const succesResponseMessage = `That's not too far. You can pick up your order!`;
-                const errorResponseMessage = `'That's pretty far. Road trips are always fun!`;
-                const randomResponse = Math.random() < 0.5 ? errorResponseMessage:succesResponseMessage;
-                distanceResponseOutput.textContent = `success! ${randomResponse}`;
-
-                if(loader.classList.contains('loading')){
-                    loader.classList.remove('loading');
-                }
-            },3000)
-        })
-
-            //if(!confirm('This is only a test and returned information is incorrect')) return;
-
-            //try{
-                //const currentLocation = await getCurrentLocation();
-
-                // const fetchResponse = await fetch(new URL('/api/distance-request','http://127.0.0.1:3456'),{
-                //     method: 'post',
-                //     headers: {
-                //         'Content-Type':'application/json'
-                //     },
-                //     body: JSON.stringify(currentLocation)
-                // });
-               
-                // const data = await fetchResponse.json();
-
-                // console.log('data', data);
-
-                // // TESTING 
-
-                // // apply loading animation
-
-                // const streetInput = document.querySelector('#OrderFormStreet');
-                // const street = streetInput.value;
-                // const cityInput = document.querySelector('#OrderFormCity');
-                // const city = cityInput.value;
-                // const stateInput = document.querySelector('#OrderFormState');
-                // const state = stateInput.value;
-                // const zipCodeInput = document.querySelector('#OrderFormZipCode');
-                // const zipCode = zipCodeInput.value;
-
-                // // get the distance based on address
-                // const addressString = `${street},${city},${state},${zipCode}`;
-               
-                // const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
-                // const fakeDistanceMiles = '234.43';
-                // const fakeTime = '12h 34m';
-                // const pickupDistanceOutput = document.querySelector('#PickupDistance');
-                // const pickupTimeOutput = document.querySelector('#PickupTime');
-                // setTimeout( ()=>{
-                //     pickupDistanceOutput.textContent = fakeDistanceMiles;
-                //     pickupTimeOutput.textContent = fakeTime;
-                //     alert(`distance retrieved from: ${addressString}`);
-                // },3000)
-
-                
-            //}catch(error){
-                //console.warn('Distance Request Error: ', error.message);
-            //}
+    setDistanceLoader(){
+        const loader = document.querySelector('.order-form .distance-loader');
+        if(loader && !loader.classList.contains('loading')){
+            loader.classList.add('loading');
+        }
     },
-    async fetchDistanceForDelivery(){
-        Confirmation.confirm('This is only a test.', (confirmed)=>{
-            // TESTING
-        if(!confirmed) return;
-            // apply loading animation
-            const loader = document.querySelector('.order-form .distance-loader');
-            if(loader && !loader.classList.contains('loading')){
-                loader.classList.add('loading');
-            }
-            const distanceResponseOutput = document.querySelector('#DistanceResponseOutput');
+    removeDistanceLoader(){
+        const loader = document.querySelector('.order-form .distance-loader');
+        if(loader && loader.classList.contains('loading')){
+            loader.classList.remove('loading');
+        }
+    },
+    getAddressData(){
+        const formData = new FormData(OrderForm.form);
+        const street = formData.get('street');
+        const city = formData.get('city');
+        const state = formData.get('state');
+        const zipCode = formData.get('zipcode');
+        if(!street || !city || !state || !zipCode){
+            return null;
+        }
+        return { street,city,state,zipCode };
+    },
+    setPickupDistanceAndTimeInputsAndDisplay(distance,time){
+        const pickupDistanceInput = document.querySelector('#PickupDistanceInput');
+        pickupDistanceInput.value = distance;
+        const pickupTimeInput = document.querySelector('#PickupTimeInput');
+        pickupTimeInput.value = time;
 
-            const streetInput = document.querySelector('#OrderFormStreet');
-            const street = streetInput.value;
-            const cityInput = document.querySelector('#OrderFormCity');
-            const city = cityInput.value;
-            const stateInput = document.querySelector('#OrderFormState');
-            const state = stateInput.value;
-            const zipCodeInput = document.querySelector('#OrderFormZipCode');
-            const zipCode = zipCodeInput.value;
+        const pickupDistanceOutput = document.querySelector('#PickupDistance');
+        pickupDistanceOutput.textContent = distance;
+        const pickupTimeOutput = document.querySelector('#PickupTime');
+        pickupTimeOutput.textContent = time;
+    },
+    setDeliveryAvailabilityInputsAndDisplay(availability,distance,time,price){
+        const deliveryAvailabilityInput = document.querySelector('#DeliveryAvailabilityInput');
+        deliveryAvailabilityInput.value = availability;
+        const deliveryDistanceInput = document.querySelector('#DeliveryDistanceInput');
+        deliveryDistanceInput.value = distance;
+        const deliveryTimeInput = document.querySelector('#DeliveryTimeInput');
+        deliveryTimeInput.value = time;
+        const deliveryPriceInput = document.querySelector('#DeliveryPriceInput');
+        deliveryPriceInput.value = price;
 
-            // get the distance based on address
-            const addressString = `${street} ${city}, ${state} ${zipCode}`;
-
-            const deliveryMilesLimit = 30;
-            const deliveryCost = 0.65;
-            const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
-            const fakeDistanceMiles = `${(Math.random() * 100).toFixed(2)}`;
-            const fakeTime = '32m';
-            const deliveryAvailabilityOutput = document.querySelector('#DeliveryAvailability');
-            const deliveryDistanceOutput = document.querySelector('#DeliveryDistance');
-            const deliveryTimeOutput = document.querySelector('#DeliveryTime');
-            const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
-
-            const fakeDistance = Number(fakeDistanceMiles);
-            setTimeout( ()=>{
-                if(fakeDistance > deliveryMilesLimit){
-                    deliveryAvailabilityOutput.textContent = 'not available';
-                    ANotification.notify(`delvery not available from: ${addressString}`);
-                    const errorResponseMessage = `I'm sorry but that is too far for me to drive at this time.`;
-                    distanceResponseOutput.textContent = `success! ${errorResponseMessage}`;
-                    
-                }else{
-                    const price = Number(fakeDistance) * deliveryCost;
-                    deliveryPriceOutput.textContent = `${price.toFixed(2)}`;
-                    deliveryAvailabilityOutput.textContent = 'available';
-                    OrderInvoice.setRetrievalCost(price.toFixed(2));
-                    OrderForm.addToTotal(price.toFixed(2));
-                    ANotification.notify(`delivery available from: ${addressString}`);
-                    const succesResponseMessage = `That's not too far. You can pick up your order!`;
-                    distanceResponseOutput.textContent = `success! ${succesResponseMessage}`;
+        const deliveryAvailabilityOutput = document.querySelector('#DeliveryAvailability');
+        deliveryAvailabilityOutput.textContent = availability;
+        const deliveryDistanceOutput = document.querySelector('#DeliveryDistance');
+        deliveryDistanceOutput.textContent = distance;
+        const deliveryTimeOutput = document.querySelector('#DeliveryTime');
+        deliveryTimeOutput.textContent = time;
+        const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
+        deliveryPriceOutput.textContent = price;
+    },
+    handleFetchResposeErrors(errors){
+        if(Array.isArray(errors)){
+            errors.forEach( error => {
+                if(error.type === 'field'){
+                    ANotification.notify(error.msg);
+                    console.log(`Fetch Response Error: ${error.msg}`)
                 }
-                deliveryDistanceOutput.textContent = fakeDistanceMiles;
-                deliveryTimeOutput.textContent = fakeTime;
-                if(loader.classList.contains('loading')){
-                    loader.classList.remove('loading');
-                }
+            })
+        }else{
+            ANotification.notify(errors);
+        }
+    },
+    fakeRequest(type){
+        ANotification.notify('This is only a test.')
+        OrderForm.setDistanceLoader();
+        if(type === 'pickup'){
+            setTimeout( ()=> {
+                OrderForm.setPickupDistanceAndTimeInputsAndDisplay(`11`,`1h 11m`);
+                OrderForm.removeDistanceLoader();
             },3000)
-        })
-        //if(!confirm('This is only a test and returned information is incorrect')) return;
+        }else if(type === 'delivery'){
+            setTimeout( ()=> {
+                OrderForm.setDeliveryAvailabilityInputsAndDisplay('not available','11','1h 11m','00.00');
+                OrderForm.removeDistanceLoader();
+            },3000)
+        }else{
+            ANotification.notify('request error');
+            OrderForm.removeDistanceLoader();
+        }
+    },
+    async requestPickupDistance(){
+        OrderForm.fakeRequest('pickup');
 
-            //try{
-                //const currentLocation = await getCurrentLocation();
+        // const addressData = OrderForm.getAddressData();
+        // if(!addressData){
+        //     ANotification.notify('Please provide your address or use current location');
+        //     return;
+        // }
+        // OrderForm.setDistanceLoader();
 
-                // const fetchResponse = await fetch(new URL('/api/distance-request','http://127.0.0.1:3456'),{
-                //     method: 'post',
-                //     headers: {
-                //         'Content-Type':'application/json'
-                //     },
-                //     body: JSON.stringify(currentLocation)
-                // });
-               
-                // const data = await fetchResponse.json();
+        // try{
+        //     const fetchResponse = await fetch(new URL('/api/request-distance','http://127.0.0.1:3456'),{
+        //         method: 'post',
+        //         headers: {
+        //             'Content-Type':'application/json'
+        //         },
+        //         body: JSON.stringify(addressData)
+        //     });
+        //     if(fetchResponse.ok){
+        //         const successData = await fetchResponse.json();
+        //         if(!successData) throw new Error('response success - no success data');
 
+        //         const { distance, time } = successData;
+        //         OrderForm.setPickupDistanceAndTimeInputsAndDisplay(distance,time);
 
-                // // TESTING
+        //         ANotification.notify('success!!');
 
-                //  // apply loading animation
+        //         OrderForm.removeDistanceLoader();
+        //     }else{
+        //         const errorData = await fetchResponse.json();
+        //         if(!errorData) throw new Error('response failed - no error data');
+           
+        //         OrderForm.handleFetchResposeErrors(errorData.errors);
 
-                // const streetInput = document.querySelector('#OrderFormStreet');
-                // const street = streetInput.value;
-                // const cityInput = document.querySelector('#OrderFormCity');
-                // const city = cityInput.value;
-                // const stateInput = document.querySelector('#OrderFormState');
-                // const state = stateInput.value;
-                // const zipCodeInput = document.querySelector('#OrderFormZipCode');
-                // const zipCode = zipCodeInput.value;
+        //         OrderForm.removeDistanceLoader();
+        //     }
+        // }catch(error){
+        //     ANotification.notify('request failed. try again.');
+        //     OrderForm.removeDistanceLoader();
+        //     console.error('Pickup Distance Request Error: ', error.message);
+        // }
+    },
+    async requestDeliveryAvailabilityCheck(){
+        OrderForm.fakeRequest('delivery');
 
-                // // get the distance based on address
-                // const addressString = `${street},${city},${state},${zipCode}`;
+        // const addressData = OrderForm.getAddressData();
+        // if(!addressData){
+        //     ANotification.notify('Please provide your address or use current location');
+        //     return;
+        // }
+        // OrderForm.setDistanceLoader();
+        // const fetchResponse = await fetch(new URL('/api/request-delivery-availability','http://127.0.0.1:3456'),{
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type':'application/json'
+        //     },
+        //     body: JSON.stringify(addressData)
+        // });
+        // try{
+        //     if(fetchResponse.ok){
+        //         const successData = await fetchResponse.json();
+        //         if(!successData) throw new Error('response success - no success data');
 
-                // const deliveryMilesLimit = 30;
-                // const deliveryCost = 0.65;
-                // const fakeLocation = { latitude: 1.23232323, longitude: -34.343433 };
-                // const fakeDistanceMiles = '26.89';
-                // const fakeTime = '32m';
-                // const deliveryAvailabilityOutput = document.querySelector('#DeliveryAvailability');
-                // const deliveryDistanceOutput = document.querySelector('#DeliveryDistance');
-                // const deliveryTimeOutput = document.querySelector('#DeliveryTime');
-                // const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
+        //         const { availability, distance, time, price } = successData;
+        //         OrderForm.setDeliveryAvailabilityInputsAndDisplay(availability, distance, time, price);
 
-                // const fakeDistance = Number(fakeDistanceMiles);
-                // setTimeout( ()=>{
-                //     if(fakeDistance > deliveryMilesLimit){
-                //         deliveryAvailabilityOutput.textContent = 'not available';
-                //         alert(`delvery not available from: ${addressString}`);
-                //     }else{
-                //         const price = Number(fakeDistance) * deliveryCost;
-                //         deliveryPriceOutput.textContent = `${price.toFixed(2)}`;
-                //         deliveryAvailabilityOutput.textContent = 'available';
-                //         OrderInvoice.setRetrievalCost(price.toFixed(2));
-                //         OrderForm.addToTotal(price.toFixed(2));
-                //         alert(`delivery available from: ${addressString}`);
-                //     }
-                //     deliveryDistanceOutput.textContent = fakeDistanceMiles;
-                //     deliveryTimeOutput.textContent = fakeTime;
-                // },3000)
-            //}catch(error){
-                //console.warn('Distance Request Error: ', error.message);
-            //}
+        //         ANotification.notify('success!!');
+
+        //         OrderForm.removeDistanceLoader();
+        //     }else{
+        //         const errorData = await fetchResponse.json();
+        //         if(!errorData) throw new Error('response failed - no error data');
+        
+        //         OrderForm.handleFetchResposeErrors(errorData.errors);
+
+        //         OrderForm.removeDistanceLoader();
+        //     }
+        // }catch(error){
+        //     ANotification.notify('request failed. try again.');
+        //     OrderForm.removeDistanceLoader();
+        //     console.error('Pickup Distance Request Error: ', error.message);
+        // }
     },
     counter: 0,
     getOrderData(){
-        submitEvent.preventDefault();
+        
         // sanitize everything
         // validate everything that needs validated
         // throw and error certain area didnt get filled out
         // make sure the form validates normally too (highlight fields unfilled)
-        const form = submitEvent.target;
+        const form = document.querySelector('#OrderForm'); //submitEvent.target;
         const formData = new FormData(form);
         console.log('FormData', formData);
         const items = [];
@@ -1607,7 +1602,9 @@ export const OrderForm = {
             fullname: formData.get(`name`) || null,
             email: formData.get(`email`) || null,
             phoneNumber: formData.get(`phone-number`) || null,
-            retrieval: formData.get(`retrieval`) || null,
+            retrieval: {
+                type: formData.get(`retrieval`) || null,
+            },
             payment: formData.get(`payment`) || null,
             subTotal: formData.get(`sub-total`) || null,
             total: formData.get(`total`) || null,
@@ -1620,6 +1617,23 @@ export const OrderForm = {
             data.state = formData.get(`state`);
             data.zipcode = formData.get(`zipcode`);
         }
+        if(data.retrieval.type === 'pickup'){
+            const pickupDistance = formData.get('pickup-distance');
+            if(pickupDistance) data.retrieval.distance = pickupDistance;
+            const pickupTime = formData.get('pickup-time');
+            if(pickupTime) data.retrieval.time = pickupTime;
+        }
+        if(data.retrieval.type === 'delivery'){
+            const deliveryAvailability = formData.get('delivery-availability');
+            if(deliveryAvailability) data.retrieval.availability = deliveryAvailability;
+            const deliveryDistance = formData.get('delivery-distance');
+            if(deliveryDistance) data.retrieval.distance = deliveryDistance;
+            const deliveryTime = formData.get('delivery-time');
+            if(deliveryTime) data.retrieval.time = deliveryTime;
+            const deliveryPrice = formData.get('delivery-price');
+            if(deliveryPrice) data.retrieval.price = deliveryPrice;
+        }
+        
         const itemsList = formData.get('items').split(',');
         if(itemsList.length > 0){
             itemsList.forEach( item => {
@@ -1642,15 +1656,54 @@ export const OrderForm = {
                 if(theme) itemData.theme = theme;
                 const personalization = formData.get(`${item}-personalization`);
                 if(personalization) itemData.personalization = personalization;
+                const inspirationImage = formData.get(`${item}-image`);
+                if(inspirationImage) itemData.image = inspirationImage;
+                console.log('data item image', inspirationImage);
                 items.push(itemData);
             });
             data.items = items;
         }
         
         console.log('data', data);
+        return data;
     },
-    submit(clickEvent){
+    async submit(clickEvent){
         clickEvent.preventDefault();
+
+        // const orderData = OrderForm.getOrderData();
+        // console.log('order data', orderData);
+
+        // OrderForm.setDistanceLoader();
+        // const fetchResponse = await fetch(new URL('/api/order','http://127.0.0.1:3456'),{
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type':'application/json'
+        //     },
+        //     body: JSON.stringify(orderData)
+        // });
+        // try{
+        //     if(fetchResponse.ok){
+        //         const successData = await fetchResponse.json();
+        //         if(!successData) throw new Error('response success - no success data');
+
+        //         console.log('success data', successData);
+
+        //         ANotification.notify('success!!');
+
+        //         OrderForm.removeDistanceLoader();
+        //     }else{
+        //         const errorData = await fetchResponse.json();
+        //         if(!errorData) throw new Error('response failed - no error data');
+        
+        //         OrderForm.handleFetchResposeErrors(errorData.errors);
+
+        //         OrderForm.removeDistanceLoader();
+        //     }
+        // }catch(error){
+        //     ANotification.notify('request failed. try again.');
+        //     OrderForm.removeDistanceLoader();
+        //     console.error('Pickup Distance Request Error: ', error.message);
+        // }
 
         Confirmation.confirm('This was only a test and no data is being sent anywhere',(confirmed)=>{
             if(confirmed){
@@ -1659,7 +1712,7 @@ export const OrderForm = {
                 ANotification.notify('How dare you cancel the order!.....it didnt do anything anyway.')
             }
             
-        })
+        });
 
         // const list = [
         //     'I disagree with your decision. try again',
@@ -1753,8 +1806,8 @@ export const OrderForm = {
 
             ProductComponent.initialize(this.removeItem);
             AddressComponent.initialize(
-                this.fetchDistanceForPickup,
-                this.fetchDistanceForDelivery
+                this.requestPickupDistance,
+                this.requestDeliveryAvailabilityCheck
             );
             OrderInvoice.initialize();
 
