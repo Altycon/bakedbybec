@@ -1407,7 +1407,33 @@ export const OrderForm = {
         const isChecked = changeEvent.target.checked;
         if(progressState.length > 0){
             changeEvent.target.checked = false;
-            ANotification.notify('please fill out all empty fields before you order')
+            ANotification.notify('please fill out all empty fields before you order');
+
+            const inputs = [...document.querySelectorAll('#OrderForm [name]')];
+            const emptyInputs = inputs.filter( input => (input.value === "" || input.value === '-- select --'));
+            console.log('empty', emptyInputs)
+            emptyInputs.forEach( input => {
+                if(!input.hidden){
+                    const item = input.closest('li.order-item');
+                    if(item && !item.classList.contains('active')){
+                        const tab = OrderForm.tabs.find( tab => tab.dataset.tabId === item.id);
+                        if(tab){
+                            tab.addEventListener('click', function removeEmptyFieldAnimation(){
+                                tab.classList.remove('empty-field');
+                                tab.removeEventListener('click', removeEmptyFieldAnimation);
+                            })
+                            tab.classList.add('empty-field');
+                        };
+                    }
+                    const field = input.closest('.field');
+                    field.classList.add('required');
+                    input.addEventListener('focus', function removeOutline(){
+                        field.classList.remove('required');
+                        input.removeEventListener('focus', removeOutline);
+                    })
+                }
+            })
+
             return;
         }
         if(isChecked){

@@ -289,6 +289,7 @@ input[hidden=true]{
 .form-date-input{
     font-family: var(--ff-primary);
 }
+
 /*
 ===================================================|
 ---------------------------------------------------|
@@ -5187,6 +5188,14 @@ input[hidden=true]{
 .order-form input[hidden=true]{
     display: none;
 }
+.order-form .field.required input,
+.order-form .field.required select,
+.order-form .field.required textarea{
+    outline: 2px solid red;
+}
+.order-form .field.required .field-output{
+    color: red;
+}
 .order-form select,
 .order-form input,
 .order-form textarea,
@@ -5298,7 +5307,20 @@ input[hidden=true]{
 .order-item-tab.show{
     opacity: 1;
 }
-
+.order-item-tab.empty-field{
+    animation: glowingRed 1.6s linear infinite;
+}
+@keyframes glowingRed {
+    0%{
+        box-shadow: inset 0px 0px 0px red;
+    }
+    50%{
+        box-shadow: inset 0px 0px 20px red
+    }
+    100%{
+        box-shadow: inset 0px 0px 0px red
+    }
+}
 .order-item-tab::before{
     content: "";
     position: absolute;
