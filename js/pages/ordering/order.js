@@ -3,7 +3,7 @@ import { openInHouseBakerySign, scrollToTopOfPage, transition, } from "../../uti
 import { OrderProgress } from "./order_progress.js";
 import { OrderForm } from "./order_form.js";
 import { Confirmation } from "../../confirmation.js";
-import { ANotification } from "../../notification.js";
+import { ANotification, PageNotification } from "../../notification.js";
 
 function openOrderForm(event){
     event.preventDefault();
@@ -27,7 +27,6 @@ function openOrderForm(event){
 };
 
 function initializeOrderPage(){
-
     // let externalItemValue = undefined;
 
     // if(window.location.hash && window.location.hash !== ""){
@@ -39,6 +38,7 @@ function initializeOrderPage(){
 
         Confirmation.initialize();
         ANotification.initialize();
+        PageNotification.initialize();
 
         if(!isPageNavigationDisplayed()){
             pageNavigation();

@@ -72,7 +72,7 @@ export const OrderProgress = {
                         OrderProgress.inspectAreaInputProgress(classSelector,progressState);
                     })
                 }else if(input.tagName === 'SELECT'){
-                    input.addEventListener('input', ()=>{
+                    input.addEventListener('change', ()=>{
                         OrderProgress.inspectAreaInputProgress(classSelector,progressState);
                     })
                 }else{
@@ -85,6 +85,18 @@ export const OrderProgress = {
     },
     display(){
         transition('add',OrderProgress.element,'open','show');
+    },
+    reset(){
+        [...document.querySelectorAll(`.js-order-form [name]`)].forEach( input => {
+            if(input.classList.contains('listening')){
+                input.classList.remove('listening');
+            }
+        });
+        this.elements.forEach( element => {
+            this.uncomplete(element);
+            this.deactivate(element);
+        });
+        this.setState(0);
     },
     initialize(){
 

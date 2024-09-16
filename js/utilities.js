@@ -21,28 +21,45 @@ export function zeroPadLeftToString(num){
 export function capitalize(word){
     return word.charAt(0).toUpperCase() + word.slice(1)
 };
-export function getTodaysDateString(){
-    const currentDate = new Date();
-    const formator = new Intl.DateTimeFormat('en-Us',{
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric'
-    });
-    return formator.format(currentDate); 
+
+export function ADate(){
+    const period = new Date();
+    const year = period.getFullYear();
+    const month = (period.getMonth() + 1) % 12;
+    const day = period.getDate();
+    return `${zeroPadLeftToString(year)}-${zeroPadLeftToString(month)}-${zeroPadLeftToString(day)}`;
 };
-export function formatDateString(dateString,options){
-    const currentDate = new Date(dateString);
-    if(options){
-        const formator = new Intl.DateTimeFormat('en-Us',options);
-        return formator.format(currentDate); 
+export function formatADate(dateString,currentFormat,newFormat){
+    if(!dateString) return null;
+    const getSeparator = (format)=>{
+        const checks = ['Y','M','D'];
+        for(let i = 0; i < format.length; i++){
+            const char = format[i];
+            if(!checks.includes(char)){
+                return char;
+            } 
+        }
+        return null;
     }
-    const formator = new Intl.DateTimeFormat('en-Us',{
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric'
-    });
-    return formator.format(currentDate); 
+    const currentSeparator = getSeparator(currentFormat);
+    if(!currentSeparator){
+        console.warn('no current seperator in current current format');
+        return dateString;
+    }
+    const dateParts = dateString.split(currentSeparator);
+    const periodOjbect = {};
+    currentFormat.split(currentSeparator).forEach( (part,index) => periodOjbect[part] = dateParts[index]);
+
+    const newSepatator = getSeparator(newFormat);
+    if(!newSepatator){
+        console.warn('no new seperator in new format');
+        return dateString;
+    }
+    const reorderedParts = newFormat.split(newSepatator).map( part => periodOjbect[part]);
+    const newString = reorderedParts.join(newSepatator);
+    return newString;
 };
+
 export function scrollToTopOfPage(){
     if(document.documentElement.scrollTop > 0){
         window.scroll({

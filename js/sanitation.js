@@ -1,4 +1,4 @@
-function sanitizeInput(inputString){
+export function sanitizeInput(inputString){
     if(typeof inputString !== 'string') return inputString;
     inputString = inputString.trim();
     const map = {

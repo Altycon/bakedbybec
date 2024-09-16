@@ -1,17 +1,20 @@
 import { Confirmation } from "../../confirmation.js";
 import { AImageViewer } from "../../image_viewer.js";
-import { ANotification } from "../../notification.js";
+import { ANotification, PageNotification } from "../../notification.js";
+import { sanitizeInput } from "../../sanitation.js";
 import { 
+    ADate,
     appendElementToParentWithFragment, 
     capitalize, 
+    clearParentElement, 
     createHtmlElement, 
     disableSelectFieldOption, 
-    enableSelectFieldOption, 
-    formatDateString, 
+    enableSelectFieldOption,  
+    formatADate, 
     getFutureDateByDays, 
-    getTodaysDateString, 
     transition
 } from "../../utilities.js";
+import { checkInputValidity } from "../../validation.js";
 import { listOfUsStates} from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
 import { PRODUCT_DATA } from "./product_data.js";
@@ -22,23 +25,22 @@ function connectInputToOutput(event){
     const outputId = event.target.id;
     const outputElement = document.querySelector(`[data-output="${outputId}"]`);
     if(outputElement){
+        const value = event.target.value;
         switch(outputId){
             case 'SugarCookiesQuantity':
             case 'DropCookiesQuantity':
             case 'CupCakesQuantity':
             case 'CakePopsQuantity':
-                outputElement.textContent = `${event.target.value} dozen`;
+                outputElement.textContent = `${value} dozen`;
                 break;
             default : 
             if(outputId.includes('Date')){
-                outputElement.textContent = formatDateString(event.target.value);
+                outputElement.textContent = formatADate(value,'YYYY-MM-DD','MM/DD/YYYY')
             }else{
-                outputElement.textContent = event.target.value;
+                outputElement.textContent = value;
             }
-            
             break;
         }
-        
     }else{
         console.error(`output element for ${outputId} missing or not connected`)
     }
@@ -79,7 +81,7 @@ const OrderInvoice = {
     images: [],
     
     setDate(dateString){
-        if(!dateString) dateString = getTodaysDateString();
+        if(!dateString) return;
         this.dateOutput.textContent = dateString;
     },
     addNumberOfItems(){
@@ -351,7 +353,7 @@ const FormComponent = {
         const li = changeEvent.target.closest('li');
         const datalistOption = li.querySelector(`#${li.id}Prices option[value="${li.dataset.name}"]`);
         const optionPrice = datalistOption.dataset.price;
-        const price = Number(optionPrice) * Number(changeEvent.target.value);
+        const price = (Number(optionPrice) * Number(changeEvent.target.value)).toFixed(2);
 
         const costInput = document.querySelector(`#${li.id}Cost`);
         if(costInput) costInput.value = `${optionPrice}`;
@@ -365,11 +367,11 @@ const FormComponent = {
     calculatePriceFromQuantityWithSize(changeEvent){
         const li = changeEvent.target.closest('li');
         const sizeFieldSelect = li.querySelector(`#${li.id}Size`);
-        if(!sizeFieldSelect || sizeFieldSelect.value === '-- select --') return;
+        if(!sizeFieldSelect || !sizeFieldSelect.value || sizeFieldSelect.value === '-- select --') return;
 
         const datalistOption = li.querySelector(`#${li.id}Prices option[value="${sizeFieldSelect.value}"]`);
         const optionPrice = datalistOption.dataset.price;
-        const price = Number(optionPrice) * Number(changeEvent.target.value);
+        const price = parseFloat((Number(optionPrice) * Number(changeEvent.target.value)).toFixed(2));
         
         const costInput = document.querySelector(`#${li.id}Cost`);
         if(costInput) costInput.value = `${optionPrice}`;
@@ -387,20 +389,20 @@ const FormComponent = {
         if(!quantityFieldElement || quantityFieldElement.value === '-- select --') return;
         const datalistOption = li.querySelector(`#${li.id}Prices option[value="${changeEvent.target.value}"]`)
         const optionPrice = datalistOption.dataset.price;
-        const price = Number(optionPrice) * Number(quantityFieldElement.value);
+        const price = parseFloat((Number(optionPrice) * Number(quantityFieldElement.value)).toFixed(2));
 
         const costInput = document.querySelector(`#${li.id}Cost`);
         if(costInput) costInput.value = `${optionPrice}`;
         const priceInput = document.querySelector(`#${li.id}Price`)
         if(priceInput) priceInput.value = `${price}`;
         
-        OrderInvoice.setItemPriceById(li.id,price);
+        OrderInvoice.setItemPriceById(li.id,`${price}`);
         OrderForm.addToSubTotal(price);
         OrderForm.addToTotal(price);
     },
     selectField(attributes,textContent,options){
         const select = createHtmlElement('select',attributes,
-            createHtmlElement('option',{selected: 'true', disabled: 'true'},'-- select --'),
+            createHtmlElement('option',{selected: 'true', disabled: 'true', value: ''},'-- select --'),
             { type: 'change', listen: connectInputToOutput }
         );
         if(attributes.id.includes('SugarCookiesQuantity') ||
@@ -516,7 +518,7 @@ const ProductComponent ={
                 createHtmlElement('h4',{},'price'),
                 createHtmlElement('p',{},[
                     createHtmlElement('span',{ class:'pink-text' }, `$${prices[0].value}`),
-                    prices[0].units || document.createElement('span')
+                    createHtmlElement('span',{}, `${prices[0].units || 'each'}`)
                 ])
             ]);
         }else{
@@ -616,7 +618,7 @@ const ProductComponent ={
     },
     inspiration(id,name){
        
-        const filenameOutput = createHtmlElement('div',{ class: 'filename-output'},'-- no file selected');
+        const filenameOutput = createHtmlElement('div',{ class: `filename-output ${name}-filename-output`},'-- no file selected');
         const imageOutput = createHtmlElement('img', { src: "", class: `inspiration-img-output viewable`});
         const fileUploadInput = createHtmlElement('input', { 
             type: 'file', 
@@ -629,9 +631,19 @@ const ProductComponent ={
         const browseBtn = createHtmlElement('button', { type: 'button', class: 'btn browse-file-btn'}, 'browse files');
         browseBtn.addEventListener('click', (clickEvent)=> {
             clickEvent.preventDefault();
-            fileUploadInput.addEventListener('input', (inputEvent)=>{
+
+            fileUploadInput.addEventListener('input', function uploadFile(inputEvent){
                 const file = inputEvent.target.files[0];
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                if(file){
+                    if(!allowedTypes.includes(file.type)){
+                        ANotification.notify('please upload a jpeg,png,gif,webp');
+                        fileUploadInput.removeEventListener('input',uploadFile);
+                        return;
+                    }
+                }
                 filenameOutput.textContent = file.name;
+                filenameOutput.setAttribute('title',file.name);
     
                 const fileReader = new FileReader();
                 fileReader.onload = function(){
@@ -722,7 +734,7 @@ const ProductComponent ={
         
         return datalist;
     },
-    create(itemId,itemName,itemTitle,itemPrices,itemImage,itemFields,itemThemed){
+    create(pid,itemId,itemName,itemTitle,itemPrices,itemImage,itemFields,itemThemed){
         const component = createHtmlElement('li', { 
             id: itemId, 
             class: 'order-item js-order-item',
@@ -748,6 +760,14 @@ const ProductComponent ={
         }
         component.append(
             this.priceDataList(itemId,itemName,itemPrices),
+            createHtmlElement('input',{
+                type: 'text',
+                id: `${itemId}PID`,
+                name: `${itemName}-pid`,
+                value: `${pid}`,
+                autocomplete: 'off',
+                hidden: 'true'
+            }),
             createHtmlElement('input',{
                 type: 'text',
                 id: `${itemId}Price`,
@@ -919,6 +939,9 @@ const AddressComponent = {
                 id: 'OrderFormStreet', 
                 name: 'street', 
                 class: 'form-text-input js-personal-info',
+                minLength: '3',
+                maxLength: '50',
+                title: 'must be more than 3 characters',
                 autocomplete: 'off',
                 required: 'true' 
             },'street'
@@ -928,6 +951,9 @@ const AddressComponent = {
                 id: 'OrderFormCity',
                 name: 'city',
                 class: 'form-text-input js-personal-info',
+                minLength: '2',
+                maxLength: '30',
+                title: 'must be more than 3 characters',
                 autocomplete: 'off',
                 required: 'true' 
             },'city'),
@@ -943,6 +969,9 @@ const AddressComponent = {
                 id: 'OrderFormZipCode',
                 name: 'zipcode',
                 class: 'form-text-input js-personal-info',
+                inputmode: 'numeric',
+                pattern: "[0-9]{5}(-[0-9]{4})?",
+                title: 'please enter correct zipcode format',
                 autocomplete: 'off',
                 required: 'true'
             },'zipcode')
@@ -993,6 +1022,7 @@ const AddressComponent = {
     }
 }
 export const OrderForm = {
+    maxImageSize: 5242880, // (5 * 1024 * 1024) 5MB
     form: undefined,
     dateInput: undefined,
     itemSelect: undefined,
@@ -1013,7 +1043,9 @@ export const OrderForm = {
     items: [],
     tabs: [],
 
-
+    createItemUID(pid){
+        
+    },
     itemIdFromName(itemName){
         if(!itemName){
             console.warn(`Function: "itemIdFromName" missing argument: "itemName" string.`);
@@ -1024,13 +1056,11 @@ export const OrderForm = {
             else return capitalize(part);
         }).join('');
     },
-    setDate(dateString){
-        if(!dateString){
-            dateString = getTodaysDateString();
-        }
-        console.log(dateString)
-        document.querySelector('#OrderFormDate').value = dateString;
-        OrderInvoice.setDate(dateString);
+    setDate(){
+        const dateString = ADate();
+        const formatedDate = formatADate(dateString,'YYYY-MM-DD','MM/DD/YYYY');
+        OrderForm.dateInput.value = dateString;
+        OrderInvoice.setDate(formatedDate);
     },
     hasCakes(itemId){
         const activeItems = document.querySelectorAll('.js-order-item');
@@ -1068,9 +1098,17 @@ export const OrderForm = {
     },
     addToSubTotal(price){
         const subtotal = Number(this.subTotalInput.value) + Number(price);
-        this.subTotalInput.value = `${subtotal}`;
+        const totalParts = subtotal.toString().split('.');
 
-        OrderInvoice.setSubTotal(`${subtotal}.00`);
+        let totalString = '';
+        if(totalParts.length > 1){
+            totalString = `${subtotal.toFixed(2)}`
+        }else{
+            totalString = `${subtotal}.00`
+        }
+
+        this.subTotalInput.value = totalString;
+        OrderInvoice.setSubTotal(totalString);
     },
     addToTotal(price){
         const total = Number(this.totalInput.value) + Number(price);
@@ -1288,8 +1326,9 @@ export const OrderForm = {
             }
         }
     },
-    addItem(itemId,itemName,itemTitle,itemPrices,itemImage,itemFields,itemThemed){
+    addItem(pid,itemId,itemName,itemTitle,itemPrices,itemImage,itemFields,itemThemed){
         const item = ProductComponent.create(
+            pid,
             itemId,
             itemName,
             itemTitle,
@@ -1319,7 +1358,16 @@ export const OrderForm = {
         OrderForm.removeItemIntro();
         OrderForm.hideItems();
 
-        OrderForm.addItem(data.id,data.name,data.title,data.prices,data.image,data.fields,data.themed);
+        OrderForm.addItem(
+            data.pid,
+            data.id,
+            data.name,
+            data.title,
+            data.prices,
+            data.image,
+            data.fields,
+            data.themed
+        );
 
         disableSelectFieldOption(OrderForm.itemSelect,itemName);
 
@@ -1390,8 +1438,13 @@ export const OrderForm = {
             OrderInvoice.setRetrievalPrice(`${retrievalPrice}`);
             OrderInvoice.setRetrievalCost(`00.00`);
             
-            if(currentState === 'shipping'){
-                OrderForm.subtractFromTotal('15');
+            if(currentState === 'delivery' || currentState === 'shipping'){
+                const total = +document.querySelector('#OrderFormTotal').value;
+                const subtotal = +document.querySelector('#OrderFormSubTotal').value;
+                const difference = total - subtotal;
+                if(total !== subtotal && difference > 0 && difference < subtotal){
+                    OrderForm.subtractFromTotal(difference);
+                }
             }
         }
         changeEvent.target.dataset.state = retrievalType;
@@ -1499,6 +1552,9 @@ export const OrderForm = {
         deliveryTimeOutput.textContent = time;
         const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
         deliveryPriceOutput.textContent = price;
+
+        OrderInvoice.setRetrievalCost(price);
+        OrderForm.addToTotal(price);
     },
     handleFetchResposeErrors(errors){
         if(Array.isArray(errors)){
@@ -1522,7 +1578,7 @@ export const OrderForm = {
             },3000)
         }else if(type === 'delivery'){
             setTimeout( ()=> {
-                OrderForm.setDeliveryAvailabilityInputsAndDisplay('not available','11','1h 11m','00.00');
+                OrderForm.setDeliveryAvailabilityInputsAndDisplay('available','23','4h 11m','6.53');
                 OrderForm.removeDistanceLoader();
             },3000)
         }else{
@@ -1614,15 +1670,7 @@ export const OrderForm = {
         // }
     },
     counter: 0,
-    getOrderData(){
-        
-        // sanitize everything
-        // validate everything that needs validated
-        // throw and error certain area didnt get filled out
-        // make sure the form validates normally too (highlight fields unfilled)
-        const form = document.querySelector('#OrderForm'); //submitEvent.target;
-        const formData = new FormData(form);
-        console.log('FormData', formData);
+    getOrderData(formData){
         const items = [];
         const data = {
             fullname: formData.get(`name`) || null,
@@ -1683,78 +1731,323 @@ export const OrderForm = {
                 const personalization = formData.get(`${item}-personalization`);
                 if(personalization) itemData.personalization = personalization;
                 const inspirationImage = formData.get(`${item}-image`);
-                if(inspirationImage) itemData.image = inspirationImage;
+                if(inspirationImage) itemData.image = structuredClone(inspirationImage);
                 console.log('data item image', inspirationImage);
                 items.push(itemData);
             });
             data.items = items;
         }
-        
-        console.log('data', data);
         return data;
+    },
+    sanitizeAndValidateInput(formData,name,options){
+        const value = formData.get(name);
+        if(!value) return [new Error('date is required'),null];
+        const sanitizedValue = sanitizeInput(value);
+        const [ valueError, validValue ] = checkInputValidity(sanitizedValue,options);
+        if(valueError) return [new Error(`"${name}" ERROR: ${valueError.message}`),null];
+        formData.set(name,validValue);
+        console.log(name,validValue);
+        return [null,value];
+    },
+    checkSanitizeAndValidateInput(formData,name,options){
+        const value = formData.get(name);
+        if(!value) return [null,'undefined'];
+        const sanitizedValue = sanitizeInput(value);
+        const [ valueError, validValue ] = checkInputValidity(sanitizedValue,options);
+        if(valueError) return [new Error(`"${name}" ERROR: ${valueError.message}`),null];
+        formData.set(name,validValue);
+        //console.log(name,validValue);
+        return [null,validValue];
+    },
+    checkAndValidateImageFileInput(formData,name){
+        //console.log(name)
+        const file = formData.get(name);
+        if(!file) return [null,'undefined'];
+        if(!file) return [new Error(`"${name}" ERROR: missing file`),null];
+        if(file.size > OrderForm.maxImageSize) return [new Error(`"${name}" ERROR: file to large`),null];
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if(!allowedTypes.includes(file.type)){
+            return [new Error(`"${name}" ERROR: invalid file type`),null];
+        }
+        return [null,null];
+    },
+    sanitizeAndValidateOrderData(form){
+        const formData = new FormData(form);
+        
+        const [ dateError ] = OrderForm.sanitizeAndValidateInput(formData,'date',{
+            isString: true,
+            minLength: 10,
+            maxLength: 20
+        })
+        if(dateError) return [dateError,null];
+
+        const [ nameError ] = OrderForm.sanitizeAndValidateInput(formData,'name',{ 
+            isString: true, 
+            minLength: 2, 
+            maxLength: 50
+        })
+        if(nameError) return [nameError,null];
+
+        const [ emailError ] = OrderForm.sanitizeAndValidateInput(formData,'email',{ 
+            type:'email', 
+            isString: true,
+            minLength: 2,
+            maxLength: 50
+        })
+        if(emailError) return [emailError,null];
+
+        const [ phoneNumberError ] = OrderForm.sanitizeAndValidateInput(formData,'phone-number',{
+            type: 'phone-number',
+            isString: true,
+            minLength: 10,
+            maxLength: 12
+        })
+        if(phoneNumberError) return [phoneNumberError,null];
+
+        const [ retrievalError, validRetrieval ] = OrderForm.sanitizeAndValidateInput(formData,'retrieval',{
+            isString: true,
+            minLength: 4,
+            maxLength: 20
+        });
+        if(retrievalError) return [retrievalError,null];
+
+        const [ paymentError ] = OrderForm.sanitizeAndValidateInput(formData,'payment',{
+            isString: true,
+            minLength: 3,
+            maxLength: 20
+        });
+        if(paymentError) return [paymentError,null];
+      
+        const [ subTotalError ] = OrderForm.sanitizeAndValidateInput(formData,'sub-total',{
+            isString: true,
+            isNumber: true,
+            minLength: 1,
+            maxLength: 5
+        });
+        if(subTotalError) return [subTotalError,null];
+        
+        const [ totalError ] = OrderForm.sanitizeAndValidateInput(formData,'total',{
+            isString: true,
+            isNumber: true,
+            minLength: 1,
+            maxLength: 20
+        });
+        if(totalError) return [totalError,null];
+
+        if(validRetrieval && validRetrieval === 'delivery' || validRetrieval === 'shipping'){
+            const [ streetError ] = OrderForm.sanitizeAndValidateInput(formData,'street',{
+                isString: true,
+                minLength: 1,
+                maxLength: 50
+            });
+            if(streetError) return [streetError,null];
+
+            const [ cityError ] = OrderForm.sanitizeAndValidateInput(formData,'city',{
+                isString: true,
+                minLength: 2,
+                maxLength: 50
+            });
+            if(cityError) return [cityError,null];
+
+            const [ stateError ] = OrderForm.sanitizeAndValidateInput(formData,'state',{
+                isString: true,
+                minLength: 2,
+                maxLength: 50
+            });
+            if(stateError) return [stateError,null];
+
+            const [ zipCodeError ] = OrderForm.sanitizeAndValidateInput(formData,'zipcode',{
+                isString: true,
+                minLength: 5,
+                maxLength: 10
+            });
+            if(zipCodeError) return [zipCodeError,null];
+        }
+        if(validRetrieval && validRetrieval === 'delivery'){
+
+            const [ deliveryAvailabilityError, validDeliveryAvailability ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-availability',{
+                isString: true,
+                minLength: 4,
+                maxLength: 20
+            });
+            if(deliveryAvailabilityError) return [deliveryAvailabilityError,null];
+
+            if(validDeliveryAvailability === 'available'){
+                const [ deliveryDistanceError ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-distance',{
+                    isString: true,
+                    minLength: 1,
+                    maxLength: 20
+                });
+                if(deliveryDistanceError) return [deliveryDistanceError,null];
+    
+                const [ deliveryTimeError ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-time',{
+                    isString: true,
+                    minLength: 5,
+                    maxLength: 10
+                });
+                if(deliveryTimeError) return [deliveryTimeError,null];
+    
+                const [ deliveryPriceError ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-price',{
+                    isString: true,
+                    isNumber: true,
+                    minLength: 1,
+                    maxLength: 8
+                });
+                if(deliveryPriceError) return [deliveryPriceError,null];
+            }
+        }
+
+        // order items
+        const orderItemsList = formData.get('items');
+        if(!orderItemsList) return [new Error('items list required'), null];
+        const orderItems = orderItemsList.split(',');
+
+        for(let i = 0; i < orderItems.length; i++){
+            const orderItem = orderItems[i];
+
+            const [ dateNeededError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-date`,{
+                isString: true,
+                minLength: 10,
+                maxLength: 12
+            });
+            if(dateNeededError) return [dateNeededError,null];
+
+            const [ quantityError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-quantity`,{
+                isString: true,
+                isNumber: true,
+                minLength: 1,
+                maxLength: 2
+            });
+            if(quantityError) return [quantityError,null];
+
+            const [ costError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-cost`,{
+                isString: true,
+                isNumber: true,
+                minLength: 1,
+                maxLength: 5
+            });
+            if(costError) return [costError,null];
+
+            const [ priceError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-price`,{
+                isString: true,
+                isNumber: true,
+                minLength: 1,
+                maxLength: 5
+            });
+            if(priceError) return [priceError,null];
+
+            const [ sizeError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-size`,{
+                isString:true,
+                minLength: 1,
+                maxLength: 20
+            });
+            if(sizeError) return [sizeError,null];
+
+            const [ flavorError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-flavor`,{
+                isString:true,
+                minLength: 2,
+                maxLength: 50
+            });
+            if(flavorError) return [flavorError,null];
+
+            const [ frostingError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-frosting`,{
+                isString: true,
+                minLength: 2,
+                maxLength: 50
+            });
+            if(frostingError) return [frostingError,null];
+
+            const [ chipsError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-chips`,{
+                isString: true,
+                minLength: 2,
+                maxLength: 50
+            });
+            if(chipsError) return [chipsError,null];
+
+            const [ themeError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-theme`,{
+                isString: true,
+                minLength: 2,
+                maxLength: 200
+            });
+            if(themeError) return [themeError,null];
+
+            const [ personalizationError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-personalization`,{
+                    isString: true,
+                    minLength: 2,
+                    maxLength: 200
+            });
+            if(personalizationError) return [personalizationError,null];
+          
+            const [ imageError ] = OrderForm.checkAndValidateImageFileInput(formData,`${orderItem}-image`);
+            if(imageError) return [imageError,null];
+        }
+        return [null,formData];
+    },
+    fakeSubmit(clickEvent){
+        clickEvent.preventDefault();
+        const pageLoader = document.querySelector('#PageLoader');
+        transition('add',pageLoader,'open',['show','loading']);
+        setTimeout( ()=> {
+            transition('remove',pageLoader,'show',['open','loading']);
+            PageNotification.notify('This was just a test.',
+                'Thank you for testing with Baked by Bec.',
+                'please close X'
+            );
+        },3000)
     },
     async submit(clickEvent){
         clickEvent.preventDefault();
+        const form = document.querySelector('#OrderForm');
 
-        // const orderData = OrderForm.getOrderData();
-        // console.log('order data', orderData);
-
-        // OrderForm.setDistanceLoader();
-        // const fetchResponse = await fetch(new URL('/api/order','http://127.0.0.1:3456'),{
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type':'application/json'
-        //     },
-        //     body: JSON.stringify(orderData)
-        // });
-        // try{
-        //     if(fetchResponse.ok){
-        //         const successData = await fetchResponse.json();
-        //         if(!successData) throw new Error('response success - no success data');
-
-        //         console.log('success data', successData);
-
-        //         ANotification.notify('success!!');
-
-        //         OrderForm.removeDistanceLoader();
-        //     }else{
-        //         const errorData = await fetchResponse.json();
-        //         if(!errorData) throw new Error('response failed - no error data');
+        const pageLoader = document.querySelector('#PageLoader');
+        transition('add',pageLoader,'open',['show','loading']);
         
-        //         OrderForm.handleFetchResposeErrors(errorData.errors);
+        try{
 
-        //         OrderForm.removeDistanceLoader();
-        //     }
-        // }catch(error){
-        //     ANotification.notify('request failed. try again.');
-        //     OrderForm.removeDistanceLoader();
-        //     console.error('Pickup Distance Request Error: ', error.message);
-        // }
+            const [ error, data ] = OrderForm.sanitizeAndValidateOrderData(form);
+            if(error) throw new Error(`VALIDATION_ERROR: ${error.message}`);
 
-        Confirmation.confirm('This was only a test and no data is being sent anywhere',(confirmed)=>{
-            if(confirmed){
-                ANotification.notify('Well done. Tis complete');
+            const orderFetchURL = new URL('/api/order','http://127.0.0.1:3456');
+            const fetchResponse = await fetch(orderFetchURL,{ method:'post', body:data });
+
+            if(fetchResponse.ok){
+                
+                const successData = await fetchResponse.json();
+                if(!successData) throw new Error('FETCH_ERROR: successfull response but no data');
+
+                console.log('success data', successData);
+
+                //ANotification.notify('order success!!');
+                
+                transition('remove',pageLoader,'show',['open','loading']);
+
+                PageNotification.notify('order success!!',
+                    'You have successfully placed and order. A confirmation email has been sent with your order. I will reply to you soon!',
+                    'please close X',
+                    //()=> window.location.reload()
+                );
+
             }else{
-                ANotification.notify('How dare you cancel the order!.....it didnt do anything anyway.')
-            }
-            
-        });
+                const errorData = await fetchResponse.json();
+                if(!errorData) throw new Error('FETCH_ERROR: - no error data');
+        
+                OrderForm.handleFetchResposeErrors(errorData.errors);
 
-        // const list = [
-        //     'I disagree with your decision. try again',
-        //     'nope. not this time. try again',
-        //     'really? do you think something is going to happen? try again',
-        //     'fine. ill do nothing again. try again',
-        //     'how long you gonna try this? try again',
-        //     `you've realized that there may be more and want to continue? try again`
-        // ]
-        // if(clickEvent.target.classList.contains('active')){
-        //     alert(list[OrderForm.counter]);
-        //     OrderForm.counter++;
-        //     if(OrderForm.counter >= list.length){
-        //         OrderForm.counter = 0;
-        //     }
-        // }
+                transition('remove',pageLoader,'show',['open','loading']);
+                PageNotification.notify('order failed.',
+                    'Order failed to process. Please try again',
+                    'please close X'
+                );
+            }
+
+        }catch(error){
+            console.log(`'FETCH_ERROR: ${error.message || error.msg}`);
+            transition('remove',pageLoader,'show',['open','loading']);
+            PageNotification.notify('order failed.',
+                'Order failed to process. Please try again',
+                'please close X'
+            );
+        }
     },
     
     listen(){
@@ -1772,7 +2065,7 @@ export const OrderForm = {
         });
         this.agreementCheckbox.addEventListener('change', this.selectAgreementCheckbox);
        // this.form.addEventListener('submit', this.submit)
-       this.submitButton.addEventListener('click', this.submit);
+       this.submitButton.addEventListener('click', this.fakeSubmit);
     },
     initialize(){
         try{

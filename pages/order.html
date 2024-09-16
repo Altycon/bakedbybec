@@ -17,7 +17,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <base href="/bakedbybec/">
+    <!-- <base href="/"> -->
+    <base href="https://altycon.github.io/bakedbybec/">
 
     <link rel="stylesheet" href="main.css">
 
@@ -34,7 +35,7 @@
     <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/" class="link">
+            <a href="/" class="link">
                 <img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked By Bec Text Logo">
             </a>
             <button type="button" title="Iowa residential bakery legislation" class="btn in-house-bakery-btn js-in-house-bakery-btn">i</button>
@@ -135,7 +136,7 @@
                     <img src="img/icon/site/bbb_icon_meet_128x128.png" width="100" alt="">
                 </div>
             </header>
-            <form id="OrderForm" class="order-form js-order-form">
+            <form id="OrderForm" class="order-form js-order-form" enctype="multipart/form-data">
                 <header>
                     <h2>order form</h2>
                     <input type="text" name="date" id="OrderFormDate" autocomplete="off" hidden>
@@ -202,7 +203,7 @@
                     </div>
                     <div class="field">
                         <label for="OrderFormRetrieval" class="form-label">retrieval type</label>
-                        <select name="retrieval" id="OrderFormRetrieval" class="form-select" data-state="" autocomplete="off" required>
+                        <select name="retrieval" id="OrderFormRetrieval" pattern="[A-Za-z]" class="form-select" data-state="" autocomplete="off" required>
                             <option value=""selected disabled>-- select --</option>
                             <option value="pickup" data-price="free">Pickup</option>
                             <option value="shipping" data-price="15">Shipping</option>
@@ -259,6 +260,9 @@
                                 id="OrderFormFullNameInput" 
                                 class="form-text-input js-personal-info" 
                                 data-input="name"
+                                minlength="2"
+                                maxlength="50"
+                                title="name must be more thatn 2 and less than 50 characters"
                                 placeholder="full name"
                                 autocomplete="off" 
                                 required>
@@ -271,8 +275,10 @@
                                 id="OrderFormEmailInput" 
                                 class="form-text-input js-personal-info"
                                 data-input="email" 
-                                placeholder="youremail@host.com"
-                                title="ex: emailname@host.com"
+                                minlength="2"
+                                maxlength="50"
+                                title="ex: email@host.com"
+                                placeholder="your_email@host.com"
                                 autocomplete="off" 
                                 required>
                             <div class="field-output">* required</div>
@@ -283,8 +289,12 @@
                                 name="phone-number" 
                                 id="OrderFormPhoneNumberInput" 
                                 class="form-text-input js-personal-info" 
+                                data-input="phone-number"
+                                pattern="[0-9]{3}[\-]?[0-9]{3}[\-]?[0-9]{4}"
+                                minlength="10"
+                                maxlength="12"
+                                title="1234567890 or 123-456-7890"
                                 placeholder="555-555-5555"
-                                data-input="phone-number" 
                                 autocomplete="off" 
                                 required>
                             <div class="field-output">* required</div>
@@ -395,7 +405,7 @@
                 <li><a href="pages/book_class.html" class="link">class</a></li>
             </ul>
             <div class="footer-logo">
-                <a href="/bakedbybec/"><img src="img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
+                <a href="/"><img src="img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
             </div>
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
@@ -443,8 +453,22 @@
                 <div class="bulb">7</div>
             </li>
         </ul>
-   </div>
-
+    </div>
+    <div id="PageLoader">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="animator">
+                <div class="ball" style="--i:1;"><span></span></div>
+                <div class="ball" style="--i:2;"><span></span></div>
+                <div class="ball" style="--i:3;"><span></span></div>
+                <div class="ball" style="--i:4;"><span></span></div>
+                <div class="ball" style="--i:5;"><span></span></div>
+                <div class="ball" style="--i:6;"><span></span></div>
+                <div class="ball" style="--i:7;"><span></span></div>
+                <div class="ball" style="--i:8;"><span></span></div>
+            </div>
+        </div>
+    </div>
     <div class="image-viewer">
         <div class="overlay"></div>
         <figure>
@@ -468,6 +492,14 @@
         <ol class="notification-list js-notification-list">
             
         </ol>
+    </div>
+    <div class="page-notification js-page-notification">
+        <div class="overlay"></div>
+        <div class="content">
+            <h3 class="title">This is the title</h3>
+            <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, similique alias ad voluptatum sed iure dolorum optio iusto sapiente. Qui.</p>
+            <button type="button" class="btn page-notification-close-btn js-page-notification-close-btn">some text for button<span> x</span></button>
+        </div>
     </div>
     
 </body>

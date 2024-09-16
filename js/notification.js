@@ -105,3 +105,73 @@ export const ANotification = {
         }
     }
 };
+
+export const PageNotification = {
+    element: undefined,
+    title: undefined,
+    message: undefined,
+    closeButton: undefined,
+    callback: undefined,
+
+    setTitle(title){
+        this.title.textContent = title;
+    },
+    setMessage(message){
+        this.message.textContent = message;
+    },
+    setButtonText(buttonText){
+        this.closeButton.textContent = buttonText;
+    },
+    close(clickEvent){
+        clickEvent.preventDefault();
+        if(PageNotification.element.classList.contains('open')){
+            PageNotification.element.classList.remove('show');
+            setTimeout( ()=>{
+                PageNotification.element.classList.remove('open');
+                if(PageNotification.callback){
+                    PageNotification.callback();
+                    PageNotification.callback = undefined;
+                }
+            },500);
+        }
+        clickEvent.target.removeEventListener('click', PageNotification.close);
+    },
+    open(){
+        if(!this.element.classList.contains('open')){
+            this.element.classList.add('open');
+            setTimeout( ()=>{
+                this.element.classList.add('show');
+            },100);
+        }
+        this.closeButton.addEventListener('click', PageNotification.close);
+    },
+    notify(title,message,buttonText,callback){
+        title = title || 'no title';
+        message = message || 'no message';
+        buttonText = buttonText || 'close';
+        if(callback) PageNotification.callback = callback;
+        PageNotification.setTitle(title);
+        PageNotification.setMessage(message);
+        PageNotification.setButtonText(buttonText);
+        PageNotification.open();
+    },
+    initialize(){
+        try{
+            this.element = document.querySelector('.js-page-notification');
+            if(!this.element) throw new Error('missing element - page notification');
+
+            this.title = document.querySelector('.js-page-notification .title');
+            if(!this.title) throw new Error('missing element - page notification title');
+
+            this.message = document.querySelector('.js-page-notification .message');
+            if(!this.message) throw new Error('missing element - page notification message');
+
+            this.closeButton = document.querySelector('.js-page-notification-close-btn');
+            if(!this.closeButton) throw new Error('missing element - page notification close button');
+
+        }catch(error){
+            console.warn('MISSING ELEMENT ERROR: ', error);
+            throw error;
+        }
+    }
+}

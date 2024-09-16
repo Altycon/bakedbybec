@@ -37,11 +37,12 @@ const BAKING_CHIPS_OPTIONS = [
 export const PRODUCT_DATA = {
     sugarCookies: {
         id: 'SugarCookies',
+        pid: '01',
         title: 'Sugar Cookies',
         name: 'sugar-cookies',
         themed: true,
         prices: [
-            { value: '30', units: '/dozen' }
+            { value: '30.00', units: '/dozen' }
         ],
         fields: {
             quantity: {
@@ -58,11 +59,12 @@ export const PRODUCT_DATA = {
     },
     dropCookies: {
         id: 'DropCookies',
+        pid: '02',
         title: 'Drop Cookies',
         name: 'drop-cookies',
         themed: false,
         prices: [
-            { value: '25', units: '/dozen' }
+            { value: '25.00', units: '/dozen' }
         ],
         fields: {
             quantity: {
@@ -91,14 +93,15 @@ export const PRODUCT_DATA = {
     },
     layerCake: {
         id: 'LayerCake',
+        pid: '03',
         title: 'Layer Cake',
         name: 'layer-cake',
         themed: true,
         prices: [
-            { value: '25', title: '6 inch' },
-            { value: '35', title: '8 inch' },
-            { value: '45', title: '10 inch' },
-            { value: '65', title: '2 tier' },
+            { value: '25.00', title: '6 inch' },
+            { value: '35.00', title: '8 inch' },
+            { value: '45.00', title: '10 inch' },
+            { value: '65.00', title: '2 tier' },
         ],
         fields: {
             quantity: {
@@ -141,12 +144,13 @@ export const PRODUCT_DATA = {
     },
     sheetCake: {
         id: 'SheetCake',
+        pid: '04',
         title: 'Sheet Cake',
         name: 'sheet-cake',
         themed: true,
         prices: [
-            { value: '30', title: 'quarter' },
-            { value: '45', title: 'half' }
+            { value: '30.00', title: 'quarter' },
+            { value: '45.00', title: 'half' }
         ],
         fields: {
             quantity: {
@@ -187,12 +191,13 @@ export const PRODUCT_DATA = {
     },
     cupCakes: {
         id: 'CupCakes',
+        pid: '05',
         title: 'Cup Cakes',
         name: 'cup-cakes',
         themed: true,
         prices: [
-            { value: '25', title:'mini', units:'/dozen' },
-            { value: '30', title:'standard', units:'/dozen' }
+            { value: '25.00', title:'mini', units:'/dozen' },
+            { value: '30.00', title:'standard', units:'/dozen' }
         ],
         fields: {
             quantity: {
@@ -230,11 +235,12 @@ export const PRODUCT_DATA = {
     },
     cakePops:{
         id: 'CakePops',
+        pid: '06',
         title: 'Cake Pops',
         name: 'cake-pops',
         themed: false,
         prices: [
-            { value: 18, units: '/dozen' }
+            { value: '18.00', units: '/dozen' }
         ],
         fields: {
             quantity: {

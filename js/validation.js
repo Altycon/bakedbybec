@@ -39,9 +39,66 @@ function validateInput(value, validationType) {
     return true;
 };
 
-export function validate(validations){
+function validate(validations){
     validations.forEach( validation =>{
         validateInput(validation);
     })
 };
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ZIPCODE_REGEX = /[0-9]{5}(-[0-9]{4})?/;
+const PHONE_NUMBER_REGEX = /[0-9]{3}[\-]?[0-9]{3}[\-]?[0-9]{4}/;
+
+export function checkInputValidity(value='', options={}){
+    if(!options) return [null,value];
+    if(options.isString){
+        if(options.isString === true){
+            if(typeof value !== 'string'){
+                return [new Error('invalid type - not string'),null];
+            }
+        }
+    }
+    if(options.isString && options.isNumber){
+        if(options.isString === true && isNaN(value)){
+            return [new Error(`"${value} is not a number (this might be wrong)`),null];
+        }
+    }
+    if(options.type){
+        switch(options.type){
+            case 'email':
+                if(!EMAIL_REGEX.test(value)){
+                    return [new Error(`invalid email - "${value}"`),null]
+                }
+                break;
+            case 'phone-number':
+                if(!PHONE_NUMBER_REGEX.test(value)){
+                    return [new Error(`invalid phone number format - "${value}"`),null]
+                }
+                break;
+            case 'zipcode':
+                if(!ZIPCODE_REGEX.test(value)){
+                    return [new Error(`invalid zipcode - "${value}"`),null]
+                }
+                break;
+        }
+    }
+    if(options.minLength){
+        if(value.length < options.minLength){
+            return [new Error('invalid length - too few characters'),null]
+        }
+    }
+    if(options.maxLength){
+        if(value.length > options.maxLength){
+            return [new Error('invalid length - too many characters'),null]
+        }
+    }
+    return [null, value];
+};
+
+// const [error,value] = checkFormValidity('23495-', { type: 'zipcode', isString: true, minLength: 3, maxLength: 50 })
+// if(error){
+//     console.log('error', error.message);
+// }else{
+//     console.log('value', value);
+// }
 

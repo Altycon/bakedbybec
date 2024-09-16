@@ -289,6 +289,9 @@ input[hidden=true]{
 .form-date-input{
     font-family: var(--ff-primary);
 }
+.form-text-input:focus-visible:invalid{
+    outline: 5px solid var(--fc-rare);
+}
 
 /*
 ===================================================|
@@ -349,11 +352,9 @@ input[hidden=true]{
 }
 .page-header .website-title > a > img{
     width: 150px;
-    /* filter: invert(100%); */
 }
 .page-header .website-title > img{
     width: 150px;
-    /* filter: invert(100%); */
 }
 /*+++++++++++++++++++++++++++++++*/
 .page-header .page-navigation-primary{
@@ -3654,13 +3655,13 @@ input[hidden=true]{
     box-shadow: 3px 3px 10px black;
 
     opacity: 0;
-    transform: translateX(50px);
-    transition: transform 300ms ease-in-out calc(var(--i) * 100ms),
-    opacity 400ms ease-in-out calc(var(--i) * 100ms);
+    translate: -50px 0;
+    transition: translate 500ms ease calc(var(--i) * 100ms),
+    opacity 300ms ease calc(var(--i) * 100ms);
 }
 .gallery-content > section.show > ul > li{
     opacity: 1;
-    transform: translateX(0px);
+    translate: 0 0;
 }
 .gallery-content > section > ul > li > figure{
     position: relative;
@@ -5073,7 +5074,7 @@ input[hidden=true]{
     text-decoration: underline;
 }
 .order-main{
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 .before-you-order{
     margin-bottom: 32px;
@@ -5558,7 +5559,7 @@ input[hidden=true]{
 .order-item-price-display > p{
     font-size: .8rem;
 }
-.order-item-price-display > p > span{
+.order-item-price-display > p > span:nth-child(1){
     font-weight: 700;
     font-size: 1rem;
 }
@@ -5748,6 +5749,10 @@ input[hidden=true]{
 .file-upload-element .filename-output{
     padding: .5rem;
     font-size: .8rem;
+    max-width: 200px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 .order-item .inspiration .inspiration-content .inspiration-img-wrapper{
     grid-column: 2;
@@ -6208,20 +6213,7 @@ input[hidden=true]{
     margin-right: 4px;
 }
 
-@keyframes distanceLoaderLoading {
-    0%{
-        background-color: var(--site-color-accent2);
-        scale: 0.5;
-    }
-    50%{
-        scale: 1;
-        background-color: var(--site-color-accent1);
-    }
-    100%{
-        scale: 0.5;
-        background-color: var(--site-color-accent2);
-    }
-}
+
 .order-form .personal-information .pickup-distance-information{
     display: none;
 
@@ -6948,6 +6940,80 @@ input[hidden=true]{
         font-size: .6rem;
     }
 }
+/*
+===================================================|
+---------------------------------------------------|
+
+            RESPONSE PAGES
+
+---------------------------------------------------|
+===================================================|
+*/
+.response-page{
+
+}
+.response-page-header{
+
+}
+.response-page-header > .website-title{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: flex-start;
+    align-items: center;
+}
+.response-page-header .website-title > a{
+    display: inline-block;
+    padding: 4px;
+}
+.response-page-header .website-title > a > img{
+    max-width: 150px;
+}
+
+.response-page .introduction{
+    padding-top: 64px;
+    padding-bottom: 32px;
+}
+.response-page .introduction > h2{
+    font-size: 8rem;
+    color: green;
+    text-align: center;
+
+    opacity: 0;
+    animation: responsePageTitleSlideAndFadeIn 500ms linear forwards;
+}
+.response-page .introduction > p{
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.5rem;
+
+    opacity: 0;
+    animation: responsePageTitleSlideAndFadeIn 500ms linear forwards 500ms;
+}
+@keyframes responsePageTitleSlideAndFadeIn {
+    from{
+        translate: -100px 0;
+        opacity: 0;
+    }
+    to{
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+.response-page .order-invoice{
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    translate: 0 100px;
+    opacity: 0;
+    transition: translate 500ms ease 1s, opacity 300ms ease 1s;
+}
+.response-page .order-invoice.show{
+    translate: 0 0;
+    opacity: 1;
+}
 
 /*
 ===================================================|
@@ -7056,6 +7122,69 @@ input[hidden=true]{
         font-weight: 500;
     }
 }
+/*
+--------------------------------
+
+    |    PAGE LOADER
+
+--------------------------------
+*/
+#PageLoader{
+    position: fixed;
+    isolation: isolate;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100vh;
+
+    display: none;
+}
+#PageLoader.open{
+    display: block;
+}
+#PageLoader .overlay{
+    position: absolute;
+    inset: 0;
+    background-color: hsl(0 0% 0% / 0.8);
+    z-index: -1;
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+#PageLoader.show .overlay{
+    opacity: 1;
+}
+#PageLoader .content{
+    height: 100%;
+    align-content: center;
+}
+#PageLoader .content .animator{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+#PageLoader .content .animator .ball{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    rotate: calc(var(--i) * 45deg);
+}
+#PageLoader .content .animator .ball > span{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    
+    scale: 1;
+}
+#PageLoader.loading .content .animator .ball > span{
+    animation: distanceLoaderLoading 1.3s linear calc(var(--i) * 200ms) infinite;
+}
+
+
 /*
 --------------------------------
 
@@ -7279,7 +7408,71 @@ input[hidden=true]{
 
 
 
+/*
+--------------------------------
 
+    |    PAGE NOTIFICATION MODAL
+
+--------------------------------
+*/
+.page-notification{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100vh;
+
+    align-content: center;
+    display: none;
+}
+.page-notification.open{
+    display: block;
+}
+.page-notification .overlay{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0 0% 0% / 0.8);
+    z-index: -1;
+
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.page-notification.show .overlay{
+    opacity: 1;
+}
+.page-notification .content{
+    text-align: center;
+
+    translate: 0 100px;
+    opacity: 0;
+    transition: translate 500ms ease, opacity 300ms ease;
+}
+.page-notification.show .content{
+    translate: 0 0;
+    opacity: 1;
+}
+.page-notification .content .title{
+    line-height: 1.5rem;
+}
+.page-notification .content .message{
+    max-width: 300px;
+    margin: 0 auto 12px auto;
+    line-height: 1.5rem;
+}
+.page-notification .content button{
+    border: none;
+    color: var(--fc-primary);
+    text-align: center;
+    font-weight: 700;
+    text-shadow: var(--text-shadow-primary);
+    padding: 8px 16px;
+    border-radius: 16px;
+    background-color: var(--site-color-accent2);
+    box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
+    inset -1px -1px 2px black,
+    5px 5px 10px black;
+}
 
 
 
@@ -7310,6 +7503,20 @@ input[hidden=true]{
 ---------------------------------------------------|
 ===================================================|
 */
+@keyframes distanceLoaderLoading {
+    0%{
+        background-color: var(--site-color-accent2);
+        scale: 0.5;
+    }
+    50%{
+        scale: 1;
+        background-color: var(--site-color-accent1);
+    }
+    100%{
+        scale: 0.5;
+        background-color: var(--site-color-accent2);
+    }
+}
 @keyframes heartPulse {
     0%{
         transform: scale(1);
