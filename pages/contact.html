@@ -96,66 +96,77 @@
     </header>
 
     <main class="contact-main">
-
         <header>
             <h1 class="page-title">contact</h1>
         </header>
-        
-        <form id="ContactForm" class="contact-form">
-            <fieldset>
-                <label for="ContactNameInput" class="form-label">
-                    <div>name</div>
-                    <input type="text" 
-                        name="name" 
-                        id="ContactNameInput"
-                        class="form-text-input" 
-                        placeholder="full name"
-                        autocomplete="off" 
-                        required>
-                </label>
-                <label for="ContactEmailInput" class="form-label">
-                    <div>email</div>
-                    <input type="text" 
-                        name="email" 
-                        id="ContactEmailInput"
-                        class="form-text-input"
-                        title="ex: email@host.com"
-                        placeholder="email@host.com"
-                        autocomplete="off"
-                        required>
-                </label>
-                <div class="topic">
-                    <label for="ContactTopicSelect" class="form-label">
-                        <div>topic</div>
-                        <select name="topic" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
-                            <option value=""selected disabled>-- select --</option>
-                            <option value="cookies">cookies</option>
-                            <option value="cakes">cakes</option>
-                            <option value="pricing">pricing</option>
-                            <option value="availability">availability</option>
-                            <option value="other">other</option>
-                        </select>
-                    </label>
-                </div>
-                
-                <label for="ContactMessageTextarea" class="form-label">
-                    <div>message</div>
-                    <textarea name="" 
-                        id="ContactMessageTextarea"
-                        class="form-textarea" 
-                        cols="30" 
-                        rows="3"  
-                        placeholder="details"
-                        autocomplete="off" 
-                        required></textarea>
-                </label>
-            </fieldset>
-            <div class="information">
-                <p>* It can take up to 24 hours for a response.</p>
-                <p>** Any messages after 6pm will be handled the following business day.</p>
+        <div class="content">
+            <div class="sidebar">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
             </div>
-            <button type="button" class="btn contact-form-submit-btn js-contact-form-submit-btn">Send</button>
-        </form>
+            <form id="ContactForm" class="contact-form">
+                <fieldset>
+                    <label for="ContactNameInput" class="form-label">
+                        <div>name</div>
+                        <input type="text" 
+                            name="name" 
+                            id="ContactNameInput"
+                            class="form-text-input" 
+                            placeholder="full name"
+                            autocomplete="off" 
+                            required>
+                    </label>
+                    <label for="ContactEmailInput" class="form-label">
+                        <div>email</div>
+                        <input type="text" 
+                            name="email" 
+                            id="ContactEmailInput"
+                            class="form-text-input"
+                            title="ex: email@host.com"
+                            placeholder="email@host.com"
+                            autocomplete="off"
+                            required>
+                    </label>
+                    <div class="topic">
+                        <label for="ContactTopicSelect" class="form-label">
+                            <div>topic</div>
+                            <select name="topic" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
+                                <option value=""selected disabled>-- select --</option>
+                                <option value="cookies">cookies</option>
+                                <option value="cakes">cakes</option>
+                                <option value="pricing">pricing</option>
+                                <option value="availability">availability</option>
+                                <option value="other">other</option>
+                            </select>
+                        </label>
+                    </div>
+                    
+                    <label for="ContactMessageTextarea" class="form-label">
+                        <div>message</div>
+                        <textarea name="" 
+                            id="ContactMessageTextarea"
+                            class="form-textarea" 
+                            cols="30" 
+                            rows="3"  
+                            placeholder="details"
+                            autocomplete="off" 
+                            required></textarea>
+                    </label>
+                </fieldset>
+                <div class="information">
+                    <p>* It can take up to 24 hours for a response.</p>
+                    <p>** Any messages after 6pm will be handled the following business day.</p>
+                </div>
+                <button type="button" class="btn contact-form-submit-btn js-contact-form-submit-btn">Send</button>
+            </form>
+            <div class="sidebar">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+   
     </main>
 
     <footer class="footer-primary">
