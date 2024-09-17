@@ -40,12 +40,10 @@ const BookClass = {
         const classType = formData.get('class-type');
         const classLevel = formData.get('class-level');
 
-        
-
         try{
     
             const sanitizedName = sanitizeInput(name);
-            const [ nameError, validName ] = checkInputValidity(sanitizedName,{
+            const [ nameError ] = checkInputValidity(sanitizedName,{
                 isString: true,
                 minLength: 3,
                 maxLength: 200
@@ -53,7 +51,7 @@ const BookClass = {
             if(nameError) throw nameError;
 
             const sanitizedEmail = sanitizeInput(email);
-            const [ emailError, validEmail ] = checkInputValidity(sanitizedEmail,{
+            const [ emailError ] = checkInputValidity(sanitizedEmail,{
                 isString: true,
                 type: 'email',
                 minLength: 5,
