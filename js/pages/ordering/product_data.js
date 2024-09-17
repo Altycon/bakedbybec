@@ -231,7 +231,7 @@ export const PRODUCT_DATA = {
         },
         invoiceFields: ['size','flavor', '/', 'frosting'],
         retrievalRestrictions: ['shipping'],
-        image: `img/icon/product/bbb_icon_cakepops_128x128.png`
+        image: `img/icon/product/bbb_icon_cupcakes_128x128.png`
     },
     cakePops:{
         id: 'CakePops',
