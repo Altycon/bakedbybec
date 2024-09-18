@@ -2157,8 +2157,15 @@ input[hidden=true]{
     line-height: 1.5em;
 }
 @media only screen and (max-width: 700px) {
+    .recent-orders-list{
+        scroll-snap-type: x mandatory;
+        scroll-snap-stop: always;
+    }
     .recent-order{
-        text-align: center;
+        padding-block: 0px;
+        padding-top: 64px;
+        padding-bottom: 128px;
+        scroll-snap-align: center;
         grid-template-columns: auto;
         grid-template-rows: repeat(2,auto);
         justify-content: center;
@@ -2180,6 +2187,9 @@ input[hidden=true]{
     }
     .recent-order .information > p:first-child{
         margin-bottom: 12px;
+    }
+    .recent-order .information > p:last-child{
+        font-size: .8rem;
     }
     .recent-order .directional-arrow{
         top: 85%;
