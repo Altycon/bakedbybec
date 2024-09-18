@@ -1896,8 +1896,49 @@ input[hidden=true]{
 =======================================|
 */
 .recent-orders{
+    position: relative;
     margin-bottom: 64px;
+    perspective: 1000px;
 }
+.recent-orders .background{
+
+    
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform-style: preserve-3d;
+
+    display: grid;
+    grid-template-columns: repeat(7,auto);
+    grid-template-rows: auto;
+    align-items: flex-end;
+    gap: 10px;
+}
+.recent-orders .background .line{
+    --line-delay: calc(var(--i) * 100ms);
+    --line-translate-z: calc(var(--i) * -100px);
+    justify-self: center;
+    width: 25px;
+    height: calc(100% - calc(var(--i) * 10%));
+    border-radius: 12px;
+    background-image: var(--site-gradient);
+    box-shadow: inset -2px 2px 5px black,
+    inset 2px 2px 3px hsl(0 0% 100% / 0.5);
+
+    /* transform-style: preserve-3d; */
+    transform-origin: center;
+    rotate: 20deg;
+    opacity: 0;
+    translate: -100px 100px var(--line-translate-z);
+    transition: translate 1s ease var(--line-delay),
+    opacity 1s ease var(--line-delay);
+}
+.recent-orders:hover .background .line{
+    opacity: 0.3;
+    translate: 0 0 var(--line-translate-z);
+    
+}
+
 .recent-orders > header > h2{
     position: relative;
     text-align: center;
@@ -1907,12 +1948,21 @@ input[hidden=true]{
     content: "";
     position: absolute;
     top: 50%; left: 50%;
-    translate: -50% -25%;
+    translate: -50% -50%;
     width: 400px;
     height: 400px;
-    outline: 10px solid var(--fc-rare);
+    /* outline: 1px solid var(--fc-rare); */
     border-radius: 50%;
-    background-image: linear-gradient(transparent 30%,var(--site-color-accent2));
+    background-image: linear-gradient(transparent 30%,var(--site-link-color));
+    box-shadow: 5px 5px 10px hsl(0 0% 0% / 0.3),
+    inset -2px -2px 5px hsl(0 0% 0% / 0.3);
+
+    opacity: 0.1;
+    transition: translate 1.5s ease, opacity 1s ease;
+}
+.recent-orders:hover > header > h2::before{
+    translate: -50% -25%;
+    opacity: 1;
 }
 .recent-orders-list{
     /* border: 10px solid var(--fc-rare); */
@@ -1923,6 +1973,7 @@ input[hidden=true]{
     overflow-x: auto;
     /* scroll-snap-type: x mandatory;
     scroll-snap-stop: always; */
+    
 
     display: grid;
     grid-template-columns: repeat(6,auto);
@@ -1934,13 +1985,13 @@ input[hidden=true]{
 }
 .recent-order{
     position: relative;
-    border: 10px solid var(--fc-rare);
     width: calc(100vw - 20px);
     
     padding-inline: 32px;
     padding-block: 128px;
     border-radius: 16px;
     /* scroll-snap-align: center; */
+    perspective: 1000px;
 
     display: grid;
     grid-template-columns: repeat(2,auto);
@@ -1950,8 +2001,9 @@ input[hidden=true]{
 .recent-order .directional-arrow{
     position: absolute;
     top: 50%;
+    min-height: 66px;
     translate: 0 -50%;
-    
+    align-content: center;
 
     display: grid;
     grid-template-columns: repeat(3,auto);
@@ -1959,10 +2011,12 @@ input[hidden=true]{
     gap: 4px;
 }
 .recent-order .directional-arrow-left{
-    left: 32px;
+    left: 0;
+    padding-left: 32px;
 }
 .recent-order .directional-arrow-right{
-    right: 32px;
+    right: 0;
+    padding-right: 32px;
 }
 .recent-orders-list .recent-order:first-of-type .directional-arrow-left{
     display: none;
@@ -2040,11 +2094,21 @@ input[hidden=true]{
     grid-row: 1;
 
     max-width: 400px;
-    aspect-ratio: 16/9;
+    aspect-ratio: 5/4;
     overflow: hidden;
     background-color: black;
     border-radius: 12px;
     box-shadow: 10px 10px 50px black;
+
+    transform-style: preserve-3d;
+    transform-origin: center;
+    opacity: 0.5;
+    rotate: y 0deg;
+    transition: rotate 1s ease, opacity 1s ease;
+}
+.recent-order:hover .img-wrapper{
+    opacity: 1;
+    rotate: y 30deg;
 }
 .recent-order .img-wrapper > img{
     width: 100%;
@@ -2057,6 +2121,14 @@ input[hidden=true]{
     max-width: 500px;
     /* outline: 1px solid yellow; */
     filter: drop-shadow(-10px 10px 20px black);
+
+    opacity: 0.8;
+    scale: .98;
+    transition: scale 500ms ease, opacity 300ms ease;
+}
+.recent-order:hover .information{
+    opacity: 1;
+    scale: 1;
 }
 .recent-order .information > p{
     text-shadow: 1px 1px 2px black;

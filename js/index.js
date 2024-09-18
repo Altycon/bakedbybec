@@ -29,9 +29,32 @@ function handleDesktopHomeHoverLinksAnimation(){
             
         });
     })
-
 };
 
+
+function setRecentOrderListItemDirectionalArrows(){
+    const recentOrdersList = document.querySelector('.recent-orders-list');
+    const recentOrders = recentOrdersList.querySelectorAll('.recent-order');
+    recentOrders.forEach( recentOrder =>{
+        const styleWidth = +getComputedStyle(recentOrder).getPropertyValue('width').slice(0,-2);
+        const paddingInline = +getComputedStyle(recentOrdersList).getPropertyValue('padding-inline').slice(0,-2);
+        const scrollWidth = styleWidth + paddingInline;
+        const leftArrow = recentOrder.querySelector('.directional-arrow-left');
+        const rightArrow = recentOrder.querySelector('.directional-arrow-right');
+        leftArrow.addEventListener('click', ()=>{
+            recentOrdersList.scrollBy({
+                left: -scrollWidth,
+                behavior: 'smooth'
+            })
+        })
+        rightArrow.addEventListener('click', ()=>{
+            recentOrdersList.scrollBy({
+                left: scrollWidth,
+                behavior: 'smooth'
+            })
+        })
+    })
+}
 
 
 function initializeSite(){
@@ -51,5 +74,31 @@ function initializeSite(){
     createIntersectionObserver('.intersection',threshold);
 
     AImageViewer.initialize(document.querySelectorAll('img.viewable'));
+
+    setRecentOrderListItemDirectionalArrows();
+
+    // const recentOrderList = document.querySelector('.recent-orders-list');
+    // console.log(recentOrderList)
+    // document.querySelectorAll('.recent-order .directional-arrow').forEach( directionArrow =>{
+        
+    //     directionArrow.addEventListener('click', (clickEvent)=>{
+    //         const arrow = clickEvent.target;
+    //         const recentOrder = arrow.closest('li');
+    //         const demensions = recentOrder.getBoundingClientRect();
+
+
+    //         if(arrow.classList.contains('directional-arrow-left')){
+    //             recentOrderList.scrollBy({
+    //                 left: -demensions.width - 10,
+    //                 behavior: 'smooth'
+    //             })
+    //         }else if(arrow.classList.contains('directional-arrow-right')){
+    //             recentOrderList.scrollBy({
+    //                 left: demensions.width + 10,
+    //                 behavior: 'smooth'
+    //             })
+    //         }
+    //     },false)
+    // })
 }
 initializeSite();
