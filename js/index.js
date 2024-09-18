@@ -35,6 +35,24 @@ function handleDesktopHomeHoverLinksAnimation(){
 function setRecentOrderListItemDirectionalArrows(){
     const recentOrdersList = document.querySelector('.recent-orders-list');
     const recentOrders = recentOrdersList.querySelectorAll('.recent-order');
+    recentOrdersList.addEventListener('scroll',()=>{
+        recentOrders.forEach( rOrder => {
+            rOrder.querySelectorAll('.directional-arrow').forEach( arrow => {
+                if(!arrow.classList.contains('hide')){
+                    arrow.classList.add('hide');
+                }
+            })
+        })
+    });
+    recentOrdersList.addEventListener('scrollend',()=>{
+        recentOrders.forEach( rOrder => {
+            rOrder.querySelectorAll('.directional-arrow').forEach( arrow => {
+                if(arrow.classList.contains('hide')){
+                    arrow.classList.remove('hide');
+                }
+            })
+        })
+    })
     recentOrders.forEach( recentOrder =>{
         const styleWidth = +getComputedStyle(recentOrder).getPropertyValue('width').slice(0,-2);
         const paddingInline = +getComputedStyle(recentOrdersList).getPropertyValue('padding-inline').slice(0,-2);
