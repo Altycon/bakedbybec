@@ -1897,6 +1897,7 @@ input[hidden=true]{
 */
 .recent-orders{
     position: relative;
+    overflow: hidden;
     margin-bottom: 64px;
     perspective: 1000px;
 }
@@ -1941,6 +1942,7 @@ input[hidden=true]{
 
 .recent-orders > header > h2{
     position: relative;
+    isolation: isolate;
     text-align: center;
     font-size: 2.5rem;
 }
@@ -1956,6 +1958,7 @@ input[hidden=true]{
     background-image: linear-gradient(transparent 30%,var(--site-link-color));
     box-shadow: 5px 5px 10px hsl(0 0% 0% / 0.3),
     inset -2px -2px 5px hsl(0 0% 0% / 0.3);
+    z-index: -1;
 
     opacity: 0.1;
     transition: translate 1.5s ease, opacity 1s ease;
@@ -1997,18 +2000,25 @@ input[hidden=true]{
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
     justify-content: space-evenly;
+    gap: 12px;
 }
 .recent-order .directional-arrow{
     position: absolute;
-    top: 50%;
+    top: 80%;
     min-height: 66px;
-    translate: 0 -50%;
+    /* translate: 0 -50%; */
     align-content: center;
 
     display: grid;
     grid-template-columns: repeat(3,auto);
     grid-template-rows: auto;
     gap: 4px;
+
+    opacity: 1;
+    transition: opacity 300ms ease;
+}
+.recent-order .directional-arrow.hide{
+    opacity: 0;
 }
 .recent-order .directional-arrow-left{
     left: 0;
@@ -2145,6 +2155,53 @@ input[hidden=true]{
     text-align:  center;
     font-size: 1.2rem;
     line-height: 1.5em;
+}
+@media only screen and (max-width: 700px) {
+    .recent-order{
+        text-align: center;
+        grid-template-columns: auto;
+        grid-template-rows: repeat(2,auto);
+        justify-content: center;
+        gap: 12px;
+    }
+    .recent-order .img-wrapper{
+        grid-column: 1;
+        grid-row: 1;
+
+        rotate: x 0deg;
+    }
+    .recent-order:hover .img-wrapper{
+        rotate: y 0deg;
+        rotate: x -10deg;
+    }
+    .recent-order .information{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .recent-order .information > p:first-child{
+        margin-bottom: 12px;
+    }
+    .recent-order .directional-arrow{
+        top: 85%;
+    }
+    .recent-order .directional-arrow-left{
+        left: 40%;
+        translate: -50% 0;
+    }
+    .recent-order .directional-arrow-right{
+        right: unset;
+        left: 60%;
+        translate: -50% 0;
+    }
+    .recent-orders .background{
+        grid-template-columns: repeat(3,auto);
+    }
+    .recent-orders .background .line:nth-child(1),
+    .recent-orders .background .line:nth-child(3),
+    .recent-orders .background .line:nth-child(4),
+    .recent-orders .background .line:nth-child(5){
+        display: none;
+    }
 }
 /*
 =======================================|
