@@ -1342,7 +1342,7 @@ input[hidden=true]{
 @media only screen and (max-width: 500px){
     .home-navigation-primary-logo-subtext{
         position: absolute;
-        top: 80%; left: 50%;
+        top: 95%; left: 50%;
         /* font-size: .8rem; */
         white-space: nowrap;
         font-weight: 700;
@@ -1374,7 +1374,8 @@ input[hidden=true]{
 .home-navigation-heros .navigation-hero{
     position: relative;
     isolation: isolate;
-    padding: 1rem;
+    padding-inline: 16px;
+    padding-bottom: 16px;
 
     opacity: 0;
     transition: opacity 500ms ease 1.5s;
@@ -1474,17 +1475,20 @@ input[hidden=true]{
     .home-navigation-heros .navigation-hero:nth-child(1),
     .home-navigation-heros .navigation-hero:nth-child(2),
     .home-navigation-heros .navigation-hero:nth-child(3){
-
         display: none;
     }
     .home-navigation-heros .navigation-hero:nth-child(4){
         grid-column: 1/4;
         grid-row: 1;
         display: block;
-        padding-inline: 2rem;
+        padding-inline: 64px;
+    
     }
-    .home-navigation-heros .navigation-hero:nth-child(4){
-
+    .home-navigation-heros .navigation-hero:nth-child(4) > a{
+        padding-block: 8px;
+    }
+    .home-navigation-heros .navigation-hero:nth-child(4) > a .icon-wrapper{
+        top: 67%; 
     }
 }
 
@@ -1977,8 +1981,8 @@ input[hidden=true]{
     height: 400px;
     /* outline: 1px solid var(--fc-rare); */
     border-radius: 50%;
-    background-image: linear-gradient(transparent 30%,var(--site-link-color));
-    box-shadow: 5px 5px 10px hsl(0 0% 0% / 0.3),
+    background-image: linear-gradient(transparent 50%,var(--site-link-color),var(--site-link-color));
+    box-shadow: 0px 5px 10px hsl(0 0% 0% / 0.3),
     inset -2px -2px 5px hsl(0 0% 0% / 0.3);
     z-index: -1;
 
@@ -7408,7 +7412,7 @@ input[hidden=true]{
 }
 .response-page-header .website-title > a{
     display: inline-block;
-    padding: 4px;
+    padding: 4px 8px;
 }
 .response-page-header .website-title > a > img{
     max-width: 150px;
@@ -7417,6 +7421,7 @@ input[hidden=true]{
 .response-page section{
     padding-top: 64px;
     padding-bottom: 32px;
+    padding-inline: 32px;
 
     display: none;
     opacity: 0;
@@ -7430,6 +7435,7 @@ input[hidden=true]{
     opacity: 1;
     translate: 0 0;
 }
+
 #ResponsePageError > header > h2{
     max-width: 600px;
     width: 100%;
@@ -7440,6 +7446,7 @@ input[hidden=true]{
     width: 100%;
     margin: 0 auto 32px auto;
 }
+
 .response-page section > header > h2 > div{
     line-height: 1em;
 }
@@ -7475,7 +7482,38 @@ input[hidden=true]{
     font-size: 1.2rem;
     font-weight: 700;
 }
-
+@media only screen and (max-width: 900px){
+    .response-page section > header > h2 > div:first-child{
+        font-size: 6rem;
+    }
+    .response-page section > header > h2 > div:last-child{
+        font-size: 3rem;
+    }
+}
+@media only screen and (max-width: 700px){
+    .response-page section > header > h2 > div:first-child{
+        font-size: 4rem;
+    }
+    .response-page section > header > h2 > div:last-child{
+        font-size: 2rem;
+    }
+}
+@media only screen and (max-width: 400px){
+    .response-page section > header > h2 > div:first-child{
+        font-size: 3rem;
+    }
+    .response-page section > header > h2 > div:last-child{
+        font-size: 1.5rem;
+    }
+}
+@media only screen and (max-width: 300px){
+    .response-page section > header > h2 > div:first-child{
+        font-size: 2rem;
+    }
+    .response-page section > header > h2 > div:last-child{
+        font-size: 1rem;
+    }
+}
 
 /*
 ===================================================|
