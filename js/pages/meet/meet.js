@@ -1,4 +1,4 @@
-import { AImageViewer } from "../../image_viewer.js";
+import { AImageViewer } from "../../canopy/image_viewer.js";
 import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { openInHouseBakerySign } from "../../utilities.js";
 

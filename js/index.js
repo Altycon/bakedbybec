@@ -1,4 +1,4 @@
-import { AImageViewer } from "./image_viewer.js";
+import { AImageViewer } from "./canopy/image_viewer.js";
 import { pageNavigation } from "./navigation.js";
 import { createIntersectionObserver } from "./intersection_observer.js";
 import { openInHouseBakerySign } from "./utilities.js";
@@ -15,7 +15,6 @@ function handleDesktopHomeHoverLinksAnimation(){
     const circleNavigationLinks = document.querySelectorAll('.js-circle-link');
 
     circleNavigationLinks.forEach( navLink => {
-
         navLink.addEventListener('mouseenter', (enterEvent)=>{
             logoRing.style.animation = `none`;
 
@@ -23,7 +22,6 @@ function handleDesktopHomeHoverLinksAnimation(){
                 logoRing.classList.remove(`${navLink.dataset.position}-hovered`);
                 leaveEvent.target.removeEventListener('mouseleave', mouseLeavesLink);
             })
-
             logoRing.classList.add(`${navLink.dataset.position}-hovered`);
             logoRing.style.animation = `slideCircleBackgroundLeft 1s linear forwards`;
             
@@ -35,24 +33,30 @@ function handleDesktopHomeHoverLinksAnimation(){
 function setRecentOrderListItemDirectionalArrows(){
     const recentOrdersList = document.querySelector('.recent-orders-list');
     const recentOrders = recentOrdersList.querySelectorAll('.recent-order');
+    let hasScrolled = false;
+
     recentOrdersList.addEventListener('scroll',()=>{
-        recentOrders.forEach( rOrder => {
-            rOrder.querySelectorAll('.directional-arrow').forEach( arrow => {
-                if(!arrow.classList.contains('hide')){
-                    arrow.classList.add('hide');
-                }
-            })
-        })
+        if(!hasScrolled){
+            recentOrders.forEach( rOrder => {
+                rOrder.querySelectorAll('.directional-arrow').forEach( arrow => {
+                    if(!arrow.classList.contains('hide')){
+                        arrow.classList.add('hide');
+                    }
+                })
+            });
+            hasScrolled = true;
+        }
     });
-    recentOrdersList.addEventListener('scrollend',()=>{
+    recentOrdersList.addEventListener('scrollend', ()=>{
         recentOrders.forEach( rOrder => {
             rOrder.querySelectorAll('.directional-arrow').forEach( arrow => {
                 if(arrow.classList.contains('hide')){
                     arrow.classList.remove('hide');
                 }
             })
-        })
-    })
+        });
+        hasScrolled = false;
+    });
     recentOrders.forEach( recentOrder =>{
         const styleWidth = +getComputedStyle(recentOrder).getPropertyValue('width').slice(0,-2);
         const paddingInline = +getComputedStyle(recentOrdersList).getPropertyValue('padding-inline').slice(0,-2);
@@ -84,8 +88,6 @@ function initializeSite(){
 
     handleDesktopHomeHoverLinksAnimation();
 
-    
-
     let threshold = 0.5;
     if(innerWidth < 800) threshold = 0.2;
     
@@ -95,28 +97,5 @@ function initializeSite(){
 
     setRecentOrderListItemDirectionalArrows();
 
-    // const recentOrderList = document.querySelector('.recent-orders-list');
-    // console.log(recentOrderList)
-    // document.querySelectorAll('.recent-order .directional-arrow').forEach( directionArrow =>{
-        
-    //     directionArrow.addEventListener('click', (clickEvent)=>{
-    //         const arrow = clickEvent.target;
-    //         const recentOrder = arrow.closest('li');
-    //         const demensions = recentOrder.getBoundingClientRect();
-
-
-    //         if(arrow.classList.contains('directional-arrow-left')){
-    //             recentOrderList.scrollBy({
-    //                 left: -demensions.width - 10,
-    //                 behavior: 'smooth'
-    //             })
-    //         }else if(arrow.classList.contains('directional-arrow-right')){
-    //             recentOrderList.scrollBy({
-    //                 left: demensions.width + 10,
-    //                 behavior: 'smooth'
-    //             })
-    //         }
-    //     },false)
-    // })
 }
 initializeSite();

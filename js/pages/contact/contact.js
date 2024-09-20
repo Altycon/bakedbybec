@@ -1,8 +1,8 @@
 import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
-import { ANotification, PageNotification } from "../../notification.js";
-import { sanitizeInput } from "../../sanitation.js";
+import { ANotification, PageNotification } from "../../canopy/notification.js";
 import { createHtmlElement, openInHouseBakerySign, transition } from "../../utilities.js";
-import { checkInputValidity } from "../../validation.js";
+import { sanitizeInput } from "../../form/sanitation.js";
+import { checkInputValidity } from "../../form/validation.js";
 
 
 const Contact = {
