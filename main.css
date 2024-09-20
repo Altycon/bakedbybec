@@ -94,9 +94,9 @@ html{
     font-family: var(--ff-primary);
     color: var(--fc-primary);
 }
-html::-webkit-scrollbar{
+/* html::-webkit-scrollbar{
     display: none;
-}
+} */
 
 body{
     min-height: 100vh;
@@ -1902,8 +1902,6 @@ input[hidden=true]{
     perspective: 1000px;
 }
 .recent-orders .background{
-
-    
     position: absolute;
     inset: 0;
     z-index: -1;
@@ -1939,7 +1937,31 @@ input[hidden=true]{
     translate: 0 0 var(--line-translate-z);
     
 }
+.recent-orders > header:nth-child(2){
+    position: relative;
+    display: block;
+}
+.recent-orders > header::before{
+    content: "recent orders";
+    position: absolute;
+    top: 0%; left: 50%;
+    width: 100%;
+    height: fit-content;
+    translate: -50% 0%;
+    text-align: center;
+    font-size: 12vw;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: hsl( 0 0% 50% / 0.2);
+    line-height: 1em;
+    z-index: -2;
 
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+.recent-orders:hover > header::before{
+    opacity: 1;
+}
 .recent-orders > header > h2{
     position: relative;
     isolation: isolate;
@@ -1963,6 +1985,7 @@ input[hidden=true]{
     opacity: 0.1;
     transition: translate 1.5s ease, opacity 1s ease;
 }
+
 .recent-orders:hover > header > h2::before{
     translate: -50% -25%;
     opacity: 1;
@@ -1974,8 +1997,8 @@ input[hidden=true]{
     list-style: none;
     overflow-y: hidden;
     overflow-x: auto;
-    /* scroll-snap-type: x mandatory;
-    scroll-snap-stop: always; */
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
     
 
     display: grid;
@@ -1993,7 +2016,7 @@ input[hidden=true]{
     padding-inline: 32px;
     padding-block: 128px;
     border-radius: 16px;
-    /* scroll-snap-align: center; */
+    scroll-snap-align: start;
     perspective: 1000px;
 
     display: grid;
@@ -7385,50 +7408,68 @@ input[hidden=true]{
     max-width: 150px;
 }
 
-.response-page .introduction{
+.response-page section{
     padding-top: 64px;
     padding-bottom: 32px;
-}
-.response-page .introduction > h2{
-    font-size: 8rem;
-    color: green;
-    text-align: center;
 
+    display: none;
     opacity: 0;
-    animation: responsePageTitleSlideAndFadeIn 500ms linear forwards;
+    translate: 0 100px;
+    transition: translate 500ms ease, opacity 300ms ease;
 }
-.response-page .introduction > p{
-    max-width: 500px;
-    margin: 0 auto;
-    text-align: center;
-    line-height: 1.5rem;
-
-    opacity: 0;
-    animation: responsePageTitleSlideAndFadeIn 500ms linear forwards 500ms;
+.response-page section.open{
+    display: block;
 }
-@keyframes responsePageTitleSlideAndFadeIn {
-    from{
-        translate: -100px 0;
-        opacity: 0;
-    }
-    to{
-        translate: 0 0;
-        opacity: 1;
-    }
+.response-page section.show{
+    opacity: 1;
+    translate: 0 0;
 }
-
-.response-page .order-invoice{
+#ResponsePageError > header > h2{
     max-width: 600px;
     width: 100%;
-    margin: 0 auto;
-    translate: 0 100px;
-    opacity: 0;
-    transition: translate 500ms ease 1s, opacity 300ms ease 1s;
+    margin: 0 auto 32px auto;
 }
-.response-page .order-invoice.show{
-    translate: 0 0;
-    opacity: 1;
+#ResponsePageSuccess > header > h2{
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto 32px auto;
 }
+.response-page section > header > h2 > div{
+    line-height: 1em;
+}
+.response-page section > header > h2 > div:first-child{
+    text-align: center;
+    font-size: 8rem;
+}
+.response-page section > header > h2 > div:last-child{
+    text-align: right;
+    font-size: 4rem;
+}
+#ResponsePageSuccess > header > h2{
+    color: var(--fc-primary);
+}
+#ResponsePageError > header > h2{
+    color: hsl(0 80% 30%);
+}
+.response-page section > p{
+    max-width: 500px;
+    margin: 0 auto 12px auto;
+    text-align: center;
+    line-height: 1.5rem;
+}
+
+.response-page section > p > a{
+    display: inline-block;
+    padding: 8px 16px;
+}
+.response-page section > p > a:not(:first-of-type){
+    margin-left: 12px;
+}
+#ResponsePageSuccess > p:nth-of-type(3){
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
 
 /*
 ===================================================|
