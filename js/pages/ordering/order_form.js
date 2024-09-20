@@ -1989,7 +1989,7 @@ export const OrderForm = {
             items: formData.get('items')
         }
         const params = new URLSearchParams(data).toString();
-        const newLocation = `http://127.0.0.1:5500/pages/order_response.html?${params}`;
+        const newLocation = `https://altycon.github.io/bakedbybec/pages/order_response.html?${params}`;
         window.location.href = newLocation;
     },
     fakeSubmit(clickEvent){
