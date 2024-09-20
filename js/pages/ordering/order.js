@@ -2,8 +2,8 @@ import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { openInHouseBakerySign, scrollToTopOfPage, transition, } from "../../utilities.js";
 import { OrderProgress } from "./order_progress.js";
 import { OrderForm } from "./order_form.js";
-import { Confirmation } from "../../confirmation.js";
-import { ANotification, PageNotification } from "../../notification.js";
+import { Confirmation } from "../../canopy/confirmation.js";
+import { ANotification, PageNotification } from "../../canopy/notification.js";
 
 function openOrderForm(event){
     event.preventDefault();

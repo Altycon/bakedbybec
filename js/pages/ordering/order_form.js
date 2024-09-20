@@ -1,7 +1,6 @@
-import { Confirmation } from "../../confirmation.js";
-import { AImageViewer } from "../../image_viewer.js";
-import { ANotification, PageNotification } from "../../notification.js";
-import { sanitizeInput } from "../../sanitation.js";
+import { Confirmation } from "../../canopy/confirmation.js";
+import { AImageViewer } from "../../canopy/image_viewer.js";
+import { ANotification, PageNotification } from "../../canopy/notification.js";
 import { 
     ADate,
     appendElementToParentWithFragment, 
@@ -14,12 +13,11 @@ import {
     getFutureDateByDays, 
     transition
 } from "../../utilities.js";
-import { checkInputValidity } from "../../validation.js";
 import { listOfUsStates} from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
 import { PRODUCT_DATA } from "./product_data.js";
-
-
+import { checkInputValidity } from "../../form/validation.js";
+import { sanitizeInput } from "../../form/sanitation.js";
 
 function connectInputToOutput(event){
     const outputId = event.target.id;
@@ -1983,16 +1981,29 @@ export const OrderForm = {
         }
         return [null,formData];
     },
+    redirectToSuccessPageWithFormData(){
+        const formData = new FormData(OrderForm.form);
+        const data = {
+            success: 'true',
+            name: formData.get('name'),
+            items: formData.get('items')
+        }
+        const params = new URLSearchParams(data).toString();
+        const newLocation = `http://127.0.0.1:5500/pages/order_response.html?${params}`;
+        window.location.href = newLocation;
+    },
     fakeSubmit(clickEvent){
         clickEvent.preventDefault();
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
         setTimeout( ()=> {
-            transition('remove',pageLoader,'show',['open','loading']);
-            PageNotification.notify('This was just a test.',
-                'Thank you for testing with Baked by Bec.',
-                'please close X'
-            );
+            transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
+                PageNotification.notify('This was just a test.',
+                    'Thank you for testing with Baked by Bec.',
+                    'please close X',
+                    ()=> OrderForm.redirectToSuccessPageWithFormData()
+                );
+            });
         },3000)
     },
     async submit(clickEvent){
@@ -2019,13 +2030,13 @@ export const OrderForm = {
 
                 //ANotification.notify('order success!!');
                 
-                transition('remove',pageLoader,'show',['open','loading']);
-
-                PageNotification.notify('order success!!',
-                    'You have successfully placed and order. A confirmation email has been sent with your order. I will reply to you soon!',
-                    'please close X',
-                    //()=> window.location.reload()
-                );
+                transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
+                    PageNotification.notify('order success!!',
+                        'You have successfully placed and order. A confirmation email has been sent with your order. I will reply to you soon!',
+                        'please close X',
+                        //()=> window.location.reload()
+                    );
+                });
 
             }else{
                 const errorData = await fetchResponse.json();
