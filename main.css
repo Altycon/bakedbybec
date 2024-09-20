@@ -2273,8 +2273,8 @@ input[hidden=true]{
     opacity: 0;
     translate: -50px;
 
-    transition: translate 300ms ease-in,
-    opacity 300ms ease-in;
+    transition: translate 500ms ease,
+    opacity 300ms ease;
 }
 .faqs > article.show > header .question{
     translate: 0px;
@@ -2333,7 +2333,7 @@ input[hidden=true]{
     text-wrap: pretty;
 
     translate: -50px;
-    transition: translate 300ms ease-in 500ms;
+    transition: translate 500ms ease 500ms;
 }
 .faqs .gluten-free.show .answer > p{
     translate: 0px;
@@ -2341,8 +2341,8 @@ input[hidden=true]{
 .faqs .gluten-free .answer .icon-wrapper{
     scale: 0;
     opacity: 0;
-    transition: scale 1000ms ease-in 500ms,
-    opacity 1000ms ease-in 500ms;
+    transition: scale 1000ms ease 500ms,
+    opacity 1000ms ease 500ms;
 }
 
 .faqs .gluten-free.show .answer .icon-wrapper{
@@ -2372,10 +2372,6 @@ input[hidden=true]{
 .faqs .order-retrieval .answer .option > p{
     text-align: center;
 }
-/* .faqs .order-retrieval .answer .option:nth-child(1) > p:nth-last-of-type(1){
-    outline: 1px solid yellow;
-    margin: 0 auto;
-} */
 .faqs .order-retrieval .pink-text.price{
     font-size: 1.5rem;
 }
@@ -2468,11 +2464,11 @@ input[hidden=true]{
 .faqs .ingredients .icon-wrapper{
     margin: 0 auto;
     transform-origin: center;
-
+    --ingredients-icon-delay: calc(var(--i) * 300ms);
     opacity: 0;
     translate: 0px -50px;
-    transition: translate 800ms ease-in calc(var(--i) * 300ms),
-    opacity 800ms ease-in calc(var(--i) * 300ms);
+    transition: translate 500ms ease var(--ingredients-icon-delay),
+    opacity 300ms ease var(--ingredients-icon-delay);
 }
 .faqs .ingredients.show .icon-wrapper{
     opacity: 1;
@@ -3719,11 +3715,21 @@ input[hidden=true]{
     text-align: center;
     text-wrap: pretty;
     max-width: 800px;
-    font-size: 1rem;
-    line-height: 1.5em;
+    font-size: 1.2rem;
+    line-height: 1.4em;
 }
-.meet-main > section > p > span{
-    font-weight: 700;
+.meet-main > section > p > strong > a{
+    display: inline-block;
+    padding-inline: 8px;
+    padding-block: 4px;
+    font-size: .8rem;
+    line-height: 1em;
+    color: var(--fc-primary);
+    text-shadow: 0px 0px 1px black;
+    background-color: var(--site-link-color);
+    border-radius: 10px;
+    box-shadow: inset 1px 1px 3px hsl(0 0% 100% / 0.3),
+    3px 3px 10px black;
 }
 .meet-main > section:nth-of-type(1){
 
