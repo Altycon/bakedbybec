@@ -1507,12 +1507,34 @@ input[hidden=true]{
 
 /***************************/
 .customer-reviews > header{
-    padding: 1rem;
+    position: relative;
+
+    margin-bottom: 128px;
+}
+.customer-reviews > header::before{
+    content: "reviews & mentions";
+    position: absolute;
+    top: -100%; left: 50%;
+    width: 100%;
+    height: fit-content;
+    translate: -50% 0%;
+    text-align: center;
+    font-size: 10vw;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: hsl( 0 0% 50% / 0.2);
+    line-height: 1em;
+    letter-spacing: -10px;
+    white-space: no-wrap;
+    z-index: -1;
+
+    /* opacity: 0;
+    transition: opacity 300ms ease; */
 }
 .customer-reviews > header > h2{
     text-align: left;
-    padding-left: 1rem;
-    color: var(--fc-rare);
+    padding-left: 32px;
+    /* color: var(--fc-primary); */
 }
 
 
@@ -1948,7 +1970,7 @@ input[hidden=true]{
 .recent-orders > header::before{
     content: "recent orders";
     position: absolute;
-    top: 0%; left: 50%;
+    top: -100%; left: 50%;
     width: 100%;
     height: fit-content;
     translate: -50% 0%;
@@ -1956,21 +1978,22 @@ input[hidden=true]{
     font-size: 12vw;
     font-weight: 700;
     text-transform: uppercase;
-    color: hsl( 0 0% 50% / 0.2);
+    color: hsl(0 0% 50% / 0.2);
     line-height: 1em;
     z-index: -2;
 
-    opacity: 0;
-    transition: opacity 300ms ease;
+    /* opacity: 0;
+    transition: opacity 300ms ease; */
 }
-.recent-orders:hover > header::before{
+/* .recent-orders:hover > header::before{
     opacity: 1;
-}
+} */
 .recent-orders > header > h2{
     position: relative;
     isolation: isolate;
-    text-align: center;
-    font-size: 2.5rem;
+    text-align: left;
+    font-size: 1.5rem;
+    padding-left: 32px;
 }
 .recent-orders > header > h2::before{
     content: "";
@@ -2255,11 +2278,32 @@ input[hidden=true]{
 .faqs .icon-wrapper > img{
     width: 100%;
 }
+.faqs > header{
+    position: relative;
+    margin-bottom: 128px;
+}
+.faqs > header::before{
+    content: "FREQUENT QUESTIONS";
+    position: absolute;
+    top: -100%; left: 50%;
+    width: 100%;
+    height: fit-content;
+    translate: -50% 0%;
+    text-align: center;
+    font-size: 12vw;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: hsl(0 0% 50% / 0.2);
+    line-height: 1em;
+    z-index: -1;
+
+    /* opacity: 0;
+    transition: opacity 300ms ease; */
+}
 .faqs > header > h2{
-    text-align: left;
-    padding-left: 1rem;
-    color: var(--fc-rare);
-    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+    padding-left: 32px;
 }
 
 .faqs > article{
@@ -2943,7 +2987,7 @@ input[hidden=true]{
     background-color: hsl(0 0% 0% / 0.2);
     background-image: var(--img-home-thankyou);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 90%;
     background-position: center;
     background-blend-mode: overlay;
 
@@ -5528,14 +5572,19 @@ input[hidden=true]{
     margin-bottom: 32px;
     text-align: center;
 
-    translate: 0 0;
-    opacity: 1;
+    display: none;
+    translate: 0 100px;
+    opacity: 0;
     transition: translate 500ms ease, opacity 300ms ease;
 }
-.before-you-order.close{
-    translate: 0 -100px;
-    opacity: 0;
+.before-you-order.open{
+    display: block;
 }
+.before-you-order.show{
+    translate: 0px 0px;
+    opacity: 1;
+}
+
 
 .before-you-order h2,
 .before-you-order p{
