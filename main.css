@@ -1512,7 +1512,7 @@ input[hidden=true]{
     margin-bottom: 128px;
 }
 .customer-reviews > header::before{
-    content: "reviews & mentions";
+    content: "reviews";
     position: absolute;
     top: -100%; left: 50%;
     width: 100%;
@@ -1524,7 +1524,7 @@ input[hidden=true]{
     text-transform: uppercase;
     color: hsl( 0 0% 50% / 0.2);
     line-height: 1em;
-    letter-spacing: -10px;
+    /* letter-spacing: -10px; */
     white-space: no-wrap;
     z-index: -1;
 
@@ -1532,7 +1532,7 @@ input[hidden=true]{
     transition: opacity 300ms ease; */
 }
 .customer-reviews > header > h2{
-    text-align: left;
+    text-align: center;
     padding-left: 32px;
     /* color: var(--fc-primary); */
 }
@@ -1991,7 +1991,7 @@ input[hidden=true]{
 .recent-orders > header > h2{
     position: relative;
     isolation: isolate;
-    text-align: left;
+    text-align:center;
     font-size: 1.5rem;
     padding-left: 32px;
 }
