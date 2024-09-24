@@ -1981,7 +1981,8 @@ export const OrderForm = {
         }
         return [null,formData];
     },
-    redirectToSuccessPageWithFormData(){
+    redirectToSuccessPageWithFormData(redirectPath){
+        
         const formData = new FormData(OrderForm.form);
         const data = {
             success: 'true',
@@ -1989,8 +1990,10 @@ export const OrderForm = {
             items: formData.get('items')
         }
         const params = new URLSearchParams(data).toString();
-        const newLocation = `https://altycon.github.io/bakedbybec/pages/order_response.html?${params}`;
-        window.location.href = newLocation;
+        const fakeLocation = `https://altycon.github.io/bakedbybec/pages/order_response.html?${params}`;
+        
+        redirectPath = redirectPath || fakeLocation;
+        window.location.href = redirectPath;
     },
     fakeSubmit(clickEvent){
         clickEvent.preventDefault();
@@ -2024,17 +2027,13 @@ export const OrderForm = {
             if(fetchResponse.ok){
                 
                 const successData = await fetchResponse.json();
-                if(!successData) throw new Error('FETCH_ERROR: successfull response but no data');
 
-                console.log('success data', successData);
-
-                //ANotification.notify('order success!!');
+             
                 
                 transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
                     PageNotification.notify('order success!!',
                         'You have successfully placed and order. A confirmation email has been sent with your order. I will reply to you soon!',
-                        'please close X',
-                        //()=> window.location.reload()
+                        'please close X'
                     );
                 });
 
@@ -2078,7 +2077,7 @@ export const OrderForm = {
        // this.form.addEventListener('submit', this.submit)
        this.submitButton.addEventListener('click', this.fakeSubmit);
     },
-    initialize(){
+    initialize(initialItemName){
         try{
             // order form
             this.form = document.querySelector('#OrderForm');
@@ -2147,7 +2146,16 @@ export const OrderForm = {
         }catch(error){
             console.warn(error);
             throw error;
-        }   
+        }
+        
+        if(initialItemName){
+            this.itemSelect.querySelectorAll('option').forEach( option =>{
+                if(initialItemName && initialItemName === option.value){
+                    option.setAttribute('selected','true');
+                }
+            });
+            this.itemSelect.dispatchEvent(new Event('change'));
+        }
     }
 };
 

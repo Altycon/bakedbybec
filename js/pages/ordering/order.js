@@ -1,3 +1,4 @@
+
 import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { openInHouseBakerySign, scrollToTopOfPage, transition, } from "../../utilities.js";
 import { OrderProgress } from "./order_progress.js";
@@ -5,16 +6,17 @@ import { OrderForm } from "./order_form.js";
 import { Confirmation } from "../../canopy/confirmation.js";
 import { ANotification, PageNotification } from "../../canopy/notification.js";
 
+
+const beforeYouOrderElement = document.querySelector('.js-before-you-order');
+const orderAreaElement = document.querySelector('.js-ordering-area');
+
 function openOrderForm(event){
     event.preventDefault();
-
-    const beforeYouOrderElement = document.querySelector('.js-before-you-order');
-    const orderAreaElement = document.querySelector('.js-ordering-area');
 
     beforeYouOrderElement.addEventListener('transitionend', (transitionEvent)=>{
         transitionEvent.target.remove();
     })
-    beforeYouOrderElement.classList.add('close');
+    transition('remove',beforeYouOrderElement,'show','open',500);
 
     scrollToTopOfPage();
     
@@ -25,15 +27,17 @@ function openOrderForm(event){
         OrderProgress.listenToAreaInputs('.js-personal-info',5);
     });
 };
-
+function retrieveInitialItemValueFromURL(urlAddress){
+    const url = new URL(urlAddress);
+    const initialItemName = url.searchParams.get('initialItem');
+    if(!initialItemName) return null;
+    return initialItemName;
+};
 function initializeOrderPage(){
-    // let externalItemValue = undefined;
+    
+    const initialItemName = retrieveInitialItemValueFromURL(window.location.href);
 
-    // if(window.location.hash && window.location.hash !== ""){
-
-    //     externalItemValue = window.location.hash.split('#')[1];
-    //     // add the item to the order item list
-    // }
+    transition('add',beforeYouOrderElement,'open','show',1000);
     try{
 
         Confirmation.initialize();
@@ -46,9 +50,12 @@ function initializeOrderPage(){
         const inHouseBakeryButton = document.querySelector('.js-in-house-bakery-btn');
         if(!inHouseBakeryButton) throw new Error('missing element - in house bakery button')
         inHouseBakeryButton.addEventListener('click', openInHouseBakerySign);
+
+        if(!beforeYouOrderElement) throw new Error('missing element - before you order');
+        if(!orderAreaElement) throw new Error('missing element - ordering area');
         
-        OrderForm.initialize();
         OrderProgress.initialize();
+        OrderForm.initialize(initialItemName);
 
         const openOrderFormButton = document.querySelector('.js-open-order-form-btn')
         if(!openOrderFormButton) throw new Error('missing element - open order form button');

@@ -1688,13 +1688,13 @@ input[hidden=true]{
     transition: opacity 300ms;
 }
 .customer-review-images > div:nth-child(1)::before{
-    background-color: hsl(0 0% 0% / 0.6);
+    background-color: hsl(0 0% 0% / 0.8);
 }
 .customer-review-images > div:nth-child(2)::before{
-    background-color: hsl(0 0% 0% / 0.4);
+    background-color: hsl(0 0% 0% / 0.6);
 }
 .customer-review-images > div:nth-child(3)::before{
-    background-color: hsl(0 0% 0% / 0.2);
+    background-color: hsl(0 0% 0% / 0.4);
 }
 .customer-review-img{
     width: 100%;

@@ -95,10 +95,3 @@ export function checkInputValidity(value='', options={}){
     return [null, value];
 };
 
-// const [error,value] = checkFormValidity('23495-', { type: 'zipcode', isString: true, minLength: 3, maxLength: 50 })
-// if(error){
-//     console.log('error', error.message);
-// }else{
-//     console.log('value', value);
-// }
-
