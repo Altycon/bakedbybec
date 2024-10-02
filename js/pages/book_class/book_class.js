@@ -65,10 +65,6 @@ const BookClass = {
     fakeSubmit(clickEvent){
         clickEvent.preventDefault();
 
-        const [error,data]=ValidateHTMLForm(BookClass.form);
-        if(error) console.warn(error);
-        else console.log(data);
-
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
         setTimeout( ()=> {
@@ -129,7 +125,7 @@ const BookClass = {
     },
     listen(){
         this.agreementCheckbox.addEventListener('change',BookClass.agree);
-        this.submitButton.addEventListener('click', BookClass.submitForm);
+        this.submitButton.addEventListener('click', BookClass.fakeSubmit);
     },
     initialize(){
         this.form = document.querySelector('#BookClassForm');

@@ -101,10 +101,6 @@ const Contact = {
     fakeSubmit(clickEvent){
         clickEvent.preventDefault();
 
-        const [error,fields] = ValidateHTMLForm(Contact.form);
-        if(error) console.warn(error);
-        else console.log(fields);
-
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
         setTimeout( ()=> {
@@ -178,7 +174,7 @@ const Contact = {
             this.handleOtherTopicOption(changeEvent);
         });
         this.agreementCheckbox.addEventListener('change', Contact.agree)
-        this.submitButton.addEventListener('click', Contact.submit);
+        this.submitButton.addEventListener('click', Contact.fakeSubmit);
     },
     initialzie(){
         this.form = document.querySelector('#ContactForm');
