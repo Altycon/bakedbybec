@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Success | Baked by Bec</title>
-    <base href="/">
+    <title>Contact response | Baked by Bec</title>
+    
+    <base href="https://altycon.github.io/bakedbybec/">
 
     <link rel="stylesheet" href="main.css">
 
@@ -27,16 +28,16 @@
         <section id="ResponsePageError">
             <header>
                 <h2>
-                    <div>order</div>
+                    <div>request</div>
                     <div>has failed</div>
                 </h2>
             </header>
             
             <p>I'm very sorry for the inconvenience but something went wrong.</p>
-            <p>Please try again or you are welcome to try and contact us via our contact page.</p>
+            <p>Please try again.</p>
             <p>
-                <a href="pages/order.html" class="link site-box-link">try again</a>
-                <a href="pages/contact.html" class="link site-box-link">contact us</a>
+                <a href="/" class="link site-box-link">Home page</a>
+                <a href="pages/contact.html" class="link site-box-link">try again</a>
             </p>
             <p>Have a wonderful day!</p>
         </section>
@@ -44,11 +45,11 @@
             <header>
                 <h2>
                     <div>thank you</div>
-                    <div>for ordering!</div>
+                    <div>for your request!</div>
                 </h2>
             </header>
-            <p>Thank you "<strong data-output="name">name</strong>" for ordering "<strong data-output="items">item1 and item2</strong>"!</p>
-            <p>Please check the email you provided for a copy of your order information and I will be responding as soon as I can.</p>
+            <p>Thank you "<strong data-output="name">name</strong>" for requesting information on a class with me!</p>
+            <p>An automated response has been sent to your email and I will be responding to your request as soon as I can.</p>
             <p>Your neighborhood cookie dealer is on the job!</p>
             <p>Have a wonderful day!</p>
             <p><a href="/" class="link site-box-link">Baked by Bec</a></p>
@@ -93,28 +94,21 @@
                 const success = parameters.get('success');
                 if(success && success === 'true'){
                     const name = parameters.get('name');
-                    const items = parameters.get('items');
-                    const itemsList = items.split(',').map( item => item.replace(/-/,' '));
-                    return { success: true, name, items: itemsList };
+                    
+                    return { success: true, name: name };
                 }
                 return { nothing: true };
             };
-            function setSuccessResponseData(name,items){
+            function setSuccessResponseData(name){
                 const nameOutput = document.querySelector(`[data-output="name"]`);
                 if(nameOutput) nameOutput.textContent = name;
-                const itemsOutput = document.querySelector(`[data-output="items"]`);
-                if(items.length > 1){
-                    items[items.length - 1] = `and ${items[items.length - 1]}`
-                }
-                const text = items.join(', ');
-                itemsOutput.textContent = text;
             };
             function processParameters(){
                 const parameters = getURLParameters();
                 if(parameters.error){
                     displayResponse('#ResponsePageError')
                 }else if(parameters.success){
-                    setSuccessResponseData(parameters.name,parameters.items);
+                    setSuccessResponseData(parameters.name);
                     displayResponse(`#ResponsePageSuccess`);
                 }else if(parameters.nothing){
                     displayResponse('#ResponsePageNothing');

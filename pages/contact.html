@@ -18,7 +18,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <base href="/bakedbybec/">
+    
+    <base href="https://altycon.github.io/bakedbybec/">
 
     <link rel="stylesheet" href="main.css">
 
@@ -35,7 +36,7 @@
     <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/" class="link">
+            <a href="/" class="link">
                 <img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked By Bec Text Logo">
             </a>
             <button type="button" title="Iowa residential bakery legislation" class="btn in-house-bakery-btn js-in-house-bakery-btn">i</button>
@@ -105,7 +106,7 @@
                 <div class="circle"></div>
                 <div class="circle"></div>
             </div>
-            <form id="ContactForm" class="contact-form">
+            <form id="ContactForm" class="contact-form" autocomplete="on" enctype="multipart/form-data">
                 <fieldset>
                     <label for="ContactNameInput" class="form-label">
                         <div>name</div>
@@ -113,25 +114,24 @@
                             name="name" 
                             id="ContactNameInput"
                             class="form-text-input" 
-                            placeholder="full name"
-                            autocomplete="off" 
+                            placeholder="full name" 
                             required>
                     </label>
                     <label for="ContactEmailInput" class="form-label">
                         <div>email</div>
-                        <input type="text" 
+                        <input type="email" 
                             name="email" 
                             id="ContactEmailInput"
                             class="form-text-input"
                             title="ex: email@host.com"
                             placeholder="email@host.com"
-                            autocomplete="off"
+                            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                             required>
                     </label>
                     <div class="topic">
                         <label for="ContactTopicSelect" class="form-label">
                             <div>topic</div>
-                            <select name="topic" id="ContactTopicSelect" class="form-select" autocomplete="off" required>
+                            <select name="topic" id="ContactTopicSelect" class="form-select" required>
                                 <option value=""selected disabled>-- select --</option>
                                 <option value="cookies">cookies</option>
                                 <option value="cakes">cakes</option>
@@ -153,14 +153,20 @@
                             cols="30" 
                             rows="3"  
                             placeholder="details"
-                            autocomplete="off" 
                             required></textarea>
                     </label>
                 </fieldset>
-                <div class="information">
-                    <p>* It can take up to 24 hours for a response.</p>
-                    <p>** Any messages after 6pm will be handled the following business day.</p>
-                </div>
+                <fieldset>
+                    <div class="information">
+                        <p>* It can take up to 24 hours for a response.</p>
+                        <p>** Any messages after 6pm will be handled the following business day.</p>
+                    </div>
+                    <div class="field">
+                        <label for="ContactFormAgreementCheckbox">The information above is correct, I understand<br>the <a href="http://127.0.0.1:5500/pages/terms_of_use.html#PrivacyPolicy" class="pink-text">terms of use</a>, and I'm ready to contact you.</label>
+                        <input type="checkbox" id="ContactFormAgreementCheckbox" name="agreement" required>
+                    </div>
+                </fieldset>
+                
                 <button type="button" class="btn contact-form-submit-btn js-contact-form-submit-btn">Send</button>
             </form>
             <div class="sidebar">
@@ -189,7 +195,7 @@
             </ul>
             <div class="footer-logo">
                 <div class="logo-ring"></div>
-                <a href="/bakedbybec/"><img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked by Bec text logo"></a>
+                <a href="/"><img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked by Bec text logo"></a>
             </div>
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>
@@ -216,15 +222,14 @@
     </div>
     <div class="notification js-notification">
         <ol class="notification-list js-notification-list">
-            
         </ol>
     </div>
     <div class="page-notification js-page-notification">
         <div class="overlay"></div>
         <div class="content">
-            <h3 class="title">This is the title</h3>
-            <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, similique alias ad voluptatum sed iure dolorum optio iusto sapiente. Qui.</p>
-            <button type="button" class="btn page-notification-close-btn js-page-notification-close-btn">some text for button<span> x</span></button>
+            <h3 class="title"></h3>
+            <p class="message"></p>
+            <button type="button" class="btn page-notification-close-btn js-page-notification-close-btn"></button>
         </div>
     </div>
     

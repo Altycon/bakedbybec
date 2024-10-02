@@ -1,16 +1,40 @@
 import { isPageNavigationDisplayed, pageNavigation } from "../../navigation.js";
 import { ANotification, PageNotification } from "../../canopy/notification.js";
-import { createHtmlElement, openInHouseBakerySign, transition } from "../../utilities.js";
-import { sanitizeInput } from "../../form/sanitation.js";
-import { checkInputValidity } from "../../form/validation.js";
+import { ADate, createHtmlElement, openInHouseBakerySign, transition } from "../../utilities.js";
+import { ValidateHTMLForm } from "../../form/validation.js";
 
 
 const Contact = {
     form: undefined,
     topicSelect: undefined,
     topicArea: undefined,
+    agreementCheckbox: undefined,
     submitButton: undefined,
 
+    activateSubmitButton(){
+        if(!Contact.submitButton.classList.contains('active')){
+            Contact.submitButton.classList.add('active');
+        }
+    },
+    deactivateSubmitButton(){
+        if(Contact.submitButton.classList.contains('active')){
+            Contact.submitButton.classList.remove('active');
+        }
+    },
+    checkForEmptyFields(){
+        const emptyFields = [];
+        Contact.form.querySelectorAll('[name]').forEach( field => {
+            if(!field.value || field.value === "" || field.value === '-- select --' ){
+                field.addEventListener('focus', function removeOutline(focusEvent){
+                    focusEvent.target.parentElement.classList.remove('required');
+                    focusEvent.target.removeEventListener('focus',removeOutline);
+                })
+                field.parentElement.classList.add('required');
+                emptyFields.push(field);
+            }
+        });
+        return emptyFields;
+    },
     otherTopicComponent(){
         return createHtmlElement('input', {
             type: 'text',
@@ -61,8 +85,26 @@ const Contact = {
             }
         }
     },
+    agree(changeEvent){
+        if(changeEvent.target.checked === true){
+            const emptyFields = Contact.checkForEmptyFields();
+            if(emptyFields.length > 0){
+                changeEvent.target.checked = false;
+                Contact.deactivateSubmitButton();
+            }else if(emptyFields.length === 0){
+                Contact.activateSubmitButton();
+            }
+        }else{
+            Contact.deactivateSubmitButton();
+        }
+    },
     fakeSubmit(clickEvent){
         clickEvent.preventDefault();
+
+        const [error,fields] = ValidateHTMLForm(Contact.form);
+        if(error) console.warn(error);
+        else console.log(fields);
+
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
         setTimeout( ()=> {
@@ -74,69 +116,54 @@ const Contact = {
             });
         },3000)
     },
-    submit(submitEvent){
+    handleFetchResponseErrors(errors){
+        if(Array.isArray(errors)){
+            errors.forEach( error => {
+                if(error.type === 'field'){
+                    ANotification.notify(error.msg);
+                    console.log(`Fetch Response Error: ${error.msg}`)
+                }
+            })
+        }
+    },
+    async submit(submitEvent){
         submitEvent.preventDefault();
-        console.log('hellow')
+        
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
 
-        const formData = new FormData(Contact.form);
-        
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const topic = formData.get('topic');
-        const message = formData.get('message');
-
         try{
-    
-            const sanitizedName = sanitizeInput(name);
-            const [ nameError ] = checkInputValidity(sanitizedName,{
-                isString: true,
-                minLength: 3,
-                maxLength: 200
-            });
-            if(nameError) throw nameError;
+            const [ error, data ] = ValidateHTMLForm(Contact.form);
+            if(error) throw new Error(`VALIDATION_ERROR: ${error.message}`);
 
-            const sanitizedEmail = sanitizeInput(email);
-            const [ emailError ] = checkInputValidity(sanitizedEmail,{
-                isString: true,
-                type: 'email',
-                minLength: 5,
-                maxLength: 254
-            });
-            if(emailError) throw emailError;
+            data.set('date', ADate());
 
+            const contactFetchURL = new URL('/contact','http://127.0.0.1:3456');
+            const fetchResponse = await fetch(contactFetchURL,{ method:'post', body:data });
+            
+            if(fetchResponse.ok){
+                
+                const successData = await fetchResponse.json();
+                console.log('success data', successData);
 
-            const [ topicError, validTopic ] = checkInputValidity(topic,{
-                isString: true,
-                minLength: 3,
-                maxLength: 50
-            });
-            if(topicError) throw topicError;
-            if(validTopic && validTopic === 'other'){
-                const otherTopic = formData.get('other-topic');
-                if(!otherTopic)throw new Error(`"other" topic must be included. Please give a topic.`);
-                const sanitizedOtherTopic = sanitizeInput(otherTopic);
-                const [ otherTopicError ] = checkInputValidity(sanitizedOtherTopic,{
-                    isString: true,
-                    minLength: 3,
-                    maxLength: 50
+                transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
+                    PageNotification.notify('message has been sent!',
+                        'Thank you for contacting Baked by Bec. I will reply to you soon!',
+                        'please close X',
+                        ()=> window.location.href = successData.redirect
+                    );
                 });
-                if(otherTopicError) throw otherTopicError;
-            }
-            const sanitizedMessage = sanitizeInput(message);
-            const [ messageError ] = checkInputValidity(sanitizedMessage,{
-                isString: true,
-                minLength: 3,
-                maxLength: 500
-            });
-            if(messageError) throw messageError;
-            transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
-                PageNotification.notify('This was just a test',
-                    'Thank you for testing with Baked by Bec',
-                    'please close X',
+
+            }else{
+                const errorData = await fetchResponse.json();
+                Contact.handleFetchResponseErrors(errorData.errors);
+
+                transition('remove',pageLoader,'show',['open','loading']);
+                PageNotification.notify('request failed.',
+                    'Failed to process request. Please try again',
+                    'please close X'
                 );
-            });
+            }
         }catch(error){
             console.warn(error);
             transition('remove',pageLoader,'show',['open','loading']);
@@ -150,14 +177,14 @@ const Contact = {
         this.topicSelect.addEventListener('change', (changeEvent)=>{
             this.handleOtherTopicOption(changeEvent);
         });
-        //this.form.addEventListener('submit', Contact.submit);
-       
-        this.submitButton.addEventListener('click', Contact.fakeSubmit);
+        this.agreementCheckbox.addEventListener('change', Contact.agree)
+        this.submitButton.addEventListener('click', Contact.submit);
     },
     initialzie(){
         this.form = document.querySelector('#ContactForm');
         this.topicArea = document.querySelector('.contact-form .topic');
         this.topicSelect = document.querySelector('#ContactTopicSelect');
+        this.agreementCheckbox = document.querySelector('#ContactFormAgreementCheckbox')
         this.submitButton = document.querySelector('.js-contact-form-submit-btn');
         this.listen();
     }

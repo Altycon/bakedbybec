@@ -1,11 +1,9 @@
-import { Confirmation } from "../../canopy/confirmation.js";
 import { AImageViewer } from "../../canopy/image_viewer.js";
 import { ANotification, PageNotification } from "../../canopy/notification.js";
 import { 
     ADate,
     appendElementToParentWithFragment, 
-    capitalize, 
-    clearParentElement, 
+    capitalize,
     createHtmlElement, 
     disableSelectFieldOption, 
     enableSelectFieldOption,  
@@ -16,8 +14,7 @@ import {
 import { listOfUsStates} from "./order_data.js";
 import { OrderProgress } from "./order_progress.js";
 import { PRODUCT_DATA } from "./product_data.js";
-import { checkInputValidity } from "../../form/validation.js";
-import { sanitizeInput } from "../../form/sanitation.js";
+import { ValidateHTMLForm, validateHTMLFormAddress } from "../../form/validation.js";
 
 function connectInputToOutput(event){
     const outputId = event.target.id;
@@ -880,8 +877,7 @@ const AddressComponent = {
                         ]),
                         createHtmlElement('p',{},[
                             'approx. distance: ',
-                            createHtmlElement('span',{ id:'DeliveryDistance' },'00.00'),
-                            ' miles'
+                            createHtmlElement('span',{ id:'DeliveryDistance' },'00.00')
                         ]),
                         createHtmlElement('p',{},[
                             'approx. time: ',
@@ -1095,31 +1091,14 @@ export const OrderForm = {
         }
     },
     addToSubTotal(price){
-        const subtotal = Number(this.subTotalInput.value) + Number(price);
-        const totalParts = subtotal.toString().split('.');
-
-        let totalString = '';
-        if(totalParts.length > 1){
-            totalString = `${subtotal.toFixed(2)}`
-        }else{
-            totalString = `${subtotal}.00`
-        }
-
-        this.subTotalInput.value = totalString;
-        OrderInvoice.setSubTotal(totalString);
+        const subtotal = (Number(this.subTotalInput.value) + Number(price)).toFixed(2);
+        this.subTotalInput.value = `${subtotal}`;
+        OrderInvoice.setSubTotal(`${subtotal}`);
     },
     addToTotal(price){
-        const total = Number(this.totalInput.value) + Number(price);
-        const totalParts = total.toString().split('.');
-
-        let totalString = '';
-        if(totalParts.length > 1){
-            totalString = `${total.toFixed(2)}`
-        }else{
-            totalString = `${total}.00`
-        }
-        this.totalInput.value = totalString;
-        OrderInvoice.setTotal(totalString);
+        const total = (Number(this.totalInput.value) + Number(price)).toFixed(2);
+        this.totalInput.value = `${total}`;
+        OrderInvoice.setTotal(`${total}`);
     },
     subtractFromSubTotal(price){
         if(this.subTotalInput.value === '0') return;
@@ -1534,7 +1513,7 @@ export const OrderForm = {
     },
     setDeliveryAvailabilityInputsAndDisplay(availability,distance,time,price){
         const deliveryAvailabilityInput = document.querySelector('#DeliveryAvailabilityInput');
-        deliveryAvailabilityInput.value = availability;
+        deliveryAvailabilityInput.value = availability ? 'available':'not available';
         const deliveryDistanceInput = document.querySelector('#DeliveryDistanceInput');
         deliveryDistanceInput.value = distance;
         const deliveryTimeInput = document.querySelector('#DeliveryTimeInput');
@@ -1551,6 +1530,9 @@ export const OrderForm = {
         const deliveryPriceOutput = document.querySelector('#DeliveryPrice');
         deliveryPriceOutput.textContent = price;
 
+        const retrievalDistanceOutput = document.querySelector('#InvoiceRetrievalDistanceOutput');
+        retrievalDistanceOutput.textContent = distance;
+
         OrderInvoice.setRetrievalCost(price);
         OrderForm.addToTotal(price);
     },
@@ -1559,7 +1541,8 @@ export const OrderForm = {
             errors.forEach( error => {
                 if(error.type === 'field'){
                     ANotification.notify(error.msg);
-                    console.log(`Fetch Response Error: ${error.msg}`)
+                }else{
+                    ANotification.notify(error.message);
                 }
             })
         }else{
@@ -1584,402 +1567,88 @@ export const OrderForm = {
             OrderForm.removeDistanceLoader();
         }
     },
-    async requestPickupDistance(){
+    async requestPickupDistance(clickEvent){
+        clickEvent.preventDefault();
         OrderForm.fakeRequest('pickup');
 
-        // const addressData = OrderForm.getAddressData();
-        // if(!addressData){
-        //     ANotification.notify('Please provide your address or use current location');
-        //     return;
-        // }
+        // const fieldNames = ['street','city','state','zipcode'];
         // OrderForm.setDistanceLoader();
 
         // try{
-        //     const fetchResponse = await fetch(new URL('/api/request-distance','http://127.0.0.1:3456'),{
-        //         method: 'post',
-        //         headers: {
-        //             'Content-Type':'application/json'
-        //         },
-        //         body: JSON.stringify(addressData)
-        //     });
-        //     if(fetchResponse.ok){
-        //         const successData = await fetchResponse.json();
-        //         if(!successData) throw new Error('response success - no success data');
+        //     const [error,data] = validateHTMLFormAddress(OrderForm.form,fieldNames);
+        //     if(error) throw new Error(`VALIDATION_ERROR: ${error.message}`);
 
-        //         const { distance, time } = successData;
-        //         OrderForm.setPickupDistanceAndTimeInputsAndDisplay(distance,time);
+        //     const destination = `${data.get('street')},${data.get('city')},${data.get('state')},${data.get('zipcode')}`;
+        //     const distanceRequestUrl = new URL(`/api/distance/:destination=${destination}`,'http://127.0.0.1:3456');
+            
+        //     const fetchResponse = await fetch(distanceRequestUrl);
+
+        //     if(fetchResponse.ok){
+
+        //         const successData = await fetchResponse.json();
+
+        //         const { distance, duration } = successData;
+        //         OrderForm.setPickupDistanceAndTimeInputsAndDisplay(distance,duration);
 
         //         ANotification.notify('success!!');
 
         //         OrderForm.removeDistanceLoader();
         //     }else{
         //         const errorData = await fetchResponse.json();
-        //         if(!errorData) throw new Error('response failed - no error data');
            
         //         OrderForm.handleFetchResposeErrors(errorData.errors);
 
         //         OrderForm.removeDistanceLoader();
         //     }
         // }catch(error){
-        //     ANotification.notify('request failed. try again.');
         //     OrderForm.removeDistanceLoader();
         //     console.error('Pickup Distance Request Error: ', error.message);
+        //     PageNotification.notify('request failed.',
+        //         error.message,
+        //         'please close X'
+        //     );
         // }
     },
     async requestDeliveryAvailabilityCheck(){
         OrderForm.fakeRequest('delivery');
 
-        // const addressData = OrderForm.getAddressData();
-        // if(!addressData){
-        //     ANotification.notify('Please provide your address or use current location');
-        //     return;
-        // }
+        // const fieldNames = ['street','city','state','zipcode'];
         // OrderForm.setDistanceLoader();
-        // const fetchResponse = await fetch(new URL('/api/request-delivery-availability','http://127.0.0.1:3456'),{
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type':'application/json'
-        //     },
-        //     body: JSON.stringify(addressData)
-        // });
-        // try{
-        //     if(fetchResponse.ok){
-        //         const successData = await fetchResponse.json();
-        //         if(!successData) throw new Error('response success - no success data');
 
-        //         const { availability, distance, time, price } = successData;
-        //         OrderForm.setDeliveryAvailabilityInputsAndDisplay(availability, distance, time, price);
+        // try{
+        //     const [error,data] = validateHTMLFormAddress(OrderForm.form,fieldNames);
+        //     if(error) throw new Error(`VALIDATION_ERROR: ${error.message}`);
+
+        //     const destination = `${data.get('street')},${data.get('city')},${data.get('state')},${data.get('zipcode')}`;
+        //     const distanceRequestUrl = new URL(`/api/delivery/:destination=${destination}`,'http://127.0.0.1:3456');
+            
+        //     const fetchResponse = await fetch(distanceRequestUrl);
+
+        //     if(fetchResponse.ok){
+
+        //         const successData = await fetchResponse.json();
+
+        //         const { availability, distance, duration, price } = successData;
+        //         OrderForm.setDeliveryAvailabilityInputsAndDisplay(availability, distance, duration, price);
 
         //         ANotification.notify('success!!');
 
         //         OrderForm.removeDistanceLoader();
         //     }else{
         //         const errorData = await fetchResponse.json();
-        //         if(!errorData) throw new Error('response failed - no error data');
-        
+           
         //         OrderForm.handleFetchResposeErrors(errorData.errors);
 
         //         OrderForm.removeDistanceLoader();
         //     }
         // }catch(error){
-        //     ANotification.notify('request failed. try again.');
         //     OrderForm.removeDistanceLoader();
         //     console.error('Pickup Distance Request Error: ', error.message);
+        //     PageNotification.notify('request failed.',
+        //         error.message,
+        //         'please close X'
+        //     );
         // }
-    },
-    counter: 0,
-    getOrderData(formData){
-        const items = [];
-        const data = {
-            fullname: formData.get(`name`) || null,
-            email: formData.get(`email`) || null,
-            phoneNumber: formData.get(`phone-number`) || null,
-            retrieval: {
-                type: formData.get(`retrieval`) || null,
-            },
-            payment: formData.get(`payment`) || null,
-            subTotal: formData.get(`sub-total`) || null,
-            total: formData.get(`total`) || null,
-            date: formData.get(`date`) || null
-        }
-        const street = formData.get(`street`);
-        if(street){
-            data.street = street;
-            data.city = formData.get(`city`);
-            data.state = formData.get(`state`);
-            data.zipcode = formData.get(`zipcode`);
-        }
-        if(data.retrieval.type === 'pickup'){
-            const pickupDistance = formData.get('pickup-distance');
-            if(pickupDistance) data.retrieval.distance = pickupDistance;
-            const pickupTime = formData.get('pickup-time');
-            if(pickupTime) data.retrieval.time = pickupTime;
-        }
-        if(data.retrieval.type === 'delivery'){
-            const deliveryAvailability = formData.get('delivery-availability');
-            if(deliveryAvailability) data.retrieval.availability = deliveryAvailability;
-            const deliveryDistance = formData.get('delivery-distance');
-            if(deliveryDistance) data.retrieval.distance = deliveryDistance;
-            const deliveryTime = formData.get('delivery-time');
-            if(deliveryTime) data.retrieval.time = deliveryTime;
-            const deliveryPrice = formData.get('delivery-price');
-            if(deliveryPrice) data.retrieval.price = deliveryPrice;
-        }
-        
-        const itemsList = formData.get('items').split(',');
-        if(itemsList.length > 0){
-            itemsList.forEach( item => {
-                const itemData = {
-                    name: item,
-                    dateNeeded: formData.get(`${item}-date`) || null,
-                    quantity: formData.get(`${item}-quantity`) || null,
-                    cost: formData.get(`${item}-cost`) || null,
-                    price: formData.get(`${item}-price`) || null,
-                };
-                const size = formData.get(`${item}-size`);
-                if(size) itemData.size = size;
-                const flavor = formData.get(`${item}-flavor`);
-                if(flavor) itemData.flavor = flavor;
-                const frosting = formData.get(`${item}-frosting`);
-                if(frosting) itemData.frosting = frosting;
-                const bakingChips = formData.get(`${item}-baking-chips`);
-                if(bakingChips) itemData.bakingChips = bakingChips;
-                const theme = formData.get(`${item}-theme`);
-                if(theme) itemData.theme = theme;
-                const personalization = formData.get(`${item}-personalization`);
-                if(personalization) itemData.personalization = personalization;
-                const inspirationImage = formData.get(`${item}-image`);
-                if(inspirationImage) itemData.image = structuredClone(inspirationImage);
-                console.log('data item image', inspirationImage);
-                items.push(itemData);
-            });
-            data.items = items;
-        }
-        return data;
-    },
-    sanitizeAndValidateInput(formData,name,options){
-        const value = formData.get(name);
-        if(!value) return [new Error('date is required'),null];
-        const sanitizedValue = sanitizeInput(value);
-        const [ valueError, validValue ] = checkInputValidity(sanitizedValue,options);
-        if(valueError) return [new Error(`"${name}" ERROR: ${valueError.message}`),null];
-        formData.set(name,validValue);
-        console.log(name,validValue);
-        return [null,value];
-    },
-    checkSanitizeAndValidateInput(formData,name,options){
-        const value = formData.get(name);
-        if(!value) return [null,'undefined'];
-        const sanitizedValue = sanitizeInput(value);
-        const [ valueError, validValue ] = checkInputValidity(sanitizedValue,options);
-        if(valueError) return [new Error(`"${name}" ERROR: ${valueError.message}`),null];
-        formData.set(name,validValue);
-        //console.log(name,validValue);
-        return [null,validValue];
-    },
-    checkAndValidateImageFileInput(formData,name){
-        //console.log(name)
-        const file = formData.get(name);
-        if(!file) return [null,'undefined'];
-        if(!file) return [new Error(`"${name}" ERROR: missing file`),null];
-        if(file.size > OrderForm.maxImageSize) return [new Error(`"${name}" ERROR: file to large`),null];
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if(!allowedTypes.includes(file.type)){
-            return [new Error(`"${name}" ERROR: invalid file type`),null];
-        }
-        return [null,null];
-    },
-    sanitizeAndValidateOrderData(form){
-        const formData = new FormData(form);
-        
-        const [ dateError ] = OrderForm.sanitizeAndValidateInput(formData,'date',{
-            isString: true,
-            minLength: 10,
-            maxLength: 20
-        })
-        if(dateError) return [dateError,null];
-
-        const [ nameError ] = OrderForm.sanitizeAndValidateInput(formData,'name',{ 
-            isString: true, 
-            minLength: 2, 
-            maxLength: 50
-        })
-        if(nameError) return [nameError,null];
-
-        const [ emailError ] = OrderForm.sanitizeAndValidateInput(formData,'email',{ 
-            type:'email', 
-            isString: true,
-            minLength: 2,
-            maxLength: 50
-        })
-        if(emailError) return [emailError,null];
-
-        const [ phoneNumberError ] = OrderForm.sanitizeAndValidateInput(formData,'phone-number',{
-            type: 'phone-number',
-            isString: true,
-            minLength: 10,
-            maxLength: 12
-        })
-        if(phoneNumberError) return [phoneNumberError,null];
-
-        const [ retrievalError, validRetrieval ] = OrderForm.sanitizeAndValidateInput(formData,'retrieval',{
-            isString: true,
-            minLength: 4,
-            maxLength: 20
-        });
-        if(retrievalError) return [retrievalError,null];
-
-        const [ paymentError ] = OrderForm.sanitizeAndValidateInput(formData,'payment',{
-            isString: true,
-            minLength: 3,
-            maxLength: 20
-        });
-        if(paymentError) return [paymentError,null];
-      
-        const [ subTotalError ] = OrderForm.sanitizeAndValidateInput(formData,'sub-total',{
-            isString: true,
-            isNumber: true,
-            minLength: 1,
-            maxLength: 5
-        });
-        if(subTotalError) return [subTotalError,null];
-        
-        const [ totalError ] = OrderForm.sanitizeAndValidateInput(formData,'total',{
-            isString: true,
-            isNumber: true,
-            minLength: 1,
-            maxLength: 20
-        });
-        if(totalError) return [totalError,null];
-
-        if(validRetrieval && validRetrieval === 'delivery' || validRetrieval === 'shipping'){
-            const [ streetError ] = OrderForm.sanitizeAndValidateInput(formData,'street',{
-                isString: true,
-                minLength: 1,
-                maxLength: 50
-            });
-            if(streetError) return [streetError,null];
-
-            const [ cityError ] = OrderForm.sanitizeAndValidateInput(formData,'city',{
-                isString: true,
-                minLength: 2,
-                maxLength: 50
-            });
-            if(cityError) return [cityError,null];
-
-            const [ stateError ] = OrderForm.sanitizeAndValidateInput(formData,'state',{
-                isString: true,
-                minLength: 2,
-                maxLength: 50
-            });
-            if(stateError) return [stateError,null];
-
-            const [ zipCodeError ] = OrderForm.sanitizeAndValidateInput(formData,'zipcode',{
-                isString: true,
-                minLength: 5,
-                maxLength: 10
-            });
-            if(zipCodeError) return [zipCodeError,null];
-        }
-        if(validRetrieval && validRetrieval === 'delivery'){
-
-            const [ deliveryAvailabilityError, validDeliveryAvailability ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-availability',{
-                isString: true,
-                minLength: 4,
-                maxLength: 20
-            });
-            if(deliveryAvailabilityError) return [deliveryAvailabilityError,null];
-
-            if(validDeliveryAvailability === 'available'){
-                const [ deliveryDistanceError ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-distance',{
-                    isString: true,
-                    minLength: 1,
-                    maxLength: 20
-                });
-                if(deliveryDistanceError) return [deliveryDistanceError,null];
-    
-                const [ deliveryTimeError ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-time',{
-                    isString: true,
-                    minLength: 5,
-                    maxLength: 10
-                });
-                if(deliveryTimeError) return [deliveryTimeError,null];
-    
-                const [ deliveryPriceError ] = OrderForm.sanitizeAndValidateInput(formData,'delivery-price',{
-                    isString: true,
-                    isNumber: true,
-                    minLength: 1,
-                    maxLength: 8
-                });
-                if(deliveryPriceError) return [deliveryPriceError,null];
-            }
-        }
-
-        // order items
-        const orderItemsList = formData.get('items');
-        if(!orderItemsList) return [new Error('items list required'), null];
-        const orderItems = orderItemsList.split(',');
-
-        for(let i = 0; i < orderItems.length; i++){
-            const orderItem = orderItems[i];
-
-            const [ dateNeededError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-date`,{
-                isString: true,
-                minLength: 10,
-                maxLength: 12
-            });
-            if(dateNeededError) return [dateNeededError,null];
-
-            const [ quantityError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-quantity`,{
-                isString: true,
-                isNumber: true,
-                minLength: 1,
-                maxLength: 2
-            });
-            if(quantityError) return [quantityError,null];
-
-            const [ costError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-cost`,{
-                isString: true,
-                isNumber: true,
-                minLength: 1,
-                maxLength: 5
-            });
-            if(costError) return [costError,null];
-
-            const [ priceError ] = OrderForm.sanitizeAndValidateInput(formData,`${orderItem}-price`,{
-                isString: true,
-                isNumber: true,
-                minLength: 1,
-                maxLength: 5
-            });
-            if(priceError) return [priceError,null];
-
-            const [ sizeError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-size`,{
-                isString:true,
-                minLength: 1,
-                maxLength: 20
-            });
-            if(sizeError) return [sizeError,null];
-
-            const [ flavorError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-flavor`,{
-                isString:true,
-                minLength: 2,
-                maxLength: 50
-            });
-            if(flavorError) return [flavorError,null];
-
-            const [ frostingError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-frosting`,{
-                isString: true,
-                minLength: 2,
-                maxLength: 50
-            });
-            if(frostingError) return [frostingError,null];
-
-            const [ chipsError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-chips`,{
-                isString: true,
-                minLength: 2,
-                maxLength: 50
-            });
-            if(chipsError) return [chipsError,null];
-
-            const [ themeError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-theme`,{
-                isString: true,
-                minLength: 2,
-                maxLength: 200
-            });
-            if(themeError) return [themeError,null];
-
-            const [ personalizationError ] = OrderForm.checkSanitizeAndValidateInput(formData,`${orderItem}-personalization`,{
-                    isString: true,
-                    minLength: 2,
-                    maxLength: 200
-            });
-            if(personalizationError) return [personalizationError,null];
-          
-            const [ imageError ] = OrderForm.checkAndValidateImageFileInput(formData,`${orderItem}-image`);
-            if(imageError) return [imageError,null];
-        }
-        return [null,formData];
     },
     redirectToSuccessPageWithFormData(redirectPath){
         
@@ -1997,50 +1666,60 @@ export const OrderForm = {
     },
     fakeSubmit(clickEvent){
         clickEvent.preventDefault();
+
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
-        setTimeout( ()=> {
-            transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
-                PageNotification.notify('This was just a test.',
-                    'Thank you for testing with Baked by Bec.',
-                    'please close X',
-                    ()=> OrderForm.redirectToSuccessPageWithFormData()
-                );
-            });
-        },3000)
+
+        const [error] = ValidateHTMLForm(OrderForm.form);
+        if(error){
+            setTimeout( ()=> {
+                transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
+                    PageNotification.notify('This is just a test.',
+                        error.message,
+                        'please close X'
+                    );
+                });
+            },3000);
+        }else{
+            setTimeout( ()=> {
+                transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
+                    PageNotification.notify('This is just a test.',
+                        'Thank you for testing with Baked by Bec.',
+                        'please close X',
+                        ()=> OrderForm.redirectToSuccessPageWithFormData()
+                    );
+                });
+            },3000);
+        }
     },
     async submit(clickEvent){
         clickEvent.preventDefault();
-        const form = document.querySelector('#OrderForm');
 
         const pageLoader = document.querySelector('#PageLoader');
         transition('add',pageLoader,'open',['show','loading']);
         
         try{
-
-            const [ error, data ] = OrderForm.sanitizeAndValidateOrderData(form);
+            const [error,data] = ValidateHTMLForm(OrderForm.form);
             if(error) throw new Error(`VALIDATION_ERROR: ${error.message}`);
 
-            const orderFetchURL = new URL('/api/order','http://127.0.0.1:3456');
+            const orderFetchURL = new URL('/order','http://127.0.0.1:3456');
             const fetchResponse = await fetch(orderFetchURL,{ method:'post', body:data });
 
             if(fetchResponse.ok){
                 
                 const successData = await fetchResponse.json();
 
-             
-                
                 transition('remove',pageLoader,['show','loading'],'open',100, ()=>{
                     PageNotification.notify('order success!!',
                         'You have successfully placed and order. A confirmation email has been sent with your order. I will reply to you soon!',
-                        'please close X'
+                        'please close X',
+                        ()=> window.location.href = successData.redirect
                     );
                 });
 
             }else{
                 const errorData = await fetchResponse.json();
-                if(!errorData) throw new Error('FETCH_ERROR: - no error data');
-        
+            
                 OrderForm.handleFetchResposeErrors(errorData.errors);
 
                 transition('remove',pageLoader,'show',['open','loading']);
@@ -2051,10 +1730,10 @@ export const OrderForm = {
             }
 
         }catch(error){
-            console.log(`'FETCH_ERROR: ${error.message || error.msg}`);
+            console.log(`'FETCH_ERROR: ${error.message}`);
             transition('remove',pageLoader,'show',['open','loading']);
             PageNotification.notify('order failed.',
-                'Order failed to process. Please try again',
+                error.message,
                 'please close X'
             );
         }
@@ -2074,12 +1753,10 @@ export const OrderForm = {
             OrderInvoice.setPhoneNumber(inputEvent.target.value);
         });
         this.agreementCheckbox.addEventListener('change', this.selectAgreementCheckbox);
-       // this.form.addEventListener('submit', this.submit)
-       this.submitButton.addEventListener('click', this.fakeSubmit);
+        this.submitButton.addEventListener('click', this.fakeSubmit);
     },
     initialize(initialItemName){
         try{
-            // order form
             this.form = document.querySelector('#OrderForm');
             if(!this.form) throw new Error('missing element - order form');
 
@@ -2125,11 +1802,9 @@ export const OrderForm = {
             this.submitButton = document.querySelector('.js-order-form-submit-btn');
             if(!this.submitButton) throw new Error('missing element - order submit button');
 
-            // order tabs
             this.tabList = document.querySelector('.js-order-item-tab-list');
             if(!this.tabList) throw new Error('missing element - order item tab list');
 
-            // order items
             this.itemList = document.querySelector('.js-order-item-list');
             if(!this.itemList) throw new Error('missing element - order item list');
 

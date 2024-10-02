@@ -122,6 +122,12 @@ export const PageNotification = {
     setButtonText(buttonText){
         this.closeButton.textContent = buttonText;
     },
+    reset(){
+        PageNotification.setTitle("");
+        PageNotification.setMessage("");
+        PageNotification.setButtonText("");
+        PageNotification.callback = undefined;
+    },
     close(clickEvent){
         clickEvent.preventDefault();
         if(PageNotification.element.classList.contains('open')){
@@ -130,7 +136,7 @@ export const PageNotification = {
                 PageNotification.element.classList.remove('open');
                 if(PageNotification.callback){
                     PageNotification.callback();
-                    PageNotification.callback = undefined;
+                    PageNotification.reset();
                 }
             },500);
         }

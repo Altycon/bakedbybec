@@ -18,7 +18,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <base href="/bakedbybec/">
+    
+    <base href="https://altycon.github.io/bakedbybec/">
 
     <link rel="stylesheet" href="main.css">
 
@@ -35,7 +36,7 @@
     <header class="page-header">
 
         <h1 class="website-title">
-            <a href="/bakedbybec/" class="link">
+            <a href="/" class="link">
                 <img src="img/logo/bbb_logo_solid_white_300x50.png" alt="Baked By Bec Text Logo">
             </a>
             <button type="button" title="Iowa residential bakery legislation" class="btn in-house-bakery-btn js-in-house-bakery-btn">i</button>
@@ -174,7 +175,7 @@
                         <div>
                             <img src="img/icon/site/bbb_icon_duo_128x128.png" alt="">
                         </div>
-                        <p>Enjoy some unique bonding time with your child and create your very own matching sets of cookies.  Instruction is focused on the basics of decorating and just having fun!</p>
+                        <p>Enjoy some unique bonding time with your friends and children to create your very own matching sets of cookies.  Instruction is focused on the basics of decorating and just having fun!</p>
                     </li>
                 </ul>
                 <div class="cookie-kit-details">
@@ -234,7 +235,7 @@
             </article>
         </section>
 
-        <form id="BookClassForm" class="book-class-form">
+        <form id="BookClassForm" class="book-class-form" enctype="multipart/form-data">
             
             <fieldset>
                 <label for="BookClassFormNameInput" class="form-label">
@@ -277,12 +278,16 @@
                     </select>
                 </label>
             </fieldset>
-
-            <div class="information">
-                <p>* It can take up to 24 hours for a response.</p>
-                <p>** Any messages after 6pm will be handled the following business day.</p>
-            </div>
-            
+            <fieldset>
+                <div class="information">
+                    <p>* It can take up to 24 hours for a response.</p>
+                    <p>** Any messages after 6pm will be handled the following business day.</p>
+                </div>
+                <div class="field">
+                    <label for="BookClassFormAgreementCheckbox">The information above is correct, I understand<br>the <a href="http://127.0.0.1:5500/pages/terms_of_use.html#PrivacyPolicy" class="pink-text">terms of use</a>, and I'm ready to send my request!</label>
+                    <input type="checkbox" id="BookClassFormAgreementCheckbox" name="agreement" autocomplete="off" required>
+                </div>
+            </fieldset>
             <button type="submit" id="BookClassSubmitButton" class="btn book-class-submit-btn">request class</button>
         </form>
         <div class="book-class-background"></div>
@@ -304,7 +309,7 @@
                 <li><a href="pages/book_class.html" class="link">class</a></li>
             </ul>
             <div class="footer-logo">
-                <a href="/bakedbybec/"><img src="img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
+                <a href="/"><img src="img/logo/bbb_logo_solid_white_ring_300.png" alt="Baked by Bec logo"></a>
             </div>
         </nav>
         <p class="footer-copyright">&copy;&nbsp;2024</p>

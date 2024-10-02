@@ -35,16 +35,15 @@
     --site-header-height: 100px;
 
     /* FONT */
-    /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
     --ff-primary: system-ui, sans-serif;
     --ff-secondary: sans-serif;
-    /* font-family:Arial, Helvetica, sans-serif; */
+    
     /* COLOR */
     --fc-primary: hsl(0 0% 90%);
     --fc-rare: hsl(0 0% 20%);
     --bc-primary: hsl(0 0% 5%);
     --bc-accent-dark: hsl(0 0% 15%);
-    /* --bc-primary: hsl(0 0% 5%); */
+
     --site-color-accent1: hsl(300 100% 50%);
     --site-color-accent2: hsl(220 100% 50%);
     --site-color-accent2-dark: hsl(220 100% 20%);
@@ -60,10 +59,15 @@
     --site-gradient: linear-gradient(90deg, var(--site-color-accent1), var(--site-color-accent2));
     --test-gradient: linear-gradient(90deg, hsl(119, 94%, 19%),hsl(120, 100%, 50%));
 
+    --site-btn-bxs-acc1: 5px 5px 10px black,
+    inset -2px -2px 3px black,
+    inset 2px 2px 3px hsl(300 100% 50% / 0.3);
+    --site-btn-bxs-acc2: 5px 5px 10px black,
+    inset -2px -2px 3px black,
+    inset 2px 2px 3px hsl(220 100% 50% / 0.3);
+
     --bg-gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.1), transparent 30%),
     linear-gradient(285deg, hsl(0 0% 100% / 0.1), transparent 30%);
-    --bg-gradient-glass-reverse: linear-gradient(135deg, hsl(0 0% 100% / 0.1), transparent 40%),
-    linear-gradient(350deg, hsl(0 0% 100% / 0.1), transparent 40%);
 
     --home-background-color-black: hsl(0 0% 5% / 0.2);
     --home-background-color-bright:hsl(300 30% 10%);
@@ -78,17 +82,6 @@
     --img-home-thankyou: url('img/site/home/bbb_rolling-pin-dough-ball_full_large.jpeg');
     --img-class-setup: url('img/site/class/bbb_class_setup_1440x1080.jpg');
     --img-meet-baker-header: url('img/site/meet/bbb_rebecca-woring-designing_full_large.jpg');
-
-    /* --nav-primary-size: 30vw; */
-
-    --site-btn-bxs-acc1: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(300 100% 50% / 0.3);
-    --site-btn-bxs-acc2: 5px 5px 10px black,
-    inset -2px -2px 3px black,
-    inset 2px 2px 3px hsl(220 100% 50% / 0.3);
-
-    --something: black;
 }
 html{
     font-family: var(--ff-primary);
@@ -3589,14 +3582,21 @@ input[hidden=true]{
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
 }
+.contact-form label.required input,
+.contact-form label.required textarea,
+.contact-form label.required select{
+    outline: 2px solid red;
+}
 .contact-form > fieldset{
     border: none;
-
+}
+.contact-form > fieldset:nth-child(1){
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: repeat(4,auto);
     gap: 16px;
 }
+
 .contact-form > fieldset label > div{
     line-height: 1.5em;
     margin-bottom: 8px;
@@ -3642,8 +3642,28 @@ input[hidden=true]{
 }
 .contact-form .information > p{
     text-align: center;
+    font-size: .8rem;
     line-height: 1.5em;
 }
+.contact-form > fieldset:nth-child(2) .field{
+    outline: 2px solid var(--site-color-accent2);
+    padding: 12px;
+    border-radius: 16px;
+    font-size: .8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    gap: 16px;
+}
+.contact-form > fieldset:nth-child(2) .field > input{
+    align-self: center;
+    justify-self: center;
+
+    margin-left: 12px;
+}
+
 .contact-form .contact-form-submit-btn{
     grid-column: 1/3;
     grid-row: 5;
@@ -3658,9 +3678,19 @@ input[hidden=true]{
     font-weight: 700;
     box-shadow: 3px 3px 10px black,
     inset 2px 2px 4px hsl(0 0% 100% / 0.3);
+
+    cursor: none;
+    pointer-events: none;
+    opacity: 0.2;
+    transition: opacity 300ms ease;
 }
 .contact-form .contact-form-submit-btn:hover{
     background-color: hsl(0 0% 10%);
+}
+.contact-form-submit-btn.active{
+    cursor: pointer;
+    pointer-events: all;
+    opacity: 1;
 }
 @media only screen and (max-width: 900px){
     .contact-main .content{
@@ -4797,70 +4827,106 @@ input[hidden=true]{
     text-align: center;
     outline: 1px solid var(--fc-rare);
 }
+.book-class-form label.required input,
+.book-class-form label.required textarea,
+.book-class-form label.required select{
+    outline: 2px solid red;
+}
 .book-class-form > fieldset{
     border: none;
-    margin-bottom: 1.5rem;
+}
+.book-class-form > fieldset:nth-child(1){
+    margin-bottom: 32px;
 
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: repeat(3,auto);
     gap: 16px;
 }
-.book-class-form > fieldset > label:nth-child(1){
+.book-class-form > fieldset:nth-child(1) > label:nth-child(1){
     grid-column: 1/3;
     grid-row: 1;
 }
-.book-class-form > fieldset > label:nth-child(2){
+.book-class-form > fieldset:nth-child(1) > label:nth-child(2){
     grid-column: 1/3;
     grid-row: 2;
 }
-.book-class-form > fieldset > label:nth-child(3){
+.book-class-form > fieldset:nth-child(1) > label:nth-child(3){
     grid-column: 1;
     grid-row: 3;
 }
-.book-class-form > fieldset > label:nth-child(4){
+.book-class-form > fieldset:nth-child(1) > label:nth-child(4){
     grid-column: 2;
     grid-row: 3;
 }
-.book-class-form > fieldset > label:nth-child(1) > div,
-.book-class-form > fieldset > label:nth-child(2) > div{
+.book-class-form > fieldset:nth-child(1) > label:nth-child(1) > div,
+.book-class-form > fieldset:nth-child(1) > label:nth-child(2) > div{
     text-align: left;
 }
-.book-class-form > fieldset > label > div{
+.book-class-form > fieldset:nth-child(1) > label > div{
     font-size: 1rem;
 }
-.book-class-form > fieldset > label > div{
+.book-class-form > fieldset:nth-child(1) > label > div{
     margin-bottom: 12px;
 }
-.book-class-form > fieldset > label > input{
+.book-class-form > fieldset:nth-child(1) > label > input{
     width: 100%;
 }
-.book-class-form > fieldset > label > select{
+.book-class-form > fieldset:nth-child(1) > label > select{
     text-align: center;
 }
-.book-class-form .information{
+.book-class-form > fieldset:nth-child(2){
+    margin-bottom: 32px;;
+}
+.book-class-form > fieldset:nth-child(2) .information{
     padding: 1rem;
 }
-.book-class-form .information > p{
-    margin-bottom: 1em;
+.book-class-form > fieldset:nth-child(2) .information > p{
     font-size: .8rem;
+    line-height: 1.5em;
+}
+.book-class-form > fieldset:nth-child(2) .field{
+    outline: 2px solid var(--site-color-accent2);
+    padding: 12px;
+    border-radius: 16px;
+    font-size: .8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    gap: 16px;
+}
+.book-class-form > fieldset:nth-child(2) .field > input{
+    align-self: center;
+    justify-self: center;
+
+    margin-left: 12px;
 }
 .book-class-submit-btn{
     display: inline-block;
     border: none;
-    width: 100%;
-    color: var(--fc-primary);
-    text-align: center;
-    text-shadow: 1px 1px 2px black;
-    font-size: 1rem;
-    line-height: 1.5em;
-    font-weight: 700;
-    padding: 4px 12px 10px 12px;
+    border: none;
     background-color: var(--site-color-accent2);
-    border-radius: 16px;
-    box-shadow: inset 2px 2px 4px hsl(0 0% 100% / 0.3),
-    inset -2px -2px 3px black,
-    5px 5px 10px black;
+    color: var(--fc-primary);
+    padding: 8px 32px;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 3px 3px 10px black,
+    inset 2px 2px 4px hsl(0 0% 100% / 0.3);
+
+    cursor: none;
+    pointer-events: none;
+    opacity: 0.2;
+    transition: opacity 300ms ease;
+}
+.book-class-submit-btn:hover{
+    background-color: hsl(0 0% 10%);
+}
+.book-class-submit-btn.active{
+    cursor: pointer;
+    pointer-events: all;
+    opacity: 1;
 }
 @media only screen and (max-width: 1000px){
 
@@ -7495,7 +7561,11 @@ input[hidden=true]{
     width: 100%;
     margin: 0 auto 32px auto;
 }
-
+#ResponsePageNothing > header > h2{
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto 32px auto;
+}
 .response-page section > header > h2 > div{
     line-height: 1em;
 }
@@ -7512,6 +7582,9 @@ input[hidden=true]{
 }
 #ResponsePageError > header > h2{
     color: hsl(0 80% 30%);
+}
+#ResponsePageNothing > header > h2{
+    color: var(--fc-rare);
 }
 .response-page section > p{
     max-width: 500px;

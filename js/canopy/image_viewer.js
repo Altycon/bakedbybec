@@ -11,13 +11,11 @@ export const AImageViewer = {
     getDocumentBaseLocation(){
         const base = document.querySelector('base');
         if(base){
-           return base.getAttribute('href') || '/';
+           return base.getAttribute('href');
         }
         return '/';
     },
-    loadImage(event){
-        // console.log('Image loaded successfully',event);
-    },
+    
     imageError(error){
         console.warn('IMAGELOADERROR',error);
     },
@@ -39,17 +37,15 @@ export const AImageViewer = {
     },
     open(event){
         AImageViewer.imageViewer.addEventListener('click', AImageViewer.close);
-        //AImageViewer.imageElement.onload = AImageViewer.loadImage;
         AImageViewer.imageElement.onerror = AImageViewer.imageError;
 
         if(event.target.dataset.fullImageUrl){
-            const imageUrl = new URL(event.target.src);
-            const newImageUrl = imageUrl.origin + AImageViewer.getDocumentBaseLocation();
-            const newImagePath = newImageUrl + event.target.dataset.fullImageUrl;
+            const newImagePath = AImageViewer.getDocumentBaseLocation() + event.target.dataset.fullImageUrl;
             AImageViewer.imageElement.src = newImagePath;
             
         }else{
-            AImageViewer.imageElement.src = event.target.src;
+            const newImagePath = AImageViewer.getDocumentBaseLocation() + event.target.src;
+            AImageViewer.imageElement.src = newImagePath;
         }
 
         AImageViewer.imageCaption.textContent = event.target.getAttribute('alt');
