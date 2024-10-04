@@ -100,7 +100,7 @@ body{
 input[hidden=true]{
     min-width: 0px;
 }
-/* #OrderBody *{
+/* body *{
     outline: 1px solid yellow;
 } */
 
@@ -1530,7 +1530,6 @@ input[hidden=true]{
 }
 .customer-reviews > header > h2{
     text-align: center;
-    padding-left: 32px;
 }
 
 
@@ -1845,7 +1844,10 @@ input[hidden=true]{
         transform: translateY(0px);
     }
 }
-@media only screen and (max-width: 500px){
+@media only screen and (max-width: 600px){
+    .customer-reviews > header::before{
+        font-size: 18vw;
+    }
     .customer-review-title{
         font-size: 1.5rem;
         margin-bottom: 1.4em;
@@ -1856,7 +1858,7 @@ input[hidden=true]{
     }
    
 }
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 500px){
     .customer-review-description{
         font-size: 1rem;
         line-height: 1.5em;
@@ -1951,7 +1953,7 @@ input[hidden=true]{
     height: fit-content;
     translate: -50% 0%;
     text-align: center;
-    font-size: 12vw;
+    font-size: 13vw;
     font-weight: 700;
     text-transform: uppercase;
     color: hsl(0 0% 50% / 0.2);
@@ -1964,7 +1966,6 @@ input[hidden=true]{
     isolation: isolate;
     text-align:center;
     font-size: 1.5rem;
-    padding-left: 32px;
 }
 .recent-orders > header > h2::before{
     content: "";
@@ -2264,14 +2265,10 @@ input[hidden=true]{
     color: hsl(0 0% 50% / 0.2);
     line-height: 1em;
     z-index: -1;
-
-    /* opacity: 0;
-    transition: opacity 300ms ease; */
 }
 .faqs > header > h2{
     text-align: center;
     font-size: 1.5rem;
-    padding-left: 32px;
 }
 
 .faqs > article{
@@ -3574,11 +3571,7 @@ input[hidden=true]{
     outline: 1px solid var(--fc-rare);
     border-radius: 16px;
 }
-.contact-form label.required input,
-.contact-form label.required textarea,
-.contact-form label.required select{
-    outline: 2px solid red;
-}
+
 .contact-form > fieldset{
     border: none;
 }
@@ -3588,7 +3581,14 @@ input[hidden=true]{
     grid-template-rows: repeat(4,auto);
     gap: 16px;
 }
-
+.contact-form > fieldset > label{
+    margin-bottom: 16px;
+}
+.contact-form label.required input,
+.contact-form label.required textarea,
+.contact-form label.required select{
+    outline: 2px solid red;
+}
 .contact-form > fieldset label > div{
     line-height: 1.5em;
     margin-bottom: 8px;
@@ -3599,6 +3599,8 @@ input[hidden=true]{
     width: 100%;
 }
 .contact-form .topic{
+    margin-bottom: 16px;
+
     display: grid;
     grid-template-columns: repeat(2,auto);
     grid-template-rows: auto;
@@ -3648,6 +3650,12 @@ input[hidden=true]{
     grid-template-columns: auto auto;
     grid-template-rows: auto;
     gap: 16px;
+}
+.contact-form > fieldset:nth-child(2) .field > label{
+    text-wrap: pretty;
+}
+.contact-form > fieldset:nth-child(2) .field > label > a{
+    white-space: nowrap;
 }
 .contact-form > fieldset:nth-child(2) .field > input{
     align-self: center;
@@ -4827,6 +4835,9 @@ input[hidden=true]{
 .book-class-form > fieldset{
     border: none;
 }
+.book-class-form > fieldset > label{
+    margin-bottom: 16px;
+}
 .book-class-form > fieldset:nth-child(1){
     margin-bottom: 32px;
 
@@ -4888,6 +4899,13 @@ input[hidden=true]{
     grid-template-columns: auto auto;
     grid-template-rows: auto;
     gap: 16px;
+
+}
+.book-class-form > fieldset:nth-child(2) .field > label{
+    text-wrap: pretty;
+}
+.book-class-form > fieldset:nth-child(2) .field > label > a{
+    white-space: nowrap;
 }
 .book-class-form > fieldset:nth-child(2) .field > input{
     align-self: center;
@@ -7002,6 +7020,16 @@ input[hidden=true]{
     border-radius: 16px;
     font-size: .8rem;
     font-weight: 700;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    gap: 16px;
+}
+.before-order-submission .field > label{
+    text-wrap: pretty;
+}
+.before-order-submission .field > label > a{
+    white-space: nowrap;
 }
 .before-order-submission .field > input{
     margin-left: 12px;

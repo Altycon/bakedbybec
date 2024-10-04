@@ -31,7 +31,7 @@ export const AImageViewer = {
                 AImageViewer.imageElement.onerror = undefined;
                 AImageViewer.imageElement.src = "";
                 AImageViewer.imageElement.setAttribute('alt', "");
-                document.body.style.overflow = 'auto';
+                // document.body.style.overflow = 'auto';
             },100);
         }
     },
@@ -50,7 +50,7 @@ export const AImageViewer = {
 
         AImageViewer.imageCaption.textContent = event.target.getAttribute('alt');
         AImageViewer.imageViewer.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        // document.body.style.overflow = 'hidden';
 
         setTimeout( ()=>{
             AImageViewer.imageViewer.classList.add('show');

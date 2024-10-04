@@ -30,7 +30,7 @@ export const Confirmation = {
         Confirmation.element.classList.add('open');
         setTimeout(()=>{
             Confirmation.element.classList.add('show');
-            document.body.style.overflow = 'hidden';
+            // document.body.style.overflow = 'hidden';
         },100);
     },
     close(){
@@ -38,7 +38,7 @@ export const Confirmation = {
         setTimeout(()=>{
             Confirmation.element.classList.remove('open','show','removing');
             Confirmation.messageOutput.textContent = "";
-            document.body.style.overflow = 'auto';
+            // document.body.style.overflow = 'auto';
         },500);
     },
     setMessage(message){
