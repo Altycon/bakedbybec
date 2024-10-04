@@ -1997,7 +1997,6 @@ input[hidden=true]{
     list-style: none;
     overflow-y: hidden;
     overflow-x: auto;
-    overscroll-behavior: contain;
     scroll-snap-type: x mandatory;
     scroll-snap-stop: always;
     
@@ -2232,6 +2231,11 @@ input[hidden=true]{
     .recent-orders .background .line:nth-child(4),
     .recent-orders .background .line:nth-child(5){
         display: none;
+    }
+}
+@media only screen and (max-width: 600px){
+    .recent-orders > header::before{
+        font-size: 13vw;
     }
 }
 /*
