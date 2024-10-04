@@ -96,6 +96,7 @@ body{
     background-color: var(--bc-primary);
     isolation: isolate;
     overflow-x: hidden;
+    overscroll-behavior: contain;
 }
 input[hidden=true]{
     min-width: 0px;
@@ -1953,7 +1954,7 @@ input[hidden=true]{
     height: fit-content;
     translate: -50% 0%;
     text-align: center;
-    font-size: 13vw;
+    font-size: 12vw;
     font-weight: 700;
     text-transform: uppercase;
     color: hsl(0 0% 50% / 0.2);
@@ -1996,6 +1997,7 @@ input[hidden=true]{
     list-style: none;
     overflow-y: hidden;
     overflow-x: auto;
+    overscroll-behavior: contain;
     scroll-snap-type: x mandatory;
     scroll-snap-stop: always;
     
