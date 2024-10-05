@@ -5751,6 +5751,9 @@ input[hidden=true]{
     max-width: 700px;
     margin: 0 auto 128px auto;
 }
+.order-form fieldset{
+    overflow:hidden;
+}
 .order-form input[hidden=true]{
     display: none;
 }
@@ -6006,6 +6009,7 @@ input[hidden=true]{
     grid-column: 1;
     grid-row: 1;
     
+    
     padding-inline: 32px;
     padding-block: 16px;
     pointer-events: none;
@@ -6016,9 +6020,9 @@ input[hidden=true]{
     opacity: 0;
     transition: translate 500ms ease, opacity 300ms ease;
 }
-/* .order-item *{
+.order-item *{
     outline: 1px solid yellow;
-} */
+}
 .order-item.open{
     display: block;
 }
@@ -6847,7 +6851,6 @@ input[hidden=true]{
 }
 .order-invoice .content .items .column{
     text-align: center;
-    /* outline: 1px solid yellow; */
 }
 .order-invoice .content .items h4,
 .order-invoice .content .items p{
@@ -6931,9 +6934,6 @@ input[hidden=true]{
     overflow: hidden;
     border-radius: 12px;
 }
-.order-invoice .content .images .images-list .img-wrapper > img{
-    /* object-fit: contain; */
-}
 .order-invoice .content .bottom{
     display: grid;
     grid-template-columns: repeat(2,auto);
@@ -6946,9 +6946,6 @@ input[hidden=true]{
 .order-invoice .content .bottom .totals{
     text-align: right;
 }
-
-
-
 
 
 
@@ -7019,12 +7016,6 @@ input[hidden=true]{
     opacity: 1;
 }
 
-
-
-
-/* maybe shut this off for mobile ?
-*  maybe move it? maybe hide it in a button?
-*/
 
 /* ORDER PROGRESS BAR */
 .order-progress-bar{
