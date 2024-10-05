@@ -410,7 +410,6 @@ input[hidden=true]{
 }
 .page-header .page-navigation-social-icon{
     width: 30px;
-    /* margin-top: 5px; */
 }
 
 
@@ -5730,18 +5729,11 @@ input[hidden=true]{
     opacity: 1;
 }
 .ordering-area > header{
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
+    
 }
 .ordering-area > header .field{
-    grid-column: 1;
-    grid-row: 1;
-
     max-width: 500px;
+    margin: 0 auto;
     padding: 16px 64px;
     text-align: center;
     outline: 1px solid var(--fc-rare);
@@ -5751,13 +5743,7 @@ input[hidden=true]{
     display: block;
     margin-bottom: 12px;
 }
-.ordering-area > header .img-wrapper{
-    grid-column: 2;
-    grid-row: 1;
-}
-.ordering-area > header .img-wrapper > img{
-    max-width: 64px;
-}
+
 
 /* === ORDER FORM */
 
@@ -6030,6 +6016,9 @@ input[hidden=true]{
     opacity: 0;
     transition: translate 500ms ease, opacity 300ms ease;
 }
+/* .order-item *{
+    outline: 1px solid yellow;
+} */
 .order-item.open{
     display: block;
 }
@@ -6086,8 +6075,20 @@ input[hidden=true]{
 
 .order-item > fieldset.common{
     display: grid;
-    grid-template-columns: repeat(3,auto);
-    grid-template-rows: auto;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: repeat(2,auto);
+}
+.order-item > fieldset.common > div:nth-child(1){
+    grid-column: 1/3;
+    grid-row: 1;
+}
+.order-item > fieldset.common > div:nth-child(2){
+    grid-column: 1;
+    grid-row: 2;
+}
+.order-item > fieldset.common > div:nth-child(3){
+    grid-column: 2;
+    grid-row: 2;
 }
 .order-item > fieldset.extra{
     margin-bottom: 48px;
@@ -6108,28 +6109,29 @@ input[hidden=true]{
     margin-bottom: 24px;
 
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: repeat(2,auto);
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3,auto);
     gap: 12px;
 }
-.order-item > fieldset.theme .field > *:nth-child(1){
+/* .order-item > fieldset.theme .field > *:nth-child(1){
     grid-column: 1;
     grid-row: 1;
 }
 .order-item > fieldset.theme .field > *:nth-child(2){
-    grid-column: 2;
-    grid-row: 1;
-}
-.order-item > fieldset.theme .field > *:nth-child(3){
-    grid-column: 1/3;
+    grid-column: 1;
     grid-row: 2;
 }
+.order-item > fieldset.theme .field > *:nth-child(3){
+    grid-column: 1;
+    grid-row: 3;
+} */
 .order-item > fieldset.theme .field .field-output{
    text-align: center;
 }
 .order-item-price-display,
 .order-item-prices-display{
     text-align: center;
+    margin-bottom: 32px;
 }
 .order-item-price-display h4{
     line-height: 1.4em;
@@ -6145,37 +6147,18 @@ input[hidden=true]{
 .order-item-prices-display{
     text-align: center;
 
-    display: grid;
-    grid-template-columns: repeat(2,auto);
-    grid-template-rows: repeat(3,auto);
-    justify-content: center;
-    align-items: center;
-    column-gap: 32px;
-    row-gap: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 .order-item-prices-display > h4{
-    grid-column: 1/3;
-    grid-row: 1;
+    flex-basis: 100%;
 
     line-height: 1.4em;
     margin-bottom: 8px;
 }
-.order-item-prices-display > div:nth-of-type(1){
-    grid-column: 1;
-    grid-row: 2;
-}
-.order-item-prices-display > div:nth-of-type(2){
-    grid-column: 2;
-    grid-row: 2;
-}
-.order-item-prices-display > div:nth-of-type(3){
-    grid-column: 1;
-    grid-row: 3;
-}
-.order-item-prices-display > div:nth-of-type(4){
-    grid-column: 2;
-    grid-row: 3;
-}
+
 .order-item-prices-display > div > p{
     font-size: .8rem;
     line-height: 1.2rem;
@@ -6200,10 +6183,16 @@ input[hidden=true]{
 #SheetCake > fieldset.extra,
 #CupCakes > fieldset.extra{
     display: grid;
-    grid-template-columns: repeat(3,auto);
-    grid-template-rows: auto;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: repeat(2,auto);
 }
-
+#LayerCake > fieldset.extra > .field:nth-of-type(1),
+#SheetCake > fieldset.extra > .field:nth-of-type(1),
+#CupCakes > fieldset.extra > .field:nth-of-type(1){
+    grid-column: 1/3;
+    grid-row: 1;
+    margin-bottom: 32px;
+}
 
 
 
@@ -6571,31 +6560,16 @@ input[hidden=true]{
     margin-bottom: 24px;
 
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: repeat(2,auto);
-    column-gap: 12px;
-    /* row-gap: 8px; */
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3,auto);
+    gap: 12px;
 }
-.order-form .personal-information .basic-information .field > *:nth-child(1){
-    grid-column: 1;
-    grid-row: 1;
-}
-.order-form .personal-information .basic-information .field > *:nth-child(2){
-    grid-column: 2;
-    grid-row: 1;
-}
-.order-form .personal-information .basic-information .field > *:nth-child(3){
-    grid-column: 1/3;
-    grid-row: 2;
-}
+
 .order-form .personal-information .basic-information .field .field-output{
    text-align: center;
 }
 .order-form .personal-information .basic-information .field > label{
     display: block;
-}
-.order-form .personal-information .basic-information .field > *:not(:last-child){
-    margin-bottom: 12px;
 }
 .order-form .personal-information .basic-information .field:nth-of-type(3){
     max-width: fit-content;
@@ -6605,7 +6579,7 @@ input[hidden=true]{
     position: relative;
 
     display: none;
-    grid-template-columns: repeat(3,auto);
+    grid-template-columns: repeat(2,auto);
     grid-template-rows: repeat(5,auto);
     column-gap: 32px;
     row-gap: 16px;
@@ -6622,15 +6596,15 @@ input[hidden=true]{
     opacity: 1;
 }
 .order-form .personal-information .address-information .address-informent-message{
-    grid-column: 1/4;
+    grid-column: 1/3;
     grid-row: 1;
 }
 .order-form .personal-information .address-information .field:nth-of-type(1){
-    grid-column: 1/4;
+    grid-column: 1/3;
     grid-row: 2;
 }
 .order-form .personal-information .address-information .field:nth-of-type(2){
-    grid-column: 1/4;
+    grid-column: 1/3;
     grid-row: 3;
 }
 .order-form .personal-information .address-information .field:nth-of-type(3){
@@ -6644,7 +6618,7 @@ input[hidden=true]{
     max-width: 200px;
 }
 .order-form .personal-information .address-information .distance-information{
-    grid-column: 1/4;
+    grid-column: 1/3;
     grid-row: 5;
 }
 
@@ -6663,49 +6637,25 @@ input[hidden=true]{
 .order-form .personal-information .address-information .field:nth-of-type(2),
 .order-form .personal-information .address-information .field:nth-of-type(4){
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: repeat(2,auto);
-    column-gap: 12px;
-    row-gap: 8px;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3,auto);
+    gap: 12px;
+
 }
-.order-form .personal-information .address-information .field:nth-of-type(1) > label,
-.order-form .personal-information .address-information .field:nth-of-type(2)  > label,
-.order-form .personal-information .address-information .field:nth-of-type(4)  > label{
-    grid-column: 1;
-    grid-row: 1;
-}
-.order-form .personal-information .address-information .field:nth-of-type(1) > input,
-.order-form .personal-information .address-information .field:nth-of-type(2)  > input,
-.order-form .personal-information .address-information .field:nth-of-type(4)  > input{
-    grid-column: 2;
-    grid-row: 1;
-}
-.order-form .personal-information .address-information .field:nth-of-type(1) .field-output,
-.order-form .personal-information .address-information .field:nth-of-type(2) .field-output,
-.order-form .personal-information .address-information .field:nth-of-type(4) .field-output{
-    grid-column: 1/3;
-    grid-row: 2;
-    
-    text-align: center;
-}
-.order-form .personal-information .address-information .field:nth-of-type(1),
-.order-form .personal-information .address-information .field:nth-of-type(2),
-.order-form .personal-information .address-information .field:nth-of-type(4){
+.order-form .personal-information .address-information .field{
     margin-bottom: 12px;
 }
-.order-form .personal-information .address-information .field:nth-of-type(1) .field-output,
-.order-form .personal-information .address-information .field:nth-of-type(2) .field-output,
-.order-form .personal-information .address-information .field:nth-of-type(4) .field-output{
-    grid-column: 1/3;
-    grid-row: 2;
-    
+.order-form .personal-information .address-information .field  > label{
+    display: block;
+}
+.order-form .personal-information .address-information .field  > input{
+    display: block;
+}
+.order-form .personal-information .address-information .field .field-output{
     text-align: center;
 }
 .order-form .personal-information .address-information .field:nth-of-type(3){
     text-align: center;
-}
-.order-form .personal-information .address-information .field:nth-of-type(3) > label{
-    display: block;
 }
 .order-form .personal-information .address-information .field:nth-of-type(3) > *:not(:last-child){
     margin-bottom: 12px;
@@ -6743,6 +6693,7 @@ input[hidden=true]{
 }
 .order-form .personal-information .distance-information > header > h3{
     text-align: left;
+    margin-bottom: 12px;
 }
 .order-form .personal-information .distance-information > header > h3{
     text-align: left;
@@ -7251,62 +7202,6 @@ input[hidden=true]{
     }
 }
 @media only screen and (max-width: 500px){
-    .ordering-area > header{
-        gap: 8px;
-    }
-    
-    /* ORDER ITEMS */
-    .order-item > fieldset.common{
-        grid-template-columns: repeat(2,auto);
-        grid-template-rows: repeat(2,auto);
-        row-gap: 32px;
-    }
-    .order-item > fieldset.common > div:nth-child(1){
-        grid-column: 1/3;
-        grid-row: 1;
-    }
-    
-    .order-item-prices-display{
-        grid-template-columns: repeat(4,auto);
-        grid-template-rows: repeat(2,auto);
-        justify-content: space-evenly;
-        align-items: center;
-        column-gap: 12px;
-    }
-    #SheetCake > fieldset .order-item-prices-display,
-    #CupCakes > fieldset .order-item-prices-display{
-        grid-template-columns: repeat(2,auto);
-        grid-template-rows: repeat(2,auto);
-    }
-    .order-item-prices-display > h4{
-        grid-column: 1/5;
-        grid-row: 1;
-    
-        line-height: 1.5em;
-        margin-bottom: 12px;
-    }
-    #SheetCake .order-item-prices-display > h4,
-    #CupCakes .order-item-prices-display > h4{
-        grid-column: 1/3;
-        grid-row: 1;
-    }
-    .order-item-prices-display > div:nth-of-type(1){
-        grid-column: 1;
-        grid-row: 2;
-    }
-    .order-item-prices-display > div:nth-of-type(2){
-        grid-column: 2;
-        grid-row: 2;
-    }
-    .order-item-prices-display > div:nth-of-type(3){
-        grid-column: 3;
-        grid-row: 2;
-    }
-    .order-item-prices-display > div:nth-of-type(4){
-        grid-column: 4;
-        grid-row: 2;
-    }
-    
     .order-form .payment-information .payment-details > ul{
         list-style: none;
         margin-bottom: 32px;
@@ -7319,6 +7214,36 @@ input[hidden=true]{
     }
     .order-form .payment-information .payment-details > ul > li{
         max-width: 300px;
+    }
+
+    .order-form .personal-information .address-information{
+        grid-template-columns: auto;
+        grid-template-rows: repeat(6,auto);
+    }
+   
+    .order-form .personal-information .address-information .address-informent-message{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .order-form .personal-information .address-information .field:nth-of-type(1){
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .order-form .personal-information .address-information .field:nth-of-type(2){
+        grid-column: 1;
+        grid-row: 3;
+    }
+    .order-form .personal-information .address-information .field:nth-of-type(3){
+        grid-column: 1;
+        grid-row: 4;
+    }
+    .order-form .personal-information .address-information .field:nth-of-type(4){
+        grid-column: 1;
+        grid-row: 5;
+    }
+    .order-form .personal-information .address-information .distance-information{
+        grid-column: 1;
+        grid-row: 6;
     }
 
     .order-progress-bar{
@@ -7342,29 +7267,6 @@ input[hidden=true]{
     }
     .order-item > header > h3{
         font-size: 1.2rem;
-    }
-
-
-
-    .layer-cake-item .form-group:nth-of-type(2),
-    .sheet-cake-item .form-group:nth-of-type(2),
-    .cup-cakes-item .form-group:nth-of-type(2){
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3,auto);
-        row-gap: 24px;
-    }
-    .layer-cake-item .form-group:nth-of-type(2) > label,
-    .sheet-cake-item .form-group:nth-of-type(2) > label,
-    .cup-cakes-item .form-group:nth-of-type(2) > label{
-        
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-    }
-    .layer-cake-item .form-group:nth-of-type(2) > label > div,
-    .sheet-cake-item .form-group:nth-of-type(2) > label > div,
-    .cup-cakes-item .form-group:nth-of-type(2) > label > div{
-        text-align: left;
     }
 
 
@@ -7459,54 +7361,16 @@ input[hidden=true]{
         font-size: .7rem;
     }
     .order-item > header{
-       
+        padding-inline: 32px;
         grid-template-columns: repeat(2,auto);
+        justify-content: space-between;
     }
     .order-item > header > h3{
         font-size: 1rem;
-        display: none;
+        grid-column: 1;
     }
     .order-item > header > img{
-        width: 32px;
-    }
-
-    .order-item-prices-display{
-       
-        grid-template-columns: repeat(4,auto);
-        grid-template-rows: repeat(2,auto);
-        justify-content: center;
-        align-items: center;
-        column-gap: 32px;
-        row-gap: 8px;
-    }
-    .sheet-cake-item .order-item-prices-display,
-    .cup-cakes-item .order-item-prices-display{
-        grid-template-columns: repeat(2,auto);
-        column-gap: 64px;
-    }
-    .order-item-prices-display > h4{
-        grid-column: 1/5;
-        grid-row: 1;
-    }
-    .sheet-cake-item .order-item-prices-display > h4,
-    .cup-cakes-item .order-item-prices-display > h4{
-        grid-column: 1/3;
-    }
-    .order-item-prices-display > div:nth-of-type(1){
-        grid-column: 1;
-        grid-row: 2;
-    }
-    .order-item-prices-display > div:nth-of-type(2){
-        grid-column: 2;
-        grid-row: 2;
-    }
-    .order-item-prices-display > div:nth-of-type(3){
-        grid-column: 3;
-        grid-row: 2;
-    }
-    .order-item-prices-display > div:nth-of-type(4){
-        grid-column: 4;
-        grid-row: 2;
+        display: none;
     }
 }
 @media only screen and (max-width: 350px){
@@ -7520,10 +7384,6 @@ input[hidden=true]{
         font-size: 1.2rem;
     }
 
-
-    .ordering-area > header > img{
-       width: 64px;
-    }
 
     .order-item-tab > div{
         font-size: .6rem;
