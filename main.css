@@ -5722,6 +5722,7 @@ input[hidden=true]{
     opacity: 0;
     transition: opacity 300ms ease;
 }
+
 .ordering-area.open{
     display: block;
 }
@@ -5771,6 +5772,9 @@ input[hidden=true]{
 .order-form .form-icon{
     /* margin-left: 12px; */
     cursor: pointer;
+}
+.order-form textarea{
+    max-width: 100%;
 }
 .order-form .field-output{
     font-size: .67rem;
@@ -6020,9 +6024,9 @@ input[hidden=true]{
     opacity: 0;
     transition: translate 500ms ease, opacity 300ms ease;
 }
-.order-item *{
+/* .order-item *{
     outline: 1px solid yellow;
-}
+} */
 .order-item.open{
     display: block;
 }
@@ -7175,6 +7179,9 @@ input[hidden=true]{
     .order-item-tab{
         padding-inline: 8px;
         place-content: center;
+    }
+    .order-item{
+        padding-inline: 0px;
     }
 }
 @media only screen and (max-width: 600px){
