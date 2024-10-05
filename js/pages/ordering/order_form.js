@@ -963,7 +963,7 @@ const AddressComponent = {
                 id: 'OrderFormZipCode',
                 name: 'zipcode',
                 class: 'form-text-input js-personal-info',
-                inputmode: 'numeric',
+                inputmode: 'decimal',
                 pattern: "[0-9]{5}(-[0-9]{4})?",
                 title: 'please enter correct zipcode format',
                 autocomplete: 'off',
