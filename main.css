@@ -178,6 +178,10 @@ input[hidden=true]{
 .btn{
     cursor: pointer;
 }
+.btn *{
+    pointer-events: none;
+    user-select: none;
+}
 .btn:active{
     scale: 0.98;
     transition: scale 100ms ease;
@@ -2131,12 +2135,10 @@ input[hidden=true]{
 
     transform-style: preserve-3d;
     transform-origin: center;
-    opacity: 0.5;
     rotate: y 0deg;
-    transition: rotate 1s ease, opacity 1s ease;
+    transition: rotate 1s ease;
 }
 .recent-order:hover .img-wrapper{
-    opacity: 1;
     rotate: y 30deg;
 }
 .recent-order .img-wrapper > img{
@@ -2151,12 +2153,10 @@ input[hidden=true]{
     /* outline: 1px solid yellow; */
     filter: drop-shadow(-10px 10px 20px black);
 
-    opacity: 0.8;
     scale: .98;
-    transition: scale 500ms ease, opacity 300ms ease;
+    transition: scale 500ms ease;
 }
 .recent-order:hover .information{
-    opacity: 1;
     scale: 1;
 }
 .recent-order .information > p{
@@ -6049,7 +6049,8 @@ input[hidden=true]{
     transition: translate 500ms ease, opacity 300ms ease;
 }
 .order-item > header{
-    margin-bottom: 32px;
+    padding-block: 32px;
+    /* margin-bottom: 32px; */
 
     display: grid;
     grid-template-columns: repeat(3,auto);
@@ -6121,36 +6122,25 @@ input[hidden=true]{
     grid-template-rows: repeat(3,auto);
     gap: 12px;
 }
-/* .order-item > fieldset.theme .field > *:nth-child(1){
-    grid-column: 1;
-    grid-row: 1;
-}
-.order-item > fieldset.theme .field > *:nth-child(2){
-    grid-column: 1;
-    grid-row: 2;
-}
-.order-item > fieldset.theme .field > *:nth-child(3){
-    grid-column: 1;
-    grid-row: 3;
-} */
 .order-item > fieldset.theme .field .field-output{
    text-align: center;
 }
 .order-item-price-display,
 .order-item-prices-display{
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 64px;
 }
 .order-item-price-display h4{
+    font-size: 1.2rem;
     line-height: 1.4em;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 .order-item-price-display > p{
     font-size: .8rem;
 }
 .order-item-price-display > p > span:nth-child(1){
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 .order-item-prices-display{
     text-align: center;
@@ -6162,9 +6152,9 @@ input[hidden=true]{
 }
 .order-item-prices-display > h4{
     flex-basis: 100%;
-
+    font-size: 1.2rem;
     line-height: 1.4em;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .order-item-prices-display > div > p{
@@ -6219,12 +6209,23 @@ input[hidden=true]{
     grid-template-columns: repeat(3,auto);
     grid-template-rows: auto;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 12px;
 }
 .order-item .inspiration-controls > h3{
+    font-size: 1rem;
+    white-space: nowrap;
     translate: 0 50%;
     opacity: 0;
     transition: translate 500ms ease, opacity 300ms ease;
+}
+.order-item .inspiration-controls > h3::before{
+    content: "";
+    position: absolute;
+    top: 0; left: -120%;
+    width: 100%;
+    height: 5%;
+    border-radius: 50%;
+    background-image: linear-gradient(90deg,var(--site-color-accent2),transparent);
 }
 .order-item .inspiration-controls > h3.show{
     translate: 0 0;
@@ -7181,7 +7182,7 @@ input[hidden=true]{
         place-content: center;
     }
     .order-item{
-        padding-inline: 0px;
+        padding-inline: 16px;
     }
 }
 @media only screen and (max-width: 600px){
@@ -7364,11 +7365,17 @@ input[hidden=true]{
         justify-content: space-between;
     }
     .order-item > header > h3{
-        font-size: 1rem;
+        /* font-size: 1rem; */
         grid-column: 1;
     }
     .order-item > header > img{
         display: none;
+    }
+    .order-item-price-display > p > span:nth-child(1){
+        font-size: 1rem;
+    }
+    .order-item-prices-display > div > p:nth-of-type(2) > span{
+        font-size: 1rem;
     }
 }
 @media only screen and (max-width: 350px){

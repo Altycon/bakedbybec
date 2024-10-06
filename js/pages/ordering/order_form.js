@@ -632,7 +632,7 @@ const ProductComponent ={
                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
                 if(file){
                     if(!allowedTypes.includes(file.type)){
-                        ANotification.notify('please upload a jpeg,png,gif,webp');
+                        PageNotification.notify('invalid file type','please upload a JPEG, JPG, PNG, GIF, or WEBP','i understand X')
                         fileUploadInput.removeEventListener('input',uploadFile);
                         return;
                     }
@@ -675,7 +675,7 @@ const ProductComponent ={
         return createHtmlElement('div',{ class: 'inspiration js-inspiration'},
             createHtmlElement('div',{ class: 'inspiration-controls' },[
                 createHtmlElement('button', { type: 'button', class: 'btn add-inspiration-btn show' },[
-                    `+ inspiration`,
+                    `+ image`,
                     createHtmlElement('img', { src: `img/icon/site/bbb_icon_image_64x64.png`, width: '16'})
                 ], { type: 'click', listen: this.addInspiration }),
                 createHtmlElement('h3',{},'inspiration image'),
@@ -1281,9 +1281,11 @@ export const OrderForm = {
         OrderInvoice.removeItem(itemId);
         OrderInvoice.subtractNumberOfItems();
 
+        const tabIntro = document.querySelector('.js-order-item-tab-intro');
+
         if(OrderForm.items.length === 0){
+            if(!tabIntro) OrderForm.addTabIntro(); 
             OrderForm.addItemIntro();
-            OrderForm.addTabIntro();
         }
         if(OrderForm.hasCakes(itemId)){
             disableSelectFieldOption(OrderForm.retrievalSelect,'shipping');
@@ -1351,7 +1353,6 @@ export const OrderForm = {
         OrderForm.addTab(data.id,data.name,data.image);
 
         OrderInvoice.addItem(data.id,data.title,data.themed,data.invoiceFields);
-        ANotification.notify(`you selected: "${data.title}"`);
         OrderInvoice.addNumberOfItems();
         
         data.retrievalRestrictions.forEach( restriction => {

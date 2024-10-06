@@ -112,6 +112,7 @@ export const PageNotification = {
     message: undefined,
     closeButton: undefined,
     callback: undefined,
+    lastFocusedElement: undefined,
 
     setTitle(title){
         this.title.textContent = title;
@@ -127,6 +128,7 @@ export const PageNotification = {
         PageNotification.setMessage("");
         PageNotification.setButtonText("");
         PageNotification.callback = undefined;
+        PageNotification.lastFocusedElement = undefined;
     },
     close(clickEvent){
         clickEvent.preventDefault();
@@ -134,12 +136,15 @@ export const PageNotification = {
             PageNotification.element.classList.remove('show');
             setTimeout( ()=>{
                 PageNotification.element.classList.remove('open');
+                PageNotification.lastFocusedElement.focus();
                 if(PageNotification.callback){
                     PageNotification.callback();
                     PageNotification.reset();
                 }
             },500);
         }
+        clickEvent.target.blur();
+        
         clickEvent.target.removeEventListener('click', PageNotification.close);
     },
     open(){
@@ -149,7 +154,9 @@ export const PageNotification = {
                 this.element.classList.add('show');
             },100);
         }
+        this.lastFocusedElement = document.activeElement;
         this.closeButton.addEventListener('click', PageNotification.close);
+        this.closeButton.focus();
     },
     notify(title,message,buttonText,callback){
         title = title || 'no title';
