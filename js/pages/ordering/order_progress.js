@@ -4,15 +4,24 @@ export const OrderProgress = {
     element: undefined,
     elements: undefined,
 
+    hide(){
+        transition('remove',OrderProgress.element,null,'show');
+    },
+    display(){
+        transition('add',OrderProgress.element,'open','show');
+        setTimeout( ()=> OrderProgress.hide(),2000);
+    },
     activate(element,callback){
         if(!element.classList.contains('active')){
             element.classList.add('active');
+            OrderProgress.display();
             if(callback) callback();
         }
     },
     deactivate(element,callback){
         if(element.classList.contains('active')){
             element.classList.remove('active');
+            OrderProgress.display();
            if(callback) callback();
         }
     },
@@ -82,9 +91,6 @@ export const OrderProgress = {
                 }
             }
         });
-    },
-    display(){
-        transition('add',OrderProgress.element,'open','show');
     },
     reset(){
         [...document.querySelectorAll(`.js-order-form [name]`)].forEach( input => {

@@ -1396,7 +1396,6 @@ export const OrderForm = {
     selectRetrievalType(changeEvent){
         const retrievalType = changeEvent.target.value;
         const currentState = changeEvent.target.dataset.state;
-        ANotification.notify(`you selected: "${retrievalType}"`);
 
         OrderForm.setAddress(retrievalType);
         OrderInvoice.setRetrievalType(retrievalType);
@@ -1430,7 +1429,6 @@ export const OrderForm = {
     selectPaymentType(changeEvent){
         const paymentType = changeEvent.target.value;
         OrderInvoice.setPaymentType(paymentType);
-        ANotification.notify(`you selected: "${paymentType}"`);
         OrderProgress.setState(4);
     },
     selectAgreementCheckbox(changeEvent){
@@ -1442,7 +1440,6 @@ export const OrderForm = {
 
             const inputs = [...document.querySelectorAll('#OrderForm [name]')];
             const emptyInputs = inputs.filter( input => (input.value === "" || input.value === '-- select --'));
-            console.log('empty', emptyInputs)
             emptyInputs.forEach( input => {
                 if(!input.hidden){
                     const item = input.closest('li.order-item');
