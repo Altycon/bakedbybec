@@ -696,7 +696,7 @@ const ProductComponent ={
                 id: `${id}Theme`,
                 name: `${name}-theme`,
                 class:`form-text-input js-item-info`,
-                placeholder: 'birthday/wedding',
+                placeholder: 'birthday, wedding, personal, etc.',
                 list: 'ItemThemes',
                 required:'true',
                 autocomplete:'off'
@@ -705,7 +705,7 @@ const ProductComponent ={
                 id: `${id}Personalization`, 
                 name: `${name}-personalization`,
                 class:`form-textarea js-item-info`,
-                placeholder: 'names,words,colors,style',
+                placeholder: 'names, words, colors, style, etc.',
                 rows: '3',
                 required:'true',
                 autocomplete:'off',
@@ -936,6 +936,7 @@ const AddressComponent = {
                 minLength: '3',
                 maxLength: '50',
                 title: 'must be more than 3 characters',
+                placeholder: '137 72nd St',
                 autocomplete: 'off',
                 required: 'true' 
             },'street'
@@ -948,6 +949,7 @@ const AddressComponent = {
                 minLength: '2',
                 maxLength: '30',
                 title: 'must be more than 3 characters',
+                placeholder: 'Camelot',
                 autocomplete: 'off',
                 required: 'true' 
             },'city'),
@@ -965,7 +967,8 @@ const AddressComponent = {
                 class: 'form-text-input js-personal-info',
                 inputmode: 'decimal',
                 pattern: "[0-9]{5}(-[0-9]{4})?",
-                title: 'please enter correct zipcode format',
+                title: 'please enter correct zipcode format 12345',
+                placeholder: '12345',
                 autocomplete: 'off',
                 required: 'true'
             },'zipcode')

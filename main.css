@@ -7152,28 +7152,7 @@ input[hidden=true]{
     outline: 3px solid green;
 }
 
-@media only screen and (max-width: 1160px){
-    /* .order-progress-bar{
-        padding-bottom: 12px;
-    }
-    .order-progress-item > p{
-        display: none;
-    }
-    .order-progress-item .bar{
-       
-        width: 100%;
-        height: 30%;
-        background-color: var(--fc-primary);
-        box-shadow: inset 2px 2px 4px hsl(0 0% 100% / 0.5),
-        inset -2px -2px 3px hsl(0 0% 0% / 0.5),
-        5px 5px 10px black;
-    }
-    .order-progress-item .bulb{
-        width: 15px;
-        height: 15px;
-        font-size: .8rem;
-    } */
-}
+
 @media only screen and (max-width: 700px){
     .before-you-order{
         padding-inline: 32px;
@@ -7546,7 +7525,7 @@ input[hidden=true]{
     padding-inline: 32px;
 }
 .terms-main a{
-    color: var(--fc-primary);
+    color: var(--site-color-accent1);
     text-decoration: none;
     font-weight: 700;
 }
@@ -7590,27 +7569,24 @@ input[hidden=true]{
 .terms-table-of-contents > ul{
     list-style: none;
 
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-auto-rows: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
     gap: 8px;
 }
 .terms-table-of-contents > ul > li{
-    align-self: stretch;
-    justify-self: stretch;
-    align-content: center;
-
-    font-size: .8rem;
+    width: fit-content;
+    padding: 8px 16px;
+    font-size: 1rem;
     background-color: var(--site-link-color);
-    text-align: center;
-    padding: 8px;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: inset 2px 2px 3px hsl(0 0% 100% / 0.3),
     inset -1px -1px 2px black;
 }
-
+.terms-table-of-contents > ul > li > a{
+    color:  var(--fc-primary);
+}
 #AgreementToLegalTerms > div{
     padding-top: 24px;
     padding-bottom: 32px;
@@ -7619,21 +7595,35 @@ input[hidden=true]{
     margin: 0 auto;
     text-align: center;
 }
-
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 800px){
     .terms-main{
         padding-inline: 16px;
     }
     .terms-table-of-contents > ul{
         
-        grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(2,1fr);
         grid-auto-rows: auto;
         justify-content: center;
         align-items: center;
         gap: 8px;
     }
-    .terms-table-of-contents > ul > li > a{
+    /* .terms-table-of-contents > ul > li > a{
         font-size: .6rem;
+        font-weight: 500;
+    } */
+}
+@media only screen and (max-width: 650px){
+   
+    /* .terms-table-of-contents > ul{
+        
+        grid-template-columns: repeat(2,1fr);
+        grid-auto-rows: auto;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    } */
+    .terms-table-of-contents > ul > li > a{
+        font-size: 1rem;
         font-weight: 500;
     }
 }
