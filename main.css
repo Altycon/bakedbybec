@@ -775,6 +775,15 @@ input[hidden=true]{
     }
 
 }
+@media only screen and (max-width: 760px){
+    .footer-created-by{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        justify-content: space-evenly;
+        row-gap: 12px;
+    }
+}
 @media only screen and (max-width: 500px){
     .footer-navigation{
         
