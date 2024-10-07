@@ -43,7 +43,7 @@ function connectInputToOutput(event){
                     outputElement.textContent = formatADate(value,'YYYY-MM-DD','MM/DD/YYYY');
                 }else{
                     PageNotification.notify('Request too early',
-                        'I need at least 2 weeks to prepare your deserts. Please select a later date.',
+                        'I need at least 2 weeks to prepare your desserts. Please select a later date.',
                         'I understand'
                     );
                     event.target.value = "";
