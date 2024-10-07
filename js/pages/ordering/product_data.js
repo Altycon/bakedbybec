@@ -34,6 +34,13 @@ const BAKING_CHIPS_OPTIONS = [
     { textContent:'white chocolate', value:'white chocolate'},
     { textContent:'peanut butter', value:'peanut butter' },
 ];
+const COATING_OPTIONS = [
+    { textContent:'vanilla', value:'vanilla' },
+    { textContent:'chocolate', value:'chocolate' },
+    { textContent:'lemon', value:'lemon' },
+    { textContent:'strawberry', value:'strawberry' },
+    { textContent:'peppermint', value:'peppermint' },
+]
 export const PRODUCT_DATA = {
     sugarCookies: {
         id: 'SugarCookies',
@@ -255,15 +262,15 @@ export const PRODUCT_DATA = {
                 textContent:'flavor',
                 options: CAKE_FLAVOR_OPTIONS
             },
-            frosting: {
-                id:'CakePopsFrosting',
-                name:'cake-pops-frosting',
-                textContent:'frosting',
-                options: CAKE_FROSTING_OPTIONS
+            coating: {
+                id:'CakePopsCoating',
+                name:'cake-pops-coating',
+                textContent:'coating',
+                options: COATING_OPTIONS
             },
             extended: true
         },
-        invoiceFields: ['flavor', '/', 'frosting'],
+        invoiceFields: ['flavor', '/', 'coating'],
         retrievalRestrictions: ['shipping'],
         image: `img/icon/product/bbb_icon_cakepops_128x128.png`
     }
