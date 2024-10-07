@@ -46,6 +46,7 @@ function connectInputToOutput(event){
                         'I need at least 2 weeks to prepare your deserts. Please select a later date.',
                         'I understand'
                     );
+                    event.target.value = "";
                 }
             }else{
                 outputElement.textContent = value;
@@ -555,7 +556,7 @@ const ProductComponent ={
             id: id,
             name: name,
             class: 'form-date-input js-item-info',
-            min: getFutureDateByDays(14),
+            //min: getFutureDateByDays(14),
             placeholder: 'mm/dd/yyyy',
             required: 'true',
             autocomplete: 'off'
