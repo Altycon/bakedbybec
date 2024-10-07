@@ -1848,6 +1848,15 @@ input[hidden=true]{
 
         transform: translateY(0px);
     }
+    .customer-review-images > div:nth-child(1)::before{
+        background-color: hsl(0 0% 0% / 0.4);
+    }
+    .customer-review-images > div:nth-child(2)::before{
+        background-color: hsl(0 0% 0% / 0.4);
+    }
+    .customer-review-images > div:nth-child(3)::before{
+        background-color: hsl(0 0% 0% / 0.4);
+    }
 }
 @media only screen and (max-width: 600px){
     .customer-reviews > header::before{
@@ -5672,7 +5681,21 @@ input[hidden=true]{
     text-align: left;
     text-wrap: pretty;
 }
-
+.before-you-order > ul > li > a{
+    display: inline-block;
+    padding-left: 8px;
+    padding-right: 16px;
+    padding-block: 4px;
+    font-size: .8rem;
+    line-height: 1em;
+    white-space: nowrap;
+    color: var(--fc-primary);
+    text-shadow: 0px 0px 1px black;
+    background-color: var(--site-link-color);
+    border-radius: 10px;
+    box-shadow: inset 1px 1px 3px hsl(0 0% 100% / 0.3),
+    3px 3px 10px black;
+}
 .before-you-order .open-order-form-btn{
     border: none;
     padding: 10px 15px;

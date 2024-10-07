@@ -1731,7 +1731,6 @@ export const OrderForm = {
             }
 
         }catch(error){
-            console.log(`'FETCH_ERROR: ${error.message}`);
             transition('remove',pageLoader,'show',['open','loading']);
             PageNotification.notify('order failed.',
                 error.message,
