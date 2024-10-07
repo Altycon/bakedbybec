@@ -30,14 +30,28 @@ function connectInputToOutput(event){
                 break;
             default : 
             if(outputId.includes('Date')){
-                outputElement.textContent = formatADate(value,'YYYY-MM-DD','MM/DD/YYYY')
+                const mpday = 86400000;
+                const dayLimit = mpday*13;
+                const now = Date.now();
+                const futureDay = now + dayLimit;
+                const limitDate = new Date(futureDay);
+                const limit = limitDate.getTime();
+                const selectedDate = new Date(value);
+                const selected = selectedDate.getTime();
+
+                if(selected >= limit){
+                    outputElement.textContent = formatADate(value,'YYYY-MM-DD','MM/DD/YYYY');
+                }else{
+                    PageNotification.notify('Request too early',
+                        'I need at least 2 weeks to prepare your deserts. Please select a later date.',
+                        'I understand'
+                    );
+                }
             }else{
                 outputElement.textContent = value;
             }
             break;
         }
-    }else{
-        console.error(`output element for ${outputId} missing or not connected`)
     }
 };
 async function getCurrentLocation(){
