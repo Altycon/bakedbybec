@@ -556,7 +556,7 @@ const ProductComponent ={
             id: id,
             name: name,
             class: 'form-date-input js-item-info',
-            //min: getFutureDateByDays(14),
+            min: getFutureDateByDays(14),
             placeholder: 'mm/dd/yyyy',
             required: 'true',
             autocomplete: 'off'
